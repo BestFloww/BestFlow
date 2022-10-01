@@ -1,9 +1,9 @@
 import express from "express";
-// import TestController from "../controllers/test_controller.js";
+import TestController from "../controllers/test_controller.js";
 
 const router = express.Router();
 
-router.route("/").get((req, res) => res.send("hello world"));
+router.route("/").get(TestController.getTest);
 
 export default router;
 

@@ -5,7 +5,7 @@ import testAPI from "./api/routes/test_route.js"
 
 const app = express();
 
-app.use(cors);
+app.use(cors());
 
 app.use(express.json());
 
