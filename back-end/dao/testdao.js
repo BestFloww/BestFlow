@@ -7,7 +7,7 @@ export default class testDAO {
       return
     }
     try {
-      things = await conn.db(process.env.TESTDATA_NS).collection("restaurants")
+      things = await conn.db(process.env.TESTDATA_NS).collection("Test")
     } catch (e) {
       console.error(
         `Unable to establish a collection handle in testDAO: ${e}`,
@@ -24,9 +24,9 @@ export default class testDAO {
     let cursor
     
     try {
+      query = {};
       cursor = await things
         .find(query)
-        console.log(cursor)
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`)
       return { thingsList: [], totalNumThings: 0 }
