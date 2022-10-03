@@ -1,5 +1,6 @@
 
-import BaseButton from "./components/BaseButton.jsx"
+import BaseButton from "./components/BaseButton.jsx";
+import HelloWorldButton from "./components/HelloWorldButton.jsx";
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
         
         <div className="justify-center flex">
           <BaseButton click={() => console.log("Hello world 2")} text={"Button 2"} />
+        </div>
+        <div className="justify-center flex">
+          <HelloWorldButton/>
         </div>
       </div>
     </div>
