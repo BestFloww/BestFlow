@@ -1,5 +1,8 @@
 import mongodb from "mongodb"
+const ObjectId = mongodb.ObjectId;
+
 let things;
+let new_things;
 
 export default class testDAO {
   static async injectDB(conn) {
@@ -8,6 +11,7 @@ export default class testDAO {
     }
     try {
       things = await conn.db(process.env.TESTDATA_NS).collection("Test")
+      new_things = await conn.db(process.env.TESTDATA_NS).collection("new_Test")
     } catch (e) {
       console.error(
         `Unable to establish a collection handle in testDAO: ${e}`,
@@ -44,6 +48,20 @@ export default class testDAO {
         `Unable to convert cursor to array or problem counting documents, ${e}`,
       )
       return { thingsList: [], totalNumThings: 0 }
+    }
+  }
+
+  static async postTestData(id, content) {
+    try {
+      const testDoc = { 
+        _id: ObjectId(id),
+        text: content,
+      }
+
+      return await new_things.insertOne(testDoc)
+    } catch (e) {
+      console.error(`Unable to post review: ${e}`)
+      return { error: e }
     }
   }
 }
