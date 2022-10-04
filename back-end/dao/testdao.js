@@ -58,7 +58,7 @@ export default class testDAO {
         text: content,
       }
 
-      return await new_things.insertOne(testDoc)
+      return await things.insertOne(testDoc)
     } catch (e) {
       console.error(`Unable to post review: ${e}`)
       return { error: e }
