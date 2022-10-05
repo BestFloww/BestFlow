@@ -6,6 +6,9 @@ const API = {
     get: async() => {
         return await axios.get(baseURL);
     },
+    post: (payload) => {
+         axios.post(baseURL, payload);
+    },
 };
 
 export default API;
