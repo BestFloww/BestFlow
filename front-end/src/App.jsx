@@ -1,6 +1,7 @@
 
 import BaseButton from "./components/BaseButton.jsx";
 import HelloWorldButton from "./components/HelloWorldButton.jsx";
+import VoiceFlowButton from "./components/VoiceFlowButton.jsx";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         </div>
         <div className="justify-center flex">
           <HelloWorldButton/>
+        </div>
+        <div className="justify-center flex">
+            <VoiceFlowButton/>
         </div>
       </div>
     </div>
