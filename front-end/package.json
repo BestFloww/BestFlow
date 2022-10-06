@@ -47,6 +47,8 @@
     "@testing-library/user-event": "^13.5.0",
     "autoprefixer": "^10.4.12",
     "babel-jest": "^29.1.2",
+    "lodash": ">=4.17.21",
+    "moment": ">=2.29.4",
     "jest": "^27.5.1",
     "postcss": "^8.4.17",
     "react-test-renderer": "^18.2.0",
