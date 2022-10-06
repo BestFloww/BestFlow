@@ -1,5 +1,6 @@
 
 import BaseButton from "./components/BaseButton.jsx";
+import PostRequestButton from "./components/PostRequestButton.jsx"
 import RequestButton from "./components/RequestButton.jsx"
 import HelloWorldButton from "./components/HelloWorldButton.jsx";
 import VoiceFlowButton from "./components/VoiceFlowButton.jsx";
@@ -13,6 +14,9 @@ function App() {
           <BaseButton click={() => console.log("Hello world")} text={"Button 1"} />
         </div>
         
+        <div className="justify-center flex">
+          <PostRequestButton/>
+        </div>
         <div className="justify-center flex">
           <RequestButton/>
         </div>
