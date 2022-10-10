@@ -5,7 +5,7 @@ export default class testDAO {
   static async getTestData({query} = {}) {
     try {
       const thingsList = await Test.find(query);
-      return {thingsList, thingsList};
+      return {thingsList};
     } catch (e) {
       return {error: e};
     }
