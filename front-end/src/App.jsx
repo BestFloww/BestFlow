@@ -1,32 +1,9 @@
 
-import BaseButton from "./components/BaseButton.jsx";
-import PostRequestButton from "./components/PostRequestButton.jsx"
-import RequestButton from "./components/RequestButton.jsx"
-import HelloWorldButton from "./components/HelloWorldButton.jsx";
-import VoiceFlowButton from "./components/VoiceFlowButton.jsx";
+import MainPage from "./components/MainPage.jsx";
 
 function App() {
   return (
-    <div className="App bg-purple-300 flex">
-      <div className="flex gap-y-10 w-full flex-col">
-        <div className="justify-center flex">
-          <BaseButton click={() => console.log("Hello world")} text={"Button 1"} />
-        </div>
-        
-        <div className="justify-center flex">
-          <PostRequestButton/>
-        </div>
-        <div className="justify-center flex">
-          <RequestButton/>
-        </div>
-        <div className="justify-center flex">
-          <HelloWorldButton/>
-        </div>
-        <div className="justify-center flex">
-            <VoiceFlowButton/>
-        </div>
-      </div>
-    </div>
+    <MainPage/>
   );
 }
 
