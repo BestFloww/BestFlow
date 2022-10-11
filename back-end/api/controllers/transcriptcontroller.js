@@ -1,5 +1,5 @@
 import intentDao from "../../dao/intentdao.js";
-import transcriptDataFormatter from "../../formatter/transcript_data_formatter.js";
+import transcriptDataFormatter from "../../helpers/transcript_data_formatter.js";
 
 export default class TranscriptController {
     static async getTranscript(req, res, next) {
