@@ -4,7 +4,8 @@ import transcriptDataFormatter from "../../helpers/transcript_data_formatter.js"
 export default class TranscriptController {
     static async getTranscript(req, res, next) {
 
-        const {intentList} = await intentDao.getIntent({});
+        const query = req.body;cd
+        const {intentList} = await intentDao.getIntents(query);
 
         res.json(intentList);
     }
