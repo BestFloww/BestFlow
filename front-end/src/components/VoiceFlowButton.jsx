@@ -10,6 +10,7 @@ class VoiceFlowButton extends Component {
       resultObject: null,
     };
     this.callVoiceFlow = this.callVoiceFlow.bind(this);
+    this.renderVariables = this.renderVariables.bind(this);
   }
 
   async callVoiceFlow() {
@@ -21,6 +22,15 @@ class VoiceFlowButton extends Component {
     })
   }
 
+  renderVariables() {
+    const resultObject = this.state.resultObject
+    if (resultObject !== null){
+      return Object.keys(resultObject).map((key) => 
+      <h3 key={key}>
+        {key}: {resultObject[key]}
+      </h3>)
+    }  
+  }
 
   render() {
     return (
@@ -29,14 +39,9 @@ class VoiceFlowButton extends Component {
           text={this.state.lastUtterance}
           click={this.callVoiceFlow}
         />
-        {this.state.resultObject && Object.keys(this.state.resultObject).forEach((key) => {
-          return (
-            <h3>
-              {key} {this.state.resultObject[key]}
-            </h3>
-          )
-        }
-      )}
+        <ul>
+          {this.renderVariables()}
+        </ul>
       </div>
     )
   }
