@@ -4,7 +4,7 @@ import testDAO from "../../dao/testdao.js";
 export default class TestController {
     static async getTest(req, res, next) {
     
-        const { thingsList, totalNumThings } = await testDAO.getTestData({});
+        const { thingsList} = await testDAO.getTestData({});
     
         let response = {
           things: thingsList,
