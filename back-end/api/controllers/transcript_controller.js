@@ -6,7 +6,7 @@ export default class TranscriptController {
 
     static setIntentDao(dao) {
         if(dao instanceof IntentInterface){
-            this.intentDao = dao;
+            this.#intentDao = dao;
         } else {
             throw new Error("not an IntentInterface");
         }
@@ -15,7 +15,7 @@ export default class TranscriptController {
     static async getTranscript(req, res, next) {
 
         const query = req.body;
-        const {intentList} = await this.intentDao.getIntent(query);
+        const {intentList} = await this.#intentDao.getIntent(query);
 
         res.json(intentList);
     }
@@ -24,7 +24,7 @@ export default class TranscriptController {
         try {
             const content = await formatTranscript(req.body);
 
-            const transcriptResponse = await this.intentDao.postIntents(content);
+            const transcriptResponse = await this.#intentDao.postIntents(content);
             res.status(200).json({ message: "success" })
         } catch (e) {
             res.status(500).json({ error: e.message })
