@@ -23,7 +23,7 @@ class MainPage extends Component {
                 <div className="justify-center flex">
                   <BaseButton click={() => console.log("Hello world")} text={"Button 1"} />
                 </div>
-                <div className="justify-center flex">
+                <div className="justify-center flex" data-testid="upload-transcript-button">
                   <BaseButton click={() => this.toggleTranscriptUploadModal()} text={"Upload Transcript"} />
                 </div>
                 <div className="justify-center flex">
