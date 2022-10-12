@@ -9,13 +9,13 @@ import BaseButton from './BaseButton.jsx';
  */
 
 
-describe('BasButton tests', () => {
+describe('BaseButton tests', () => {
     const basicProps = {
         click: jest.fn(),
         text: "sampleText",
     };
     const renderComponent = (props) => {
-        render(<BaseButton {... basicProps}/>)
+        render(<BaseButton {... props}/>)
     }
 
     it('should call the click function on click', () => {
