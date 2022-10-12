@@ -2,7 +2,7 @@ import {formatTranscript} from "../../helpers/transcript_data_formatter.js";
 import {IntentInterface} from "../../interfaces/intent-interface.js";
 
 export default class TranscriptController {
-    static intentDao;
+    static #intentDao;
 
     static setIntentDao(dao) {
         if(dao instanceof IntentInterface){
@@ -25,7 +25,7 @@ export default class TranscriptController {
             const content = await formatTranscript(req.body);
 
             const transcriptResponse = await this.intentDao.postIntents(content);
-            res.status(200).json({message: "success"})
+            res.status(200).json({ message: "success" })
         } catch (e) {
             res.status(500).json({ error: e.message })
         }
