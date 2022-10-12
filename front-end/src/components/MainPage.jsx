@@ -11,6 +11,11 @@ class MainPage extends Component {
         showTranscriptUploadModal: false
     }
 
+    toggleTranscriptUploadModal() {
+        this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal})
+        console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal)
+    }
+
     render() {
         return (
             <div className="MainPage bg-purple-300 flex">
@@ -19,11 +24,7 @@ class MainPage extends Component {
                   <BaseButton click={() => console.log("Hello world")} text={"Button 1"} />
                 </div>
                 <div className="justify-center flex">
-                  <BaseButton click={() => {
-                      this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal})
-                      console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal)
-                  }} 
-                  text={"Upload Transcript"} />
+                  <BaseButton click={() => this.toggleTranscriptUploadModal()} text={"Upload Transcript"} />
                 </div>
                 <div className="justify-center flex">
                   <TranscriptUploadModal show={this.state.showTranscriptUploadModal} />
