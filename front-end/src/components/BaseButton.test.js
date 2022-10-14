@@ -26,7 +26,7 @@ describe('BaseButton tests', () => {
 
     it('should display the given text', async() => {
         renderComponent(basicProps);
-        expect((await screen.findByTestId("custom-button"))).toHaveTextContent(basicProps.text);
+        expect(await screen.findByTestId("custom-button")).toHaveTextContent(basicProps.text);
     });
 
 });

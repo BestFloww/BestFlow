@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import "./TranscriptUploadModal.css";
 import axios from 'axios';
 
 class TranscriptUploadModal extends Component {
@@ -33,7 +32,7 @@ class TranscriptUploadModal extends Component {
     if (!this.props.show) {
       return null;
     }
-    return <div className="modalBackground">
+    return <div className="modalBackground" data-testid="upload-transcript-modal">
       <div className="modalContainer">
         <div className="titleCloseButton">
           <button> x </button>
