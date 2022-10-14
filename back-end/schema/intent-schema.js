@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import mongoose from "mongoose";
 
 // id is automatically given if left blank in schema
