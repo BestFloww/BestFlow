@@ -8,15 +8,15 @@ describe('MainPage tests', () => {
 
     it('should not display Upload Transcript Modal on load', () => {
         renderComponent();
-        expect(screen.queryByTestId('upload-transcript-modal')).toBeNull();
+        expect(screen.queryByTestId('upload-transcript-modal')).not.toBeInTheDocument();
     });
     
     it('should toggle Upload Transcript Modal when Upload Transcript button is pressed', async() => {
         renderComponent();
         userEvent.click(screen.getByText('Upload Transcript'));
-        expect(await screen.queryByTestId('upload-transcript-modal')).not.toBeNull();
+        expect(await screen.queryByTestId('upload-transcript-modal')).toBeInTheDocument();
         userEvent.click(screen.getByText('Upload Transcript'));
-        expect(await screen.queryByTestId('upload-transcript-modal')).toBeNull();
+        expect(await screen.queryByTestId('upload-transcript-modal')).not.toBeInTheDocument();
     });
 
 });
