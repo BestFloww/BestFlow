@@ -1,10 +1,10 @@
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import '@testing-library/jest-dom'
+import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 import MainPage from './MainPage.jsx';
 
 describe('MainPage tests', () => {
-    const renderComponent = () => render(<MainPage/>)
+    const renderComponent = () => render(<MainPage/>);
 
     it('should not display Upload Transcript Modal on load', () => {
         renderComponent();

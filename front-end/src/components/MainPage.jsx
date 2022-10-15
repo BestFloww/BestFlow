@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import BaseButton from "./BaseButton.jsx";
-import PostRequestButton from "./PostRequestButton.jsx"
-import RequestButton from "./RequestButton.jsx"
+import PostRequestButton from "./PostRequestButton.jsx";
+import RequestButton from "./RequestButton.jsx";
 import HelloWorldButton from "./HelloWorldButton.jsx";
 import VoiceFlowButton from "./VoiceFlowButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
@@ -12,8 +12,8 @@ class MainPage extends Component {
     }
 
     toggleTranscriptUploadModal() {
-        this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal})
-        console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal)
+        this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
+        console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal);
     }
 
     render() {
@@ -23,8 +23,10 @@ class MainPage extends Component {
                 <div className="justify-center flex">
                   <BaseButton click={() => console.log("Hello world")} text={"Button 1"} />
                 </div>
-                <div className="justify-center flex" data-testid="upload-transcript-button">
-                  <BaseButton click={() => this.toggleTranscriptUploadModal()} text={"Upload Transcript"} />
+                <div className="justify-center flex">
+                  <BaseButton
+                    click={this.toggleTranscriptUploadModal}
+                    text="Upload Transcript" />
                 </div>
                 <div className="justify-center flex">
                   <TranscriptUploadModal show={this.state.showTranscriptUploadModal} />
