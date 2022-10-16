@@ -25,7 +25,8 @@ beforeAll(() => {
     const bad_entry = {
       "project_id": "2",
       "trace_type": "text"
-    }
+    };
+
     global_database["raw_transcript"] = {"data":[]};
     global_database["speak1"] = speak_1;
     global_database["text1"] = text_1;
@@ -36,7 +37,7 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-  global_database.raw_transcript = {"data" : []}
+  global_database.raw_transcript = {"data" : []};
 });
 
 
@@ -87,8 +88,8 @@ describe("formatTranscipt", () => {
 
 
     it("should return an array containing two Intent initializers, same project ids, one children of the other", async() => {
-        global_database.raw_transcript.data.push(global_database.speak1)
-        global_database.raw_transcript.data.push(global_database.text1)
+        global_database.raw_transcript.data.push(global_database.speak1);
+        global_database.raw_transcript.data.push(global_database.text1);
         let children = new Map();
         children.set("What would you like to buy?", 1);
         const received = await TranscriptFormatter.formatTranscipt(global_database.raw_transcript);
@@ -100,11 +101,11 @@ describe("formatTranscipt", () => {
 
 
     it("should return an array containing 3 Intent initializers, various project ids, one children twice", async() => {
-        global_database.raw_transcript.data.push(global_database.speak1)
-        global_database.raw_transcript.data.push(global_database.text1)
-        global_database.raw_transcript.data.push(global_database.text2)
-        global_database.raw_transcript.data.push(global_database.speak1)
-        global_database.raw_transcript.data.push(global_database.text1)
+        global_database.raw_transcript.data.push(global_database.speak1);
+        global_database.raw_transcript.data.push(global_database.text1);
+        global_database.raw_transcript.data.push(global_database.text2);
+        global_database.raw_transcript.data.push(global_database.speak1);
+        global_database.raw_transcript.data.push(global_database.text1);
         let children = new Map();
         children.set("What would you like to buy?", 2);
         const received = await TranscriptFormatter.formatTranscipt(global_database.raw_transcript);

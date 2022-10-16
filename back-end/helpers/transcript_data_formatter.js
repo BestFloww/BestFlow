@@ -8,7 +8,7 @@ export default class TranscriptFormatter{
             for(const entry of raw_transcript["data"]){
                 if(entry["trace_type"] == "text" || entry["trace_type"] == "speak"){
                     const trace_payload = JSON.parse(entry["trace_payload"]);
-                    const id = entry["project_id"]
+                    const id = entry["project_id"];
                     const message = trace_payload.payload.message;
                     this.add_intent(content, message, id);
     
@@ -22,7 +22,7 @@ export default class TranscriptFormatter{
             return Object.values(content);
         }
         catch{
-            return("The transcript does not match specifications!")
+            return("The transcript does not match specifications!");
         }
     }
 
