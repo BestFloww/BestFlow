@@ -6,7 +6,7 @@ export default class TranscriptFormatter{
         let prev = "";
         try{
             for(const entry of rawTranscript["data"]){
-                prev = this.#uptadeContent(entry, content, prev);
+                prev = this.#updateContent(entry, content, prev);
             }
             return Object.values(content);   
         }
@@ -15,7 +15,7 @@ export default class TranscriptFormatter{
         }
     }
 
-    static #uptadeContent(entry, content, prev){
+    static #updateContent(entry, content, prev){
         if(entry["trace_type"] == "text" || entry["trace_type"] == "speak"){
             const tracePayload = JSON.parse(entry["trace_payload"]);
             const id = entry["project_id"];
