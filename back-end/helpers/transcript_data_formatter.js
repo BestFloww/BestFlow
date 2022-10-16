@@ -11,11 +11,9 @@ export default class TranscriptFormatter{
                     const id = entry["project_id"];
                     const message = trace_payload.payload.message;
                     this.add_intent(content, message, id);
-    
                     if(prev in content){
                         this.add_child(content, prev, message, id);
                     }
-    
                     prev = (message + id);
                 }
             }
@@ -28,7 +26,7 @@ export default class TranscriptFormatter{
 
     static add_intent(content, message, id){
         if(!((message + id) in content)){
-            const intent = {question: message, children: new Map(),total_children: 0, project_id: id};
+            const intent = {question: message, children: new Map(), total_children: 0, project_id: id};
             content[(message + id)] = intent;
         }
     }
