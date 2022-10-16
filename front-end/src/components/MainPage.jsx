@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import BaseButton from "./BaseButton.jsx";
-import PostRequestButton from "./PostRequestButton.jsx";
-import RequestButton from "./RequestButton.jsx";
-import HelloWorldButton from "./HelloWorldButton.jsx";
-import VoiceFlowButton from "./VoiceFlowButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 
 class MainPage extends Component {
@@ -11,7 +7,8 @@ class MainPage extends Component {
         showTranscriptUploadModal: false
     }
 
-    toggleTranscriptUploadModal() {
+    toggleTranscriptUploadModal= () => {
+
         this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
         console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal);
     }
