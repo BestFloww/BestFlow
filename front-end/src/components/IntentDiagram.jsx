@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 
 class IntentDiagram extends Component {
     listLeaves = () => {
-        return Object.keys(this.props.children).map((key) => {
+        return Object.keys(this.props.branches).map((key) => {
             return (
                 <div 
                     className="text-sm bg-green-300 flex-col flex gap-y-0 shadow-sm rounded-full p-5 border border-green-300 hover:border-black focus-within:border-black"
+                    data-testid={`${key}-container`}
                     key={key}
                 >
                     <h4 
@@ -17,10 +18,10 @@ class IntentDiagram extends Component {
                         {key} 
                     </h4>
                     <p
-                        data-testid={`${key}-${this.props.children[key]}`}
+                        data-testid={`${key}-${this.props.branches[key]}`}
                         tabIndex={0}
                     >
-                        {this.props.children[key]}%
+                        {this.props.branches[key]}%
                     </p>
                 </div>
             );
@@ -46,7 +47,7 @@ class IntentDiagram extends Component {
 
 IntentDiagram.propTypes = {
     question: PropTypes.string.isRequired,
-    children: PropTypes.objectOf(PropTypes.number).isRequired,
+    branches: PropTypes.objectOf(PropTypes.number).isRequired,
 }
 
  

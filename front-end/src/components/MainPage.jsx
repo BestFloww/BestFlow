@@ -50,7 +50,7 @@ class MainPage extends Component {
                   <VoiceFlowButton/>
                 </div>
                 <div className="justify-center flex">
-                  <IntentDiagram question="test question" children={fakeChildren}/>
+                  <IntentDiagram question="test question" branches={fakeChildren}/>
                 </div>
               </div>
             </div>
