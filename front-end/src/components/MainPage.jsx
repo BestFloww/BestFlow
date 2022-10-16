@@ -5,6 +5,12 @@ import RequestButton from "./RequestButton.jsx";
 import HelloWorldButton from "./HelloWorldButton.jsx";
 import VoiceFlowButton from "./VoiceFlowButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
+import IntentDiagram from './IntentDiagram.jsx';
+
+const fakeChildren = new Map();
+fakeChildren.set("q1", 35);
+fakeChildren.set("q2", 40);
+fakeChildren.set("q3", 25);
 
 class MainPage extends Component {
     state = {
@@ -42,6 +48,9 @@ class MainPage extends Component {
                 </div>
                 <div className="justify-center flex">
                   <VoiceFlowButton/>
+                </div>
+                <div className="justify-center flex">
+                  <IntentDiagram question="test question" children={fakeChildren}/>
                 </div>
               </div>
             </div>
