@@ -1,45 +1,50 @@
 
 export default class TranscriptFormatter{
     
-    static async formatTranscipt(raw_transcript){
+    static async formatTranscipt(rawTranscript){
         let content = {};
         let prev = "";
         try{
-            for(const entry of raw_transcript["data"]){
-                if(entry["trace_type"] == "text" || entry["trace_type"] == "speak"){
-                    const trace_payload = JSON.parse(entry["trace_payload"]);
-                    const id = entry["project_id"];
-                    const message = trace_payload.payload.message;
-                    this.add_intent(content, message, id);
-                    if(prev in content){
-                        this.add_child(content, prev, message, id);
-                    }
-                    prev = (message + id);
-                }
+            for(const entry of rawTranscript["data"]){
+                prev = this.#uptadeContent(entry, content, prev);
             }
-            return Object.values(content);
+            return Object.values(content);   
         }
-        catch{
-            return("The transcript does not match specifications!");
+        catch(error){
+            throw new Error("The transcript does not match specifications!" + ` Error: ${error.message}`);
         }
     }
 
-    static add_intent(content, message, id){
+    static #uptadeContent(entry, content, prev){
+        if(entry["trace_type"] == "text" || entry["trace_type"] == "speak"){
+            const tracePayload = JSON.parse(entry["trace_payload"]);
+            const id = entry["project_id"];
+            const message = tracePayload.payload.message;
+            this.#addIntent(content, message, id);
+            if(prev in content){
+                this.#addChild(content, prev, message, id);
+            }
+            prev = (message + id);
+        }
+        return prev;
+    }
+
+    static #addIntent(content, message, id){
         if(!((message + id) in content)){
-            const intent = {question: message, children: new Map(), total_children: 0, project_id: id};
+            const intent = {question: message, children: new Map(), totalChildren: 0, projectId: id};
             content[(message + id)] = intent;
         }
     }
 
-    static add_child(content, prev, message, id){
-        const prev_intent = content[prev];
-        if(prev_intent.project_id == id){
-            if(!(prev_intent.children.has(message))){
-                prev_intent.children.set(message, 0);
+    static #addChild(content, prev, message, id){
+        const prevIntent = content[prev];
+        if(prevIntent.projectId == id){
+            if(!(prevIntent.children.has(message))){
+                prevIntent.children.set(message, 0);
             }
-            prev_intent.children.set(message, prev_intent.children.get(message) + 1);
-            prev_intent.total_children += 1;
-            content[prev] = prev_intent;
+            prevIntent.children.set(message, prevIntent.children.get(message) + 1);
+            prevIntent.totalChildren += 1;
+            content[prev] = prevIntent;
         }
     }
 }
