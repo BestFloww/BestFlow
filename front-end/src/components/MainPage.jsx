@@ -7,17 +7,17 @@ import VoiceFlowButton from "./VoiceFlowButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import IntentDiagram from './IntentDiagram.jsx';
 
-const fakeChildren = new Map();
-fakeChildren.set("q1", 35);
-fakeChildren.set("q2", 40);
-fakeChildren.set("q3", 25);
-
+const fakeChildren = {
+  q1: 25,
+  q2: 35,
+  q3: 45,
+}
 class MainPage extends Component {
     state = {
         showTranscriptUploadModal: false
     }
 
-    toggleTranscriptUploadModal() {
+    toggleTranscriptUploadModal = () => {
         this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
         console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal);
     }
