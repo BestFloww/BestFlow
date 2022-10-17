@@ -26,7 +26,6 @@ export default class intentDao extends IntentInterface{
       Promise.all(intentList);
       return { status: 200 };
     } catch (e) {
-      console.error(`Unable to post review: ${e}`);
       return { error: e };
     }
   }

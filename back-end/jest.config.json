@@ -1,7 +1,0 @@
-{
-    "setupFiles": ["dotenv/config"],
-    "testEnvironment": "node",
-    "testMatch": ["<rootDir>/**/*spec.js"],
-    "testPathIgnorePatterns": ["/node_modules/", "/jest.config.js", "/server.js", "/index.js", "/coverage/"],
-    "coverageDirectory": "coverage"
-}
