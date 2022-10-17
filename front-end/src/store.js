@@ -1,6 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './store/counters/counterSlice.js';
+import switchPageReducer from './store/switchPageSlice.js';
+import mainPageReducer from './store/mainPageSlice.js';
 
 export default configureStore({
-  reducer: {counterReducer}
+  reducer: {
+    switchPage: switchPageReducer,
+    mainPage: mainPageReducer
+  }
 });
