@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import BaseButton from "./BaseButton.jsx";
-import PostRequestButton from "./PostRequestButton.jsx";
-import RequestButton from "./RequestButton.jsx";
-import HelloWorldButton from "./HelloWorldButton.jsx";
-import VoiceFlowButton from "./VoiceFlowButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import IntentDiagram from './IntentDiagram.jsx';
 
@@ -17,7 +13,9 @@ class MainPage extends Component {
         showTranscriptUploadModal: false
     }
 
-    toggleTranscriptUploadModal = () => {
+
+    toggleTranscriptUploadModal= () => {
+        TranscriptModalButton
         this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
         console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal);
     }
@@ -27,30 +25,12 @@ class MainPage extends Component {
             <div className="MainPage bg-purple-300 flex">
               <div className="flex gap-y-10 w-full flex-col">
                 <div className="justify-center flex">
-                  <BaseButton click={() => console.log("Hello world")} text={"Button 1"} />
-                </div>
-                <div className="justify-center flex">
                   <BaseButton
                     click={this.toggleTranscriptUploadModal}
                     text="Upload Transcript" />
                 </div>
                 <div className="justify-center flex">
                   <TranscriptUploadModal show={this.state.showTranscriptUploadModal} />
-                </div>
-                <div className="justify-center flex">
-                  <PostRequestButton/>
-                </div>
-                <div className="justify-center flex">
-                  <RequestButton/>
-                </div>
-                <div className="justify-center flex">
-                  <HelloWorldButton/>
-                </div>
-                <div className="justify-center flex">
-                  <VoiceFlowButton/>
-                </div>
-                <div className="justify-center flex">
-                  <IntentDiagram question="test question" branches={fakeChildren}/>
                 </div>
               </div>
             </div>
