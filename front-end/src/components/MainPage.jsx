@@ -27,7 +27,7 @@ class MainPage extends Component {
                   <BaseButton click={() => this.toggleTranscriptUploadModal()} text={"Upload Transcript"} />
                 </div>
                 <div className="justify-center flex">
-                  <TranscriptUploadModal show={this.state.showTranscriptUploadModal} />
+                  <TranscriptUploadModal isOpen={this.state.showTranscriptUploadModal} />
                 </div>
                 <div className="justify-center flex">
                   <PostRequestButton/>
