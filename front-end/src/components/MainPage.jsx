@@ -32,6 +32,9 @@ class MainPage extends Component {
                   <TranscriptUploadModal show={this.state.showTranscriptUploadModal} />
                 </div>
               </div>
+              <div className="justify-center flex">
+                  <IntentDiagram question="test question" branches={fakeChildren}/>
+              </div>
             </div>
           );
     }
