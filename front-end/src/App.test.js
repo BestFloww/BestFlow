@@ -14,21 +14,21 @@ describe('App tests', () => {
 
     it('should display MainPage on load', () => {
         renderComponent();
-        expect(screen.queryByTestId('main-page')).toBeInTheDocument();
+        expect(screen.getByTestId('main-page')).toBeInTheDocument();
         expect(screen.queryByTestId('analysis-page')).not.toBeInTheDocument();
     });
     
     it('should display AnalysisPage when View Analysis button is pressed on MainPage', async() => {
         renderComponent();
         userEvent.click(screen.getByText('View Analysis'));
-        expect(await screen.queryByTestId('analysis-page')).toBeInTheDocument();
+        expect(await screen.getByTestId('analysis-page')).toBeInTheDocument();
         expect(await screen.queryByTestId('main-page')).not.toBeInTheDocument();
     });
 
     it('should display MainPage when Return to Main Page button is pressed on AnalysisPage', async() => {
         renderComponent();
         userEvent.click(screen.getByText('Return to Main Page'));
-        expect(await screen.queryByTestId('main-page')).toBeInTheDocument();
+        expect(await screen.getByTestId('main-page')).toBeInTheDocument();
         expect(await screen.queryByTestId('analysis-page')).not.toBeInTheDocument();
     });
 
