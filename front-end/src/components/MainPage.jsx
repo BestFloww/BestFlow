@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
@@ -12,6 +12,10 @@ class MainPage extends Component {
   toggleTranscriptUploadModal = () => {
       this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
       console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal);
+  }
+
+  openAnalysisPage = () => {
+    store.dispatch(openAnalysisPage());
   }
 
   render() {
@@ -28,7 +32,7 @@ class MainPage extends Component {
           </div>
           <div className="justify-center flex">
             <BaseButton
-              click={this.props.openAnalysisPage}
+              click={this.openAnalysisPage}
               text="View Analysis" />
           </div>
         </div>
@@ -37,10 +41,4 @@ class MainPage extends Component {
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    openAnalysisPage: () => dispatch(openAnalysisPage())
-  }
-};
-
-export default connect(null, mapDispatchToProps)(MainPage);
+export default MainPage;
