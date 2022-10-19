@@ -1,33 +1,46 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { openAnalysisPage } from "../store/switchPageSlice.js";
-import { toggleTranscriptUploadModal } from "../store/mainPageSlice.js";
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 
-function MainPage() {
-  const showTranscriptUploadModal = useSelector((state) => state.mainPage.showTranscriptUploadModal)
-  const dispatch = useDispatch();
+class MainPage extends Component {
+  state = {
+      showTranscriptUploadModal: false
+  }
 
-  return (
+  toggleTranscriptUploadModal = () => {
+      this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
+      console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal);
+  }
+
+  render() {
+    return(
       <div className="MainPage bg-purple-300 flex" data-testid="main-page">
         <div className="flex gap-y-10 w-full flex-col">
           <div className="justify-center flex">
             <BaseButton
-              click={() => dispatch(toggleTranscriptUploadModal())}
+              click={this.toggleTranscriptUploadModal}
               text="Upload Transcript" />
           </div>
           <div className="justify-center flex">
-            <TranscriptUploadModal show={showTranscriptUploadModal} />
+            <TranscriptUploadModal show={this.state.showTranscriptUploadModal} />
           </div>
           <div className="justify-center flex">
             <BaseButton
-              click={() => dispatch(openAnalysisPage())}
+              click={this.props.openAnalysisPage}
               text="View Analysis" />
           </div>
         </div>
       </div>
-    );
+    )
+  };
 }
 
-export default MainPage;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openAnalysisPage: () => dispatch(openAnalysisPage())
+  }
+};
+
+export default connect(null, mapDispatchToProps)(MainPage);
