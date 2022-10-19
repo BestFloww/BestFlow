@@ -6,7 +6,7 @@ class IntentDiagram extends Component {
         return Object.keys(this.props.branches).map((key) => {
             return (
                 <div 
-                    className="text-sm bg-green-300 flex-col flex gap-y-0 shadow-sm rounded-full p-5 border border-green-300 hover:border-black focus-within:border-black"
+                    className="text-sm bg-green-300 flex-col flex gap-y-0 shadow-sm rounded-2xl p-5 border border-green-300 hover:border-black focus-within:border-black"
                     data-testid={`${key}-container`}
                     key={key}
                 >
@@ -30,7 +30,7 @@ class IntentDiagram extends Component {
 
     render() { 
         return (
-            <div className="border-2 border-gray-700 rounded-lg bg-purple-400 shadow-lg text-black flex flex-col p-5 pt-1 w-80 gap-y-2">
+            <div className="border-2 border-gray-700 rounded-lg bg-gray-100 shadow-lg text-black flex flex-col p-5 pt-1 w-80 gap-y-2">
                 <h3
                     className="break-words text-center text-lg"
                     data-testid={this.props.question}
