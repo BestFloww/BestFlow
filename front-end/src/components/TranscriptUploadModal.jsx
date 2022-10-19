@@ -39,12 +39,35 @@ class TranscriptUploadModal extends React.Component {
   render() {
     return (
       <Modal
-        isOpen={this.props.isOpen}
-        className="reactModal justify-center bg-purple-200 rounded-lg shadow-lg w-80 h-50"
-        onRequestClose={this.props.onRequestClose}
+        isOpen={this.props.show}
+        className="reactModal bg-purple-200"
+        onRequestClose={this.props.toggleModal}
+        shouldCloseOnEsc={true}
+        style={{overlay: {
+          position:'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(255, 255, 255, 0.75)'
+        }, content: {
+          position: 'fixed',
+          justifyContent: 'center',
+          top: '35vh',
+          left: '35vw',
+          right: '35vw',
+          bottom: '35vh',
+          border: '1px solid #ccc',
+          overflow: 'auto',
+          WebkitOverflowScrolling: 'touch',
+          borderRadius: '4px',
+          outline: 'none',
+          padding: '20px'
+        }
+      }}
       >
-        <h2 className="m-3">{"Upload File Below"}</h2>
-          <div className={"modalContainerVertical"}>
+        <h2 className="m-3 justify-center flex">{"Drag and drop file or upload below."}</h2>
+          <div className={"modalContainerVertical justify-center flex"}>
             <div className={"modalContainer m-3"}>
               <input
                 type="file"
