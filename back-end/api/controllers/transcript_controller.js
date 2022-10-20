@@ -22,8 +22,9 @@ export default class TranscriptController {
 
     static async postTranscript(req, res, next) {
         try {
-            const content = await TranscriptFormatter.formatTranscript(req.body);
-
+            const transcript = JSON.parse(req.body.transcript);
+            console.log(transcript)
+            const content = await TranscriptFormatter.formatTranscript(transcript);
             const transcriptResponse = await this.#intentDao.postIntents(content);
             res.status(200).json({ message: "success" })
         } catch (e) {

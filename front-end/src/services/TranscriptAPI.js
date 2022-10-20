@@ -12,11 +12,12 @@ const API = {
     },
 
     /**
-     * @param {Object} Transcript 
+     * @param {String} Transcript 
      * @returns {Object} Resolution
      */
-    post: async(Transcript) => {
-        return await axios.post(baseURL, Transcript);
+    post: async(transcript) => {
+        console.log(transcript.result)
+        return await axios.post(baseURL, {transcript: transcript});
     },
 };
 
