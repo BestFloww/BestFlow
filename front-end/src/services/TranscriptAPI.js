@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:5000/api/Transcript";
+const baseURL = "http://localhost:5000/api/transcript";
 
 const API = {
     /**
@@ -16,8 +16,8 @@ const API = {
      * @returns {Object} Resolution
      */
     post: async(transcript) => {
-        console.log(transcript.result)
-        return await axios.post(baseURL, {transcript: transcript});
+        const payload = JSON.stringify(transcript);
+        return await axios.post(baseURL, {payload});
     },
 };
 

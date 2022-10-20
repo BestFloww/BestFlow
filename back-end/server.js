@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use("/api/test", testAPI);
 app.use("/api/VoiceFlow", voice_flowAPI);
-app.use("/api/Transcript", transcriptAPI);
+app.use("/api/transcript", transcriptAPI);
 app.use("/api/HelloWorld", (req, res) => res.status(200).json({message: "Hello World!"}));
 app.use("*", (req, res) => res.status(404).json({error: "Page not found"}));
 

@@ -23,8 +23,6 @@ class TranscriptUploadModal extends React.Component {
     let result;
     fileUploaded.addEventListener("loadend", e => {
       result = e.target.result;
-      result = JSON.stringify(result);
-      console.log(result)
       const formData = {transcript: result};
       TranscriptAPI.post(formData);
     });
