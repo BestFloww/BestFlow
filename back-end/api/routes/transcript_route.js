@@ -1,6 +1,6 @@
 import express from "express";
 import TranscriptController from "../controllers/transcript_controller.js";
-import intentDao from "../dao/intentdao.js";
+import intentDao from "../../dao/intentdao.js";
 
 const router = express.Router();
 
