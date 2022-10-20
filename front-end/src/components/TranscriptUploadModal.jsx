@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import Modal from 'react-modal';
+import TranscriptAPI from '../services/TranscriptAPI';
 import BaseButton from './BaseButton';
 
 class TranscriptUploadModal extends React.Component {
@@ -22,6 +22,7 @@ class TranscriptUploadModal extends React.Component {
     const formData= new FormData();
 
     formData.append('transcript', file)
+    TranscriptAPI.post(formData)
   }
 
   componentDidMount() {
