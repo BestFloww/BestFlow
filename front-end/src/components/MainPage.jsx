@@ -36,7 +36,6 @@ class MainPage extends Component {
           </div>
           <div className="justify-center flex">
             <TranscriptUploadModal
-              data-testid="upload-transcript-modal"
               show={this.state.showTranscriptUploadModal}
               toggleModal={this.toggleTranscriptUploadModal}
             />
