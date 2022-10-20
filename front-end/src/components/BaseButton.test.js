@@ -1,6 +1,6 @@
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import '@testing-library/jest-dom'
+import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 import BaseButton from './BaseButton.jsx';
 
 /** 
@@ -9,13 +9,13 @@ import BaseButton from './BaseButton.jsx';
  */
 
 
-describe('BasButton tests', () => {
+describe('BaseButton tests', () => {
     const basicProps = {
         click: jest.fn(),
         text: "sampleText",
     };
     const renderComponent = (props) => {
-        render(<BaseButton {... basicProps}/>)
+        render(<BaseButton {... props}/>)
     }
 
     it('should call the click function on click', () => {
@@ -26,7 +26,7 @@ describe('BasButton tests', () => {
 
     it('should display the given text', async() => {
         renderComponent(basicProps);
-        expect((await screen.findByTestId("custom-button"))).toHaveTextContent(basicProps.text);
+        expect(await screen.findByTestId("custom-button")).toHaveTextContent(basicProps.text);
     });
 
 });
