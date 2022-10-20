@@ -23,7 +23,8 @@ describe("Transcript API", () => {
     it("post a transcript", async() => {
         const fakeTranscript = {Wario: "waaa", Waluigi: "waaaa"};
         await TranscriptAPI.post(fakeTranscript);
-        expect(axios.post).toHaveBeenCalledWith(expect.any(String), fakeTranscript);
+        const payload = JSON.stringify(fakeTranscript);
+        expect(axios.post).toHaveBeenCalledWith(expect.any(String), {payload});
     });
 });
 
