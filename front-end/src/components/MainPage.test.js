@@ -20,9 +20,9 @@ describe('MainPage tests', () => {
     it('should toggle Upload Transcript Modal when Upload Transcript button is pressed', async() => {
         renderComponent();
         userEvent.click(screen.getByText('Upload Transcript'));
-        expect(await screen.getByTestId('upload-transcript-modal')).toBeInTheDocument();
+        expect(screen.getByTestId('upload-transcript-modal')).toBeInTheDocument();
         userEvent.click(screen.getByText('Upload Transcript'));
-        expect(await screen.queryByTestId('upload-transcript-modal')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('upload-transcript-modal')).not.toBeInTheDocument();
     });
 
 });
