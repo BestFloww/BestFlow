@@ -42,9 +42,9 @@ class MainPage extends Component {
               click={this.openAnalysisPage}
               text="View Analysis"/>
           </div>
-        </div>
-        <div className="justify-center flex">
-          <IntentDiagram question="test question" branches={fakeChildren}/>
+          <div className="justify-center flex">
+            <IntentDiagram question="test question" branches={fakeChildren}/>
+          </div>
         </div>
       </div>
     )
