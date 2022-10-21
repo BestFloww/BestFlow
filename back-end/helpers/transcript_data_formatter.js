@@ -1,7 +1,8 @@
 
 export default class TranscriptFormatter{
     
-    static async formatTranscipt(rawTranscript){
+    static async formatTranscipt(jsonTranscript){
+        const rawTranscript = JSON.parse(jsonTranscript);
         let content = {};
         let prev = "";
         try{
