@@ -28,7 +28,7 @@ describe('MainPage tests', () => {
     it('should dispatch openAnalysisPage when Analyze Transcript button is clicked', () => {
         renderComponent();
         const spy = jest.spyOn(store, 'dispatch');
-        userEvent.click(screen.getByText('Analyze Transcript'));
+        userEvent.click(screen.getByText('View Analysis'));
         expect(spy).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
     });
 

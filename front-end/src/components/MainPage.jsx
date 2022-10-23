@@ -40,7 +40,7 @@ class MainPage extends Component {
           <div className="justify-center flex">
             <BaseButton
               click={this.openAnalysisPage}
-              text="Analyze Transcript"/>
+              text="View Analysis"/>
           </div>
         </div>
         <div className="justify-center flex">
