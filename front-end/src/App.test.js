@@ -18,9 +18,9 @@ describe('App tests', () => {
         expect(screen.queryByTestId('analysis-page')).not.toBeInTheDocument();
     });
     
-    it('should display AnalysisPage when View Analysis button is pressed on MainPage', async() => {
+    it('should display AnalysisPage when Analyze Transcript button is pressed on MainPage', async() => {
         renderComponent();
-        userEvent.click(screen.getByText('View Analysis'));
+        userEvent.click(screen.getByText('Analyze Transcript'));
         expect(await screen.getByTestId('analysis-page')).toBeInTheDocument();
         expect(await screen.queryByTestId('main-page')).not.toBeInTheDocument();
     });

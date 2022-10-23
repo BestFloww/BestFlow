@@ -25,4 +25,11 @@ describe('MainPage tests', () => {
         expect(screen.queryByTestId('upload-transcript-modal')).not.toBeInTheDocument();
     });
 
+    it('should dispatch openAnalysisPage when Analyze Transcript button is clicked', () => {
+        renderComponent();
+        const spy = jest.spyOn(store, 'dispatch');
+        userEvent.click(screen.getByText('Analyze Transcript'));
+        expect(spy).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
+    });
+
 });
