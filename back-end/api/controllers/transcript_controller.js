@@ -1,5 +1,5 @@
 import {IntentInterface} from "../../interfaces/intent-interface.js";
-import {TranscriptDataInterface} from "../interfaces/transcript-data-interface.js";
+import {TranscriptDataInterface} from "../../interfaces/transcript-data-interface.js";
 
 export default class TranscriptController {
     static #intentDao;
@@ -13,7 +13,7 @@ export default class TranscriptController {
         }
     }
 
-    static setIntentDao(formatter) {
+    static setTranscriptFormatter(formatter) {
         if(formatter.isTranscriptDataInterface){
             this.#transcriptFormatter = formatter;
         } else {
