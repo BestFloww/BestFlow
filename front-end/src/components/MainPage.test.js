@@ -12,7 +12,7 @@ describe('MainPage tests', () => {
         </Provider>
     );
 
-    it('should not display Upload Transcript Modal on load', () => {
+    it('should not display Upload Transcript Modal initially', () => {
         renderComponent();
         expect(screen.queryByTestId('upload-transcript-modal')).not.toBeInTheDocument();
     });
