@@ -12,7 +12,7 @@ describe('MainPage tests', () => {
         </Provider>
     );
 
-    it('should not display Upload Transcript Modal on load', () => {
+    it('should not display Upload Transcript Modal initially', () => {
         renderComponent();
         expect(screen.queryByTestId('upload-transcript-modal')).not.toBeInTheDocument();
     });
@@ -23,6 +23,13 @@ describe('MainPage tests', () => {
         expect(screen.getByText('Drag and drop file or upload below.')).toBeInTheDocument();
         userEvent.click(screen.getByText('Upload Transcript'));
         expect(screen.queryByText("Drag and drop file or upload below.")).not.toBeInTheDocument();
+    });
+
+    it('should dispatch openAnalysisPage when View Analysis button is clicked', () => {
+        renderComponent();
+        const dispatch = jest.spyOn(store, 'dispatch');
+        userEvent.click(screen.getByText('View Analysis'));
+        expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
     });
 
 });
