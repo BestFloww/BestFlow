@@ -31,7 +31,7 @@ describe('BaseButton tests', () => {
 
     it('should have correct style if isDisabled is false', async() => {
         renderComponent(basicProps, false);
-        expect(screen.getByTestId('custom-button')).toHaveClass("bg-blue-300 rounded-lg shadow-lg hover:bg-blue-200 active:bg-blue-400 py-3 px-6");
+        expect(screen.getByTestId('custom-button')).toHaveClass("bg-blue-300 rounded-lg shadow-lg py-3 px-6 hover:bg-blue-200 active:bg-blue-400");
     });
 
     it('should not be disabled if isDisabled is false', async() => {
@@ -41,7 +41,7 @@ describe('BaseButton tests', () => {
 
     it('should have correct style if isDisabled is true', async() => {
         renderComponent(basicProps, true);
-        expect(screen.getByTestId('custom-button')).toHaveClass("bg-blue-300 rounded-lg shadow-lg opacity-50 py-3 px-6");
+        expect(screen.getByTestId('custom-button')).toHaveClass("bg-blue-300 rounded-lg shadow-lg py-3 px-6 opacity-50");
     });
 
     it('should be disabled if isDisabled is true', async() => {

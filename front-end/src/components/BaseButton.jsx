@@ -3,19 +3,18 @@ import PropTypes from 'prop-types';
 
 const BaseButton = (props) => {
     // Change button appearance based on whether it is enabled or disabled
-    const style = () => {
-        if (props.isDisabled) {
-            return "bg-blue-300 rounded-lg shadow-lg opacity-50 py-3 px-6";
-        } else {
-            return "bg-blue-300 rounded-lg shadow-lg hover:bg-blue-200 active:bg-blue-400 py-3 px-6";
-        }
+    const getButtonStyle = () => {
+        const baseStyling = "bg-blue-300 rounded-lg shadow-lg py-3 px-6 ";
+        const disabledStyling = "opacity-50";
+        const enabledStyling = "hover:bg-blue-200 active:bg-blue-400";
+        return baseStyling + (props.isDisabled ? disabledStyling : enabledStyling);
     };
 
     return (
         <div className='flex'>
             <button
                 onClick={props.click}
-                className={style()}
+                className={getButtonStyle()}
                 data-testid="custom-button"
                 disabled={props.isDisabled}
             > 
