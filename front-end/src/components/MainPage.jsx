@@ -35,7 +35,7 @@ class MainPage extends Component {
               text="Upload Transcript" />
           </div>
           <div className="justify-center flex">
-            <TranscriptUploadModal show={this.state.showTranscriptUploadModal} toggleModal={this.toggleTranscriptUploadModal}/>
+            <TranscriptUploadModal show={this.state.showTranscriptUploadModal} toggleModal={this.toggleTranscriptUploadModal} />
           </div>
           <div className="justify-center flex">
             <BaseButton
