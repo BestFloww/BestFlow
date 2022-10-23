@@ -14,8 +14,8 @@ describe('BaseButton tests', () => {
         click: jest.fn(),
         text: "sampleText",
     };
-    const renderComponent = (props, componentDisabled) => {
-        render(<BaseButton {... props} isDisabled={componentDisabled}/>)
+    const renderComponent = (props, buttonDisabled) => {
+        render(<BaseButton {... props} isDisabled={buttonDisabled}/>)
     }
 
     it('should call the click function on click', () => {
