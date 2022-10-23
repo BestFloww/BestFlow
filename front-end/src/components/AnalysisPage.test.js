@@ -14,9 +14,9 @@ describe('AnalysisPage tests', () => {
 
     it('should dispatch openMainPage when Return to Main Page button is clicked', () => {
         renderComponent();
-        const spy = jest.spyOn(store, 'dispatch');
+        const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.click(screen.getByText('Return to Main Page'));
-        expect(spy).toHaveBeenCalledWith({ type: 'switchPage/openMainPage' });
+        expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openMainPage' });
     });
 
 });
