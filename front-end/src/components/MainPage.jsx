@@ -32,7 +32,8 @@ class MainPage extends Component {
           <div className="justify-center flex">
             <BaseButton
               click={this.toggleTranscriptUploadModal}
-              text="Upload Transcript" />
+              text="Upload Transcript"
+            />
           </div>
           <div className="justify-center flex">
             <TranscriptUploadModal
@@ -43,7 +44,8 @@ class MainPage extends Component {
           <div className="justify-center flex">
             <BaseButton
               click={this.openAnalysisPage}
-              text="View Analysis"/>
+              text="View Analysis"
+            />
           </div>
           <div className="justify-center flex">
             <IntentDiagram question="test question" branches={fakeChildren}/>
