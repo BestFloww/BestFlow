@@ -1,11 +1,11 @@
-import {formatTranscript} from "../../helpers/transcript_data_formatter.js";
+import { TranscriptFormatter } from "../../helpers/transcript_data_formatter.js";
 import {IntentInterface} from "../../interfaces/intent-interface.js";
 
 export default class TranscriptController {
     static #intentDao;
 
     static setIntentDao(dao) {
-        if(dao instanceof IntentInterface){
+        if(dao.isIntentInterface){
             this.#intentDao = dao;
         } else {
             throw new Error("not an IntentInterface");
@@ -22,9 +22,10 @@ export default class TranscriptController {
 
     static async postTranscript(req, res, next) {
         try {
-            const content = await formatTranscript(req.body);
-
-            const transcriptResponse = await this.#intentDao.postIntents(content);
+            const body = JSON.stringify(req.body.payload);
+            const transcript = JSON.parse(body);
+            const content = await TranscriptFormatter.formatTranscript(transcript);
+            await this.#intentDao.postIntents(content);
             res.status(200).json({ message: "success" })
         } catch (e) {
             res.status(500).json({ error: e.message })

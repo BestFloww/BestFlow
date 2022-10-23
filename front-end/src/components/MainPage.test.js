@@ -20,9 +20,9 @@ describe('MainPage tests', () => {
     it('should toggle Upload Transcript Modal when Upload Transcript button is pressed', async() => {
         renderComponent();
         userEvent.click(screen.getByText('Upload Transcript'));
-        expect(screen.getByTestId('upload-transcript-modal')).toBeInTheDocument();
+        expect(screen.getByText('Drag and drop file or upload below.')).toBeInTheDocument();
         userEvent.click(screen.getByText('Upload Transcript'));
-        expect(screen.queryByTestId('upload-transcript-modal')).not.toBeInTheDocument();
+        expect(screen.queryByText("Drag and drop file or upload below.")).not.toBeInTheDocument();
     });
 
     it('should dispatch openAnalysisPage when View Analysis button is clicked', () => {
