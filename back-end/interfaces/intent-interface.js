@@ -6,7 +6,7 @@
  */
  export class IntentInterface {
     static isIntentInterface = true;
-      /**
+    /**
      *  @param {Object} query find specific intent(s)
      *  @return {Query} the queried items
      * */

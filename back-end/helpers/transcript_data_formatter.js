@@ -1,6 +1,10 @@
+import {TranscriptDataInterface} from "../interfaces/transcript-data-interface.js";
 
-export class TranscriptFormatter{
-    
+export class TranscriptFormatter extends TranscriptDataInterface{
+    /**
+     *  @param {Object} rawTranscript raw transcript uploaded by user
+     *  @return {Object} properly formatted data from the transcript
+     * */
     static async formatTranscript(rawTranscript){
         let content = {};
         let prev = "";
