@@ -36,6 +36,7 @@ class TranscriptUploadModal extends React.Component {
         className="container w-60 md:w-80 mx-auto bg-purple-200 rounded-lg shadow-lg py-3 mt-[40vh]"
         onRequestClose={this.props.toggleModal}
         shouldCloseOnEsc={true}
+        data-testid="upload-transcript-modal"
       >
         <h2 className="justify-center flex m-3">
           Drag and drop file or upload below.
