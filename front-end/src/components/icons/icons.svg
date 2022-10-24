@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+
+    <symbol id="magnifying-glass" viewBox="0 0 512 512">
+      <path fill="none" stroke="#000" stroke-width="36" stroke-linecap="round" d="m280,278a153,153 0 1,0-2,2l170,170m-91-117 110,110-26,26-110-110"/>
+    </symbol>
+
+    <symbol id="arrow-left" viewBox="0 0 512 512">
+      <path d="m133 256l269-237c4-4 5-11 1-15-4-5-11-5-15-1l-278 245c-2 2-3 5-3 8 0 3 1 6 3 8l278 245c2 2 4 3 7 3 3 0 6-1 8-4 4-4 3-11-1-15z"/>
+    </symbol>
+
+    <symbol id="arrow-right" viewBox="0 0 512 512">
+      <path d="m402 248l-278-245c-4-4-11-4-15 1-4 4-3 11 1 15l269 237-269 237c-4 4-5 11-1 15 2 3 5 4 8 4 3 0 5-1 7-3l278-245c2-2 3-5 3-8 0-3-1-6-3-8z"/>
+    </symbol>
+
+</svg>

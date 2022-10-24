@@ -4,4 +4,5 @@ module.exports = {
     coverageDirectory: 'coverage',
     testEnvironment: 'jsdom',
     setUpFilesAfterEnv: ['src/jest.setup.js'],
+    transformIgnorePatterns: [`import Icons from './icons/icons.svg';`],
 }
