@@ -1,22 +1,23 @@
 import intentDao from "../../dao/intentdao.js";
 import TranscriptController from "./transcript_controller.js";
-import {TranscriptFormatter} from "../../helpers/transcript_data_formatter.js";
+import TranscriptFormatter from "../../helpers/transcript_data_formatter.js";
 
 jest.mock("../../dao/intentdao.js");
 jest.mock("../../schema/intent-schema.js");
 jest.mock("../../helpers/transcript_data_formatter.js")
 
 const mockResponse = () => {
-    let res = {}
+    let res = {};
     res = {
         status: () => res,
         json: jest.fn().mockImplementation((obj) => obj),
         error: "error",
     };
-    return res
+    return res;
 }
 
 TranscriptController.setIntentDao(intentDao);
+TranscriptController.setTranscriptFormatter(TranscriptFormatter);
 
 describe("transcriptController", () => {
     it("Should correctly set intentDao and get transcript", async() => {
