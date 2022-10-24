@@ -3,7 +3,6 @@ import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
-import IntentDiagram from './IntentDiagram.jsx';
 
 class MainPage extends Component {
   state = {
