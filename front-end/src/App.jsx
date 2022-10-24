@@ -7,8 +7,8 @@ function App() {
 
   return (
     <div>
-      {page == "MainPage" && <MainPage />}
-      {page == "AnalysisPage" && <AnalysisPage />}
+      {page === "MainPage" && <MainPage />}
+      {page === "AnalysisPage" && <AnalysisPage />}
     </div>
   );
 }

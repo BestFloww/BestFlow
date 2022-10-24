@@ -35,16 +35,19 @@ class MainPage extends Component {
               text="Upload Transcript" />
           </div>
           <div className="justify-center flex">
-            <TranscriptUploadModal show={this.state.showTranscriptUploadModal} toggleModal={this.toggleTranscriptUploadModal}/>
+            <TranscriptUploadModal
+              show={this.state.showTranscriptUploadModal}
+              toggleModal={this.toggleTranscriptUploadModal}
+            />
           </div>
           <div className="justify-center flex">
             <BaseButton
               click={this.openAnalysisPage}
               text="View Analysis"/>
           </div>
-        </div>
-        <div className="justify-center flex">
-          <IntentDiagram question="test question" branches={fakeChildren}/>
+          <div className="justify-center flex">
+            <IntentDiagram question="test question" branches={fakeChildren}/>
+          </div>
         </div>
       </div>
     )

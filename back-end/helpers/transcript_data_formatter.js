@@ -1,7 +1,7 @@
 
-export default class TranscriptFormatter{
+export class TranscriptFormatter{
     
-    static async formatTranscipt(rawTranscript){
+    static async formatTranscript(rawTranscript){
         let content = {};
         let prev = "";
         try{

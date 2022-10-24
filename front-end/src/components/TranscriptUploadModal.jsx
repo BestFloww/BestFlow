@@ -17,12 +17,15 @@ class TranscriptUploadModal extends React.Component {
     this.setState({file: e.target.files})
   }
 
-  handleUpload(e) {
-    const file=this.state.file;
-    const formData= new FormData();
-
-    formData.append('transcript', file)
-    TranscriptAPI.post(formData)
+  async handleUpload(e) {
+    let fileUploaded = new FileReader();
+    fileUploaded.readAsText(this.state.file[0]);
+    let result;
+    fileUploaded.addEventListener("loadend", e => {
+      result = e.target.result;
+      const formData = {transcript: result};
+      TranscriptAPI.post(formData);
+    });
   }
 
   componentDidMount() {
@@ -37,7 +40,7 @@ class TranscriptUploadModal extends React.Component {
         onRequestClose={this.props.toggleModal}
         shouldCloseOnEsc={true}
       >
-        <h2 className="justify-center flex m-3">
+        <h2 className="justify-center flex m-3" data-testid="upload-transcript-modal">
           Drag and drop file or upload below.
         </h2>
           <div className={"justify-center flex m-7 flex-col"}>
