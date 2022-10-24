@@ -1,6 +1,6 @@
+import {TranscriptDataInterface} from "../interfaces/transcript-data-interface.js";
 
-export class TranscriptFormatter{
-    
+export default class TranscriptFormatter extends TranscriptDataInterface{
     static async formatTranscript(rawTranscript){
         let content = {};
         let prev = "";
