@@ -14,19 +14,39 @@ describe('BaseButton tests', () => {
         click: jest.fn(),
         text: "sampleText",
     };
-    const renderComponent = (props) => {
-        render(<BaseButton {... props}/>)
+    const renderComponent = (props, buttonDisabled) => {
+        render(<BaseButton {... props} isDisabled={buttonDisabled}/>)
     }
 
     it('should call the click function on click', () => {
-        renderComponent(basicProps);
+        renderComponent(basicProps, false);
         userEvent.click(screen.getByTestId('custom-button'));
         expect(basicProps.click).toHaveBeenCalled();
     });
 
     it('should display the given text', async() => {
-        renderComponent(basicProps);
+        renderComponent(basicProps, false);
         expect(await screen.findByTestId("custom-button")).toHaveTextContent(basicProps.text);
+    });
+
+    it('should have correct style if isDisabled is false', async() => {
+        renderComponent(basicProps, false);
+        expect(screen.getByTestId('custom-button')).toHaveClass("bg-blue-300 rounded-lg shadow-lg py-3 px-6 hover:bg-blue-200 active:bg-blue-400");
+    });
+
+    it('should not be disabled if isDisabled is false', async() => {
+        renderComponent(basicProps, false);
+        expect(screen.getByTestId('custom-button')).not.toBeDisabled();
+    });
+
+    it('should have correct style if isDisabled is true', async() => {
+        renderComponent(basicProps, true);
+        expect(screen.getByTestId('custom-button')).toHaveClass("bg-blue-300 rounded-lg shadow-lg py-3 px-6 opacity-50");
+    });
+
+    it('should be disabled if isDisabled is true', async() => {
+        renderComponent(basicProps, true);
+        expect(screen.getByTestId('custom-button')).toBeDisabled();
     });
 
 });
