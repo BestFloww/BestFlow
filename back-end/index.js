@@ -1,7 +1,6 @@
 import app from "./server.js";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import testDAO from "./dao/testdao.js";
 
 dotenv.config();
 
