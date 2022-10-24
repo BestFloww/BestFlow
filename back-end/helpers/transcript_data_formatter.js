@@ -39,8 +39,8 @@ export default class TranscriptFormatter extends TranscriptDataInterface{
     static #addChild(content, prev, message, id){
         const prevIntent = content[prev];
         if(prevIntent.projectId == id){ // adds child only if it has the same project id as its previous question
-            if(!(prevIntent.children.has(message))){ 
-                prevIntent.children.set(message, 0); 
+            if(!(prevIntent.children.has(message))){
+                prevIntent.children.set(message, 0);
             }
             prevIntent.children.set(message, prevIntent.children.get(message) + 1); // updates the count of this child
             prevIntent.totalChildren += 1;
