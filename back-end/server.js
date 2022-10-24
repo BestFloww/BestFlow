@@ -9,7 +9,7 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use("/api/getTranscript", transcriptAPI);
+app.use("/api/transcript", transcriptAPI);
 app.use("*", (req, res) => res.status(404).json({error: "Page not found"}));
 
 export default app;
