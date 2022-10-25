@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import TranscriptAPI from '../services/TranscriptAPI';
 import BaseButton from './BaseButton';
+import DragDropFile from './DragDropFile';
 
 class TranscriptUploadModal extends React.Component {
 
@@ -11,9 +12,8 @@ class TranscriptUploadModal extends React.Component {
       file: null,
     };
   }
-  
+
   handleFile(e) {
-    console.log(e.target.files, "File Uploaded");
     this.setState({file: e.target.files})
   }
 
@@ -39,6 +39,7 @@ class TranscriptUploadModal extends React.Component {
         className="container w-60 md:w-80 mx-auto bg-purple-200 rounded-lg shadow-lg py-3 mt-[40vh]"
         onRequestClose={this.props.toggleModal}
         shouldCloseOnEsc={true}
+        ariaHideApp={false}
       >
         <h2 className="justify-center flex m-3" data-testid="upload-transcript-modal">
           Drag and drop file or upload below.
@@ -47,9 +48,11 @@ class TranscriptUploadModal extends React.Component {
               <input
                 type="file"
                 name="transcript"
+                data-testid="fileInput"
                 onChange={(e)=>this.handleFile(e)}>
               </input>
               <BaseButton
+                data-testid="uploadButton"
                 click={(e)=>this.handleUpload(e)}
                 text="Upload"
               />           

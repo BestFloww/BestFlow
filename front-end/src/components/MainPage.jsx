@@ -11,7 +11,6 @@ class MainPage extends Component {
 
   toggleTranscriptUploadModal = () => {
       this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
-      console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal);
   }
 
   openAnalysisPage = () => {
