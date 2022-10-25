@@ -37,7 +37,7 @@ class IntentDiagram extends Component {
                 >
                     {this.props.question}
                 </h3>
-                <div className="flex flex-row justify-between text-center gap-x-2">
+                <div className="flex flex-row mx-auto justify-between text-center gap-x-2">
                     {this.listLeaves()}
                 </div>
             </div>
