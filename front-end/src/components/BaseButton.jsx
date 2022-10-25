@@ -3,13 +3,6 @@ import PropTypes from 'prop-types';
 
 const BaseButton = (props) => {
     // Change button appearance based on whether it is enabled or disabled
-    /*
-    const baseStyling = "font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 py-3 px-6 ";
-        const smallStyling = "text-sm ";
-        const largeStyling = "text-2xl ";
-        const disabledStyling = "opacity-50 ";
-        const enabledStyling = "hover:bg-purple-200 active:bg-purple-400 ";
-    */
     const getButtonStyle = () => {
         let styling = "font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 "
         //Styling for enabled vs. disabled buttons
@@ -19,7 +12,7 @@ const BaseButton = (props) => {
         else {
             styling += "hover:bg-purple-200 active:bg-purple-400 ";
         }
-        //Styling for size pre-sets
+        //Styling for size presets
         switch(props.size) {
             case "sm":
                 styling += "py-1 px-4 md:text-md 2xl:text-lg";
