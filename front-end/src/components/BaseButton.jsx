@@ -16,8 +16,8 @@ const BaseButton = (props) => {
             <button
                 onClick={props.click}
                 className={getButtonStyle()}
-                data-testid="custom-button"
                 disabled={props.isDisabled}
+                data-testid="custom-button"
             > 
                 { props.text }
                 { props.icon && <Icon icon={props.icon}/> }

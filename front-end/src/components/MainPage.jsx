@@ -47,7 +47,7 @@ class MainPage extends Component {
               text="View Analysis"
               icon={{
                 name: "magnifying-glass",
-                size: 40
+                size: "40"
               }}
             />
           </div>

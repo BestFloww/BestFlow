@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 const Icon = (props) => {
     return (
         <svg
-          className={`icon ${props.icon.name}`}
+          className={`icon-${props.icon.name}`}
           fill={props.icon.color}
           width={props.icon.size}
           height={props.icon.size}
+          data-testid="custom-icon"
         >
           <use xlinkHref={`${Icons}#${props.icon.name}`} />
         </svg>
