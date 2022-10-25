@@ -17,7 +17,7 @@ const Icon = (props) => {
 
 Icon.propTypes = {
   icon: PropTypes.shape({
-    // The icon's name is required, all other attributes only required to overwrite defaults in icons.svg
+    // The icon's name is required, all other attributes only required to overwrite default appearance of icon as described in icons.svg
     name: PropTypes.string.isRequired,
     color: PropTypes.string,
     size: PropTypes.number
