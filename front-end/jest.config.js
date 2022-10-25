@@ -4,4 +4,7 @@ module.exports = {
     coverageDirectory: 'coverage',
     testEnvironment: 'jsdom',
     setUpFilesAfterEnv: ['src/jest.setup.js'],
+    moduleNameMapper: {
+        '^.+\\.svg$': 'jest-svg-transformer'
+     }
 }
