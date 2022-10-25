@@ -1,19 +1,19 @@
 import express from "express";
 import TranscriptController from "../controllers/transcript_controller.js";
 import intentDao from "../../dao/intentdao.js";
-import TranscriptFormatter from "../../helpers/transcript_data_formatter.js";
+import TranscriptIntentFormatter from "../../helpers/transcript_upload_interactor.js";
 
 const router = express.Router();
 
 router.route("/").get((req, res, next) => {
     TranscriptController.setIntentDao(intentDao)
-    TranscriptController.setTranscriptFormatter(TranscriptFormatter)
+    TranscriptController.setTranscriptFormatter(TranscriptIntentFormatter)
     TranscriptController.get(req, res, next)
 })
 
 router.route("/").post((req, res, next) => {
     TranscriptController.setIntentDao(intentDao)
-    TranscriptController.setTranscriptFormatter(TranscriptFormatter)
+    TranscriptController.setTranscriptFormatter(TranscriptIntentFormatter)
     TranscriptController.post(req, res, next)
 })
 

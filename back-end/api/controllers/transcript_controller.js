@@ -1,5 +1,5 @@
 import {IntentInterface} from "../../interfaces/intent-interface.js";
-import {TranscriptDataInterface} from "../../interfaces/transcript-data-interface.js";
+import {InputBoundaryInterface} from "../../interfaces/input-boundary-interface.js";
 
 export default class TranscriptController {
     static #intentDao;
@@ -14,10 +14,10 @@ export default class TranscriptController {
     }
 
     static setTranscriptFormatter(formatter) {
-        if(formatter.isTranscriptDataInterface){
+        if(formatter.isInputBoundaryInterface){
             this.#transcriptFormatter = formatter;
         } else {
-            throw new Error("not a TranscriptDataInterface");
+            throw new Error("not a InputBoundaryInterface");
         }
     }
 
