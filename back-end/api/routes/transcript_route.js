@@ -6,13 +6,13 @@ import TranscriptIntentFormatter from "../../helpers/transcript_upload_interacto
 const router = express.Router();
 
 router.route("/").get((req, res, next) => {
-    TranscriptController.setIntentDao(intentDao)
+    TranscriptIntentFormatter.setIntentDao(intentDao)
     TranscriptController.setTranscriptFormatter(TranscriptIntentFormatter)
     TranscriptController.get(req, res, next)
 })
 
 router.route("/").post((req, res, next) => {
-    TranscriptController.setIntentDao(intentDao)
+    TranscriptIntentFormatter.setIntentDao(intentDao)
     TranscriptController.setTranscriptFormatter(TranscriptIntentFormatter)
     TranscriptController.post(req, res, next)
 })
