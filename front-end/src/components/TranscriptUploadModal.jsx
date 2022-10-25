@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'react-modal';
 import TranscriptAPI from '../services/TranscriptAPI';
 import BaseButton from './BaseButton';
-import DragDropFile from './DragDropFile';
 
 class TranscriptUploadModal extends React.Component {
 
