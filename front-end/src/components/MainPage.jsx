@@ -3,13 +3,6 @@ import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
-import IntentDiagram from './IntentDiagram.jsx';
-
-const fakeChildren = {
-  q1: 25,
-  q2: 35,
-  q3: 45,
-}
 
 class MainPage extends Component {
   state = {
@@ -18,7 +11,6 @@ class MainPage extends Component {
 
   toggleTranscriptUploadModal = () => {
       this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
-      console.log("Set showTranscriptUploadModal to " + this.state.showTranscriptUploadModal);
   }
 
   openAnalysisPage = () => {
@@ -32,7 +24,8 @@ class MainPage extends Component {
           <div className="justify-center flex">
             <BaseButton
               click={this.toggleTranscriptUploadModal}
-              text="Upload Transcript" />
+              text="Upload Transcript"
+            />
           </div>
           <div className="justify-center flex">
             <TranscriptUploadModal
@@ -43,10 +36,8 @@ class MainPage extends Component {
           <div className="justify-center flex">
             <BaseButton
               click={this.openAnalysisPage}
-              text="View Analysis"/>
-          </div>
-          <div className="justify-center flex">
-            <IntentDiagram question="test question" branches={fakeChildren}/>
+              text="View Analysis"
+            />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import {TranscriptFormatter} from "./transcript_data_formatter"
+import TranscriptFormatter from "./transcript_data_formatter"
 const globalDatabase = {};
 
 describe("formatTranscript", () => {
