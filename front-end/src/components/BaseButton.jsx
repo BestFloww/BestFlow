@@ -20,7 +20,7 @@ const BaseButton = (props) => {
                 disabled={props.isDisabled}
             > 
                 { props.text }
-                { props.svgName && <Icon name={props.svgName} color={props.svgColor} size={props.svgSize}/> }
+                { props.icon && <Icon icon={props.icon}/> }
             </button>
         </div>
     )
@@ -30,9 +30,7 @@ BaseButton.propTypes = {
     text: PropTypes.string,
     click: PropTypes.func.isRequired,
     isDisabled: PropTypes.bool,
-    svgName: PropTypes.string,
-    svgColor: PropTypes.string,
-    svgSize: PropTypes.number
+    icon: PropTypes.object,
 };
 
 BaseButton.defaultProps = {

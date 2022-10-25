@@ -4,17 +4,24 @@ import PropTypes from 'prop-types';
 
 const Icon = (props) => {
     return (
-        <svg className={`${props.name}`} fill={props.color} height={props.size} width={props.size}>
-            <use xlinkHref={`${Icons}#${props.name}`} />
+        <svg
+          className={`icon ${props.icon.name}`}
+          fill={props.icon.color}
+          width={props.icon.size}
+          height={props.icon.size}
+        >
+          <use xlinkHref={`${Icons}#${props.icon.name}`} />
         </svg>
     )
 };
 
 Icon.propTypes = {
+  icon: PropTypes.shape({
     // The icon's name is required, all other attributes only required to overwrite defaults in icons.svg
     name: PropTypes.string.isRequired,
     color: PropTypes.string,
     size: PropTypes.number
+  })
 };
   
 export default Icon;

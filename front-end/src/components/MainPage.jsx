@@ -45,8 +45,10 @@ class MainPage extends Component {
             <BaseButton
               click={this.openAnalysisPage}
               text="View Analysis"
-              svgName="magnifying-glass"
-              svgSize={20}
+              icon={{
+                name: "magnifying-glass",
+                size: 40
+              }}
             />
           </div>
           <div className="justify-center flex">
