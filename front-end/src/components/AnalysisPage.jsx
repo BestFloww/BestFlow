@@ -6,24 +6,24 @@ import IntentLister from './IntentLister.jsx';
 
 const fakeIntents = [
   {
-    question: "Can you tell me who is ya boi?",
-    children: {
-      "Kaylee Chan uses ya boi as a moniker.": 100,
-    }
-  },
-  {
     question: "What is something that Waluigi and Wario often say?",
     children: {
-      "The brothers Waluigi and Wario have their catchphrase 'waaa'.": 10,
-      "Sorry, I don't know what they say because I don't play Nintendo games.": 20
+      "The brothers Waluigi and Wario have their catchphrase 'waaa'.": 100,
     }
-  }, 
+  },
   {
     question: "Where should I go for a good time and great learning experience?",
     children: {
       "You should go to the University of Toronto.": 10,
-      "You should go to the Technology Leadership Initiative.": 20,
-      "I usually go to your mom's house.": 70,
+      "You should go to the Technology Leadership Initiative.": 90
+    }
+  }, 
+  {
+    question: "Hey BestFlow, what time is it?",
+    children: {
+      "It's time for you to get a watch, would you like to take a look at our product?": 10,
+      "Showtime showtime what I'm John Laurens in the place to be.": 20,
+      "Summertime! School's out, scream and shout.": 70,
     }
   }
 ]
@@ -41,7 +41,8 @@ class AnalysisPage extends Component {
                 <div className="justify-center flex mt-12">
                   <BaseButton
                     click={this.openMainPage}
-                    text="Return to Main Page" />
+                    text="Return to Main Page" 
+                    size="sm" />
                 </div>
                 <div className="w-4/5 h-4/5 mx-auto">
                   <IntentLister intents={fakeIntents} index={0} />

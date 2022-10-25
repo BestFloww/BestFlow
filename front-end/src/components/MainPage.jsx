@@ -20,15 +20,16 @@ class MainPage extends Component {
   render() {
     return(
       <div className="MainPage bg-purple-100 absolute inset-0" data-testid="main-page">
-        <div className="flex gap-y-10 w-full flex-col mt-[25vh]">
+        <div className="flex gap-y-7 w-full flex-col mt-[25vh]">
           <h1 className="justify-center flex font-pacifico text-9xl text-purple-300 text-shadow shadow-blue">
             BestFlow
           </h1>
-          <p className="justify-center text-xl flex font-cabin -mt-5"> Problem diagnostic tool for VoiceFlow transcripts </p>
-          <div className="justify-center flex mt-12">
+          <p className="justify-center text-xl flex font-cabin -mt-3"> Problem diagnostic tool for VoiceFlow transcripts </p>
+          <div className="justify-center flex mt-10">
             <BaseButton
               click={this.toggleTranscriptUploadModal}
               text="Upload Transcript"
+              size="lg"
             />
           </div>
           <div className="justify-center flex">
@@ -41,6 +42,7 @@ class MainPage extends Component {
             <BaseButton
               click={this.openAnalysisPage}
               text="View Analysis"
+              size="lg"
             />
           </div>
         </div>

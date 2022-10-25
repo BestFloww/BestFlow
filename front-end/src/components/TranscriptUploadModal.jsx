@@ -35,26 +35,30 @@ class TranscriptUploadModal extends React.Component {
     return (
       <Modal
         isOpen={this.props.show}
-        className="container w-60 md:w-80 mx-auto bg-purple-100 rounded-lg shadow-lg py-3 mt-[40vh]"
+        className="container w-60 md:w-80 mx-auto font-cabin bg-purple-100 rounded-lg shadow-lg py-3 mt-[40vh]"
         onRequestClose={this.props.toggleModal}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
       >
-        <h2 className="justify-center flex m-3" data-testid="upload-transcript-modal">
+        <h2 className="justify-center flex mt-3 text-lg" data-testid="upload-transcript-modal">
           Drag and drop file or upload below.
         </h2>
           <div className={"justify-center flex m-7 flex-col"}>
               <input
+                className={"mb-7 ml-7"}
                 type="file"
                 name="transcript"
                 data-testid="fileInput"
                 onChange={(e)=>this.handleFile(e)}>
               </input>
-              <BaseButton
-                data-testid="uploadButton"
-                click={(e)=>this.handleUpload(e)}
-                text="Upload"
-              />           
+              <div className={"justify-center flex"}>
+                <BaseButton
+                  data-testid="uploadButton"
+                  click={(e)=>this.handleUpload(e)}
+                  text="Upload"
+                  size="sm"
+                />       
+              </div>   
         </div>
       </Modal>
     )
