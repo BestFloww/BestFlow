@@ -13,11 +13,16 @@ describe('Icon tests', () => {
         render(<Icon icon={props}/>)
     }
 
-    it('should render the correct svg icon', () => {
+    it('should render the correct icon if name is given', () => {
         renderComponent(basicProps);
         expect(screen.getByTestId('custom-icon')).toHaveClass(`icon-${basicProps.name}`);
     });
 
+    it('should render the icon with the correct alt text', () => {
+        renderComponent(basicProps);
+        expect(screen.getByTestId('custom-icon').getAttribute('alt')).toBe(basicProps.name);
+    });
+    
     it('should render the icon with the correct color', () => {
         renderComponent(basicProps);
         expect(screen.getByTestId('custom-icon').getAttribute('fill')).toBe(basicProps.color);
