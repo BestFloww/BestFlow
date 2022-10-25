@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'react-modal';
 import TranscriptAPI from '../services/TranscriptAPI';
 import BaseButton from './BaseButton';
-import DragDropFile from './DragDropFile';
 
 class TranscriptUploadModal extends React.Component {
 
@@ -36,7 +35,7 @@ class TranscriptUploadModal extends React.Component {
     return (
       <Modal
         isOpen={this.props.show}
-        className="container w-60 md:w-80 mx-auto bg-purple-200 rounded-lg shadow-lg py-3 mt-[40vh]"
+        className="container w-60 md:w-80 mx-auto bg-purple-100 rounded-lg shadow-lg py-3 mt-[40vh]"
         onRequestClose={this.props.toggleModal}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
