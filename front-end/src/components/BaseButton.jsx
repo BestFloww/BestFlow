@@ -18,9 +18,11 @@ const BaseButton = (props) => {
                 className={getButtonStyle()}
                 disabled={props.isDisabled}
                 data-testid="custom-button"
-            > 
-                { props.text }
-                { props.icon && <Icon icon={props.icon}/> }
+            >
+                <div className='flex items-center space-x-2'>
+                    {props.icon && <div><Icon icon={props.icon}/></div>}
+                    {props.text && <div>{ props.text }</div>}
+                </div>
             </button>
         </div>
     )

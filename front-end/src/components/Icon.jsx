@@ -6,6 +6,7 @@ const Icon = (props) => {
     return (
         <svg
           className={`icon-${props.icon.name}`}
+          alt={props.icon.name}
           fill={props.icon.color}
           width={props.icon.size}
           height={props.icon.size}
@@ -21,7 +22,7 @@ Icon.propTypes = {
     // The icon's name is required, all other attributes only required to overwrite default appearance of icon as described in icons.svg
     name: PropTypes.string.isRequired,
     color: PropTypes.string,
-    size: PropTypes.number
+    size: PropTypes.string
   })
 };
   
