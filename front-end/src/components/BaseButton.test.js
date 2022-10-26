@@ -2,6 +2,7 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import BaseButton from './BaseButton.jsx';
+import Icon from './Icon.jsx';
 
 /** 
  * Think of this file as an example testing file. Please do not hesitate to ask me questions about why I do things.
@@ -14,8 +15,15 @@ describe('BaseButton tests', () => {
         click: jest.fn(),
         text: "sampleText",
     };
-    const renderComponent = (props, buttonDisabled, buttonSize) => {
-        render(<BaseButton {... props} isDisabled={buttonDisabled} size={buttonSize}/>)
+
+    const sampleIcon = {
+        name: "magnifying-glass",
+        color: "red",
+        size: "40"
+    };
+
+    const renderComponent = (props, buttonDisabled, buttonSize=null, iconProps=null) => {
+        render(<BaseButton {... props} isDisabled={buttonDisabled} size={buttonSize} icon={iconProps}/>)
     }
 
     it('should call the click function on click', () => {
@@ -29,6 +37,16 @@ describe('BaseButton tests', () => {
         expect(await screen.findByTestId("custom-button")).toHaveTextContent(basicProps.text);
     });
 
+    it('should not render an Icon child if there are no icon props', () => {
+        renderComponent(basicProps, false);
+        expect(Icon).not.toHaveBeenCalled();
+    });
+
+    it('should correctly render and pass icon props to its Icon child if there are any', () => {
+        renderComponent(basicProps, false, sampleIcon);
+        expect(Icon).toHaveBeenCalledWith({ icon: sampleIcon }, {});
+    });
+    
     it('should have correct default style if isDisabled is false and no size is given', async() => {
         renderComponent(basicProps, false);
         expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 hover:bg-purple-200 active:bg-purple-400 py-3 px-6 md:text-lg 2xl:text-2xl");
