@@ -21,9 +21,8 @@ export default class intentDao extends IntentInterface{
       const intentList = [];
       for (const intent of content) {
         const newIntent = new Intent(intent);
-        intentList.push(newIntent.save((err) => {throw err}));
+        await newIntent.save();
       }
-      Promise.all(intentList);
       return { status: 200 };
     } catch (e) {
       return { error: e };

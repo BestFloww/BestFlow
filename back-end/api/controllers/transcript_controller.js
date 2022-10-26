@@ -1,30 +1,20 @@
-import {IntentInterface} from "../../interfaces/intent-interface.js";
-import {TranscriptDataInterface} from "../../interfaces/transcript-data-interface.js";
+import {InputBoundaryInterface} from "../../interfaces/input-boundary-interface.js";
 
 export default class TranscriptController {
-    static #intentDao;
-    static #transcriptFormatter;
+    static #inputBoundary;
 
-    static setIntentDao(dao) {
-        if(dao.isIntentInterface){
-            this.#intentDao = dao;
+    static setTranscriptInteractor(interactor) {
+        if(interactor.isInputBoundaryInterface){
+            this.#inputBoundary = interactor;
         } else {
-            throw new Error("not an IntentInterface");
-        }
-    }
-
-    static setTranscriptFormatter(formatter) {
-        if(formatter.isTranscriptDataInterface){
-            this.#transcriptFormatter = formatter;
-        } else {
-            throw new Error("not a TranscriptDataInterface");
+            throw new Error("not a InputBoundaryInterface");
         }
     }
 
     static async getTranscript(req, res, next) {
 
         const query = req.body;
-        const {intentList} = await this.#intentDao.getIntent(query);
+        const {intentList} = await this.#inputBoundary.getTranscript(query);
 
         res.json(intentList);
     }
@@ -33,8 +23,7 @@ export default class TranscriptController {
         try {
             const body = JSON.stringify(req.body.payload);
             const transcript = JSON.parse(body);
-            const content = await this.#transcriptFormatter.formatTranscript(transcript);
-            await this.#intentDao.postIntents(content);
+            await this.#inputBoundary.formatTranscript(transcript);
             res.status(200).json({ message: "success" })
         } catch (e) {
             res.status(500).json({ error: e.message })
