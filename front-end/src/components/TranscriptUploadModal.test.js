@@ -1,4 +1,4 @@
-import {render, screen} from "@testing-library/react";
+import {render, screen, waitFor} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
@@ -9,7 +9,7 @@ describe("TranscriptUploadModal tests", () => {
     let props;
     const renderComponent = (props) => {
         render(<TranscriptUploadModal {...props} />)
-    }
+    };
     
     beforeEach(() => {
         props = {
@@ -17,6 +17,12 @@ describe("TranscriptUploadModal tests", () => {
             toggleModal: jest.fn().mockImplementation(() => {props.show=!props.show}),
         };
     });
+
+    it("correctly closes modal on escape press", () => {
+        renderComponent(props);
+        userEvent.keyboard("{esc}");
+        expect(props.show).toBe(false);
+    })
 
     it("correctly inputs file into modal", () => {
         renderComponent(props);
@@ -29,23 +35,23 @@ describe("TranscriptUploadModal tests", () => {
         expect(input.files).toHaveLength(1);
     })
 
-    it("correctly closes modal on escape press", () => {
+    it("correctly uploads file to backend if JSON has a data attribute", async() => {
         renderComponent(props);
-        userEvent.keyboard("{esc}");
-        expect(props.show).toBe(false);
-    })
+        const fakeData = {'data': 'value'}
+        // First trick JSON
+        const parse = jest.spyOn(JSON, "parse").mockImplementation(() => fakeData)
+        // then we trick the FileReader
+        const fakeFile = new File(["{'data': 'value'}"], "test.json", {type: "application/json"})
 
-
-    it("correctly uploads file to backend", async() => {
-        renderComponent(props);
-        const readAsText = jest.spyOn(FileReader.prototype, "readAsText").mockImplementation((Obj) => TranscriptAPI.post(Obj))
-        const fakeFile = new File(["{'key': 'value'}"], "test.json", {type: "application/json"})
+        // then we test
         const input = screen.getByTestId("fileInput")
         expect(input.files).toHaveLength(0);
         userEvent.upload(input, fakeFile)
 
-        userEvent.click(screen.getByText("Upload"));
-        expect(TranscriptAPI.post).toHaveBeenCalledWith(fakeFile);
-    })
+        await waitFor(() => expect(parse).toHaveBeenCalled())
 
+        // This allows our async method to run
+        userEvent.click(screen.getByText("Upload"));
+        await waitFor(() => expect(TranscriptAPI.post).toHaveBeenCalled())
+    })
 });
