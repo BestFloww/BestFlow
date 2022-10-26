@@ -21,7 +21,6 @@ class TranscriptUploadModal extends React.Component {
 
   handleData(result) {
     if (!this.validateData(result)) {
-      console.log(result)
       this.setState({isFileValid: false});
     } else{
       this.setState({

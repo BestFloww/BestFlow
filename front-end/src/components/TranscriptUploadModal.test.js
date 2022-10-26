@@ -54,24 +54,4 @@ describe("TranscriptUploadModal tests", () => {
         userEvent.click(screen.getByText("Upload"));
         await waitFor(() => expect(TranscriptAPI.post).toHaveBeenCalled())
     })
-
-    it("correctly rejects file to if JSON has no data attribute", async() => {
-        renderComponent(props);
-        // first we trick the validator
-        const parse = jest.spyOn(JSON, "parse").mockImplementationOnce(() => { throw new Error("hi") });
-
-        // then we trick the FileReader
-        const fakeFile = new File(["{'notData': 'value'}"], "test.json", {type: "application/json"})
-
-        // then we test
-        const input = screen.getByTestId("fileInput")
-        expect(input.files).toHaveLength(0);
-        userEvent.upload(input, fakeFile)
-
-        // This allows our async method to run
-        await waitFor(() => expect(parse).toHaveBeenCalled())
-
-        await waitFor(expect(screen.getByText("Please upload a valid JSON")).toBeInTheDocument());
-    })
-
 });
