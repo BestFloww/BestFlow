@@ -23,7 +23,7 @@ describe('BaseButton tests', () => {
         size: "40"
     };
 
-    const renderComponent = (props, buttonDisabled, buttonSize=null, iconProps=null) => {
+    const renderComponent = (props, buttonDisabled, buttonSize, iconProps=null) => {
         render(<BaseButton {... props} isDisabled={buttonDisabled} size={buttonSize} icon={iconProps}/>)
     }
 
