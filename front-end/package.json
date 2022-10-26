@@ -52,6 +52,7 @@
     "autoprefixer": "^10.4.12",
     "babel-jest": "^29.1.2",
     "jest": "^27.5.1",
+    "jest-svg-transformer": "^1.0.0",
     "lodash": ">=4.17.21",
     "moment": ">=2.29.4",
     "postcss": "^8.4.17",
