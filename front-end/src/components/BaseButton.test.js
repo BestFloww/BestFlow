@@ -23,8 +23,8 @@ describe('BaseButton tests', () => {
         size: "40"
     };
 
-    const renderComponent = (props, buttonDisabled, iconProps = null) => {
-        render(<BaseButton {... props} isDisabled={buttonDisabled} icon={iconProps}/>)
+    const renderComponent = (props, buttonDisabled, buttonSize=null, iconProps=null) => {
+        render(<BaseButton {... props} isDisabled={buttonDisabled} size={buttonSize} icon={iconProps}/>)
     }
 
     it('should call the click function on click', () => {
@@ -44,13 +44,13 @@ describe('BaseButton tests', () => {
     });
 
     it('should correctly render and pass icon props to its Icon child if there are any', () => {
-        renderComponent(basicProps, false, sampleIcon);
+        renderComponent(basicProps, false, null, sampleIcon);
         expect(Icon).toHaveBeenCalledWith({ icon: sampleIcon }, {});
     });
-
-    it('should have correct style if isDisabled is false', () => {
+    
+    it('should have correct default style if isDisabled is false and no size is given', async() => {
         renderComponent(basicProps, false);
-        expect(screen.getByTestId('custom-button')).toHaveClass("bg-blue-300 rounded-lg shadow-lg py-3 px-6 hover:bg-blue-200 active:bg-blue-400");
+        expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 hover:bg-purple-200 active:bg-purple-400 py-3 px-6 md:text-lg 2xl:text-2xl");
     });
 
     it('should not be disabled if isDisabled is false', () => {
@@ -58,13 +58,24 @@ describe('BaseButton tests', () => {
         expect(screen.getByTestId('custom-button')).not.toBeDisabled();
     });
 
-    it('should have correct style if isDisabled is true', () => {
+    it('should have correct default style if isDisabled is true and no size is given', async() => {
         renderComponent(basicProps, true);
-        expect(screen.getByTestId('custom-button')).toHaveClass("bg-blue-300 rounded-lg shadow-lg py-3 px-6 opacity-50");
+        expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 opacity-50");
     });
 
     it('should be disabled if isDisabled is true', () => {
         renderComponent(basicProps, true);
         expect(screen.getByTestId('custom-button')).toBeDisabled();
     });
+
+    it('should be small if size is small', async() => {
+        renderComponent(basicProps, false, "sm");
+        expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 hover:bg-purple-200 active:bg-purple-400 py-1 px-4 md:text-md 2xl:text-lg");
+    });
+
+    it('should be large if size is large', async() => {
+        renderComponent(basicProps, false, "lg");
+        expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 hover:bg-purple-200 active:bg-purple-400 md:py-5 md:px-6 md:text-2xl 2xl:py-6 2xl:px-9 2xl:text-2xl");
+    });
+
 });
