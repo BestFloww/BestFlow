@@ -23,7 +23,7 @@ describe('BaseButton tests', () => {
         size: "40"
     };
 
-    const renderComponent = (props, buttonDisabled, buttonSize, iconProps=null) => {
+    const renderComponent = (props, buttonDisabled, buttonSize=null, iconProps=null) => {
         render(<BaseButton {... props} isDisabled={buttonDisabled} size={buttonSize} icon={iconProps}/>)
     }
 
@@ -44,7 +44,7 @@ describe('BaseButton tests', () => {
     });
 
     it('should correctly render and pass icon props to its Icon child if there are any', () => {
-        renderComponent(basicProps, false, sampleIcon);
+        renderComponent(basicProps, false, iconProps=sampleIcon);
         expect(Icon).toHaveBeenCalledWith({ icon: sampleIcon }, {});
     });
     
