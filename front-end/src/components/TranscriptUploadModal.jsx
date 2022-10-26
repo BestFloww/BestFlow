@@ -9,22 +9,38 @@ class TranscriptUploadModal extends React.Component {
     super(props);
     this.state = {
       file: null,
+      isFileValid: null,
     };
   }
 
   handleFile(e) {
-    this.setState({file: e.target.files})
-  }
-
-  async handleUpload(e) {
     let fileUploaded = new FileReader();
-    fileUploaded.readAsText(this.state.file[0]);
+    fileUploaded.readAsText(e.target.files[0]);
     let result;
     fileUploaded.addEventListener("loadend", e => {
       result = e.target.result;
-      const formData = {transcript: result};
-      TranscriptAPI.post(formData);
+      if (!this.validateData(result)) {
+        this.setState({isFileValid: false});
+      } else{
+        this.setState({
+          file: {transcript: result},
+          isFileValid: true,
+        });
+      }
     });
+  }
+
+  validateData(data) {
+    try {
+      const parsedData = JSON.parse(data);
+      return parsedData.data;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async handleUpload(e) {
+    TranscriptAPI.post(this.state.file);
   }
 
   componentDidMount() {
@@ -40,6 +56,7 @@ class TranscriptUploadModal extends React.Component {
         shouldCloseOnEsc={true}
         ariaHideApp={false}
       >
+
         <h2 className="justify-center flex m-3" data-testid="upload-transcript-modal">
           Drag and drop file or upload below.
         </h2>
@@ -54,6 +71,7 @@ class TranscriptUploadModal extends React.Component {
                 data-testid="uploadButton"
                 click={(e)=>this.handleUpload(e)}
                 text="Upload"
+                isDisabled={!this.state.isFileValid}
               />           
         </div>
       </Modal>

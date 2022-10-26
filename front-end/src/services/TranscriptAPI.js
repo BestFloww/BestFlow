@@ -17,6 +17,7 @@ const API = {
      */
     post: async(transcript) => {
         const payload = JSON.stringify(transcript);
+        console.log(payload)
         return await axios.post(baseURL, {payload});
     },
 };
