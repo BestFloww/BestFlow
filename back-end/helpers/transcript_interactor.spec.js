@@ -15,6 +15,13 @@ describe("transcriptInteractor", () => {
         expect(intentDao.getIntent).toHaveBeenCalled();
     });
 
+    it("Should correctly parse JSON transcript", async() => {
+        const spy_parse = jest.spyOn(JSON, "parse");
+        await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript));
+        expect(spy_parse).toHaveBeenCalledWith(JSON.stringify(mock_transcript));
+        expect(spy_parse).toHaveBeenCalledWith(mock_transcript.transcript);
+    });
+
     it("Should correctly call TranscriptFormatter", async() =>{
         await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript));
         expect(TranscriptFormatter.formatTranscript).toHaveBeenCalled();
