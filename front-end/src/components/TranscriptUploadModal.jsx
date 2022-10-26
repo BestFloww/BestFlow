@@ -51,7 +51,7 @@ class TranscriptUploadModal extends React.Component {
                 data-testid="fileInput"
                 onChange={(e)=>this.handleFile(e)}>
               </input>
-              <div className={"justify-center flex"}>
+              <div className="justify-center flex">
                 <BaseButton
                   data-testid="uploadButton"
                   click={(e)=>this.handleUpload(e)}

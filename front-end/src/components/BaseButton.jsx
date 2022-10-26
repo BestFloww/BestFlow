@@ -20,7 +20,7 @@ const BaseButton = (props) => {
             case "lg":
                 styling += "md:py-5 md:px-6 md:text-2xl 2xl:py-6 2xl:px-9 2xl:text-2xl";
                 break;
-            default:
+            default: // medium-sized button
                 styling += "py-3 px-6 md:text-lg 2xl:text-2xl";
 
         }
