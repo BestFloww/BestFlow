@@ -38,7 +38,7 @@ export default class TranscriptFormatter extends TranscriptDataInterface{
 
     static #addChild(content, prev, message, id){
         const prevIntent = content[prev];
-        if(prevIntent.projectId == id){
+        if(prevIntent.project_id == id){
             if(!(prevIntent.children.has(message))){
                 prevIntent.children.set(message, 0);
             }
