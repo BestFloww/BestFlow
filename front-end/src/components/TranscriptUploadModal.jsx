@@ -40,7 +40,7 @@ class TranscriptUploadModal extends React.Component {
   }
 
   async handleUpload(file) {
-    TranscriptAPI.post();
+    TranscriptAPI.post(file);
   }
 
   componentDidMount() {
@@ -75,7 +75,7 @@ class TranscriptUploadModal extends React.Component {
               </input>
               <div className="justify-center flex">
                 <BaseButton
-                  click={(e)=>this.handleUpload(e)}
+                  click={(e)=>this.handleUpload(this.state.file)}
                   text="Upload"
                   size="sm"
                   isDisabled={!this.state.isFileValid}
