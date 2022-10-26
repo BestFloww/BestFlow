@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Icon from './Icon.jsx';
 
 const BaseButton = (props) => {
-    // Change button appearance based on whether it is enabled or disabled
+    // Change button styling based on whether it is enabled or disabled
     const getButtonStyle = () => {
         let styling = "font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 "
         //Styling for enabled vs. disabled buttons
@@ -32,10 +33,13 @@ const BaseButton = (props) => {
             <button
                 onClick={props.click}
                 className={getButtonStyle()}
-                data-testid="custom-button"
                 disabled={props.isDisabled}
-            > 
-                { props.text }
+                data-testid="custom-button"
+            >
+                <div className='flex items-center space-x-2'>
+                    {props.icon && <div><Icon icon={props.icon}/></div>}
+                    {props.text && <div>{ props.text }</div>}
+                </div>
             </button>
         </div>
     )
@@ -46,10 +50,11 @@ BaseButton.propTypes = {
     click: PropTypes.func.isRequired,
     size: PropTypes.string,
     isDisabled: PropTypes.bool,
-}
+    icon: PropTypes.object,
+};
 
 BaseButton.defaultProps = {
-    isDisabled: false,
-}
+    isDisabled: false
+};
 
 export default BaseButton;

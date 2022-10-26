@@ -9,6 +9,7 @@ import Icon from './Icon.jsx';
  * The tests in this file are a little more complicated than necessary, but show good design patterns.
  */
 
+jest.mock('./Icon.jsx', () => jest.fn(() => null));
 
 describe('BaseButton tests', () => {
     const basicProps = {
@@ -52,7 +53,7 @@ describe('BaseButton tests', () => {
         expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 hover:bg-purple-200 active:bg-purple-400 py-3 px-6 md:text-lg 2xl:text-2xl");
     });
 
-    it('should not be disabled if isDisabled is false', async() => {
+    it('should not be disabled if isDisabled is false', () => {
         renderComponent(basicProps, false);
         expect(screen.getByTestId('custom-button')).not.toBeDisabled();
     });
@@ -62,7 +63,7 @@ describe('BaseButton tests', () => {
         expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 opacity-50");
     });
 
-    it('should be disabled if isDisabled is true', async() => {
+    it('should be disabled if isDisabled is true', () => {
         renderComponent(basicProps, true);
         expect(screen.getByTestId('custom-button')).toBeDisabled();
     });
