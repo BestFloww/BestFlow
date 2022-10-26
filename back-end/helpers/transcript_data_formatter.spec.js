@@ -66,7 +66,7 @@ describe("formatTranscript", () => {
         expect(received[0].question).toBe("<voice name=\"Alexa\">\"I want to plan my schedule\" Is this a key location? </voice>");
         expect(received[0].children).toEqual(new Map());
         expect(received[0].totalChildren).toBe(0);
-        expect(received[0].projectId).toBe("1");
+        expect(received[0].project_id).toBe("1");
         
     });
 
@@ -77,7 +77,7 @@ describe("formatTranscript", () => {
         expect(received[0].question).toBe("What would you like to buy?");
         expect(received[0].children).toEqual(new Map());
         expect(received[0].totalChildren).toBe(0);
-        expect(received[0].projectId).toBe("2");
+        expect(received[0].project_id).toBe("2");
     });
 
     it("should return an array containing two Intent initializers, two different project ids, no children", async() => {

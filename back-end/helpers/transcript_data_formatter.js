@@ -31,14 +31,14 @@ export default class TranscriptFormatter extends TranscriptDataInterface{
 
     static #addIntent(content, message, id){
         if(!((message + id) in content)){
-            const intent = {question: message, children: new Map(), totalChildren: 0, projectId: id};
+            const intent = {question: message, children: new Map(), totalChildren: 0, project_id: id};
             content[(message + id)] = intent;
         }
     }
 
     static #addChild(content, prev, message, id){
         const prevIntent = content[prev];
-        if(prevIntent.projectId == id){
+        if(prevIntent.project_id == id){
             if(!(prevIntent.children.has(message))){
                 prevIntent.children.set(message, 0);
             }
