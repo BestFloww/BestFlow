@@ -31,7 +31,7 @@ export default class TranscriptFormatter extends TranscriptDataInterface{
 
     static #addIntent(content, message, id){
         if(!((message + id) in content)){
-            const intent = {question: message, children: new Map(), totalChildren: 0, projectId: id};
+            const intent = {question: message, children: new Map(), totalChildren: 0, project_id: id};
             content[(message + id)] = intent;
         }
     }
