@@ -1,11 +1,11 @@
 import {InputBoundaryInterface} from "../../interfaces/input-boundary-interface.js";
 
 export default class TranscriptController {
-    static #transcriptFormatter;
+    static #transcriptInteractor;
 
-    static setTranscriptFormatter(formatter) {
-        if(formatter.isInputBoundaryInterface){
-            this.#transcriptFormatter = formatter;
+    static setTranscriptInteractor(interactor) {
+        if(interactor.isInputBoundaryInterface){
+            this.#transcriptInteractor = interactor;
         } else {
             throw new Error("not a InputBoundaryInterface");
         }
@@ -14,7 +14,7 @@ export default class TranscriptController {
     static async getTranscript(req, res, next) {
 
         const query = req.body;
-        const {intentList} = await this.#transcriptFormatter.getTranscript(query);
+        const {intentList} = await this.#transcriptInteractor.getTranscript(query);
 
         res.json(intentList);
     }
@@ -23,7 +23,7 @@ export default class TranscriptController {
         try {
             const body = JSON.stringify(req.body.payload);
             const transcript = JSON.parse(body);
-            await this.#transcriptFormatter.formatTranscript(transcript);
+            await this.#transcriptInteractor.formatTranscript(transcript);
             res.status(200).json({ message: "success" })
         } catch (e) {
             res.status(500).json({ error: e.message })

@@ -1,10 +1,10 @@
 import intentDao from "../../dao/intentdao.js";
 import TranscriptController from "./transcript_controller.js";
-import TranscriptFormatter from "../../helpers/transcript_data_formatter.js";
+import TranscriptInteractor from "../../helpers/transcript_interactor.js";
 
 jest.mock("../../dao/intentdao.js");
 jest.mock("../../schema/intent-schema.js");
-jest.mock("../../helpers/transcript_data_formatter.js")
+jest.mock("../../helpers/transcript_interactor.js")
 
 const mockResponse = () => {
     let res = {};
@@ -16,25 +16,24 @@ const mockResponse = () => {
     return res;
 }
 
-TranscriptController.setIntentDao(intentDao);
-TranscriptController.setTranscriptFormatter(TranscriptFormatter);
+TranscriptController.setTranscriptInteractor(TranscriptInteractor);
 
 describe("transcriptController", () => {
-    it("Should correctly set intentDao and get transcript", async() => {
-        intentDao.getIntent.mockImplementation().mockReturnValue({});
+    it("Should correctly get transcript", async() => {
+        TranscriptInteractor.getTranscript.mockImplementation().mockReturnValue({});
         await TranscriptController.getTranscript({}, mockResponse(), {});
-        expect(intentDao.getIntent).toHaveBeenCalled();
+        expect(TranscriptInteractor.getTranscript).toHaveBeenCalled();
     });
 
-    it("Should correctly set intentDao and post transcript", async() => {
+    it("Should correctly post transcript", async() => {
         await TranscriptController.postTranscript({body:{payload : {"a" : "a"}}}, mockResponse(), {});
-        expect(intentDao.postIntents).toHaveBeenCalled();
+        expect(TranscriptInteractor.formatTranscript).toHaveBeenCalled();
     });
 
     it("Should correctly throw an error for post transcript", async() => {
-        intentDao.postIntents.mockImplementation(() => {throw {message : "error"}});
+        TranscriptInteractor.formatTranscript.mockImplementation(() => {throw {message : "error"}});
         const res = mockResponse();
-        const result = await TranscriptController.postTranscript({body:{payload : {"a" : "a"}}}, res,{});
+        await TranscriptController.postTranscript({body:{payload : {"a" : "a"}}}, res,{});
         expect(res.json).toHaveBeenCalledWith({error : "error"});
     });
 
