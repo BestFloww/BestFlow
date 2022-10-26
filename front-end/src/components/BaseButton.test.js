@@ -44,7 +44,7 @@ describe('BaseButton tests', () => {
     });
 
     it('should correctly render and pass icon props to its Icon child if there are any', () => {
-        renderComponent(basicProps, false, iconProps=sampleIcon);
+        renderComponent(basicProps, false, icon=sampleIcon);
         expect(Icon).toHaveBeenCalledWith({ icon: sampleIcon }, {});
     });
     
