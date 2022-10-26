@@ -13,21 +13,22 @@ class TranscriptUploadModal extends React.Component {
     };
   }
 
-  handleFile(e) {
+  async handleFile(e) {
     let fileUploaded = new FileReader();
     fileUploaded.readAsText(e.target.files[0]);
-    let result;
-    fileUploaded.addEventListener("loadend", e => {
-      result = e.target.result;
-      if (!this.validateData(result)) {
-        this.setState({isFileValid: false});
-      } else{
-        this.setState({
-          file: {transcript: result},
-          isFileValid: true,
-        });
-      }
-    });
+    fileUploaded.onloadend = (e) => this.handleData(e.target.result);
+  }
+
+  handleData(result) {
+    if (!this.validateData(result)) {
+      console.log(result)
+      this.setState({isFileValid: false});
+    } else{
+      this.setState({
+        file: {transcript: result},
+        isFileValid: true,
+      });
+    }
   }
 
   validateData(data) {
@@ -39,8 +40,8 @@ class TranscriptUploadModal extends React.Component {
     }
   }
 
-  async handleUpload(e) {
-    TranscriptAPI.post(this.state.file);
+  async handleUpload(file) {
+    TranscriptAPI.post();
   }
 
   componentDidMount() {
@@ -51,14 +52,19 @@ class TranscriptUploadModal extends React.Component {
     return (
       <Modal
         isOpen={this.props.show}
-        className="container w-60 md:w-80 mx-auto bg-purple-200 rounded-lg shadow-lg py-3 mt-[40vh]"
+        className="container w-60 md:w-80 mx-auto bg-purple-200 rounded-lg shadow-lg py-3 mt-[40vh] flex flex-col"
         onRequestClose={this.props.toggleModal}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
       >
+        {this.state.isFileValid === false && 
+          <h3 className="bg-red-100 h-full text-center -mt-3 rounded-t-lg">
+            Please upload a valid JSON
+          </h3>
+        }
 
         <h2 className="justify-center flex m-3" data-testid="upload-transcript-modal">
-          Drag and drop file or upload below.
+          Drag and drop file or upload below. 
         </h2>
           <div className={"justify-center flex m-7 flex-col"}>
               <input
@@ -68,8 +74,7 @@ class TranscriptUploadModal extends React.Component {
                 onChange={(e)=>this.handleFile(e)}>
               </input>
               <BaseButton
-                data-testid="uploadButton"
-                click={(e)=>this.handleUpload(e)}
+                click={() => this.handleUpload(this.state.file)}
                 text="Upload"
                 isDisabled={!this.state.isFileValid}
               />           
