@@ -5,45 +5,44 @@ import {IntentInterface} from "../interfaces/intent-interface.js";
 export default class intentDao extends IntentInterface{
   /**
    *  @param {Object} query find specific intent(s)
-   *  @return {Query} the queried items
    * */
-  static async getIntent(query = {}) {
+  async getIntent(query = {}) {
     try {
       const intentList = await Intent.find(query).exec();
-      return intentList;
+      this.emit("getIntent", intentList);
     } catch (e) {
-      return {error: e};
+      this.emit("getIntent",{status: 500, error: e});
     }
   }
   
-  static async postIntents(content) {
+  async postIntents(content) {
     try {
       const intentList = [];
       for (const intent of content) {
         const newIntent = new Intent(intent);
         await newIntent.save();
       }
-      return { status: 200 };
+      this.emit("postIntent",{status: 200});
     } catch (e) {
-      return { error: e };
+      this.emit("postIntent",{status: 500, error: e});
     }
   }
 
-  static async putIntent(intentID, newContent) {
+  async putIntent(intentID, newContent) {
     try {
       Intent.findByIdAndUpdate(intentID, newContent);
-      return { status: 200 };
+      this.emit("putIntent",{status: 200});
     } catch (e) {
-      return {error: e};
+      this.emit("putIntent",{status: 500, error: e});
     }
   }
 
-  static async saveIntent(intent) {
+  async saveIntent(intent) {
     try {
       await intent.save();
-      return { status: 200 };
+      this.emit("saveIntent",{status: 200});
     } catch (e) {
-      return {error: e};
+      this.emit("saveIntent",{status: 500, error: e});
     }
   }
 }
