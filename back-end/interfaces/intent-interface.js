@@ -1,15 +1,17 @@
-import { EventEmitter } from 'node:events'
 /* istanbul ignore file */
 /**
  * Abstract Class IntentInterface.
  *
  * @class Interface
  */
+ import { EventEmitter } from 'node:events'
+
  export class IntentInterface extends EventEmitter{
-    isIntentInterface = true;
+
     /**
      *  @param {Object} query find specific intent(s)
      * */
+
     async getIntent(query = {}) {
       throw new Error("not implemented");
     }

@@ -6,6 +6,7 @@ export default class intentDao extends IntentInterface{
   /**
    *  @param {Object} query find specific intent(s)
    * */
+
   async getIntent(query = {}) {
     try {
       const intentList = await Intent.find(query).exec();
@@ -17,7 +18,6 @@ export default class intentDao extends IntentInterface{
   
   async postIntents(content) {
     try {
-      const intentList = [];
       for (const intent of content) {
         const newIntent = new Intent(intent);
         await newIntent.save();

@@ -1,10 +1,10 @@
-import intentDao from "../../dao/intentdao.js";
 import TranscriptController from "./transcript_controller.js";
 import TranscriptInteractor from "../../helpers/transcript_interactor.js";
+import OutputDataBoundary from "../../helpers/output_data_boundary.js"
 
-jest.mock("../../dao/intentdao.js");
 jest.mock("../../schema/intent-schema.js");
-jest.mock("../../helpers/transcript_interactor.js")
+jest.mock("../../helpers/transcript_interactor.js");
+jest.mock("../../helpers/output_data_boundary.js")
 
 const mockResponse = () => {
     let res = {};
@@ -17,12 +17,13 @@ const mockResponse = () => {
 }
 
 TranscriptController.setTranscriptInteractor(TranscriptInteractor);
+TranscriptController.setOutputBoundary(OutputDataBoundary);
 
 describe("transcriptController", () => {
     it("Should correctly get transcript", async() => {
-        TranscriptInteractor.getTranscript.mockImplementation().mockReturnValue({});
+        OutputDataBoundary.getOutput.mockImplementation().mockReturnValue({});
         await TranscriptController.getTranscript({}, mockResponse(), {});
-        expect(TranscriptInteractor.getTranscript).toHaveBeenCalled();
+        expect(OutputDataBoundary.getOutput).toHaveBeenCalled();
     });
 
     it("Should correctly post transcript", async() => {
