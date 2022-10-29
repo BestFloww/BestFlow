@@ -20,6 +20,4 @@ export class OutputBoundaryInterface {
     static async getOutput() {
         throw new Error("not implemented");
     }
-
-
 }
