@@ -6,7 +6,7 @@ export default class TranscriptController {
         if(interactor.isInputBoundaryInterface){
             this.#inputBoundary = interactor;
         } else {
-            throw new Error("not an InputBoundaryInterface");
+            throw new Error("not an InputBoundary");
         }
     }
 
@@ -14,7 +14,7 @@ export default class TranscriptController {
         if(outputBoundary.isOutputBoundaryInterface){
             this.#outputBoundary = outputBoundary;
         } else {
-            throw new Error("not an OutputBoundaryInterface");
+            throw new Error("not an OutputBoundary");
         }
     }
 
