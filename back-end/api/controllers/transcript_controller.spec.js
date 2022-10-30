@@ -22,7 +22,7 @@ TranscriptController.setOutputBoundary(OutputDataBoundary);
 describe("transcriptController", () => {
     it("Should correctly get transcript", async() => {
         OutputDataBoundary.getOutput.mockImplementation().mockReturnValue({});
-        await TranscriptController.getTranscript({}, mockResponse(), {});
+        await TranscriptController.getAnalyzedTranscript({}, mockResponse(), {});
         expect(OutputDataBoundary.getOutput).toHaveBeenCalled();
     });
 
