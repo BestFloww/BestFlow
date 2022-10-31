@@ -4,7 +4,7 @@
  *
  * @class Interface
  */
-export class InputBoundaryInterface {
+export class InputBoundaryInterface{
     static isInputBoundaryInterface = true;
 
     /**
@@ -21,6 +21,4 @@ export class InputBoundaryInterface {
     static async formatTranscript(rawTranscript = {}) {
         throw new Error("not implemented");
     }
-
-
 }

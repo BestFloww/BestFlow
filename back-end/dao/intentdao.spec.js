@@ -1,45 +1,52 @@
-import intentDao from "./intentdao.js";
+import IntentDao from "./intentdao.js";
 import { Intent } from "../schema/intent-schema.js";
 
 jest.mock("../schema/intent-schema.js");
 
-describe("intentDao", () => {
+let dao;
+let emit;
 
-    it("Should correctly get intents", () => {
-        intentDao.getIntent();
+describe("IntentDao", () => {
+    beforeEach(() => {
+        const newDao = new IntentDao();
+        const newEmit = jest.spyOn(newDao, "emit");
+        dao = newDao;
+        emit = newEmit;
+    });
+    it("Should correctly get intents", async() => {
+        await dao.getIntent();
         expect(Intent.find).toHaveBeenCalled();
     });
 
-    it("Should correctly get intents with query", () => {
+    it("Should correctly get intents with query", async() => {
         const query = {bark: "woof"};
-        intentDao.getIntent(query);
+        await dao.getIntent(query);
         expect(Intent.find).toHaveBeenCalledWith(query);
     });
 
-    it("Should return the intentList", async() => {
+    it("Should emit the intentList", async() => {
         const fakePayload = {grrr: "meow"};
         Intent.find.mockImplementationOnce(() => {
             return {exec: jest.fn().mockReturnValue(fakePayload)};
         });
-        expect(await intentDao.getIntent()).toBe(fakePayload);
+        await dao.getIntent();
+        expect(emit).toHaveBeenCalledWith("getIntent", fakePayload);
     });
 
     it("should correctly throw an error for get", async() => {
         Intent.find.mockImplementation(() => {throw "error"});
-        const result = await intentDao.getIntent();
-        expect(result.error).toBe("error");
+        await dao.getIntent();
+        expect(emit).toHaveBeenCalledWith("getIntent", {status: 500, error: "error"});
     });
 
     it("Post a single intent", async() => {
         const fakeIntents = [{goodDog: "prr"}];
         const fakeModel = {save: jest.fn()};
         Intent.mockImplementationOnce(() => fakeModel);
-
-        const result = await intentDao.postIntents(fakeIntents);
-
+        await dao.postIntents(fakeIntents);
         expect(Intent).toHaveBeenCalled();
         expect(fakeModel.save).toHaveBeenCalled();
-        expect(result.status).toBe(200);
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success"});
     });
 
     it("Post multiple intents", async() => {
@@ -47,26 +54,24 @@ describe("intentDao", () => {
         const fakeIntents = [{goodDog: "prr"}, {badDog: "barkbark"}];
         const fakeModel = {save: jest.fn()};
         Intent.mockImplementationOnce(() => fakeModel);
-
-        const result = await intentDao.postIntents(fakeIntents);
-
+        await dao.postIntents(fakeIntents);
         expect(Intent).toHaveBeenCalledTimes(2);
         expect(fakeModel.save).toHaveBeenCalled();
-        expect(result.status).toBe(200);
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success"});
     });
 
     it("should correctly throw an error for post", async() => {
         Intent.mockImplementation(() => {throw "error"});
-        const result = await intentDao.getIntent();
-        expect(result.error).toBe("error");
+        await dao.postIntents();
+        const error = new TypeError("content is not iterable")
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 500, error: error});
     });
 
     it("Put an intent", async() => {
         const id = 1;
         const content = {"meow": "kitten"};
 
-        await intentDao.putIntent(id, content);
-
+        await dao.putIntent(id, content);
         expect(Intent.findByIdAndUpdate).toHaveBeenCalledWith(
             id,
             content,
@@ -75,23 +80,22 @@ describe("intentDao", () => {
 
     it("should correctly throw an error for put", async() => {
         Intent.findByIdAndUpdate.mockImplementation(() => {throw "error"});
-        const result = await intentDao.getIntent();
-        expect(result.error).toBe("error");
+        await dao.putIntent();
+        expect(emit).toHaveBeenCalledWith("putIntent", {status: 500, error: "error"});
     });
 
     it("should save an intent", async() => {
         const fakeIntent = {save: jest.fn()};
-
-        const result = await intentDao.saveIntent(fakeIntent);
-
-        expect(result.status).toBe(200);
+        await dao.saveIntent(fakeIntent);
+        expect(emit).toHaveBeenCalledWith("saveIntent", {status: 200});
         expect(fakeIntent.save).toHaveBeenCalled();
     });
 
-    it("should correctly throw an error for put", async() => {
+    it("should correctly throw an error for save", async() => {
         const fakeIntent = {save: jest.fn()};
         fakeIntent.save.mockImplementation(() => {throw "error"});
-        const result = await intentDao.getIntent();
-        expect(result.error).toBe("error");
+        await dao.saveIntent();
+        const error = new TypeError("Cannot read properties of undefined (reading 'save')")
+        expect(emit).toHaveBeenCalledWith("saveIntent", {status: 500, error: error});
     });
 });

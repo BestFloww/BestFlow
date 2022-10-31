@@ -1,18 +1,41 @@
 import intentDao from "../dao/intentdao.js";
+import { IntentInterface } from "../interfaces/intent-interface.js";
 import TranscriptInteractor from "./transcript_interactor.js";
 import TranscriptFormatter from "./transcript_data_formatter.js";
 
 jest.mock("../dao/intentdao.js");
+jest.mock("../interfaces/intent-interface.js")
 jest.mock("./transcript_data_formatter.js");
 
-TranscriptInteractor.setIntentDao(intentDao);
 const mock_transcript = {transcript: JSON.stringify({})};
 
+let dao;
+
 describe("transcriptInteractor", () => {
-    it("Should correctly set intentDao and get transcript", async() => {
-        intentDao.getIntent.mockImplementation().mockReturnValue({});
+    beforeAll(() => {
+        intentDao.prototype = Object.create(IntentInterface.prototype);
+        const newDao = new intentDao;
+        newDao.prototype = new IntentInterface();
+        TranscriptInteractor.setIntentDao(newDao);
+        dao = newDao;
+    });
+
+    it("Should correctly throw an error for setIntentDao", async() => {
+        dao.getIntent.mockImplementation().mockReturnValue({});
         await TranscriptInteractor.getTranscript({});
-        expect(intentDao.getIntent).toHaveBeenCalled();
+        expect(dao.getIntent).toHaveBeenCalled();
+    });
+
+    it("Should correctly throw an error for setIntentDao", async() => {
+        dao.getIntent.mockImplementation().mockReturnValue({});
+        await TranscriptInteractor.getTranscript({});
+        expect(dao.getIntent).toHaveBeenCalled();
+    });
+
+    it("Should correctly set intentDao and get transcript", async() => {
+        dao.getIntent.mockImplementation().mockReturnValue({});
+        await TranscriptInteractor.getTranscript({});
+        expect(dao.getIntent).toHaveBeenCalled();
     });
 
     it("Should correctly parse JSON transcript", async() => {
@@ -29,11 +52,11 @@ describe("transcriptInteractor", () => {
 
     it("Should correctly format transcript", async() => {
         await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript));
-        expect(intentDao.postIntents).toHaveBeenCalled();
+        expect(dao.postIntents).toHaveBeenCalled();
     });
 
     it("Should correctly throw an error for format transcript", async() => {
-        intentDao.postIntents.mockImplementation(() => {throw {message : "error"}})
+        dao.postIntents.mockImplementation(() => {throw {message : "error"}})
         const result = await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript));
         expect(result.error.message).toBe("error");
     });

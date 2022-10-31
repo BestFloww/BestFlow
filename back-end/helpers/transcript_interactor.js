@@ -1,32 +1,39 @@
 import {InputBoundaryInterface} from "../interfaces/input-boundary-interface.js";
 import TranscriptFormatter from "./transcript_data_formatter.js";
+import OutputDataBoundary from "./output_data_boundary.js";
+import { IntentInterface } from "../interfaces/intent-interface.js";
 
 export default class TranscriptInteractor extends InputBoundaryInterface{
-    static #intentDao;
+    static #IntentDao;
 
-    static setIntentDao(dao) {
-        if(dao.isIntentInterface){
-            this.#intentDao = dao;
+    static setIntentDao(dao){
+        if(dao instanceof IntentInterface){
+            this.#IntentDao = dao;
+            this.#IntentDao.addListener('postIntent', (response) => {
+                OutputDataBoundary.setOutput(response);
+            });
+            this.#IntentDao.addListener('getIntent', (response) => {
+                OutputDataBoundary.setOutput(response);
+            });
         } else {
             throw new Error("not an IntentInterface");
         }
     }
 
     static async getTranscript(query){
-        return await this.#intentDao.getIntent(query);
+        const res = await this.#IntentDao.getIntent(query);
     }
 
     static async formatTranscript(rawTranscript){
         try{
             rawTranscript = rawTranscript.replaceAll(".", "-DOT-");
+            console.log(rawTranscript);
             let formattedTranscript = JSON.parse(rawTranscript);
             formattedTranscript = JSON.parse(formattedTranscript.transcript);
-            const finalTranscript = await TranscriptFormatter.formatTranscript(formattedTranscript)
-            await this.#intentDao.postIntents(finalTranscript);
+            const finalTranscript = await TranscriptFormatter.formatTranscript(formattedTranscript);
+            const res = await this.#IntentDao.postIntents(finalTranscript);
         } catch (e) {
             return {error: e};
         }
     }
-
-
 }
