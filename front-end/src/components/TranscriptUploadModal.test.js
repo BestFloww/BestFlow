@@ -5,6 +5,8 @@ import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import TranscriptAPI from "../services/TranscriptAPI.js";
 jest.mock("../services/TranscriptAPI.js");
 
+// React-modal doesn't work very well with the React testing library and this is our best attempts at testing.
+
 describe("TranscriptUploadModal tests", () => {
     let props;
     const renderComponent = (props) => {
@@ -22,7 +24,7 @@ describe("TranscriptUploadModal tests", () => {
         renderComponent(props);
         userEvent.keyboard("{esc}");
         expect(props.show).toBe(false);
-    })
+    });
 
     it("correctly inputs file into modal", () => {
         renderComponent(props);
@@ -33,7 +35,7 @@ describe("TranscriptUploadModal tests", () => {
         userEvent.upload(input, fakeFile)
 
         expect(input.files).toHaveLength(1);
-    })
+    });
 
     it("correctly uploads file to backend if JSON has a data attribute", async() => {
         renderComponent(props);
@@ -51,7 +53,8 @@ describe("TranscriptUploadModal tests", () => {
         await waitFor(() => expect(parse).toHaveBeenCalled())
 
         // This allows our async method to run
+        jest.spyOn(TranscriptAPI,"post").mockImplementation().mockReturnValue({status:200});
         userEvent.click(screen.getByText("Upload"));
         await waitFor(() => expect(TranscriptAPI.post).toHaveBeenCalled())
-    })
+    });
 });
