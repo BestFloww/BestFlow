@@ -6,7 +6,7 @@ export default class TranscriptController {
         if(interactor.isInputBoundaryInterface){
             this.#inputBoundary = interactor;
         } else {
-            throw new Error("not an InputBoundaryInterface");
+            throw new Error("not an InputBoundary");
         }
     }
 
@@ -14,15 +14,20 @@ export default class TranscriptController {
         if(outputBoundary.isOutputBoundaryInterface){
             this.#outputBoundary = outputBoundary;
         } else {
-            throw new Error("not an OutputBoundaryInterface");
+            throw new Error("not an OutputBoundary");
         }
     }
 
-    static async getTranscript(req, res, next) {
+    static async getAnalyzedTranscript(req, res, next) {
         const query = req.body;
-        await this.#inputBoundary.getTranscript(query);
-        const {intentList} = this.#outputBoundary.getOutput();
-        res.json(intentList);
+        try {
+            await this.#inputBoundary.getTranscript(query);
+            const {intentList} = this.#outputBoundary.getOutput();
+            res.json(intentList);
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+        
     }
 
     static async postTranscript(req, res, next) {
