@@ -30,6 +30,7 @@ describe("transcriptController", () => {
         OutputDataBoundary.getOutput.mockImplementation(() => {return outputReturn});
         const res = mockResponse();
         await TranscriptController.postTranscript({body:{payload : {"a" : "a"}}}, res,{});
+        
         expect(TranscriptInteractor.formatTranscript).toHaveBeenCalled();
         expect(OutputDataBoundary.getOutput).toHaveBeenCalled();
         expect(res.json).toHaveBeenCalledWith(outputReturn);
