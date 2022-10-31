@@ -2,7 +2,6 @@ import TranscriptController from "./transcript_controller.js";
 import TranscriptInteractor from "../../helpers/transcript_interactor.js";
 import OutputDataBoundary from "../../helpers/output_data_boundary.js"
 
-jest.mock("../../schema/intent-schema.js");
 jest.mock("../../helpers/transcript_interactor.js");
 jest.mock("../../helpers/output_data_boundary.js")
 
@@ -27,8 +26,13 @@ describe("transcriptController", () => {
     });
 
     it("Should correctly post transcript", async() => {
-        await TranscriptController.postTranscript({body:{payload : {"a" : "a"}}}, mockResponse(), {});
+        const outputReturn = {status: 201, message: "success"};
+        OutputDataBoundary.getOutput.mockImplementation(() => {return outputReturn});
+        const res = mockResponse();
+        await TranscriptController.postTranscript({body:{payload : {"a" : "a"}}}, res,{});
         expect(TranscriptInteractor.formatTranscript).toHaveBeenCalled();
+        expect(OutputDataBoundary.getOutput).toHaveBeenCalled();
+        expect(res.json).toHaveBeenCalledWith(outputReturn);
     });
 
     it("Should correctly throw an error for post transcript", async() => {

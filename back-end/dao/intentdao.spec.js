@@ -1,15 +1,14 @@
-import intentDao from "./intentdao.js";
+import IntentDao from "./intentdao.js";
 import { Intent } from "../schema/intent-schema.js";
 
 jest.mock("../schema/intent-schema.js");
 
 let dao;
 let emit;
-//const get = jest.spyOn(dao, "getIntent");
 
-describe("intentDao", () => {
+describe("IntentDao", () => {
     beforeEach(() => {
-        const newDao = new intentDao();
+        const newDao = new IntentDao();
         const newEmit = jest.spyOn(newDao, "emit");
         dao = newDao;
         emit = newEmit;
@@ -47,7 +46,7 @@ describe("intentDao", () => {
         await dao.postIntents(fakeIntents);
         expect(Intent).toHaveBeenCalled();
         expect(fakeModel.save).toHaveBeenCalled();
-        expect(emit).toHaveBeenCalledWith("postIntent", {status: 200});
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success"});
     });
 
     it("Post multiple intents", async() => {
@@ -58,7 +57,7 @@ describe("intentDao", () => {
         await dao.postIntents(fakeIntents);
         expect(Intent).toHaveBeenCalledTimes(2);
         expect(fakeModel.save).toHaveBeenCalled();
-        expect(emit).toHaveBeenCalledWith("postIntent", {status: 200});
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success"});
     });
 
     it("should correctly throw an error for post", async() => {
