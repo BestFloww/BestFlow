@@ -40,7 +40,13 @@ class TranscriptUploadModal extends React.Component {
   }
 
   async handleUpload(file) {
-    TranscriptAPI.post(file);
+    const result = await TranscriptAPI.post(file);
+    if(result.status === 200){
+      this.props.toggleModal();
+    }
+    else {
+      window.alert("Error in uploading transcript. Please try again.")
+    }
   }
 
   componentDidMount() {
