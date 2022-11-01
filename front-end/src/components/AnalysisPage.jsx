@@ -15,7 +15,7 @@ const fakeIntents = [
     question: "Where should I go for a good time and great learning experience?",
     children: {
       "You should go to the University of Toronto.": 10,
-      "You should go to the Technology Leadership Initiative.": 90
+      "You should go to the Technology Leadership Initiative.": 90,
     }
   }, 
   {
@@ -25,13 +25,47 @@ const fakeIntents = [
       "Showtime showtime what I'm John Laurens in the place to be.": 20,
       "Summertime! School's out, scream and shout.": 70,
     }
-  }
+  },
+  {
+    question: "What is Tailwind used for?",
+    children: {
+      "Escaping from your enemies.": 15,
+      "Making it easier to code CSS.": 85,
+    }
+  },
+  {
+    question: "What is your favorite cooking ingredient?",
+    children: {
+      "Basil.": 36,
+      "Onion.": 23,
+      "Asphalt.": 41,
+      "Cookbooks.": 0,
+    }
+  },
+  {
+    question: "What is the name of the rat in Ratatouille?",
+    children: {
+      "Ratatouille.": 99,
+      "Remy.": 1,
+    }
+  },
 ]
 
 class AnalysisPage extends Component {
+    state = {
+      intentIndex: 0,
+    }
 
     openMainPage = () => {
       store.dispatch(openMainPage());
+    }
+
+    incrementIndex = () => {
+      this.setState({intentIndex: Math.min(this.state.showTranscriptUploadModal + 3, fakeIntents.length() - 1)});
+    }
+
+    decrementIndex = () => {
+      this.setState({intentIndex: Math.max(this.state.showTranscriptUploadModal - 3, 0)});
     }
 
     render() {
@@ -45,7 +79,7 @@ class AnalysisPage extends Component {
                     size="sm" />
                 </div>
                 <div className="w-4/5 h-4/5 mx-auto">
-                  <IntentLister intents={fakeIntents} index={0} />
+                  <IntentLister intents={fakeIntents} index={this.state.intentIndex} />
                 </div>
               </div>
             </div>
