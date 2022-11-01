@@ -1,5 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
+import store from "../store.js";
+import { enable, disable } from '../store/counters/uploadedSlice.js';
 import TranscriptAPI from '../services/TranscriptAPI';
 import BaseButton from './BaseButton';
 
@@ -43,9 +45,11 @@ class TranscriptUploadModal extends React.Component {
     const result = await TranscriptAPI.post(file);
     if(result.status === 500){
       window.alert("Error in uploading transcript. Please try again.")
+      store.dispatch(disable())
     }
     else {
       this.props.toggleModal();
+      store.dispatch(enable())
     }
   }
 

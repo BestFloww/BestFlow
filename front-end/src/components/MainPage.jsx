@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
+import { disable } from '../store/counters/uploadedSlice.js';
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 
 class MainPage extends Component {
   state = {
-      showTranscriptUploadModal: false
+      showTranscriptUploadModal: false,
+      isTranscriptUploaded: false
   }
+  unsubscribe = store.subscribe( () =>{
+    this.state.isTranscriptUploaded = store.getState().isTranscriptUploaded.isUploaded;
+  })
 
   toggleTranscriptUploadModal = () => {
       this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
+      this.state.isTranscriptUploaded = false;
   }
 
   openAnalysisPage = () => {
@@ -43,6 +49,7 @@ class MainPage extends Component {
               click={this.openAnalysisPage}
               text="View Analysis"
               size="lg"
+              isDisabled={!this.state.isTranscriptUploaded}
             />
           </div>
         </div>
