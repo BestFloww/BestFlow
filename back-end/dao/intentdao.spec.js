@@ -67,7 +67,7 @@ describe("intentDao", () => {
         Intent.mockImplementationOnce(() => {save: jest.fn().mockImplementation(() => {throw {error: "error"}})});
         await dao.postIntents();
         const error = new TypeError("content is not iterable")
-        expect(emit).toHaveBeenCalledWith("postIntent", {status: 500, error: error});
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 500, error: error.message});
     });
 
     it("should correctly throw an error for post if an intent with the same ID is found and override is false", async() => {
@@ -75,7 +75,7 @@ describe("intentDao", () => {
         Intent.find.mockImplementationOnce(() => [1]);
         await dao.postIntents(fakeIntents, false);
         const expectedError = new Error("Project ID is already present. Do you want to override?");
-        expect(emit).toHaveBeenCalledWith("postIntent", {status: 500, error: expectedError});
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 500, error: expectedError.message});
     });
 
     it("should correctly post if override is true", async() => {
