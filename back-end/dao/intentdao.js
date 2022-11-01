@@ -1,8 +1,7 @@
-import { Query } from "mongoose";
 import { Intent } from "../schema/intent-schema.js";
 import {IntentInterface} from "../interfaces/intent-interface.js";
 
-export default class intentDao extends IntentInterface{
+export default class IntentDao extends IntentInterface{
   /**
    *  @param {Object} query find specific intent(s)
    * */
@@ -33,7 +32,7 @@ export default class intentDao extends IntentInterface{
         await newIntent.save();
         checkedIds.push(intent.project_id);
       }
-      this.emit("postIntent",{status: 200});
+      this.emit("postIntent",{status: 201, message: "success"});
     } catch (e) {
       this.emit("postIntent",{status: 500, error: e.message});
     }

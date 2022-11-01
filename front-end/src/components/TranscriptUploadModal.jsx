@@ -40,7 +40,13 @@ class TranscriptUploadModal extends React.Component {
   }
 
   async handleUpload(file) {
-    TranscriptAPI.post(file);
+    const result = await TranscriptAPI.post(file);
+    if(result.status === 500){
+      window.alert("Error in uploading transcript. Please try again.")
+    }
+    else {
+      this.props.toggleModal();
+    }
   }
 
   componentDidMount() {
@@ -51,17 +57,18 @@ class TranscriptUploadModal extends React.Component {
     return (
       <Modal
         isOpen={this.props.show}
-        className="container w-60 md:w-80 mx-auto bg-purple-200 rounded-lg shadow-lg py-3 mt-[40vh] flex flex-col"
+        className="container w-60 md:w-80 mx-auto bg-purple-100 rounded-lg shadow-lg py-3 mt-[40vh] flex flex-col"
         onRequestClose={this.props.toggleModal}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
       >
+
         {this.state.isFileValid === false && 
-          <h3 className="bg-red-100 h-full text-center -mt-3 rounded-t-lg">
+          <h3 className="full text-center -mt-3 rounded-t-lg bg-red py-3 ">
             Please upload a valid JSON
           </h3>
         }
-
+        
         <h2 className="justify-center flex m-3" data-testid="upload-transcript-modal">
           Drag and drop file or upload below. 
         </h2>
