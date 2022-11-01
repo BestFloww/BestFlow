@@ -31,12 +31,11 @@ export default class intentDao extends IntentInterface{
         }
         const newIntent = new Intent(intent);
         await newIntent.save();
-        console.log(override)
         checkedIds.push(intent.project_id);
       }
       this.emit("postIntent",{status: 200});
     } catch (e) {
-      this.emit("postIntent",{status: 500, error: e});
+      this.emit("postIntent",{status: 500, error: e.message});
     }
   }
 

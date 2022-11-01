@@ -12,7 +12,7 @@ const mock_transcript = {transcript: JSON.stringify({})};
 let dao;
 
 describe("transcriptInteractor", () => {
-    beforeAll(() => {
+    beforeEach(() => {
         intentDao.prototype = Object.create(IntentInterface.prototype);
         const newDao = new intentDao;
         newDao.prototype = new IntentInterface();
@@ -48,7 +48,7 @@ describe("transcriptInteractor", () => {
 
     it("Should correctly call TranscriptFormatter", async() =>{
         await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript));
-        expect(TranscriptFormatter.formatTranscript).toHaveBeenCalledWith();
+        expect(TranscriptFormatter.formatTranscript).toHaveBeenCalledWith({});
     });
 
     it("Should correctly format transcript", async() => {
@@ -63,9 +63,13 @@ describe("transcriptInteractor", () => {
     });
 
     it("should correctly postIntents with override being passed down", async() => {
-        result = await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript), true);
-        TranscriptFormatter.formatTranscript.mockImplementation(() => {});
-        expect(formatTranscript).toHaveBeenCalledWith({}, true);
+        const result = await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript), true);
+        expect(dao.postIntents).toHaveBeenCalledWith(undefined, true);
+    });
+
+    it("should correctly postIntents with override being passed down defaulting to false", async() => {
+        const result = await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript));
+        expect(dao.postIntents).toHaveBeenCalledWith(undefined, false);
     });
 
 });

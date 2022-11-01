@@ -34,6 +34,7 @@ export default class TranscriptController {
         try {
             const body = JSON.stringify(req.body.payload);
             const transcript = JSON.parse(body);
+            console.log(transcript)
             const override = transcript.override;
             await this.#inputBoundary.formatTranscript(transcript, override);
             const output = this.#outputBoundary.getOutput();

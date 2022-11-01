@@ -2,7 +2,6 @@ import {InputBoundaryInterface} from "../interfaces/input-boundary-interface.js"
 import TranscriptFormatter from "./transcript_data_formatter.js";
 import OutputDataBoundary from "./output_data_boundary.js";
 import { IntentInterface } from "../interfaces/intent-interface.js";
-import intentDao from "../dao/intentdao.js";
 
 export default class TranscriptInteractor extends InputBoundaryInterface{
     static #intentDao;
