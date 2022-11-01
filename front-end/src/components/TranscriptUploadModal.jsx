@@ -44,7 +44,7 @@ class TranscriptUploadModal extends React.Component {
       await TranscriptAPI.post(file);
       this.props.toggleModal();
     } catch (e) {
-      window.alert("Error in uploading transcript. Please try again.");
+      window.alert("Error in uploading transcript. " + e.message);
     }
   }
 
