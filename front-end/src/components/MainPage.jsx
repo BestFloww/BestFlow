@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
+import { disable } from '../store/counters/transcriptUploadedSlice.js';
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 
@@ -15,7 +16,7 @@ class MainPage extends Component {
 
   toggleTranscriptUploadModal = () => {
       this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
-      this.state.isTranscriptUploaded = false;
+      store.dispatch(disable())
   }
 
   openAnalysisPage = () => {
