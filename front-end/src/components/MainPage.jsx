@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
-import { disable } from '../store/counters/uploadedSlice.js';
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 

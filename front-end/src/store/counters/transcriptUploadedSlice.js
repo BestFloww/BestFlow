@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const uploadedSlice = createSlice({
+export const transcriptUploadedSlice = createSlice({
   name: 'isTranscriptUploaded',
   initialState: {
     isUploaded: false
@@ -15,6 +15,6 @@ export const uploadedSlice = createSlice({
   }
 })
 
-export const { enable, disable } = uploadedSlice.actions
+export const { enable, disable } = transcriptUploadedSlice.actions
 
-export default uploadedSlice.reducer
+export default transcriptUploadedSlice.reducer
