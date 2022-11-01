@@ -24,7 +24,7 @@ class MainPage extends Component {
           <h1 className="justify-center flex font-pacifico text-9xl text-purple-300 text-shadow shadow-blue">
             BestFlow
           </h1>
-          <p className="justify-center text-xl flex font-cabin -mt-3"> Problem diagnostic tool for VoiceFlow transcripts </p>
+          <p className="justify-center text-xl flex font-cabin -mt-3"> Problem diagnostic tool for chatbot transcripts </p>
           <div className="justify-center flex mt-10">
             <BaseButton
               click={this.toggleTranscriptUploadModal}
