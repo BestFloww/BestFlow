@@ -31,7 +31,7 @@ export default class TranscriptInteractor extends InputBoundaryInterface{
             let formattedTranscript = JSON.parse(rawTranscript);
             formattedTranscript = JSON.parse(formattedTranscript.transcript);
             const finalTranscript = await TranscriptFormatter.formatTranscript(formattedTranscript);
-            const res = await this.#intentDao.postIntents(finalTranscript, override);
+            const res = await this.#IntentDao.postIntents(finalTranscript, override);
         } catch (e) {
             return {error: e};
         }

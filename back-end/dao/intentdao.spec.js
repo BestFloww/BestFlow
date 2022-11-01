@@ -83,7 +83,7 @@ describe("IntentDao", () => {
         Intent.mockImplementationOnce(() => {save: jest.fn()});
         await dao.postIntents(fakeIntents, true);
         expect(Intent.find).not.toHaveBeenCalled();
-        expect(emit).toHaveBeenCalledWith("postIntent", {status: 200});
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success"});
     });
 
     it("Put an intent", async() => {
