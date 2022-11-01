@@ -37,7 +37,7 @@ export default class TranscriptController {
             await this.#inputBoundary.formatTranscript(transcript);
             const output = this.#outputBoundary.getOutput();
             const status = Object.keys(output)[0];
-            res.status(status).json(output);
+            console.log(output[status]);
         } catch (e) {
             res.status(500).json({ error: e.message });
         }
