@@ -18,7 +18,7 @@ export class InputBoundaryInterface{
      *  @param {Object} rawTranscript raw transcript uploaded by user
      *  @return {Object} properly formatted data from the transcript
      * */
-    static async formatTranscript(rawTranscript = {}) {
+    static async formatTranscript(rawTranscript = {}, override = false) {
         throw new Error("not implemented");
     }
 }

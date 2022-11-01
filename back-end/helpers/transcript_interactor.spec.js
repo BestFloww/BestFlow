@@ -18,6 +18,7 @@ describe("transcriptInteractor", () => {
         newDao.prototype = new IntentInterface();
         TranscriptInteractor.setIntentDao(newDao);
         dao = newDao;
+        jest.clearAllMocks();
     });
 
     it("Should correctly throw an error for setIntentDao", async() => {
@@ -47,7 +48,7 @@ describe("transcriptInteractor", () => {
 
     it("Should correctly call TranscriptFormatter", async() =>{
         await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript));
-        expect(TranscriptFormatter.formatTranscript).toHaveBeenCalled();
+        expect(TranscriptFormatter.formatTranscript).toHaveBeenCalledWith();
     });
 
     it("Should correctly format transcript", async() => {
@@ -56,9 +57,15 @@ describe("transcriptInteractor", () => {
     });
 
     it("Should correctly throw an error for format transcript", async() => {
-        dao.postIntents.mockImplementation(() => {throw {message : "error"}})
+        dao.postIntents.mockImplementationOnce(() => {throw {message : "error"}})
         const result = await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript));
         expect(result.error.message).toBe("error");
+    });
+
+    it("should correctly postIntents with override being passed down", async() => {
+        result = await TranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript), true);
+        TranscriptFormatter.formatTranscript.mockImplementation(() => {});
+        expect(formatTranscript).toHaveBeenCalledWith({}, true);
     });
 
 });

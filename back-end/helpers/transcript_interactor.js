@@ -25,13 +25,13 @@ export default class TranscriptInteractor extends InputBoundaryInterface{
         const res = await this.#intentDao.getIntent(query);
     }
 
-    static async formatTranscript(rawTranscript){
+    static async formatTranscript(rawTranscript, override = false){
         try{
             rawTranscript = rawTranscript.replaceAll(".", "-DOT-");
             let formattedTranscript = JSON.parse(rawTranscript);
             formattedTranscript = JSON.parse(formattedTranscript.transcript);
             const finalTranscript = await TranscriptFormatter.formatTranscript(formattedTranscript);
-            const res = await this.#intentDao.postIntents(finalTranscript);
+            const res = await this.#intentDao.postIntents(finalTranscript, override);
         } catch (e) {
             return {error: e};
         }
