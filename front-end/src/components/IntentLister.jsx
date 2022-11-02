@@ -9,7 +9,7 @@ class IntentLister extends Component {
     }  
     
     incrementIndex = () => {
-        // Increment index by 3 if the last question is beyond the 3 indices currently displayed
+        // Increment index by 3 if the index of the last question is beyond the 3 indices currently displayed
         if (this.props.intents.length > this.state.index + 3) {
           this.setState({index: this.state.index + 3});
         }
@@ -18,6 +18,16 @@ class IntentLister extends Component {
     decrementIndex = () => {
         // Decrement index by 3, stopping at 0 to avoid negative indices
         this.setState({index: Math.max(this.state.index - 3, 0)});
+    }
+
+    checkIfMaxIndex = () => {
+        // Check if the lister is displaying the last possible set of questions
+        return this.props.intents.length - this.state.index < 3;
+    }
+
+    checkIfMinIndex = () => {
+        // Check if the lister is displaying the first possible set of questions
+        return this.state.index === 0;
     }
 
     generateIntents = (currentIntents) => {
@@ -53,36 +63,40 @@ class IntentLister extends Component {
             curr++;
         }
         return (
-            <div className="full h-full flex flex-col mx-auto gap-y-20 justify-evenly">
-                <div className="flex flex-col gap-y-32 sm:flex-row sm:mx-0 mx-auto sm:justify-around">
-                    {this.generateIntents(currentIntents)}
+            <div>
+                <div className="full h-full flex flex-col mx-auto gap-y-12 justify-evenly">
+                    <div className="flex flex-col gap-y-32 sm:flex-row sm:mx-0 mx-auto sm:justify-around">
+                        {this.generateIntents(currentIntents)}
+                    </div>
+                    {currentIntents.length === MAX_CURRENT_INTENTS &&
+                    <div className="flex mx-auto">
+                        <IntentDiagram
+                            data-testid={currentIntents[2].question}
+                            question={currentIntents[2].question}
+                            branches={currentIntents[2].children}
+                        />
+                    </div>
+                    }
                 </div>
-                {currentIntents.length === MAX_CURRENT_INTENTS &&
-                <div className="flex mx-auto">
-                  <IntentDiagram
-                    data-testid={currentIntents[2].question}
-                    question={currentIntents[2].question}
-                    branches={currentIntents[2].children}
-                 />
+                <div className="fixed left-4 bottom-8">
+                    <BaseButton
+                        click={this.decrementIndex}
+                        isDisabled={this.checkIfMinIndex()}
+                        icon={{
+                            name: "arrow-left",
+                            size: "40"
+                        }}
+                    />
                 </div>
-                }
-                <div className="justify-between flex mb-12 ml-12 mr-12">
-                  <BaseButton
-                    click={this.decrementIndex}
-                    isDisabled={this.state.index === 0}
-                    icon={{
-                      name: "arrow-left",
-                      size: "40"
-                    }}
-                  />
-                  <BaseButton
-                    click={this.incrementIndex}
-                    isDisabled={this.props.intents.length - this.state.index < 3}
-                    icon={{
-                      name: "arrow-right",
-                      size: "40"
-                    }}
-                  />
+                <div className="fixed right-4 bottom-8">
+                    <BaseButton
+                        click={this.incrementIndex}
+                        isDisabled={this.checkIfMaxIndex()}
+                        icon={{
+                            name: "arrow-right",
+                            size: "40"
+                        }}
+                    />
                 </div>
             </div>
         );
