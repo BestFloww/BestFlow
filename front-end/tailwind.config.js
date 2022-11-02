@@ -34,6 +34,9 @@ module.exports = {
         DEFAULT: '2px 2px 2px var(--tw-shadow-color)',
         lg: '0 8px 16px var(--tw-shadow-color)',
       },
+      scale: {
+        '175': '1.75',
+      }
     },
   },
   plugins: [

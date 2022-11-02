@@ -22,13 +22,10 @@ class MainPage extends Component {
     return(
       <div className="MainPage bg-purple-100 absolute inset-0" data-testid="main-page">
         <div className="flex gap-y-7 w-full flex-col mt-[25vh]">
-          <div className="justify-center flex md:-ml-[8vw] 2xl:-ml-[4vw]">
-            <Icon icon={{name: "logo"}}/>
-            <h1 className="justify-center flex font-pacifico text-9xl text-purple-300 text-shadow shadow-blue md:-ml-[7.3vw] 2xl:-ml-[4vw]">
-              estFlow
-            </h1>
+          <div className="justify-center flex scale-175">
+            <Icon icon={{name: "title"}}/>
           </div>
-          <p className="justify-center text-xl flex font-cabin -mt-3"> Problem diagnostic tool for chatbot transcripts </p>
+          <p className="justify-center text-xl flex font-cabin -mt-7"> Problem diagnostic tool for chatbot transcripts </p>
           <div className="justify-center flex mt-10">
             <BaseButton
               click={this.toggleTranscriptUploadModal}
