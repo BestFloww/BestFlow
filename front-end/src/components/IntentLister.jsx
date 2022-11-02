@@ -4,9 +4,13 @@ import BaseButton from "./BaseButton.jsx";
 import IntentDiagram from './IntentDiagram.jsx';
 
 class IntentLister extends Component {
-    constructor(props){
+
+    constructor(props) {
         super(props);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.state = {
+            index: this.props.initialIndex,
+        };
     }
 
     componentDidMount() {
@@ -19,17 +23,15 @@ class IntentLister extends Component {
 
     handleKeyPress(event) {
         switch(event.key) {
+            case "ArrowLeft":
             case "a":
                 this.decrementIndex();
                 break;
+            case "ArrowRight":
             case "d":
                 this.incrementIndex();
         };
     }
-
-    state = {
-        index: 0,
-    }  
     
     incrementIndex = () => {
         // Increment index by 3 if the index of the last question is beyond the 3 indices currently displayed
@@ -45,7 +47,7 @@ class IntentLister extends Component {
 
     checkIfMaxIndex = () => {
         // Check if the lister is displaying the last possible set of questions
-        return this.props.intents.length - this.state.index < 3;
+        return this.props.intents.length - this.state.index <= 3;
     }
 
     checkIfMinIndex = () => {
@@ -87,7 +89,7 @@ class IntentLister extends Component {
             currentIntents.push(this.props.intents[curr]);
             curr++;
         }
-        
+
         return (
             <div>
                 <div className="full h-full flex flex-col mx-auto gap-y-12 justify-evenly">
@@ -112,9 +114,10 @@ class IntentLister extends Component {
                             name: "arrow-left",
                             size: "40"
                         }}
+                        label="Left Arrow"
                     />
                 </div>
-                <div className="fixed right-4 bottom-8">
+                <div className="fixed right-4 bottom-8" data-testid="arrow-right">
                     <BaseButton
                         click={this.incrementIndex}
                         isDisabled={this.checkIfMaxIndex()}
@@ -122,6 +125,7 @@ class IntentLister extends Component {
                             name: "arrow-right",
                             size: "40"
                         }}
+                        label="Right Arrow"
                     />
                 </div>
             </div>
@@ -131,8 +135,11 @@ class IntentLister extends Component {
 
 IntentLister.propTypes = {
     intents: PropTypes.arrayOf(PropTypes.object).isRequired,
-    index: PropTypes.number.isRequired,
-}
+    initialIndex: PropTypes.number,
+};
 
+IntentLister.defaultProps = {
+    initialIndex: 0,
+};
  
 export default IntentLister;

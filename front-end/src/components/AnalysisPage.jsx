@@ -57,9 +57,10 @@ const fakeIntents = [
       "Remy.": 1,
     }
   },
-]
+];
 
 class AnalysisPage extends Component {
+
     openMainPage = () => {
       store.dispatch(openMainPage());
     }
