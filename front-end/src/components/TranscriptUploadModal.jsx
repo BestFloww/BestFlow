@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import store from "../store.js";
-import { enable, disable } from '../store/counters/transcriptUploadedSlice.js';
+import { enable, disable } from '../store/transcriptUploadedSlice.js';
 import TranscriptAPI from '../services/TranscriptAPI';
 import BaseButton from './BaseButton';
 

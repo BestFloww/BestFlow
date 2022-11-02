@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import store from './store.js';
+import { enable, disable } from './store/transcriptUploadedSlice.js';
 import App from './App.jsx';
 
 describe('App tests', () => {
@@ -11,6 +12,14 @@ describe('App tests', () => {
             <App/>
         </Provider>
     );
+
+    beforeEach(() => {
+        store.dispatch(enable())
+    });
+
+    afterAll(() => {
+        store.dispatch(disable())
+    });
 
     it('should display MainPage on load', () => {
         renderComponent();

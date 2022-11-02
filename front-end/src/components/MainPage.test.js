@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import store from '../store.js';
 import MainPage from './MainPage.jsx';
+import {enable, disable} from "../store/transcriptUploadedSlice.js"
 
 describe('MainPage tests', () => {
     const renderComponent = () => render(
@@ -11,6 +12,14 @@ describe('MainPage tests', () => {
             <MainPage/>
         </Provider>
     );
+
+    beforeEach(() => {
+        store.dispatch(enable())
+    });
+
+    afterAll(() => {
+        store.dispatch(disable())
+    });
 
     it('should not display Upload Transcript Modal initially', () => {
         renderComponent();

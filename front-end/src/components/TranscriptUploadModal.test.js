@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import TranscriptAPI from "../services/TranscriptAPI.js";
+import store from '../store.js';
+
 jest.mock("../services/TranscriptAPI.js");
 
 // React-modal doesn't work very well with the React testing library and this is our best attempts at testing.
@@ -57,4 +59,12 @@ describe("TranscriptUploadModal tests", () => {
         userEvent.click(screen.getByText("Upload"));
         await waitFor(() => expect(TranscriptAPI.post).toHaveBeenCalled())
     });
+
+    it('should dispatch enable when the transcript is successfully uploaded ', () => {
+        renderComponent();
+        const dispatch = jest.spyOn(store, 'dispatch');
+        userEvent.click(screen.getByText('View Analysis'));
+        expect(dispatch).toHaveBeenCalledWith({ type: 'isTranscriptUploaded/enable' });
+    });
+
 });
