@@ -106,6 +106,7 @@ describe("IntentLister", () => {
 
     it ("should increment index by 3 if the right arrow button is pressed and there are more than 3 remaining intents starting from the current index", () => {
         renderComponent(props);
+        expect(screen.getByLabelText('Right Arrow')).not.toBeDisabled();
         userEvent.click(screen.getByLabelText('Right Arrow'));
 
         // Intents 0-2 should not display, Intents 3-5 should display
@@ -139,6 +140,7 @@ describe("IntentLister", () => {
     it ("should decrement index by 3 if the left arrow button is pressed and there are more than 3 remaining intents before the current index", () => {
         props.initialIndex = 3;
         renderComponent(props);
+        expect(screen.getByLabelText('Left Arrow')).not.toBeDisabled();
         userEvent.click(screen.getByLabelText('Left Arrow'));
 
         // Intents 0-2 should display, Intents 3-5 should not display
