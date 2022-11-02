@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import store from '../store.js';
 import MainPage from './MainPage.jsx';
-import {enable, disable} from "../store/transcriptUploadedSlice.js"
+import {enableAnalysisButton, disableAnalysisButton} from "../store/transcriptUploadSlice.js"
 
 describe('MainPage tests', () => {
     const renderComponent = () => render(
@@ -13,12 +13,8 @@ describe('MainPage tests', () => {
         </Provider>
     );
 
-    beforeEach(() => {
-        store.dispatch(enable())
-    });
-
     afterAll(() => {
-        store.dispatch(disable())
+        store.dispatch(disableAnalysisButton())
     });
 
     it('should not display Upload Transcript Modal initially', () => {
@@ -35,6 +31,7 @@ describe('MainPage tests', () => {
     });
 
     it('should dispatch openAnalysisPage when View Analysis button is clicked', () => {
+        store.dispatch(enableAnalysisButton())
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.click(screen.getByText('View Analysis'));

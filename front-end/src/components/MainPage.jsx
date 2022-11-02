@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
-import { disable } from '../store/transcriptUploadedSlice.js';
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 
@@ -13,7 +12,6 @@ class MainPage extends Component {
 
   toggleTranscriptUploadModal = () => {
       this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
-      store.dispatch(disable())
   }
 
   openAnalysisPage = () => {
@@ -57,7 +55,7 @@ class MainPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isTranscriptUploaded: state.isTranscriptUploaded.isUploaded
+  isTranscriptUploaded: state.changeUploaded.isUploaded
 });
 
 export default connect(mapStateToProps)(MainPage);

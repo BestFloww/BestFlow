@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import store from './store.js';
-import { enable, disable } from './store/transcriptUploadedSlice.js';
+import { enableAnalysisButton, disableAnalysisButton } from './store/transcriptUploadSlice.js';
 import App from './App.jsx';
 
 describe('App tests', () => {
@@ -13,12 +13,8 @@ describe('App tests', () => {
         </Provider>
     );
 
-    beforeEach(() => {
-        store.dispatch(enable())
-    });
-
     afterAll(() => {
-        store.dispatch(disable())
+        store.dispatch(disableAnalysisButton())
     });
 
     it('should display MainPage on load', () => {
@@ -28,6 +24,7 @@ describe('App tests', () => {
     });
     
     it('should display AnalysisPage when View Analysis button is pressed on MainPage', async() => {
+        store.dispatch(enableAnalysisButton())
         renderComponent();
         userEvent.click(screen.getByText('View Analysis'));
         expect(await screen.getByTestId('analysis-page')).toBeInTheDocument();

@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import store from "../store.js";
-import { enable, disable } from '../store/transcriptUploadedSlice.js';
+import { enableAnalysisButton, disableAnalysisButton } from '../store/transcriptUploadSlice.js';
 import TranscriptAPI from '../services/TranscriptAPI';
 import BaseButton from './BaseButton';
 
@@ -24,6 +24,7 @@ class TranscriptUploadModal extends React.Component {
   handleData(result) {
     if (!this.validateData(result)) {
       this.setState({isFileValid: false});
+      store.dispatch(disableAnalysisButton())
     } else{
       this.setState({
         file: {transcript: result},
@@ -45,11 +46,11 @@ class TranscriptUploadModal extends React.Component {
     const result = await TranscriptAPI.post(file);
     if(result.status === 500){
       window.alert("Error in uploading transcript. Please try again.")
-      store.dispatch(disable())
+      store.dispatch(disableAnalysisButton())
     }
     else {
       this.props.toggleModal();
-      store.dispatch(enable())
+      store.dispatch(enableAnalysisButton())
     }
   }
 
