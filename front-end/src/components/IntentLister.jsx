@@ -4,6 +4,29 @@ import BaseButton from "./BaseButton.jsx";
 import IntentDiagram from './IntentDiagram.jsx';
 
 class IntentLister extends Component {
+    constructor(props){
+        super(props);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
+    }
+
+    componentDidMount() {
+        document.addEventListener("keydown", this.handleKeyPress, false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.handleKeyPress, false);
+    }
+
+    handleKeyPress(event) {
+        switch(event.key) {
+            case "a":
+                this.decrementIndex();
+                break;
+            case "d":
+                this.incrementIndex();
+        };
+    }
+
     state = {
         index: 0,
     }  
@@ -58,10 +81,13 @@ class IntentLister extends Component {
         const MAX_CURRENT_INTENTS = 3;
         let currentIntents = [];
         let curr = this.state.index;
+
+        // Choose a sublist of intents to display, up to a maximum of MAX_CURRENT_INTENTS
         while (this.props.intents[curr] && curr < this.state.index + MAX_CURRENT_INTENTS) {
             currentIntents.push(this.props.intents[curr]);
             curr++;
         }
+        
         return (
             <div>
                 <div className="full h-full flex flex-col mx-auto gap-y-12 justify-evenly">
