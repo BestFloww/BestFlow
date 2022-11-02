@@ -9,11 +9,7 @@ import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 class MainPage extends Component {
   state = {
       showTranscriptUploadModal: false,
-      //isTranscriptUploaded: false
   }
-  //unsubscribe = store.subscribe( () =>{
-  //  this.state.isTranscriptUploaded = store.getState().isTranscriptUploaded.isUploaded;
-  //})
 
   toggleTranscriptUploadModal = () => {
       this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
