@@ -3,7 +3,6 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import TranscriptAPI from "../services/TranscriptAPI.js";
-import store from '../store.js';
 
 jest.mock("../services/TranscriptAPI.js");
 

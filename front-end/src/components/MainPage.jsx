@@ -8,7 +8,7 @@ import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 
 class MainPage extends Component {
   state = {
-      showTranscriptUploadModal: false,
+      showTranscriptUploadModal: false
   }
 
   toggleTranscriptUploadModal = () => {
