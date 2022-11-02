@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export const transcriptUploadSlice = createSlice({
-  name: 'changeUpload',
+  name: 'transcriptUpload',
   initialState: {
     isUploaded: false
   },
