@@ -59,12 +59,4 @@ describe("TranscriptUploadModal tests", () => {
         userEvent.click(screen.getByText("Upload"));
         await waitFor(() => expect(TranscriptAPI.post).toHaveBeenCalled())
     });
-
-    it('should dispatch enable when the transcript is successfully uploaded ', () => {
-        renderComponent();
-        const dispatch = jest.spyOn(store, 'dispatch');
-        userEvent.click(screen.getByText('View Analysis'));
-        expect(dispatch).toHaveBeenCalledWith({ type: 'isTranscriptUploaded/enable' });
-    });
-
 });
