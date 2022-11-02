@@ -55,7 +55,7 @@ class MainPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isTranscriptUploaded: state.changeUploaded.isUploaded
+  isTranscriptUploaded: state.transcriptUpload.isUploaded
 });
 
 export default connect(mapStateToProps)(MainPage);
