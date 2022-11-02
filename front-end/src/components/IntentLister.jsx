@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import BaseButton from "./BaseButton.jsx";
 import IntentDiagram from './IntentDiagram.jsx';
 
 class IntentLister extends Component {
+    state = {
+        index: 0,
+    }  
+    
+    incrementIndex = () => {
+        // Increment index by 3 if the last question is beyond the 3 indices currently displayed
+        if (this.props.intents.length > this.state.index + 3) {
+          this.setState({index: this.state.index + 3});
+        }
+    }
+  
+    decrementIndex = () => {
+        // Decrement index by 3, stopping at 0 to avoid negative indices
+        this.setState({index: Math.max(this.state.index - 3, 0)});
+    }
 
     generateIntents = (currentIntents) => {
         let relevantIntents = [];
@@ -31,8 +47,8 @@ class IntentLister extends Component {
     render() {
         const MAX_CURRENT_INTENTS = 3;
         let currentIntents = [];
-        let curr = this.props.index;
-        while (this.props.intents[curr] && curr < this.props.index + MAX_CURRENT_INTENTS) {
+        let curr = this.state.index;
+        while (this.props.intents[curr] && curr < this.state.index + MAX_CURRENT_INTENTS) {
             currentIntents.push(this.props.intents[curr]);
             curr++;
         }
@@ -50,6 +66,24 @@ class IntentLister extends Component {
                  />
                 </div>
                 }
+                <div className="justify-between flex mb-12 ml-12 mr-12">
+                  <BaseButton
+                    click={this.decrementIndex}
+                    isDisabled={this.state.index === 0}
+                    icon={{
+                      name: "arrow-left",
+                      size: "40"
+                    }}
+                  />
+                  <BaseButton
+                    click={this.incrementIndex}
+                    isDisabled={this.props.intents.length - this.state.index < 3}
+                    icon={{
+                      name: "arrow-right",
+                      size: "40"
+                    }}
+                  />
+                </div>
             </div>
         );
     }

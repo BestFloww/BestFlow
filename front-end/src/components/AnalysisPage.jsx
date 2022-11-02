@@ -60,25 +60,8 @@ const fakeIntents = [
 ]
 
 class AnalysisPage extends Component {
-    state = {
-      intentIndex: 0,
-      intentCount: fakeIntents.length,
-    }
-
     openMainPage = () => {
       store.dispatch(openMainPage());
-    }
-
-    incrementIndex = () => {
-      // Increment index by 3 if the last question is beyond the 3 indices currently displayed
-      if (this.state.intentCount > this.state.intentIndex + 3) {
-        this.setState({intentIndex: this.state.intentIndex + 3});
-      }
-    }
-
-    decrementIndex = () => {
-      // Decrement index by 3, stopping at 0 to avoid negative indices
-      this.setState({intentIndex: Math.max(this.state.intentIndex - 3, 0)});
     }
 
     render() {
@@ -95,25 +78,6 @@ class AnalysisPage extends Component {
                 <div className="w-4/5 h-4/5 mx-auto">
                   <IntentLister
                     intents={fakeIntents}
-                    index={this.state.intentIndex}
-                  />
-                </div>
-                <div className="justify-between flex mb-12 ml-12 mr-12">
-                  <BaseButton
-                    click={this.decrementIndex}
-                    isDisabled={this.state.intentIndex === 0}
-                    icon={{
-                      name: "arrow-left",
-                      size: "40"
-                    }}
-                  />
-                  <BaseButton
-                    click={this.incrementIndex}
-                    isDisabled={this.state.intentCount - this.state.intentIndex < 3}
-                    icon={{
-                      name: "arrow-right",
-                      size: "40"
-                    }}
                   />
                 </div>
               </div>
