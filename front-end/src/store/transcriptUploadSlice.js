@@ -6,15 +6,15 @@ export const transcriptUploadSlice = createSlice({
     isUploaded: false
   },
   reducers: {
-    enableAnalysisButton: state => {
+    setTranscriptUploadStatusTrue: state => {
       state.isUploaded = true
     },
-    disableAnalysisButton: state => {
+    setTranscriptUploadStatusFalse: state => {
       state.isUploaded = false
     }
   }
 })
 
-export const { enableAnalysisButton, disableAnalysisButton } = transcriptUploadSlice.actions
+export const { setTranscriptUploadStatusTrue, setTranscriptUploadStatusFalse } = transcriptUploadSlice.actions
 
 export default transcriptUploadSlice.reducer
