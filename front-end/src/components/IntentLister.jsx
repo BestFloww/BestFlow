@@ -68,7 +68,7 @@ class IntentLister extends Component {
             this.setState({index: this.props.intents.length - this.props.intents.length % 3})
         } else {
             // Increment index by 3 if the index of the last question is beyond the 3 indices currently displayed
-            this.setState({index: Math.min(this.state.index + 3, this.props.intents.length - 3)});
+            this.setState({index: Math.min(this.state.index + 3, this.props.intents.length - this.props.intents.length % 3)});
         }
     }
   
