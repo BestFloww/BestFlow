@@ -84,4 +84,17 @@ describe('BaseButton tests', () => {
         expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 hover:bg-purple-200 active:bg-purple-400 md:py-5 md:px-6 md:text-2xl 2xl:py-6 2xl:px-9 2xl:text-2xl");
     });
 
+    it("should have a tooltip if tooltip prop is not null", () => {
+        const props = {...basicProps};
+        props.tooltip = "have fun kids";
+        renderComponent(props, false, "lg");
+        expect(screen.getByTestId("tooltip")).toBeInTheDocument();
+    });
+
+    it("should not have a tooltip if tooltip prop is null", () => {
+        renderComponent(basicProps, false, "lg");
+        expect(screen.queryByTestId("tooltip")).not.toBeInTheDocument();
+    });
+
+
 });
