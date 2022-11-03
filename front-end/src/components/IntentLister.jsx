@@ -7,42 +7,78 @@ class IntentLister extends Component {
 
     constructor(props) {
         super(props);
-        this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
         this.state = {
             index: this.props.initialIndex,
+            keysHeld: {},
         };
     }
 
     componentDidMount() {
-        document.addEventListener("keydown", this.handleKeyPress, false);
+        document.addEventListener("keydown", this.handleKeyDown, false);
+        document.addEventListener("keyup", this.handleKeyUp, false);
     }
 
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.handleKeyPress, false);
+        document.removeEventListener("keydown", this.handleKeyDown, false);
+        document.removeEventListener("keyup", this.handleKeyUp, false);
     }
 
-    handleKeyPress(event) {
+    handleKeyDown(event) {
+        // Track that this key has been held down
+        this.setState({
+            ...this.state,
+            keysHeld: {
+                ...this.state.keysHeld,
+                [event.key]: true,
+            }
+        });
+
+        // Map keys to methods
         switch(event.key) {
-            case "ArrowLeft":
-            case "a":
+            case "a", "ArrowLeft":
                 this.decrementIndex();
                 break;
-            case "ArrowRight":
-            case "d":
+            case "d", "ArrowRight":
                 this.incrementIndex();
+                break;
+            default:
+                break;
         };
+    }
+
+    handleKeyUp(event) {
+        // Track that this key has been released
+        this.setState({
+            ...this.state,
+            keysHeld: {
+                ...this.state.keysHeld,
+                [event.key]: false,
+            }
+        });
     }
     
     incrementIndex = () => {
-        // Increment index by 3 if the index of the last question is beyond the 3 indices currently displayed
-        if (this.props.intents.length > this.state.index + 3) {
-          this.setState({index: this.state.index + 3});
+        // Ctrl + Right goes to last intent set, defalt Right goes to next intent set
+        if (this.state.keysHeld["Control"]) {
+            // Set index to that of the first intent in the last intent set
+            this.setState({index: this.props.intents.length - this.props.intents.length % 3})
+        } else {
+            // Increment index by 3 if the index of the last question is beyond the 3 indices currently displayed
+            this.setState({index: Math.min(this.state.index + 3, this.props.intents.length - 3)});
         }
     }
   
     decrementIndex = () => {
-        // Decrement index by 3, stopping at 0 to avoid negative indices
-        this.setState({index: Math.max(this.state.index - 3, 0)});
+        // Ctrl + Left goes to first intent set, default Left goes to previous intent set
+        if (this.state.keysHeld["Control"]) {
+            // Set index to 0
+            this.setState({index: 0});
+        } else {
+            // Decrement index by 3, stopping at 0 to avoid negative indices
+            this.setState({index: Math.max(this.state.index - 3, 0)});
+        }
     }
 
     checkIfMaxIndex = () => {
@@ -111,7 +147,7 @@ class IntentLister extends Component {
                         click={this.decrementIndex}
                         isDisabled={this.checkIfMinIndex()}
                         icon={{
-                            name: "arrow-left",
+                            name: this.state.keysHeld["Control"] ? "skip-left" : "arrow-left",
                             size: "40"
                         }}
                         label="Left Arrow"
@@ -122,7 +158,7 @@ class IntentLister extends Component {
                         click={this.incrementIndex}
                         isDisabled={this.checkIfMaxIndex()}
                         icon={{
-                            name: "arrow-right",
+                            name: this.state.keysHeld["Control"] ? "skip-right" : "arrow-right",
                             size: "40"
                         }}
                         label="Right Arrow"
