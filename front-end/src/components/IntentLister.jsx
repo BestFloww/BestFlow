@@ -152,7 +152,7 @@ class IntentLister extends Component {
                             name: this.state.keysHeld["Control"] ? "skip-left" : "arrow-left",
                             size: "40"
                         }}
-                        tooltip="Click this button or press the ← key while holding control to skip to the beginning"
+                        tooltip="Click this button or press the ← key while holding CTRL to skip to the beginning"
                         label="Left Arrow"
                     />
                 </div>
@@ -164,7 +164,7 @@ class IntentLister extends Component {
                             name: this.state.keysHeld["Control"] ? "skip-right" : "arrow-right",
                             size: "40"
                         }}
-                        tooltip="Click this button or press the → key while holding control to skip to the end"
+                        tooltip="Click this button or press the → key while holding CTRL to skip to the end"
                         label="Right Arrow"
                     />
                 </div>
