@@ -6,11 +6,11 @@ import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 
 class MainPage extends Component {
   state = {
-      showTranscriptUploadModal: false
+    showTranscriptUploadModal: false
   }
 
   toggleTranscriptUploadModal = () => {
-      this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
+    this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
   }
 
   openAnalysisPage = () => {
