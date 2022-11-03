@@ -3,7 +3,7 @@ import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
-import {ReactComponent as Title} from "./icons/title.svg";
+import Title from "./icons/title.jsx";
 
 class MainPage extends Component {
   state = {
