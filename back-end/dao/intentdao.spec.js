@@ -12,6 +12,7 @@ describe("IntentDao", () => {
         const newEmit = jest.spyOn(newDao, "emit");
         dao = newDao;
         emit = newEmit;
+        jest.clearAllMocks();
     });
     it("Should correctly get intents", async() => {
         await dao.getIntent();
@@ -34,14 +35,15 @@ describe("IntentDao", () => {
     });
 
     it("should correctly throw an error for get", async() => {
-        Intent.find.mockImplementation(() => {throw "error"});
+        Intent.find.mockImplementationOnce(() => {throw "error"});
         await dao.getIntent();
         expect(emit).toHaveBeenCalledWith("getIntent", {status: 500, error: "error"});
     });
 
     it("Post a single intent", async() => {
-        const fakeIntents = [{goodDog: "prr"}];
+        const fakeIntents = [{goodDog: "prr", project_id: 1}];
         const fakeModel = {save: jest.fn()};
+        Intent.find.mockImplementationOnce(() => []);
         Intent.mockImplementationOnce(() => fakeModel);
         await dao.postIntents(fakeIntents);
         expect(Intent).toHaveBeenCalled();
@@ -50,9 +52,9 @@ describe("IntentDao", () => {
     });
 
     it("Post multiple intents", async() => {
-        jest.clearAllMocks();
-        const fakeIntents = [{goodDog: "prr"}, {badDog: "barkbark"}];
+        const fakeIntents = [{goodDog: "prr", project_id: 1}, {badDog: "barkbark", project_id: 1}];
         const fakeModel = {save: jest.fn()};
+        Intent.find.mockImplementationOnce(() => []);
         Intent.mockImplementationOnce(() => fakeModel);
         await dao.postIntents(fakeIntents);
         expect(Intent).toHaveBeenCalledTimes(2);
@@ -61,10 +63,27 @@ describe("IntentDao", () => {
     });
 
     it("should correctly throw an error for post", async() => {
-        Intent.mockImplementation(() => {throw "error"});
+        Intent.mockImplementationOnce(() => {save: jest.fn().mockImplementation(() => {throw {error: "error"}})});
         await dao.postIntents();
         const error = new TypeError("content is not iterable")
-        expect(emit).toHaveBeenCalledWith("postIntent", {status: 500, error: error});
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 500, error: error.message});
+    });
+
+    it("should correctly throw an error for post if an intent with the same ID is found and override is false", async() => {
+        const fakeIntents = [{goodDog: "prr", project_id: 1}, {badDog: "barkbark", project_id: 1}];
+        Intent.find.mockImplementationOnce(() => [1]);
+        await dao.postIntents(fakeIntents, false);
+        const expectedError = new Error("Project ID is already present. Do you want to override?");
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 500, error: expectedError.message});
+    });
+
+    it("should correctly post if override is true", async() => {
+        const fakeIntents = [{goodDog: "prr", project_id: 1}, {badDog: "barkbark", project_id: 1}];
+        Intent.find.mockImplementationOnce(() => [1]);
+        Intent.mockImplementationOnce(() => {save: jest.fn()});
+        await dao.postIntents(fakeIntents, true);
+        expect(Intent.find).not.toHaveBeenCalled();
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success"});
     });
 
     it("Put an intent", async() => {

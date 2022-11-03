@@ -34,6 +34,7 @@ const BaseButton = (props) => {
                 onClick={props.click}
                 className={getButtonStyle()}
                 disabled={props.isDisabled}
+                aria-label={props.label}
                 data-testid="custom-button"
             >
                 <div className='flex items-center space-x-2'>
@@ -51,10 +52,20 @@ BaseButton.propTypes = {
     size: PropTypes.string,
     isDisabled: PropTypes.bool,
     icon: PropTypes.object,
+    label: function(props) {
+        // Buttons without text must instead have a descriptive label string for accessibility
+        if (props["text"] == null && props["label"] == null) {
+            return new Error("Must provide a label string if the button has no text.");
+        }
+        // Label must be of string type
+        if (props["label"] != null && typeof(props["label"]) != "string") {
+            return new Error("Label must be a string.");
+        }
+    }
 };
 
 BaseButton.defaultProps = {
-    isDisabled: false
+    isDisabled: false,
 };
 
 export default BaseButton;

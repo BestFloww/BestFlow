@@ -15,16 +15,32 @@ export default class IntentDao extends IntentInterface{
     }
   }
   
-  async postIntents(content) {
+  async postIntents(content, override) {
     try {
+      const checkedIds = [];
       for (const intent of content) {
+
+        // Checks if the project ID is already present without an override.
+        if (!override && !checkedIds.includes(intent.project_id)) {
+          const isPresent = await this.isProjectIdPresent(intent.project_id)
+          // double nested so it uses a promise correctly
+          if (isPresent) {
+            throw new Error("Project ID is already present. Do you want to override?");
+          }
+        }
         const newIntent = new Intent(intent);
         await newIntent.save();
+        checkedIds.push(intent.project_id);
       }
       this.emit("postIntent",{status: 201, message: "success"});
     } catch (e) {
-      this.emit("postIntent",{status: 500, error: e});
+      this.emit("postIntent",{status: 500, error: e.message});
     }
+  }
+
+  async isProjectIdPresent(id) {
+    const query = await Intent.find({project_id: id});
+    return query.length !== 0;
   }
 
   async putIntent(intentID, newContent) {

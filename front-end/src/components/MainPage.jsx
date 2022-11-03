@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
 import BaseButton from "./BaseButton.jsx";
@@ -7,11 +8,11 @@ import Title from "./icons/title.jsx";
 
 class MainPage extends Component {
   state = {
-      showTranscriptUploadModal: false
+    showTranscriptUploadModal: false
   }
 
   toggleTranscriptUploadModal = () => {
-      this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
+    this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
   }
 
   openAnalysisPage = () => {
@@ -19,6 +20,7 @@ class MainPage extends Component {
   }
 
   render() {
+    let isTranscriptUploaded = this.props.isTranscriptUploaded;
     return(
       <div className="MainPage bg-purple-100 absolute inset-0" data-testid="main-page">
         <div className="flex gap-y-7 w-full flex-col mt-[25vh]">
@@ -44,6 +46,7 @@ class MainPage extends Component {
               click={this.openAnalysisPage}
               text="View Analysis"
               size="lg"
+              isDisabled={!isTranscriptUploaded}
             />
           </div>
         </div>
@@ -52,4 +55,8 @@ class MainPage extends Component {
   };
 }
 
-export default MainPage;
+const mapStateToProps = (state) => ({
+  isTranscriptUploaded: state.transcriptUpload.isUploaded
+});
+
+export default connect(mapStateToProps)(MainPage);

@@ -15,6 +15,7 @@ describe('BaseButton tests', () => {
     const basicProps = {
         click: jest.fn(),
         text: "sampleText",
+        label: "sampleLabel",
     };
 
     const sampleIcon = {
@@ -36,6 +37,11 @@ describe('BaseButton tests', () => {
     it('should display the given text', async() => {
         renderComponent(basicProps, false);
         expect(await screen.findByTestId("custom-button")).toHaveTextContent(basicProps.text);
+    });
+
+    it('should have the correct label', async() => {
+        renderComponent(basicProps, false);
+        expect(await screen.findByTestId("custom-button")).toHaveAttribute('aria-label', basicProps.label);
     });
 
     it('should not render an Icon child if there are no icon props', () => {
