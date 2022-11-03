@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import TranscriptAPI from "../services/TranscriptAPI.js";
+
 jest.mock("../services/TranscriptAPI.js");
 
 // React-modal doesn't work very well with the React testing library and this is our best attempts at testing.

@@ -27,7 +27,6 @@ export default class TranscriptInteractor extends InputBoundaryInterface{
     static async formatTranscript(rawTranscript, override = false){
         try{
             rawTranscript = rawTranscript.replaceAll(".", "-DOT-");
-            console.log(rawTranscript);
             let formattedTranscript = JSON.parse(rawTranscript);
             formattedTranscript = JSON.parse(formattedTranscript.transcript);
             const finalTranscript = await TranscriptFormatter.formatTranscript(formattedTranscript);
