@@ -144,7 +144,7 @@ class IntentLister extends Component {
                     </div>
                     }
                 </div>
-                <div className="fixed left-4 bottom-8">
+                <div className="fixed left-6 bottom-8">
                     <BaseButton
                         click={this.decrementIndex}
                         isDisabled={this.checkIfMinIndex()}
@@ -152,10 +152,11 @@ class IntentLister extends Component {
                             name: this.state.keysHeld["Control"] ? "skip-left" : "arrow-left",
                             size: "40"
                         }}
+                        tooltip="Click this button or press the ← key while holding control to skip to the beginning"
                         label="Left Arrow"
                     />
                 </div>
-                <div className="fixed right-4 bottom-8" data-testid="arrow-right">
+                <div className="fixed right-6 bottom-8" data-testid="arrow-right">
                     <BaseButton
                         click={this.incrementIndex}
                         isDisabled={this.checkIfMaxIndex()}
@@ -163,6 +164,7 @@ class IntentLister extends Component {
                             name: this.state.keysHeld["Control"] ? "skip-right" : "arrow-right",
                             size: "40"
                         }}
+                        tooltip="Click this button or press the → key while holding control to skip to the end"
                         label="Right Arrow"
                     />
                 </div>

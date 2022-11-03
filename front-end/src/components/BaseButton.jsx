@@ -5,7 +5,7 @@ import Icon from './Icon.jsx';
 const BaseButton = (props) => {
     // Change button styling based on whether it is enabled or disabled
     const getButtonStyle = () => {
-        let styling = "font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 "
+        let styling = "font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 group relative inline-block  "
         //Styling for enabled vs. disabled buttons
         if (props.isDisabled) {
             styling += "opacity-50 ";
@@ -41,6 +41,16 @@ const BaseButton = (props) => {
                     {props.icon && <div><Icon icon={props.icon}/></div>}
                     {props.text && <div>{ props.text }</div>}
                 </div>
+                <div className="group-hover:flex hidden">
+                {/* Render tooltip */ !props.isDisabled && props.tooltip &&
+                    <span
+                        className="absolute hidden group-hover:flex -right-5 -top-2 -translate-y-full w-32 px-2 py-1 bg-gray rounded-lg text-center text-off-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray"
+                        data-testid="tooltip"
+                    >
+                        {props.tooltip}
+                    </span>
+                }
+                </div>
             </button>
         </div>
     )
@@ -50,6 +60,7 @@ BaseButton.propTypes = {
     text: PropTypes.string,
     click: PropTypes.func.isRequired,
     size: PropTypes.string,
+    tooltip: PropTypes.string,
     isDisabled: PropTypes.bool,
     icon: PropTypes.object,
     label: function(props) {
