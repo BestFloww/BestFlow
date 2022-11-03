@@ -37,10 +37,12 @@ class IntentLister extends Component {
 
         // Map keys to methods
         switch(event.key) {
-            case "a", "ArrowLeft":
+            case "ArrowLeft":
+            case "a":
                 this.decrementIndex();
                 break;
-            case "d", "ArrowRight":
+            case "ArrowRight":
+            case "d":
                 this.incrementIndex();
                 break;
             default:
