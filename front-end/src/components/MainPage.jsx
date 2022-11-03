@@ -4,6 +4,7 @@ import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
+import Title from "./icons/title.jsx";
 
 class MainPage extends Component {
   state = {
@@ -23,10 +24,10 @@ class MainPage extends Component {
     return(
       <div className="MainPage bg-purple-100 absolute inset-0" data-testid="main-page">
         <div className="flex gap-y-7 w-full flex-col mt-[25vh]">
-          <h1 className="justify-center flex font-pacifico text-9xl text-purple-300 text-shadow shadow-blue">
-            BestFlow
-          </h1>
-          <p className="justify-center text-xl flex font-cabin -mt-3"> Problem diagnostic tool for chatbot transcripts </p>
+          <div className="justify-center flex">
+            <Title />
+          </div>
+          <p className="justify-center text-xl flex font-cabin -mt-7"> Problem diagnostic tool for chatbot transcripts </p>
           <div className="justify-center flex mt-10">
             <BaseButton
               click={this.toggleTranscriptUploadModal}
