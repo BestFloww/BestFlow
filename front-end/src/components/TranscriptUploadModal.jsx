@@ -24,7 +24,6 @@ class TranscriptUploadModal extends React.Component {
   handleData(result) {
     if (!this.validateData(result)) {
       this.setState({isFileValid: false});
-      store.dispatch(disableAnalysisButton())
     } else{
       this.setState({
         file: {transcript: result},
