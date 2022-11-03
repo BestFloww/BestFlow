@@ -3,7 +3,7 @@ import store from "../store.js";
 import { openAnalysisPage } from "../store/switchPageSlice.js";
 import BaseButton from "./BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
-import Icon from "./Icon.jsx"
+import {ReactComponent as Title} from "./icons/title.svg";
 
 class MainPage extends Component {
   state = {
@@ -22,8 +22,8 @@ class MainPage extends Component {
     return(
       <div className="MainPage bg-purple-100 absolute inset-0" data-testid="main-page">
         <div className="flex gap-y-7 w-full flex-col mt-[25vh]">
-          <div className="justify-center flex scale-175">
-            <Icon icon={{name: "title"}}/>
+          <div className="justify-center flex">
+            <Title />
           </div>
           <p className="justify-center text-xl flex font-cabin -mt-7"> Problem diagnostic tool for chatbot transcripts </p>
           <div className="justify-center flex mt-10">
