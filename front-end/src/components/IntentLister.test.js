@@ -84,7 +84,7 @@ describe("IntentLister", () => {
     describe("For displaying the proper intents based on the index", () => {
         it ("should display 3 intents if there are at least 3 remaining intents starting from the current index", () => {
             renderComponent(props);
-            // Intents 0-2 should display, Intents 3-6 should not display
+            // Intents 0-2 should display, Intents 3-8 should not display
             Object.keys(props.intents).forEach((key) => {
                 expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
             });
@@ -306,7 +306,6 @@ describe("IntentLister", () => {
                 expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
-
         
         it ("should stay on the current index if CTRL + Right Arrow key is pressed and there are 3 remaining intents starting from the current index", () => {
             props.initialIndex = 6;
