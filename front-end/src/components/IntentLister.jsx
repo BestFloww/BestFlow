@@ -26,7 +26,7 @@ class IntentLister extends Component {
     }
 
     handleKeyDown(event) {
-        // Track that this key has been held down
+        // Track that this key has been held down so that it may modify the behavior of other key presses in multi-key shortcuts
         this.setState({
             ...this.state,
             keysHeld: {
@@ -35,7 +35,7 @@ class IntentLister extends Component {
             }
         });
 
-        // Map keys to methods
+        // Map keys to methods for keyboard shortcuts
         switch(event.key) {
             case "ArrowLeft":
             case "a":
@@ -51,7 +51,7 @@ class IntentLister extends Component {
     }
 
     handleKeyUp(event) {
-        // Track that this key has been released
+        // Track that this key has been released so that it cannot modify the behavior of other key presses
         this.setState({
             ...this.state,
             keysHeld: {

@@ -77,9 +77,7 @@ class AnalysisPage extends Component {
                   />
                 </div>
                 <div className="w-4/5 h-4/5 mx-auto">
-                  <IntentLister
-                    intents={fakeIntents}
-                  />
+                  <IntentLister intents={fakeIntents} />
                 </div>
               </div>
             </div>
