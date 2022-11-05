@@ -38,11 +38,9 @@ class IntentLister extends Component {
         // Map keys to methods for keyboard shortcuts
         switch(event.key) {
             case "ArrowLeft":
-            case "a":
                 this.decrementIndex();
                 break;
             case "ArrowRight":
-            case "d":
                 this.incrementIndex();
                 break;
             default:
