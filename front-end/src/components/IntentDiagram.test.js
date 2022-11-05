@@ -4,9 +4,11 @@ import IntentDiagram from './IntentDiagram.jsx';
 
 describe("IntentDiagram", () => {
     let props;
+    
     const renderComponent = (props) => {
         render(<IntentDiagram {...props} />)
     }
+
     beforeEach(() => {
         props = {
             question: "question",
@@ -15,12 +17,14 @@ describe("IntentDiagram", () => {
             },
         };
     });
+
     it("correctly displays the question", () => {
         renderComponent(props);
         const question = screen.getByTestId(props.question);
         expect(question).toBeInTheDocument();
         expect(question.textContent).toBe(props.question);
     });
+
     it("correctly displays 1 branch", () => {
         renderComponent(props);
         const q1 = screen.getByTestId("q1");

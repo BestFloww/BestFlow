@@ -40,7 +40,6 @@ class IntentLister extends Component {
             case "ArrowLeft":
                 this.decreaseIndex();
                 break;
-            case "d":
             case "ArrowRight":
                 this.increaseIndex();
                 break;
@@ -152,7 +151,7 @@ class IntentLister extends Component {
                             size: "40"
                         }}
                         tooltip="Click this button or press the ← key while holding CTRL to skip to the beginning"
-                        label="Left Arrow"
+                        label="Previous Set"
                     />
                 </div>
                 <div className="fixed right-6 bottom-8" data-testid="arrow-right">
@@ -164,7 +163,7 @@ class IntentLister extends Component {
                             size: "40"
                         }}
                         tooltip="Click this button or press the → key while holding CTRL to skip to the end"
-                        label="Right Arrow"
+                        label="Next Set"
                     />
                 </div>
             </div>

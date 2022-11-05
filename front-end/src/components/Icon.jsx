@@ -10,7 +10,7 @@ const Icon = (props) => {
           fill={props.icon.color}
           width={props.icon.size}
           height={props.icon.size}
-          data-testid="custom-icon"
+          data-testid={`custom-icon-${props.icon.name}`}
         >
           <use xlinkHref={`${Icons}#${props.icon.name}`} />
         </svg>
@@ -19,7 +19,7 @@ const Icon = (props) => {
 
 Icon.propTypes = {
   icon: PropTypes.shape({
-    // The icon's name is required, all other attributes only required to overwrite default appearance of icon as described in icons.svg
+    // The icon's name is required, all other attributes only required to overwrite default appearance of icon as described in Icons.svg
     name: PropTypes.string.isRequired,
     color: PropTypes.string,
     size: PropTypes.string
