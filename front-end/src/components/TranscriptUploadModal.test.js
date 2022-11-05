@@ -33,7 +33,7 @@ describe("TranscriptUploadModal tests", () => {
 
         const input = screen.getByTestId("fileInput")
         expect(input.files).toHaveLength(0);
-        userEvent.upload(input, fakeFile)
+        userEvent.upload(input, fakeFile);
 
         expect(input.files).toHaveLength(1);
     });
@@ -49,13 +49,13 @@ describe("TranscriptUploadModal tests", () => {
         // then we test
         const input = screen.getByTestId("fileInput")
         expect(input.files).toHaveLength(0);
-        userEvent.upload(input, fakeFile)
+        userEvent.upload(input, fakeFile);
 
-        await waitFor(() => expect(parse).toHaveBeenCalled())
+        await waitFor(() => expect(parse).toHaveBeenCalled());
 
         // This allows our async method to run
         jest.spyOn(TranscriptAPI,"post").mockImplementation().mockReturnValue({status:200});
         userEvent.click(screen.getByText("Upload"));
-        await waitFor(() => expect(TranscriptAPI.post).toHaveBeenCalled())
+        await waitFor(() => expect(TranscriptAPI.post).toHaveBeenCalled());
     });
 });

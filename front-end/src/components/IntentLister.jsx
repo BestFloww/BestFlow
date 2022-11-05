@@ -38,10 +38,11 @@ class IntentLister extends Component {
         // Map keys to methods for keyboard shortcuts
         switch(event.key) {
             case "ArrowLeft":
-                this.decrementIndex();
+                this.decreaseIndex();
                 break;
+            case "d":
             case "ArrowRight":
-                this.incrementIndex();
+                this.increaseIndex();
                 break;
             default:
                 break;
@@ -59,18 +60,18 @@ class IntentLister extends Component {
         });
     }
     
-    incrementIndex = () => {
+    increaseIndex = () => {
         // Ctrl + Right goes to last intent set, defalt Right goes to next intent set
         if (this.state.keysHeld["Control"]) {
             // Set index to that of the first intent in the last intent set
-            this.setState({index: this.props.intents.length - this.props.intents.length % 3})
+            this.setState({index: this.props.intents.length - 1 - (this.props.intents.length - 1) % 3});
         } else {
             // Increment index by 3 if the index of the last question is beyond the 3 indices currently displayed
-            this.setState({index: Math.min(this.state.index + 3, this.props.intents.length - this.props.intents.length % 3)});
+            this.setState({index: Math.min(this.state.index + 3, this.props.intents.length - 1 - (this.props.intents.length - 1) % 3)});
         }
     }
   
-    decrementIndex = () => {
+    decreaseIndex = () => {
         // Ctrl + Left goes to first intent set, default Left goes to previous intent set
         if (this.state.keysHeld["Control"]) {
             // Set index to 0
@@ -144,7 +145,7 @@ class IntentLister extends Component {
                 </div>
                 <div className="fixed left-6 bottom-8">
                     <BaseButton
-                        click={this.decrementIndex}
+                        click={this.decreaseIndex}
                         isDisabled={this.checkIfMinIndex()}
                         icon={{
                             name: this.state.keysHeld["Control"] ? "skip-left" : "arrow-left",
@@ -156,7 +157,7 @@ class IntentLister extends Component {
                 </div>
                 <div className="fixed right-6 bottom-8" data-testid="arrow-right">
                     <BaseButton
-                        click={this.incrementIndex}
+                        click={this.increaseIndex}
                         isDisabled={this.checkIfMaxIndex()}
                         icon={{
                             name: this.state.keysHeld["Control"] ? "skip-right" : "arrow-right",
