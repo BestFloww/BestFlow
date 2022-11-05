@@ -69,7 +69,7 @@ const sampleIntents = [
     },
   ]
 
-describe("IntentLister tests", () => {
+describe("IntentLister", () => {
     let props = {};
 
     const renderComponent = (props) => {
@@ -110,55 +110,55 @@ describe("IntentLister tests", () => {
     });
 
     describe("For disabling and enabling the intent navigation buttons", () => {
-        it ("should enable the Next Set button if there are more than 3 remaining intents starting from the current index", () => {
+        it ("should enable the Next Results button if there are more than 3 remaining intents starting from the current index", () => {
             renderComponent(props);
-            expect(screen.getByLabelText("Next Set")).not.toBeDisabled();
+            expect(screen.getByLabelText("Next Results")).not.toBeDisabled();
         });
 
-        it ("should disable the Next Set button if there are 3 remaining intents starting from the current index", () => {
+        it ("should disable the Next Results button if there are 3 remaining intents starting from the current index", () => {
             props.initialIndex = 6;
             renderComponent(props);
-            expect(screen.getByLabelText("Next Set")).toBeDisabled();
+            expect(screen.getByLabelText("Next Results")).toBeDisabled();
         });
 
-        it ("should disable the Next Set button if there are 2 remaining intents starting from the current index", () => {
+        it ("should disable the Next Results button if there are 2 remaining intents starting from the current index", () => {
             props.initialIndex = 7;
             renderComponent(props);
-            expect(screen.getByLabelText("Next Set")).toBeDisabled();
+            expect(screen.getByLabelText("Next Results")).toBeDisabled();
         });
 
-        it ("should disable the Next Set button if there is 1 remaining intent starting from the current index", () => {
+        it ("should disable the Next Results button if there is 1 remaining intent starting from the current index", () => {
             props.initialIndex = 8;
             renderComponent(props);
-            expect(screen.getByLabelText("Next Set")).toBeDisabled();
+            expect(screen.getByLabelText("Next Results")).toBeDisabled();
         });
 
-        it ("should enable the Previous Set button if there are intents before the current index", () => {
+        it ("should enable the Previous Results button if there are intents before the current index", () => {
             props.initialIndex = 3;
             renderComponent(props);
-            expect(screen.getByLabelText("Previous Set")).not.toBeDisabled();
+            expect(screen.getByLabelText("Previous Results")).not.toBeDisabled();
         });
 
-        it ("should disable the Previous Set button if there are no intents before the current index", () => {
+        it ("should disable the Previous Results button if there are no intents before the current index", () => {
             renderComponent(props);
-            expect(screen.getByLabelText("Previous Set")).toBeDisabled();
+            expect(screen.getByLabelText("Previous Results")).toBeDisabled();
         });
     });
 
     describe("For incrementing and decrementing the index using the intent navigation buttons", () => {
-        it ("should increment index by 3 if the Next Set button is pressed and there are more than 3 remaining intents starting from the current index", () => {
+        it ("should increment index by 3 if the Next Results button is pressed and there are more than 3 remaining intents starting from the current index", () => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Next Set"));
+            userEvent.click(screen.getByLabelText("Next Results"));
             // Intents 0-2 and 6-8 should not display, Intents 3-5 should display
             Object.keys(props.intents).forEach((key) => {
                 expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe((key < 3 || key >= 6) ? 0 : 1);
             });
         });
 
-        it ("should decrement index by 3 if the Previous Set button is pressed and there are intents before the current index", () => {
+        it ("should decrement index by 3 if the Previous Results button is pressed and there are intents before the current index", () => {
             props.initialIndex = 3;
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Previous Set"));
+            userEvent.click(screen.getByLabelText("Previous Results"));
             // Intents 0-2 should display, Intents 3-8 should not display
             Object.keys(props.intents).forEach((key) => {
                 expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
@@ -229,10 +229,10 @@ describe("IntentLister tests", () => {
     });
 
     describe("For skipping to the first and last indices using CTRL + intent navigation buttons", () => {
-        it ("should correctly skip to the last set of intents if CTRL + Next Set button is pressed and the set has 3 intents", () => {
+        it ("should correctly skip to the last set of intents if CTRL + Next Results button is pressed and the set has 3 intents", () => {
             renderComponent(props);
             userEvent.keyboard("{Control>}");
-            userEvent.click(screen.getByLabelText("Next Set"));
+            userEvent.click(screen.getByLabelText("Next Results"));
             userEvent.keyboard("{/Control}");
             // Intents 0-5 should not display, Intents 6-8 should display
             Object.keys(props.intents).forEach((key) => {
@@ -240,11 +240,11 @@ describe("IntentLister tests", () => {
             });
         });
 
-        it ("should correctly skip to the last set of intents if CTRL + Next Set button is pressed and the set has 2 intents", () => {
+        it ("should correctly skip to the last set of intents if CTRL + Next Results button is pressed and the set has 2 intents", () => {
             props.intents = props.intents.slice(0, 8);  // Include only Intents 0-7
             renderComponent(props);
             userEvent.keyboard("{Control>}");
-            userEvent.click(screen.getByLabelText("Next Set"));
+            userEvent.click(screen.getByLabelText("Next Results"));
             userEvent.keyboard("{/Control}");
             // Intents 0-5 should not display, Intents 6-7 should display
             Object.keys(props.intents).forEach((key) => {
@@ -252,11 +252,11 @@ describe("IntentLister tests", () => {
             });
         });
 
-        it ("should correctly skip to the last set of intents if CTRL + Next Set button is pressed and the set has 1 intent", () => {
+        it ("should correctly skip to the last set of intents if CTRL + Next Results button is pressed and the set has 1 intent", () => {
             props.intents = props.intents.slice(0, 7);  // Include only Intents 0-6
             renderComponent(props);
             userEvent.keyboard("{Control>}");
-            userEvent.click(screen.getByLabelText("Next Set"));
+            userEvent.click(screen.getByLabelText("Next Results"));
             userEvent.keyboard("{/Control}");
             // Intents 0-5 should not display, Intent 6 should display
             Object.keys(props.intents).forEach((key) => {
@@ -264,11 +264,11 @@ describe("IntentLister tests", () => {
             });
         });
 
-        it ("should correctly skip to the first set of intents if CTRL + Previous Set button is pressed and there are intents before the current index", () => {
+        it ("should correctly skip to the first set of intents if CTRL + Previous Results button is pressed and there are intents before the current index", () => {
             props.initialIndex = 6;
             renderComponent(props);
             userEvent.keyboard("{Control>}");
-            userEvent.click(screen.getByLabelText("Previous Set"));
+            userEvent.click(screen.getByLabelText("Previous Results"));
             userEvent.keyboard("{/Control}");
             // Intents 0-2 should display, Intents 3-8 should not display
             Object.keys(props.intents).forEach((key) => {

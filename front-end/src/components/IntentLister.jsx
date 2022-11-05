@@ -151,7 +151,7 @@ class IntentLister extends Component {
                             size: "40"
                         }}
                         tooltip="Click this button or press the ← key while holding CTRL to skip to the beginning"
-                        label="Previous Set"
+                        label="Previous Results"
                     />
                 </div>
                 <div className="fixed right-6 bottom-8" data-testid="arrow-right">
@@ -163,7 +163,7 @@ class IntentLister extends Component {
                             size: "40"
                         }}
                         tooltip="Click this button or press the → key while holding CTRL to skip to the end"
-                        label="Next Set"
+                        label="Next Results"
                     />
                 </div>
             </div>
