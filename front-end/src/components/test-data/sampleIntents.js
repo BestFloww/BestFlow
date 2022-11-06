@@ -1,3 +1,7 @@
+/* istanbul ignore file */
+
+// This defines a list of 9 sample intents for use in testing IntentLister and IntentDiagram.
+
 const sampleIntents = [
     {
       question: "Sample Intent 0",
