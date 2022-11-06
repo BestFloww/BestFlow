@@ -9,92 +9,136 @@ import Icon from './Icon.jsx';
  * The tests in this file are a little more complicated than necessary, but show good design patterns.
  */
 
-jest.mock('./Icon.jsx', () => jest.fn(() => null));
+jest.mock("./Icon.jsx", () => jest.fn(() => null));
 
-describe('BaseButton tests', () => {
+describe("BaseButton", () => {
     const basicProps = {
         click: jest.fn(),
         text: "sampleText",
         label: "sampleLabel",
     };
+    let props = {};
 
-    const sampleIcon = {
+    const sampleIconProps = {
         name: "magnifying-glass",
         color: "red",
-        size: "40"
+        size: "40",
     };
 
-    const renderComponent = (props, buttonDisabled, buttonSize=null, iconProps=null) => {
-        return render(<BaseButton {... props} isDisabled={buttonDisabled} size={buttonSize} icon={iconProps}/>);
+    const renderComponent = (props) => {
+        return render(<BaseButton {...props} />);
     }
 
-    it('should call the click function on click', () => {
-        renderComponent(basicProps, false);
-        userEvent.click(screen.getByTestId('custom-button'));
-        expect(basicProps.click).toHaveBeenCalled();
+    beforeEach(() => {
+        props = {...basicProps};
+        jest.spyOn(console, 'error').mockImplementation(() => null);
     });
 
-    it('should display the given text', async() => {
-        renderComponent(basicProps, false);
-        expect(await screen.findByTestId("custom-button")).toHaveTextContent(basicProps.text);
+    afterEach(() => {
+        console.error.mockClear();
     });
 
-    it('should have the correct aria label', async() => {
-        renderComponent(basicProps, false);
-        expect(await screen.findByTestId("custom-button")).toHaveAttribute('aria-label', basicProps.label);
+    it("should call the click function on click", () => {
+        renderComponent(props);
+        userEvent.click(screen.getByTestId("custom-button"));
+        expect(props.click).toHaveBeenCalled();
     });
 
-    it('should not render an Icon child if there are no icon props', () => {
-        renderComponent(basicProps, false);
-        expect(Icon).not.toHaveBeenCalled();
+    it("should display the given text", async() => {
+        renderComponent(props);
+        expect(await screen.findByTestId("custom-button")).toHaveTextContent(props.text);
     });
 
-    it('should correctly render and pass icon props to its Icon child if there are any', () => {
-        renderComponent(basicProps, false, null, sampleIcon);
-        expect(Icon).toHaveBeenCalledWith({ icon: sampleIcon }, {});
-    });
-    
-    it('should have correct default style if isDisabled is false and no size is given', async() => {
-        renderComponent(basicProps, false);
-        expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 hover:bg-purple-200 active:bg-purple-400 py-3 px-6 md:text-lg 2xl:text-2xl");
-    });
-
-    it('should not be disabled if isDisabled is false', () => {
-        renderComponent(basicProps, false);
-        expect(screen.getByTestId('custom-button')).not.toBeDisabled();
-    });
-
-    it('should have correct default style if isDisabled is true and no size is given', async() => {
-        renderComponent(basicProps, true);
-        expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 opacity-50");
-    });
-
-    it('should be disabled if isDisabled is true', () => {
-        renderComponent(basicProps, true);
-        expect(screen.getByTestId('custom-button')).toBeDisabled();
-    });
-
-    it('should be small if size is small', async() => {
-        renderComponent(basicProps, false, "sm");
-        expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 hover:bg-purple-200 active:bg-purple-400 py-1 px-4 md:text-md 2xl:text-lg");
-    });
-
-    it('should be large if size is large', async() => {
-        renderComponent(basicProps, false, "lg");
-        expect(screen.getByTestId('custom-button')).toHaveClass("font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 hover:bg-purple-200 active:bg-purple-400 md:py-5 md:px-6 md:text-2xl 2xl:py-6 2xl:px-9 2xl:text-2xl");
+    it("should have the given aria label", async() => {
+        renderComponent(props);
+        expect(await screen.findByTestId("custom-button")).toHaveAttribute("aria-label", props.label);
     });
 
     it("should have a tooltip if tooltip prop is not null", () => {
-        const props = {...basicProps};
         props.tooltip = "have fun kids";
-        renderComponent(props, false, "lg");
+        renderComponent(props);
         expect(screen.getByTestId("tooltip")).toBeInTheDocument();
     });
 
     it("should not have a tooltip if tooltip prop is null", () => {
-        renderComponent(basicProps, false, "lg");
+        renderComponent(props);
         expect(screen.queryByTestId("tooltip")).not.toBeInTheDocument();
     });
 
+    describe("For rendering an embedded icon", () => {
+        it("should not render an embedded icon if icon is null", () => {
+            renderComponent(props);
+            expect(Icon).not.toHaveBeenCalled();
+        });
+    
+        it("should correctly render and pass icon props to an embedded icon if icon is not null", () => {
+            props.icon = sampleIconProps;
+            renderComponent(props);
+            expect(Icon).toHaveBeenCalledWith({ icon: sampleIconProps }, {});
+        });
+    });
 
+    describe("For enabling and disabling the button", () => {
+        it("should not be disabled if isDisabled is false", () => {
+            renderComponent(props);
+            expect(screen.getByTestId("custom-button")).not.toBeDisabled();
+        });
+
+        it("should be disabled if isDisabled is true", () => {
+            props.isDisabled = true;
+            renderComponent(props);
+            expect(screen.getByTestId("custom-button")).toBeDisabled();
+        });
+    });
+
+    describe("For correct style", () => {
+        it("should have correct style if isDisabled is false", () => {
+            renderComponent(props);
+            expect(screen.getByTestId("custom-button")).toHaveClass("hover:bg-purple-200");
+        });
+
+        it("should have correct style if isDisabled is true", () => {
+            props.isDisabled = true;
+            renderComponent(props);
+            expect(screen.getByTestId("custom-button")).toHaveClass("opacity-50");
+        });
+
+        it("should be medium if size is null", () => {
+            renderComponent(props);
+            expect(screen.getByTestId("custom-button")).toHaveClass("py-3 px-6");
+        });
+
+        it("should be small if size is small", () => {
+            props.size = "sm";
+            renderComponent(props);
+            expect(screen.getByTestId("custom-button")).toHaveClass("py-1 px-4");
+        });
+
+        it("should be large if size is large", () => {
+            props.size = "lg";
+            renderComponent(props);
+            expect(screen.getByTestId("custom-button")).toHaveClass("md:py-5 md:px-6");
+        });
+    });
+    
+    describe("For custom props validation", () => {
+        it("should return a validation error if both text and label are null", () => {
+            props.text = null;
+            props.label = null;
+            renderComponent(props);
+            // Expect the console to return an error
+            expect(console.error).toHaveBeenCalled();
+            // Expect the error message to correspond to the error described by the custom props validator in BaseButton.jsx
+            expect(console.error.mock.calls[0][2]).toBe("Must provide a label string if the button has no text.");
+        });
+    
+        it("should return a validation error if label is not a string", () => {
+            props.label = 0;
+            renderComponent(props);
+            // Expect the console to return an error
+            expect(console.error).toHaveBeenCalled();
+            // Expect the error message to correspond to the error described by the custom props validator in BaseButton.jsx
+            expect(console.error.mock.calls[0][2]).toBe("Label must be a string.");
+        });
+    });
 });
