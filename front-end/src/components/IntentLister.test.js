@@ -2,74 +2,13 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import IntentLister from './IntentLister.jsx';
-
-const sampleIntents = [
-    {
-      question: "Sample Intent 0",
-      children: {
-        "q1": 100,
-      }
-    },
-    {
-      question: "Sample Intent 1",
-      children: {
-        "q1": 10,
-        "q2": 90
-      }
-    }, 
-    {
-      question: "Sample Intent 2",
-      children: {
-        "q1": 10,
-        "q2": 20,
-        "q3": 70,
-      }
-    },
-    {
-      question: "Sample Intent 3",
-      children: {
-        "q1": 10,
-      }
-    },
-    {
-      question: "Sample Intent 4",
-      children: {
-        "q1": 10,
-        "q2": 90,
-      }
-    },
-    {
-      question: "Sample Intent 5",
-      children: {
-        "q1": 10,
-        "q2": 20,
-        "q3": 70,
-      }
-    },
-    {
-      question: "Sample Intent 6",
-      children: {
-        "q1": 100
-      }
-    },
-    {
-      question: "Sample Intent 7",
-      children: {
-        "q1": 10,
-        "q2": 90,
-      }
-    },
-    {
-      question: "Sample Intent 8",
-      children: {
-        "q1": 10,
-        "q2": 20,
-        "q3": 70,
-      }
-    },
-  ]
+import sampleIntents from './test-data/sampleIntents.js';
 
 describe("IntentLister", () => {
+    const basicProps = {
+        intents: sampleIntents,
+        initialIndex: 0,
+    };
     let props = {};
 
     const renderComponent = (props) => {
@@ -77,8 +16,7 @@ describe("IntentLister", () => {
     }
 
     beforeEach(() => {
-        props.intents = [...sampleIntents];
-        props.initialIndex = 0;
+        props = {...basicProps};
     });
 
     describe("For displaying the proper intents based on the index", () => {
@@ -188,7 +126,7 @@ describe("IntentLister", () => {
 
         it ("should stay on the current index if the Right Arrow key is pressed and there are 2 remaining intents starting from the current index", () => {
             props.initialIndex = 6;
-            props.intents = props.intents.slice(0, 8);  // Include only Intents 0-7
+            props.intents = sampleIntents.slice(0, 8);  // Include only Intents 0-7
             renderComponent(props);
             userEvent.keyboard("{ArrowRight}");
             // Intents 0-5 should still not display, Intents 6-7 should still display
@@ -199,7 +137,7 @@ describe("IntentLister", () => {
 
         it ("should stay on the current index if the Right Arrow key is pressed and there is 1 remaining intent starting from the current index", () => {
             props.initialIndex = 6;
-            props.intents = props.intents.slice(0, 7);  // Include only Intents 0-6
+            props.intents = sampleIntents.slice(0, 7);  // Include only Intents 0-6
             renderComponent(props);
             userEvent.keyboard("{ArrowRight}");
             // Intents 0-5 should still not display, Intent 6 should still display
@@ -241,7 +179,7 @@ describe("IntentLister", () => {
         });
 
         it ("should correctly skip to the last set of intents if CTRL + Next Results button is pressed and the set has 2 intents", () => {
-            props.intents = props.intents.slice(0, 8);  // Include only Intents 0-7
+            props.intents = sampleIntents.slice(0, 8);  // Include only Intents 0-7
             renderComponent(props);
             userEvent.keyboard("{Control>}");
             userEvent.click(screen.getByLabelText("Next Results"));
@@ -253,7 +191,7 @@ describe("IntentLister", () => {
         });
 
         it ("should correctly skip to the last set of intents if CTRL + Next Results button is pressed and the set has 1 intent", () => {
-            props.intents = props.intents.slice(0, 7);  // Include only Intents 0-6
+            props.intents = sampleIntents.slice(0, 7);  // Include only Intents 0-6
             renderComponent(props);
             userEvent.keyboard("{Control>}");
             userEvent.click(screen.getByLabelText("Next Results"));
@@ -288,7 +226,7 @@ describe("IntentLister", () => {
         });
 
         it ("should correctly skip to the last set of intents if CTRL + Right Arrow key is pressed and the set has 2 intents", () => {
-            props.intents = props.intents.slice(0, 8);  // Include only Intents 0-7
+            props.intents = sampleIntents.slice(0, 8);  // Include only Intents 0-7
             renderComponent(props);
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should not display, Intents 6-7 should display
@@ -298,7 +236,7 @@ describe("IntentLister", () => {
         });
 
         it ("should correctly skip to the last set of intents if CTRL + Right Arrow key is pressed and the set has 1 intent", () => {
-            props.intents = props.intents.slice(0, 7);  // Include only Intents 0-6
+            props.intents = sampleIntents.slice(0, 7);  // Include only Intents 0-6
             renderComponent(props);
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should not display, Intent 6 should display
@@ -319,7 +257,7 @@ describe("IntentLister", () => {
 
         it ("should stay on the current index if CTRL + Right Arrow key is pressed and there are 2 remaining intents starting from the current index", () => {
             props.initialIndex = 6;
-            props.intents = props.intents.slice(0, 8);  // Include only Intents 0-7
+            props.intents = sampleIntents.slice(0, 8);  // Include only Intents 0-7
             renderComponent(props);
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should still not display, Intents 6-7 should still display
@@ -330,7 +268,7 @@ describe("IntentLister", () => {
 
         it ("should stay on the current index if CTRL + Right Arrow key is pressed and there is 1 remaining intent starting from the current index", () => {
             props.initialIndex = 6;
-            props.intents = props.intents.slice(0, 7);  // Include only Intents 0-6
+            props.intents = sampleIntents.slice(0, 7);  // Include only Intents 0-6
             renderComponent(props);
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should still not display, Intent 6 should still display
