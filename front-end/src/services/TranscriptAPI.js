@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:5000/api/transcript";
+const baseURL = `${process.env.REACT_APP_BASE_URL}/transcript`;
 
 const API = {
     /**
@@ -16,6 +16,8 @@ const API = {
      * @returns {Object} Resolution
      */
     post: async(transcript) => {
+        console.log(process.env.REACT_APP_BASE_URL)
+        console.log(baseURL)
         const payload = JSON.stringify(transcript);
         return await axios.post(baseURL, {payload});
     },
