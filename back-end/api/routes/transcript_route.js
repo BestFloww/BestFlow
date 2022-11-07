@@ -11,7 +11,7 @@ router.route("/").get((req, res, next) => {
     TranscriptInteractor.setIntentDao(dao);
     TranscriptController.setTranscriptInteractor(TranscriptInteractor);
     TranscriptController.setOutputBoundary(OutputDataBoundary);
-    TranscriptController.getTranscript(req, res, next);
+    TranscriptController.getAnalyzedTranscript(req, res, next);
 })
 
 router.route("/").post((req, res, next) => {
