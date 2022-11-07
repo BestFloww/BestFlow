@@ -3,5 +3,7 @@ back-end/coverage/
 back-end/.env
 back-end/coverage
 front-end/node_modules/
+front-end/.env
+front-end/.env.production
 .idea
 .DS_Store

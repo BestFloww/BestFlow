@@ -5,6 +5,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.3",
+    "fs": "^0.0.1-security",
     "lodash": ">=4.17.21",
     "moment": ">=2.29.4",
     "react": "^18.2.0",
