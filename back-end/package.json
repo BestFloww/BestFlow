@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
