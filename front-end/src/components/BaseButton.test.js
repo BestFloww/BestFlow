@@ -25,7 +25,7 @@ describe('BaseButton tests', () => {
     };
 
     const renderComponent = (props, buttonDisabled, buttonSize=null, iconProps=null) => {
-        render(<BaseButton {... props} isDisabled={buttonDisabled} size={buttonSize} icon={iconProps}/>)
+        return render(<BaseButton {... props} isDisabled={buttonDisabled} size={buttonSize} icon={iconProps}/>);
     }
 
     it('should call the click function on click', () => {
@@ -39,7 +39,7 @@ describe('BaseButton tests', () => {
         expect(await screen.findByTestId("custom-button")).toHaveTextContent(basicProps.text);
     });
 
-    it('should have the correct label', async() => {
+    it('should have the correct aria label', async() => {
         renderComponent(basicProps, false);
         expect(await screen.findByTestId("custom-button")).toHaveAttribute('aria-label', basicProps.label);
     });

@@ -63,7 +63,7 @@ BaseButton.propTypes = {
     tooltip: PropTypes.string,
     isDisabled: PropTypes.bool,
     icon: PropTypes.object,
-    label: function(props) {
+    label: (props) => {
         // Buttons without text must instead have a descriptive label string for accessibility
         if (props["text"] == null && props["label"] == null) {
             return new Error("Must provide a label string if the button has no text.");

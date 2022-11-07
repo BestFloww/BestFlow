@@ -26,7 +26,7 @@ class IntentLister extends Component {
     }
 
     handleKeyDown(event) {
-        // Track that this key has been held down
+        // Track that this key has been held down so that it may modify the behavior of other key presses in multi-key shortcuts
         this.setState({
             ...this.state,
             keysHeld: {
@@ -35,15 +35,13 @@ class IntentLister extends Component {
             }
         });
 
-        // Map keys to methods
+        // Map keys to methods for keyboard shortcuts
         switch(event.key) {
             case "ArrowLeft":
-            case "a":
-                this.decrementIndex();
+                this.decreaseIndex();
                 break;
             case "ArrowRight":
-            case "d":
-                this.incrementIndex();
+                this.increaseIndex();
                 break;
             default:
                 break;
@@ -51,7 +49,7 @@ class IntentLister extends Component {
     }
 
     handleKeyUp(event) {
-        // Track that this key has been released
+        // Track that this key has been released so that it cannot modify the behavior of other key presses
         this.setState({
             ...this.state,
             keysHeld: {
@@ -61,18 +59,18 @@ class IntentLister extends Component {
         });
     }
     
-    incrementIndex = () => {
+    increaseIndex = () => {
         // Ctrl + Right goes to last intent set, defalt Right goes to next intent set
         if (this.state.keysHeld["Control"]) {
             // Set index to that of the first intent in the last intent set
-            this.setState({index: this.props.intents.length - this.props.intents.length % 3})
+            this.setState({index: this.props.intents.length - 1 - (this.props.intents.length - 1) % 3});
         } else {
             // Increment index by 3 if the index of the last question is beyond the 3 indices currently displayed
-            this.setState({index: Math.min(this.state.index + 3, this.props.intents.length - this.props.intents.length % 3)});
+            this.setState({index: Math.min(this.state.index + 3, this.props.intents.length - 1 - (this.props.intents.length - 1) % 3)});
         }
     }
   
-    decrementIndex = () => {
+    decreaseIndex = () => {
         // Ctrl + Left goes to first intent set, default Left goes to previous intent set
         if (this.state.keysHeld["Control"]) {
             // Set index to 0
@@ -146,26 +144,26 @@ class IntentLister extends Component {
                 </div>
                 <div className="fixed left-6 bottom-8">
                     <BaseButton
-                        click={this.decrementIndex}
+                        click={this.decreaseIndex}
                         isDisabled={this.checkIfMinIndex()}
                         icon={{
                             name: this.state.keysHeld["Control"] ? "skip-left" : "arrow-left",
                             size: "40"
                         }}
                         tooltip="Click this button or press the ← key while holding CTRL to skip to the beginning"
-                        label="Left Arrow"
+                        label="Previous Results"
                     />
                 </div>
                 <div className="fixed right-6 bottom-8" data-testid="arrow-right">
                     <BaseButton
-                        click={this.incrementIndex}
+                        click={this.increaseIndex}
                         isDisabled={this.checkIfMaxIndex()}
                         icon={{
                             name: this.state.keysHeld["Control"] ? "skip-right" : "arrow-right",
                             size: "40"
                         }}
                         tooltip="Click this button or press the → key while holding CTRL to skip to the end"
-                        label="Right Arrow"
+                        label="Next Results"
                     />
                 </div>
             </div>
