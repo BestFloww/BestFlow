@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import IntentLister from './IntentLister.jsx';
-import sampleIntents from './test-data/sampleIntents.js';
+import sampleIntents from '../test-data/sampleIntents.js';
 
 describe("IntentLister", () => {
     const basicProps = {

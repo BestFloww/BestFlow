@@ -27,15 +27,15 @@ describe('App tests', () => {
         store.dispatch(setTranscriptUploadStatusTrue())
         renderComponent();
         userEvent.click(screen.getByText('View Analysis'));
-        expect(await screen.getByTestId('analysis-page')).toBeInTheDocument();
-        expect(await screen.queryByTestId('main-page')).not.toBeInTheDocument();
+        expect(screen.getByTestId('analysis-page')).toBeInTheDocument();
+        expect(screen.queryByTestId('main-page')).not.toBeInTheDocument();
     });
 
     it('should display MainPage when Return to Main Page button is pressed on AnalysisPage', async() => {
         renderComponent();
         userEvent.click(screen.getByText('Return to Main Page'));
-        expect(await screen.getByTestId('main-page')).toBeInTheDocument();
-        expect(await screen.queryByTestId('analysis-page')).not.toBeInTheDocument();
+        expect(screen.getByTestId('main-page')).toBeInTheDocument();
+        expect(screen.queryByTestId('analysis-page')).not.toBeInTheDocument();
     });
 
 });

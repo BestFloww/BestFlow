@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import MainPage from "./components/MainPage.jsx";
-import AnalysisPage from "./components/AnalysisPage.jsx";
+import MainPage from "./components/main-page/MainPage.jsx";
+import AnalysisPage from "./components/analysis-page/AnalysisPage.jsx";
 
 function App() {
   const page = useSelector((state) => state.switchPage.page);
