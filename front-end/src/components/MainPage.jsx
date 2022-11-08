@@ -19,7 +19,7 @@ class MainPage extends Component {
     store.dispatch(openAnalysisPage());
   }
 
-  downloadTemplateJSON = () => {
+  downloadTranscriptTemplate = () => {
     const element = document.createElement("a");
     const data = {"data": [
         {
@@ -87,8 +87,8 @@ class MainPage extends Component {
           </div>
           <div className="justify-center flex">
             <BaseButton
-                click={this.downloadTemplateJSON}
-                text="Download Template JSON"
+                click={this.downloadTranscriptTemplate}
+                text="Download Transcript Template"
                 size="lg"
             />
           </div>
