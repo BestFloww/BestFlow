@@ -1,9 +1,9 @@
 import React from 'react';
 import Modal from 'react-modal';
-import store from "../store.js";
-import { setTranscriptUploadStatus } from '../store/transcriptUploadSlice.js';
-import TranscriptAPI from '../services/TranscriptAPI';
-import BaseButton from './BaseButton';
+import store from "../../store.js";
+import { setTranscriptUploadStatus } from '../../store/transcriptUploadSlice.js';
+import TranscriptAPI from '../../services/TranscriptAPI';
+import BaseButton from '../general/BaseButton';
 
 class TranscriptUploadModal extends React.Component {
 

@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import store from '../../store.js';
 import MainPage from './MainPage.jsx';
-import { setTranscriptUploadStatus } from '../store/transcriptUploadSlice.js';
+import {setTranscriptUploadStatus} from "../../store/transcriptUploadSlice.js";
 
 describe('MainPage tests', () => {
     const renderComponent = () => render(
