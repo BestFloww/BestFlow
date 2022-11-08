@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import store from "../store.js";
-import { openMainPage } from "../store/switchPageSlice.js";
-import BaseButton from "./BaseButton.jsx";
+import store from "../../store.js";
+import { openMainPage } from "../../store/switchPageSlice.js";
+import BaseButton from "../general/BaseButton.jsx";
 import IntentLister from './IntentLister.jsx';
 
 const fakeIntents = [

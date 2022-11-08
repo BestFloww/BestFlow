@@ -1,12 +1,14 @@
 FROM node:16
-WORKDIR /BestFlow/back-end
+WORKDIR /usr/BestFlow/back-end
 ENV NODE_ENV=production
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY package*.json ./
 
-RUN npm install --production
+RUN npm install
 
 COPY . .
+
+RUN npm run start
 
 EXPOSE 5000
 
