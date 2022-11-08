@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 /**
- * Abstract Class TranscriptDataInterface.
+ * Abstract Class OutputBoundaryInterface.
  *
  * @class Interface
  */
