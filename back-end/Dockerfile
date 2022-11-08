@@ -1,5 +1,5 @@
 FROM node:16
-WORKDIR /BestFlow/back-end
+WORKDIR /usr/BestFlow/back-end
 ENV NODE_ENV=production
 
 COPY package*.json ./
