@@ -8,7 +8,6 @@ export const transcriptUploadSlice = createSlice({
   reducers: {
     setTranscriptUploadStatus: (state, action) => {
       state.isUploaded = action.payload
-      //action.payload can be any object that is passed to the function
     }
   }
 })
