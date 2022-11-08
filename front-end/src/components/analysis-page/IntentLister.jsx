@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import BaseButton from "./BaseButton.jsx";
+import BaseButton from "../general/BaseButton.jsx";
 import IntentDiagram from './IntentDiagram.jsx';
 
 class IntentLister extends Component {
