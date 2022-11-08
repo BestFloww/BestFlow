@@ -2,9 +2,9 @@ FROM node:16
 WORKDIR /BestFlow/back-end
 ENV NODE_ENV=production
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY package*.json ./
 
-RUN npm install --production
+RUN npm install
 
 COPY . .
 
