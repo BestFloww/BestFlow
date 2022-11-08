@@ -1,18 +1,14 @@
 import '@testing-library/jest-dom';
-import reducer , { setTranscriptUploadStatusTrue, setTranscriptUploadStatusFalse } from "./transcriptUploadSlice.js"
+import store from "../store.js"
+import reducer , { setTranscriptUploadStatus } from "./transcriptUploadSlice.js"
 
 describe('transcriptUploadedSlice tests', () => {
     it('should set isUploaded to false in the initial state', () => {
         expect(reducer(undefined, { type: undefined })).toEqual({ isUploaded: false });
     });
-    
-    it('should set isUploaded to true when enable is called', async() => {
-        const previousState = { isUploaded: false };
-        expect(reducer(previousState, { type: setTranscriptUploadStatusTrue })).toEqual({ isUploaded: true });
-    });
 
-    it('should set page to AnalysisPage when openAnalysisPage is called', () => {
+    it('should set isUploaded to the argument passed by setTranscriptUploadStatus', () => {
         const previousState = { isUploaded: true };
-        expect(reducer(previousState, { type: setTranscriptUploadStatusFalse })).toEqual({ isUploaded: false });
+        expect(reducer(previousState, setTranscriptUploadStatus(false))).toEqual({ isUploaded: false });
     });
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import store from "../store.js";
-import { setTranscriptUploadStatusTrue, setTranscriptUploadStatusFalse } from '../store/transcriptUploadSlice.js';
+import { setTranscriptUploadStatus } from '../store/transcriptUploadSlice.js';
 import TranscriptAPI from '../services/TranscriptAPI';
 import BaseButton from './BaseButton';
 
@@ -45,10 +45,10 @@ class TranscriptUploadModal extends React.Component {
     try {
       await TranscriptAPI.post(file);
       this.props.toggleModal();
-      store.dispatch(setTranscriptUploadStatusTrue())
+      store.dispatch(setTranscriptUploadStatus(true))
     } catch (e) {
       window.alert("Error in uploading transcript. " + e.message);
-      store.dispatch(setTranscriptUploadStatusFalse())
+      store.dispatch(setTranscriptUploadStatus(false))
     }
   }
 

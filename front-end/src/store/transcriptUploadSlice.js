@@ -6,15 +6,13 @@ export const transcriptUploadSlice = createSlice({
     isUploaded: false
   },
   reducers: {
-    setTranscriptUploadStatusTrue: state => {
-      state.isUploaded = true
-    },
-    setTranscriptUploadStatusFalse: state => {
-      state.isUploaded = false
+    setTranscriptUploadStatus: (state, action) => {
+      state.isUploaded = action.payload
+      //action.payload can be any object that is passed to the function
     }
   }
 })
 
-export const { setTranscriptUploadStatusTrue, setTranscriptUploadStatusFalse } = transcriptUploadSlice.actions
+export const { setTranscriptUploadStatus } = transcriptUploadSlice.actions
 
 export default transcriptUploadSlice.reducer
