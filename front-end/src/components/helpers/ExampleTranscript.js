@@ -1,13 +1,13 @@
 export const exampleTranscript = {"data": [
         {
-            "project_id": "Your unique project id",
+            "project_id": "[INSERT UNIQUE ID]",
             "trace_type": "speak",
             "trace_payload": "{\"type\":\"speak\",\"payload\":{" +
-                "\"type\":\"message\":\"<voice name=\\\"AnyVoiceName\\\">Insert chatbot message.</voice>\"}}"
+                "\"type\":\"message\":\"<voice name=\\\"[AnyVoiceName]\\\">[INSERT CHATBOT MESSAGE]</voice>\"}}"
         },
         {
-            "project_id": "Your unique project id",
+            "project_id": "[INSERT UNIQUE ID]",
             "trace_type": "intent",
             "trace_payload": "{\"type\":\"intent\",\"ELICIT\":false,\"payload\":{" +
-                "\"query\":\"unique query\",\"intent\":{\"name\":\"unique intent\"},\"confidence\":1}}"
+                "\"query\":\"[INSERT QUERY]\",\"intent\":{\"name\":\"[INSERT INTENT]\"},\"confidence\":1}}"
         }]};
