@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import store from './store.js';
-import { setTranscriptUploadStatusTrue, setTranscriptUploadStatusFalse } from './store/transcriptUploadSlice.js';
+import { setTranscriptUploadStatus } from './store/transcriptUploadSlice.js';
 import App from './App.jsx';
 
 describe('App tests', () => {
@@ -14,7 +14,7 @@ describe('App tests', () => {
     );
 
     afterAll(() => {
-        store.dispatch(setTranscriptUploadStatusFalse())
+        store.dispatch(setTranscriptUploadStatus(false))
     });
 
     it('should display MainPage on load', () => {
@@ -24,7 +24,7 @@ describe('App tests', () => {
     });
     
     it('should display AnalysisPage when View Analysis button is pressed on MainPage', async() => {
-        store.dispatch(setTranscriptUploadStatusTrue())
+        store.dispatch(setTranscriptUploadStatus(true))
         renderComponent();
         userEvent.click(screen.getByText('View Analysis'));
         expect(screen.getByTestId('analysis-page')).toBeInTheDocument();
