@@ -36,7 +36,7 @@ const BaseButton = (props) => {
                 aria-label={props.label}
                 data-testid="custom-button"
             >
-                <div className={"flex items-center space-x-2"}>
+                <div className="flex items-center space-x-2">
                     {props.icon && <div className="mx-auto"><Icon icon={props.icon}/></div>}
                     {props.text && <div className="mx-auto">{ props.text }</div>}
                 </div>
