@@ -27,9 +27,9 @@ describe("intentAnalyzer", () => {
     fakeMap.set("Intent 1-DOT-", 1);
     const input = generator.generateModel("Question 1-DOT-", fakeMap, 1, 1);
     input.getPercentages.mockImplementation(() => {return getPercentages(input.children, input.total_children)})
-    const output = generator.generateAnalyzedIntent("Question 1.", {"Intent 1.": 1});
+    const output = generator.generateAnalyzedIntent("Question 1.", {"Intent 1.": 1.00});
 
-    expect(analyzer.analyzeIntents([input])).toStrictEqual(output);
+    expect(analyzer.analyzeIntents([input])).toStrictEqual([output]);
   });
 
   it("Should properly format three intents", async() => {
@@ -47,13 +47,13 @@ describe("intentAnalyzer", () => {
     input2.getPercentages.mockImplementation(() => {return getPercentages(input2.children, input2.total_children)})
     input3.getPercentages.mockImplementation(() => {return getPercentages(input3.children, input3.total_children)})
 
-    const output = generator.generateMultipleIntents([["Question 1.", {"Intent 1": 7}], ["Question 2.", {"Intent 2": 2}], ["Question 3.", {"Intent 3": 1}]]);
+    const output = generator.generateMultipleIntents([["Question 1.", {"Intent 1.": 0.70}], ["Question 2.", {"Intent 2.": 0.20}], ["Question 3.", {"Intent 3.": 0.10}]]);
     expect(analyzer.analyzeIntents([input1, input2, input3])).toStrictEqual(output);
   });
 
   it("Should properly format question with no intents", async() => {
     const input = generator.generateModel("Question 1-DOT-", {}, 0, 1);
     const output = generator.generateAnalyzedIntent("Question 1.", {"No intents found.": 0});
-    expect(analyzer.analyzeIntents([input])).toStrictEqual(output);
+    expect(analyzer.analyzeIntents([input])).toStrictEqual([output]);
   });
 })

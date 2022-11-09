@@ -16,7 +16,7 @@ export default class TestIntentGenerator {
             children: intents,
         };
 
-        return [generatedIntent];
+        return generatedIntent;
     }
 
     generateMultipleIntents(intentInputs) {
