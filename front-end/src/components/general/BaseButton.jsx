@@ -5,7 +5,7 @@ import Icon from './Icon.jsx';
 const BaseButton = (props) => {
     // Change button styling based on whether it is enabled or disabled
     const getButtonStyle = () => {
-        let styling = "font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 group relative inline-block  "
+        let styling = "font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 group relative inline-block "
         // Styling for enabled vs. disabled buttons
         if (props.isDisabled) {
             styling += "opacity-50 ";
@@ -19,7 +19,7 @@ const BaseButton = (props) => {
                 styling += "py-1 px-4 md:text-md 2xl:text-lg";
                 break;
             case "lg":
-                styling += "md:py-5 md:px-6 md:text-2xl 2xl:py-6 2xl:px-9 2xl:text-2xl";
+                styling += "md:py-5 md:px-6 md:text-2xl 2xl:py-8 2xl:px-9 2xl:text-2xl";
                 break;
             default:  // medium-sized button
                 styling += "py-3 px-6 md:text-lg 2xl:text-2xl";
@@ -36,9 +36,9 @@ const BaseButton = (props) => {
                 aria-label={props.label}
                 data-testid="custom-button"
             >
-                <div className='flex items-center space-x-2'>
+                <div className='flex items-center space-x-2 min-w-[12rem]'>
                     {props.icon && <div><Icon icon={props.icon}/></div>}
-                    {props.text && <div>{ props.text }</div>}
+                    {props.text && <div className="mx-auto">{ props.text }</div>}
                 </div>
                 <div className="group-hover:flex hidden">
                 {/* Render tooltip */ !props.isDisabled && props.tooltip &&
