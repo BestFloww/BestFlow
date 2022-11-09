@@ -35,14 +35,14 @@ class MainPage extends Component {
   render() {
     let isTranscriptUploaded = this.props.isTranscriptUploaded;
     return(
-      <div className="bg-purple-100 absolute inset-0 flex flex-row" data-testid="main-page">
+      <div className="bg-purple-100 absolute gap-y-5 sm:inset-0 flex flex-col sm:flex-row" data-testid="main-page">
         <div className="justify-center flex">
           <TranscriptUploadModal
             show={this.state.showTranscriptUploadModal}
             toggleModal={this.toggleTranscriptUploadModal}
           />
         </div>
-        <div className="flex w-2/3 flex-col mt-[25vh] gap-y-12">
+        <div className="flex w-2/3 flex-col sm:mt-[25vh] gap-y-12">
           <div className="justify-center flex">
             <Title />
           </div>
