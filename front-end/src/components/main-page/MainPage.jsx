@@ -60,6 +60,10 @@ class MainPage extends Component {
                 text="View Analysis"
                 size="lg"
                 isDisabled={!isTranscriptUploaded}
+                icon={{
+                  name: "magnifying-glass",
+                  size: 30
+                }}
               />
             </div>
           </div>
