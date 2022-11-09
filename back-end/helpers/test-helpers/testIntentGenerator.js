@@ -10,14 +10,6 @@ export default class TestIntentGenerator {
         return generatedModel;
     };
 
-    generateMultipleModels(modelInputs) {
-        const models = []
-
-        modelInputs.forEach((input) => {models.push(this.generateModel(input[0], input[1], input[2], input[3]))})
-
-        return models;
-    }
-
     generateAnalyzedIntent(questionMsg, intents) {
         const generatedIntent = {
             question: questionMsg,
