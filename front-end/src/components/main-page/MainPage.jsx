@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import store from "../store.js";
-import { openAnalysisPage } from "../store/switchPageSlice.js";
-import BaseButton from "./BaseButton.jsx";
+import store from "../../store.js";
+import { openAnalysisPage } from "../../store/switchPageSlice.js";
+import BaseButton from "../general/BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
-import Title from "./icons/title.jsx";
-import {exampleTranscript} from "./helpers/ExampleTranscript.js";
+import Title from "../icons/title.jsx";
+import {exampleTranscript} from "../helpers/ExampleTranscript.js";
 
 class MainPage extends Component {
   state = {
