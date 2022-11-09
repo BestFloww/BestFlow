@@ -4,6 +4,7 @@ import store from "../../store.js";
 import { setTranscriptUploadStatus } from '../../store/transcriptUploadSlice.js';
 import TranscriptAPI from '../../services/TranscriptAPI';
 import BaseButton from '../general/BaseButton';
+import OverrideModal from "./OverrideModal";
 
 class TranscriptUploadModal extends React.Component {
 
@@ -12,7 +13,12 @@ class TranscriptUploadModal extends React.Component {
     this.state = {
       file: null,
       isFileValid: null,
+      showOverrideModal: false,
     };
+  }
+
+  toggleOverrideModal = () => {
+    this.setState({showOverrideModal: !this.state.showOverrideModal});
   }
 
   async handleFile(e) {
@@ -47,8 +53,13 @@ class TranscriptUploadModal extends React.Component {
       this.props.toggleModal();
       store.dispatch(setTranscriptUploadStatus(true))
     } catch (e) {
-      window.alert("Error in uploading transcript. " + e.message);
-      store.dispatch(setTranscriptUploadStatus(false))
+      if(e.message === "Project ID is already present. Do you want to override?"){
+        this.toggleOverrideModal();
+      }
+      else {
+        window.alert("Error in uploading transcript. " + e.message);
+      }
+      store.dispatch(setTranscriptUploadStatusFalse())
     }
   }
 
@@ -90,7 +101,13 @@ class TranscriptUploadModal extends React.Component {
                   size="sm"
                   isDisabled={!this.state.isFileValid}
                 />       
-              </div>   
+              </div>
+            <div className="justify-center flex">
+              <OverrideModal
+                show={this.state.showOverrideModal}
+                toggleModal={this.toggleOverrideModal}
+                />
+            </div>
         </div>
       </Modal>
     )
