@@ -31,7 +31,7 @@ export default class IntentAnalyzer{
     const newMap = {};
     Object.entries(map).forEach(([intent, percentage]) => {
         const replacedIntent = intent.replace("-DOT-", ".")
-        newMap[replacedIntent] = +(percentage);
+        newMap[replacedIntent] = +(percentage); //casting .toFixed() string into a float
     });
     return newMap;
   }
