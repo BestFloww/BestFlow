@@ -5,6 +5,7 @@ import { openAnalysisPage } from "../../store/switchPageSlice.js";
 import BaseButton from "../general/BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import Title from "../icons/title.jsx";
+import {exampleTranscript} from "../helpers/ExampleTranscript.js";
 
 class MainPage extends Component {
   state = {
@@ -17,6 +18,17 @@ class MainPage extends Component {
 
   openAnalysisPage = () => {
     store.dispatch(openAnalysisPage());
+  }
+
+  downloadTranscriptTemplate = () => {
+    const element = document.createElement("a");
+    const file = new Blob([JSON.stringify(exampleTranscript)], {
+      type: "application/json",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = "template-transcript-JSON.json"
+    document.body.appendChild(element);
+    element.click();
   }
 
   render() {
@@ -47,6 +59,13 @@ class MainPage extends Component {
               text="View Analysis"
               size="lg"
               isDisabled={!isTranscriptUploaded}
+            />
+          </div>
+          <div className="justify-center flex">
+            <BaseButton
+                click={this.downloadTranscriptTemplate}
+                text="Download Transcript Template"
+                size="lg"
             />
           </div>
         </div>

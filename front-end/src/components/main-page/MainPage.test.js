@@ -38,4 +38,16 @@ describe('MainPage tests', () => {
         expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
     });
 
+    it('should download transcript template when Download Transcript Template button is clicked', () => {
+        renderComponent();
+        const mockElement = {click:jest.fn()}
+        const createElementSpy = jest.spyOn(document, 'createElement').mockReturnValueOnce(mockElement);
+        document.body.appendChild = jest.fn();
+        global.URL.createObjectURL = jest.fn();
+        userEvent.click(screen.getByText('Download Transcript Template'));
+        expect(createElementSpy).toHaveBeenCalledWith('a');
+        expect(document.body.appendChild).toHaveBeenCalled();
+        expect(mockElement.click).toHaveBeenCalled();
+    });
+
 });
