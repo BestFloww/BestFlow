@@ -1,4 +1,5 @@
-export default class TestIntentGenerator {
+/* istanbul ignore file */
+export default class TestIntentFactory {
     generateModel(questionMsg, intents, total_intents, id) {
         const generatedModel = {
             question: questionMsg,
