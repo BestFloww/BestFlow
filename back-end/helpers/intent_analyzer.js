@@ -1,8 +1,8 @@
 export default class IntentAnalyzer{
-    analyzeIntents(models) {
-      let newIntents = [];
+  analyzeIntents(models) {
+      const newIntents = [];
 
-      for (let model in models) {
+      for (const model of models) {
         newIntents.push(this.formatModel(model))
       }
 
@@ -11,11 +11,11 @@ export default class IntentAnalyzer{
 
   formatModel(model) {//Formats the mongoose model into desired array for IntentLister to use
     let percentageMap;
-
     if (model.total_children == 0) {
       percentageMap = {"No intents found.": 0};
     }
     else {
+      console.log(model);
       percentageMap = this.replacePeriods(model.getPercentages());
     }
 
@@ -28,9 +28,9 @@ export default class IntentAnalyzer{
   }
 
   replacePeriods(map) {
-    let newMap = {};
-    map.forEach((percentage, intent) => {
-        let replacedIntent = intent.replace("-DOT-", ".")
+    const newMap = {};
+    Object.entries(map).forEach(([intent, percentage]) => {
+        const replacedIntent = intent.replace("-DOT-", ".")
         newMap[replacedIntent] = percentage;
     });
     return newMap;
