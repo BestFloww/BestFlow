@@ -15,7 +15,7 @@ export default class IntentAnalyzer{
       percentageMap = {"No intents found.": 0};
     }
     else {
-      console.log(model);
+    
       percentageMap = this.replacePeriods(model.getPercentages());
     }
 
