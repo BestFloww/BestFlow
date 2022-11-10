@@ -1,6 +1,5 @@
 import React from 'react';
 import Modal from 'react-modal';
-import store from "../../store.js";
 import BaseButton from '../general/BaseButton';
 
 class OverrideModal extends React.Component {
@@ -10,8 +9,7 @@ class OverrideModal extends React.Component {
     }
 
     async overrideFile(){
-        this.props.state.file.override = true;
-        await this.props.handleUpload(this.props.state.file);
+        this.props.overrideTrue();
         this.props.toggleModal();
     }
 
@@ -45,4 +43,4 @@ class OverrideModal extends React.Component {
     }
 }
 
-export default TranscriptUploadModal;
+export default OverrideModal;

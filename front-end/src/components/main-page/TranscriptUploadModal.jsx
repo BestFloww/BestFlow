@@ -14,11 +14,18 @@ class TranscriptUploadModal extends React.Component {
       file: null,
       isFileValid: null,
       showOverrideModal: false,
+      override: false,
     };
   }
 
   toggleOverrideModal = () => {
     this.setState({showOverrideModal: !this.state.showOverrideModal});
+  }
+
+  toggleOverride = () => {
+    this.setState({override: true},() => {
+      this.handleUpload(this.state.file)
+    });
   }
 
   async handleFile(e) {
@@ -49,17 +56,22 @@ class TranscriptUploadModal extends React.Component {
 
   async handleUpload(file) {
     try {
+      if(this.state.override){
+        file.override = true;
+        this.setState({override: false});
+      }
+      console.log(file)
       await TranscriptAPI.post(file);
       this.props.toggleModal();
       store.dispatch(setTranscriptUploadStatus(true))
     } catch (e) {
-      if(e.message === "Project ID is already present. Do you want to override?"){
+      if(e.response.data.error === "Project ID is already present. Do you want to override?"){
         this.toggleOverrideModal();
       }
       else {
-        window.alert("Error in uploading transcript. " + e.message);
+        window.alert("Error in uploading transcript. " + e.response.data.error);
       }
-      store.dispatch(setTranscriptUploadStatusFalse())
+      store.dispatch(setTranscriptUploadStatus(false))
     }
   }
 
@@ -106,6 +118,7 @@ class TranscriptUploadModal extends React.Component {
               <OverrideModal
                 show={this.state.showOverrideModal}
                 toggleModal={this.toggleOverrideModal}
+                overrideTrue={this.toggleOverride}
                 />
             </div>
         </div>
