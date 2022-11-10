@@ -60,7 +60,6 @@ class TranscriptUploadModal extends React.Component {
         file.override = true;
         this.setState({override: false});
       }
-      console.log(file)
       await TranscriptAPI.post(file);
       this.props.toggleModal();
       store.dispatch(setTranscriptUploadStatus(true))

@@ -58,4 +58,74 @@ describe("TranscriptUploadModal tests", () => {
         userEvent.click(screen.getByText("Upload"));
         await waitFor(() => expect(TranscriptAPI.post).toHaveBeenCalled());
     });
+
+    it('should not display Override Modal initially', () => {
+        renderComponent(props);
+        expect(screen.queryByTestId('override-modal')).not.toBeInTheDocument();
+    });
+
+    it('should toggle Override Modal when project id exists', async() => {
+        renderComponent(props);
+        const fakeData = {'data': 'value'}
+        // First trick JSON
+        const parse = jest.spyOn(JSON, "parse").mockImplementation(() => fakeData)
+        // then we trick the FileReader
+        const fakeFile = new File(["{'data': 'value'}"], "test.json", {type: "application/json"})
+
+        // then we test
+        const input = screen.getByTestId("fileInput")
+        userEvent.upload(input, fakeFile);
+
+        await waitFor(() => expect(parse).toHaveBeenCalled());
+
+        // Create personalized Error
+        const overrideError = new Error();
+        overrideError.response = {data: {error: "Project ID is already present. Do you want to override?"}}
+
+        // This allows our async method to run
+        jest.spyOn(TranscriptAPI,"post").mockImplementation(() => {throw overrideError});
+
+        // Catch overrideError
+        try {
+            userEvent.click(screen.getByText("Upload"));
+        } catch (e) {
+            const thrownError = e;
+            expect(thrownError).toEqual(overrideError);
+            expect(thrownError.response.data.error).toEqual(overrideError.response.data.error);
+            expect(screen.getByText('Project ID is already present. Do you want to override?')).toBeInTheDocument();
+        }
+    });
+
+    it("correctly sets state override to true", () => {
+        renderComponent(props);
+        const fakeData = {'data': 'value'}
+        // First trick JSON
+        const parse = jest.spyOn(JSON, "parse").mockImplementation(() => fakeData)
+        // then we trick the FileReader
+        const fakeFile = new File(["{'data': 'value'}"], "test.json", {type: "application/json"})
+
+        // then we test
+        const input = screen.getByTestId("fileInput")
+        userEvent.upload(input, fakeFile);
+
+        // Create personalized Error
+        const overrideError = new Error();
+        overrideError.response = {data: {error: "Project ID is already present. Do you want to override?"}}
+
+        // This allows our async method to run
+        jest.spyOn(TranscriptAPI,"post").mockImplementation(() => {throw overrideError});
+
+        // Catch overrideError
+        try {
+            userEvent.click(screen.getByText("Upload"));
+        } catch (e) {
+            const thrownError = e;
+            expect(thrownError).toEqual(overrideError);
+            expect(thrownError.response.data.error).toEqual(overrideError.response.data.error);
+            expect(screen.getByText('Project ID is already present. Do you want to override?')).toBeInTheDocument();
+            jest.spyOn(this,"handleUpload").mockImplementation(() => {})
+            userEvent.click(screen.getByText("Confirm"));
+            expect(this.toggleOverride).toHaveBeenCalled();
+        }
+    });
 });
