@@ -4,10 +4,6 @@ import BaseButton from '../general/BaseButton';
 
 class OverrideModal extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     async overrideFile(){
         this.props.overrideTrue();
         this.props.toggleModal();
