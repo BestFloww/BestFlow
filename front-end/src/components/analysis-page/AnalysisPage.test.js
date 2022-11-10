@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store from '../../store.js';
 import AnalysisPage from './AnalysisPage.jsx';
 
-describe('AnalysisPage tests', () => {
+describe('AnalysisPage', () => {
     const renderComponent = () => render(
         <Provider store={store} >
             <AnalysisPage />

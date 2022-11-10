@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import reducer , { setTranscriptUploadStatus } from "./transcriptUploadSlice.js"
 
-describe('transcriptUploadedSlice tests', () => {
+describe('transcriptUploadedSlice', () => {
     it('should set isUploaded to false in the initial state', () => {
         expect(reducer(undefined, { type: undefined })).toEqual({ isUploaded: false });
     });

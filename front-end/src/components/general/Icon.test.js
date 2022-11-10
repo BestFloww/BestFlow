@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Icon from './Icon.jsx';
 
-describe('Icon tests', () => {
+describe('Icon', () => {
     const basicProps = {
         name: "magnifying-glass",
         color: "red",

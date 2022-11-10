@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import TranscriptDescription from "./TranscriptDescription.jsx"
 import {exampleTranscript} from "../helpers/ExampleTranscript.js"; 
 
-describe("TranscriptDescription tests", () => {
+describe("TranscriptDescription", () => {
     it("should correctly show the JSON file in the description", () => {
         render(<TranscriptDescription/>)
 

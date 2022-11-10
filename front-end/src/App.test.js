@@ -6,7 +6,7 @@ import store from './store.js';
 import { setTranscriptUploadStatus } from './store/transcriptUploadSlice.js';
 import App from './App.jsx';
 
-describe('App tests', () => {
+describe('App', () => {
     const renderComponent = () => render(
         <Provider store={store} >
             <App/>
