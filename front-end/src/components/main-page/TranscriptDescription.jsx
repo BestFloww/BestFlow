@@ -4,7 +4,7 @@ import {exampleTranscript} from "../helpers/ExampleTranscript.js";
 class TranscriptDescription extends Component {
 	render() {
 		return (
-            <div className='leading-12'>
+            <div>
                 <ul className='text-center font-bold text-lg'> 
                     Required Data Format:
                 </ul>
