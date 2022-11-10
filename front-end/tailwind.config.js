@@ -13,7 +13,8 @@ module.exports = {
       "gray": "#374151",
       "green": {
         100: "#A0B4B1",
-        200: "#3D5245"
+        200: "#3D5245",
+        300: "#C9D2D1"
       },
       "purple": {
         100: "#E7E1F1",
@@ -35,6 +36,9 @@ module.exports = {
         DEFAULT: '2px 2px 2px var(--tw-shadow-color)',
         lg: '0 8px 16px var(--tw-shadow-color)',
       },
+      boxShadow: {
+        "inner-lg": "inset 1px 1px 10px 3px rgb(0, 0, 0, 0.2)",
+      }
     },
   },
   plugins: [

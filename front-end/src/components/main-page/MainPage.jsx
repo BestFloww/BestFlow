@@ -6,7 +6,7 @@ import BaseButton from "../general/BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import Title from "../icons/title.jsx";
 import {exampleTranscript} from "../helpers/ExampleTranscript.js";
-import TranscriptDescription from "./TranscriptDescription"
+import TranscriptDescription from "./TranscriptDescription.jsx"
 
 class MainPage extends Component {
   state = {
@@ -71,7 +71,7 @@ class MainPage extends Component {
           
         </div>
           <div className="w-1/4 h-7/8 justify-center flex flex-col gap-y-3">
-            <div className="bg-off-white h-[75vh] box-border drop-shadow-md rounded-xl p-5 text-lg font-cabin mb-5">
+            <div className="bg-off-white h-[75vh] box-border drop-shadow-md rounded-xl p-5 text-lg font-cabin mb-5 overflow-y-auto">
                 <TranscriptDescription></TranscriptDescription>
             </div>
             <div className="mx-auto">
