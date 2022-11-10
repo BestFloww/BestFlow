@@ -12,7 +12,7 @@ router.route("/").get((req, res, next) => {
     TranscriptController.setTranscriptInteractor(TranscriptInteractor);
     TranscriptController.setOutputBoundary(OutputDataBoundary);
     TranscriptController.getAnalyzedTranscript(req, res, next);
-})
+});
 
 router.route("/").post((req, res, next) => {
     const dao = new IntentDao();
@@ -20,6 +20,6 @@ router.route("/").post((req, res, next) => {
     TranscriptController.setTranscriptInteractor(TranscriptInteractor);
     TranscriptController.setOutputBoundary(OutputDataBoundary);
     TranscriptController.postTranscript(req, res, next);
-})
+});
 
 export default router;
