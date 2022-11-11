@@ -22,7 +22,7 @@ class TranscriptUploadModal extends React.Component {
     this.setState({showOverrideModal: !this.state.showOverrideModal});
   }
 
-  toggleOverride = () => {
+  handleUploadOverride = () => {
     this.setState({override: true},() => {
       this.handleUpload(this.state.file)
     });
@@ -117,7 +117,7 @@ class TranscriptUploadModal extends React.Component {
               <OverrideModal
                 show={this.state.showOverrideModal}
                 toggleModal={this.toggleOverrideModal}
-                overrideTrue={this.toggleOverride}
+                uploadFileWithOverride={this.handleUploadOverride}
                 />
             </div>
         </div>

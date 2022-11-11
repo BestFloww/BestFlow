@@ -1,11 +1,18 @@
 import React from 'react';
 import Modal from 'react-modal';
 import BaseButton from '../general/BaseButton';
+import PropTypes from 'prop-types';
 
 class OverrideModal extends React.Component {
 
+    static propTypes = {
+        show: PropTypes.bool.isRequired,
+        toggleModal: PropTypes.func.isRequired,
+        uploadFileWithOverride: PropTypes.func.isRequired,
+    }
+
     async overrideFile(){
-        this.props.overrideTrue();
+        this.props.uploadFileWithOverride();
         this.props.toggleModal();
     }
 

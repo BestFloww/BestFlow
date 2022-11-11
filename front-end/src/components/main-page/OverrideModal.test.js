@@ -17,7 +17,7 @@ describe("OverrideModal tests", () => {
             toggleModal: jest.fn().mockImplementation(() => {
                 props.show = !props.show
             }),
-            overrideTrue: jest.fn().mockImplementation(),
+            uploadFileWithOverride: jest.fn().mockImplementation(),
         };
     });
 
@@ -27,10 +27,10 @@ describe("OverrideModal tests", () => {
         expect(props.show).toBe(false);
     });
 
-    it("correctly closes modal after confirming override", () => {
+    it("correctly closes modal and posts transcript with override", () => {
         renderComponent(props);
         userEvent.click(screen.getByText("Confirm"));
-        expect(props.overrideTrue).toHaveBeenCalled();
+        expect(props.uploadFileWithOverride).toHaveBeenCalled();
         expect(props.toggleModal).toHaveBeenCalled();
         expect(props.show).toBe(false);
     });
