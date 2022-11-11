@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import reducer, { openMainPage, openAnalysisPage } from './switchPageSlice.js';
 
-describe('switchPageSlice tests', () => {
+describe('switchPageSlice', () => {
     it('should set page to MainPage in the initial state', () => {
         expect(reducer(undefined, { type: undefined })).toEqual({ page: 'MainPage' });
     });

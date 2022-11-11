@@ -8,7 +8,7 @@ jest.mock("../../services/TranscriptAPI.js");
 
 // React-modal doesn't work very well with the React testing library and this is our best attempts at testing.
 
-describe("TranscriptUploadModal tests", () => {
+describe("TranscriptUploadModal", () => {
     let props;
     const renderComponent = (props) => {
         render(<TranscriptUploadModal {...props} />)
