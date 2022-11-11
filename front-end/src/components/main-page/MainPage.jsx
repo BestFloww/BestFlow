@@ -53,6 +53,10 @@ class MainPage extends Component {
                 click={this.toggleTranscriptUploadModal}
                 text="Upload Transcript"
                 size="lg"
+                icon={{
+                  name: "upload-note",
+                  size: "40"
+                }}
               />
             </div>
             <div className="justify-center flex">
@@ -62,8 +66,8 @@ class MainPage extends Component {
                 size="lg"
                 isDisabled={!isTranscriptUploaded}
                 icon={{
-                  name: "magnifying-glass",
-                  size: 30
+                  name: "analyze-note",
+                  size: "40"
                 }}
               />
             </div>
@@ -78,6 +82,10 @@ class MainPage extends Component {
               <BaseButton
                   click={this.downloadTranscriptTemplate}
                   text="Download Transcript Template"
+                  icon={{
+                    name: "download-note",
+                    size: "25"
+                  }}
               />
             </div>
           </div>
