@@ -19,7 +19,7 @@ const intentSchema = new mongoose.Schema({
     },
 });
 
-intentSchema.methods.getPercentages = () => {
+intentSchema.methods.getPercentages = function() {
     const percentageMap = {};
     this.children.forEach((numTimesCalled, intent) => {
         percentageMap[intent] = (numTimesCalled / this.total_children).toFixed(2);
@@ -27,7 +27,7 @@ intentSchema.methods.getPercentages = () => {
     return percentageMap;
 };
 
-intentSchema.methods.addChild = (newChild) => {
+intentSchema.methods.addChild = function(newChild) {
     if (!this.children.get(newChild)) {
         this.children.set(newChild, 0);
     }
