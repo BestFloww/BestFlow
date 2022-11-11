@@ -40,13 +40,13 @@ describe("TranscriptController", () => {
     it("Should correctly post transcript", async() => {
         TranscriptController.setTranscriptInteractor(PostTranscriptInteractor);
         await TranscriptController.postTranscript({body:{payload : {"a" : "a"}}}, mockResponse(), {});
-        expect(PostTranscriptInteractor.formatTranscript).toHaveBeenCalledWith({"a": "a"}, undefined);
+        expect(PostTranscriptInteractor.formatTranscript).toHaveBeenCalledWith({"a": "a"});
     });
 
     it("Should correctly post transcript with override", async() => {
         TranscriptController.setTranscriptInteractor(PostTranscriptInteractor);
         await TranscriptController.postTranscript({body:{payload : {"a" : "a", override: true}}}, mockResponse(), {});
-        expect(PostTranscriptInteractor.formatTranscript).toHaveBeenCalledWith({"a": "a", override: true}, true);
+        expect(PostTranscriptInteractor.formatTranscript).toHaveBeenCalledWith({"a": "a"});
     });
 
     it("Should correctly throw an error for post transcript", async() => {

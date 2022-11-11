@@ -17,10 +17,11 @@ export default class PostTranscriptInteractor extends InputBoundaryInterface{
         }
     }
 
-    static async formatTranscript(rawTranscript, override = false){
+    static async formatTranscript(rawTranscript){
         try{
             rawTranscript = rawTranscript.replaceAll(".", "-DOT-");
             let formattedTranscript = JSON.parse(rawTranscript);
+            const override = formattedTranscript.override;
             formattedTranscript = JSON.parse(formattedTranscript.transcript);
             const finalTranscript = await TranscriptFormatter.formatTranscript(formattedTranscript);
             const res = await this.#IntentDao.postIntents(finalTranscript, override);

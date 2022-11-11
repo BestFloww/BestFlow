@@ -4,6 +4,7 @@ import store from "../../store.js";
 import { setTranscriptUploadStatus } from '../../store/transcriptUploadSlice.js';
 import TranscriptAPI from '../../services/TranscriptAPI';
 import BaseButton from '../general/BaseButton';
+import OverrideModal from "./OverrideModal";
 
 class TranscriptUploadModal extends React.Component {
 
@@ -12,7 +13,19 @@ class TranscriptUploadModal extends React.Component {
     this.state = {
       file: null,
       isFileValid: null,
+      showOverrideModal: false,
+      override: false,
     };
+  }
+
+  toggleOverrideModal = () => {
+    this.setState({showOverrideModal: !this.state.showOverrideModal});
+  }
+
+  handleUploadOverride = () => {
+    this.setState({override: true}, () => {
+      this.handleUpload(this.state.file)
+    });
   }
 
   async handleFile(e) {
@@ -43,11 +56,20 @@ class TranscriptUploadModal extends React.Component {
 
   async handleUpload(file) {
     try {
+      if(this.state.override){
+        file.override = true;
+        this.setState({override: false});
+      }
       await TranscriptAPI.post(file);
       this.props.toggleModal();
       store.dispatch(setTranscriptUploadStatus(true))
     } catch (e) {
-      window.alert("Error in uploading transcript. " + e.message);
+      if(e.response.data.error === "Project ID is already present. Do you want to override?"){
+        this.toggleOverrideModal();
+      }
+      else {
+        window.alert("Error in uploading transcript. " + e.response.data.error);
+      }
       store.dispatch(setTranscriptUploadStatus(false))
     }
   }
@@ -60,7 +82,7 @@ class TranscriptUploadModal extends React.Component {
     return (
       <Modal
         isOpen={this.props.show}
-        className="container w-60 md:w-80 mx-auto bg-purple-100 rounded-lg shadow-lg py-3 mt-[40vh] flex flex-col"
+        className="container w-60 md:w-80 mx-auto bg-purple-100 font-cabin rounded-lg shadow-lg py-3 mt-[40vh] flex flex-col"
         onRequestClose={this.props.toggleModal}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
@@ -90,7 +112,14 @@ class TranscriptUploadModal extends React.Component {
                   size="sm"
                   isDisabled={!this.state.isFileValid}
                 />       
-              </div>   
+              </div>
+            <div className="justify-center flex">
+              <OverrideModal
+                show={this.state.showOverrideModal}
+                toggleModal={this.toggleOverrideModal}
+                uploadFileWithOverride={this.handleUploadOverride}
+                />
+            </div>
         </div>
       </Modal>
     )
