@@ -28,7 +28,7 @@ export default class TranscriptInteractor extends InputBoundaryInterface{
         try{
             rawTranscript = rawTranscript.replaceAll(".", "-DOT-");
             let formattedTranscript = JSON.parse(rawTranscript);
-            const override = formattedTranscript.override
+            const override = formattedTranscript.override;
             formattedTranscript = JSON.parse(formattedTranscript.transcript);
             const finalTranscript = await TranscriptFormatter.formatTranscript(formattedTranscript);
             const res = await this.#IntentDao.postIntents(finalTranscript, override);
