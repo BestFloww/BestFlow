@@ -82,6 +82,10 @@ class MainPage extends Component {
               <BaseButton
                   click={this.downloadTranscriptTemplate}
                   text="Download Transcript Template"
+                  icon={{
+                    name: "download-note",
+                    size: "25"
+                  }}
               />
             </div>
           </div>
