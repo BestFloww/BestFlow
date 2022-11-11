@@ -3,7 +3,7 @@ import TranscriptFormatter from "./transcript_data_formatter.js";
 import OutputDataBoundary from "./output_data_boundary.js";
 import { IntentInterface } from "../interfaces/intent-interface.js";
 
-export default class TranscriptInteractor extends InputBoundaryInterface{
+export default class PostTranscriptInteractor extends InputBoundaryInterface{
     static #IntentDao;
 
     static setIntentDao(dao){
@@ -12,16 +12,9 @@ export default class TranscriptInteractor extends InputBoundaryInterface{
             this.#IntentDao.addListener('postIntent', (response) => {
                 OutputDataBoundary.setOutput(response);
             });
-            this.#IntentDao.addListener('getIntent', (response) => {
-                OutputDataBoundary.setOutput(response);
-            });
         } else {
             throw new Error("not an IntentInterface");
         }
-    }
-
-    static async getTranscript(query){
-        const res = await this.#IntentDao.getIntent(query);
     }
 
     static async formatTranscript(rawTranscript){

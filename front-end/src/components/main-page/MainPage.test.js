@@ -6,7 +6,7 @@ import store from '../../store.js';
 import MainPage from './MainPage.jsx';
 import {setTranscriptUploadStatus} from "../../store/transcriptUploadSlice.js";
 
-describe('MainPage tests', () => {
+describe('MainPage', () => {
     const renderComponent = () => render(
         <Provider store={store} >
             <MainPage/>

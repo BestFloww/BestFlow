@@ -30,8 +30,8 @@ export default class TranscriptFormatter {
     static #addIntent(content, message, id){
         if(!((message + id) in content)){
             // adds question only if it's not already existing
-            const intent = {question: message, children: new Map(), totalChildren: 0, project_id: id};
-            // creates default intent object to be passed to an Intent(see intent_scehma)
+            const intent = {question: message, children: new Map(), total_children: 0, project_id: id};
+            // creates default intent object to be passed to an Intent(see intent-schema)
             content[(message + id)] = intent;
         }
     }
@@ -44,7 +44,7 @@ export default class TranscriptFormatter {
                 prevIntent.children.set(message, 0);
             }
             prevIntent.children.set(message, prevIntent.children.get(message) + 1);
-            prevIntent.totalChildren += 1;
+            prevIntent.total_children += 1;
             content[prev] = prevIntent;
         }
     }

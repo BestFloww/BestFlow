@@ -65,7 +65,7 @@ describe("formatTranscript", () => {
         expect(received.length).toBe(1);
         expect(received[0].question).toBe("<voice name=\"Alexa\">\"I want to plan my schedule\" Is this a key location? </voice>");
         expect(received[0].children).toEqual(new Map());
-        expect(received[0].totalChildren).toBe(0);
+        expect(received[0].total_children).toBe(0);
         expect(received[0].project_id).toBe("1");
         
     });
@@ -76,7 +76,7 @@ describe("formatTranscript", () => {
         expect(received.length).toBe(1);
         expect(received[0].question).toBe("What would you like to buy?");
         expect(received[0].children).toEqual(new Map());
-        expect(received[0].totalChildren).toBe(0);
+        expect(received[0].total_children).toBe(0);
         expect(received[0].project_id).toBe("2");
     });
 
@@ -86,7 +86,7 @@ describe("formatTranscript", () => {
         const received = await TranscriptFormatter.formatTranscript(globalDatabase.rawTranscript);
         expect(received.length).toBe(2);
         expect(received[0].children).toEqual(new Map());
-        expect(received[0].totalChildren).toBe(0);
+        expect(received[0].total_children).toBe(0);
     });
 
 
@@ -98,7 +98,7 @@ describe("formatTranscript", () => {
         const received = await TranscriptFormatter.formatTranscript(globalDatabase.rawTranscript);
         expect(received.length).toBe(2);
         expect(received[0].children).toEqual(children);
-        expect(received[0].totalChildren).toBe(1);
+        expect(received[0].total_children).toBe(1);
       
     });
 
@@ -114,7 +114,7 @@ describe("formatTranscript", () => {
         const received = await TranscriptFormatter.formatTranscript(globalDatabase.rawTranscript);
         expect(received.length).toBe(3);
         expect(received[0].children).toEqual(children);
-        expect(received[0].totalChildren).toBe(2);
+        expect(received[0].total_children).toBe(2);
       
     });
 });
