@@ -5,7 +5,7 @@ import OverrideModal from "./OverrideModal";
 
 // React-modal doesn't work very well with the React testing library and this is our best attempts at testing.
 
-describe("OverrideModal tests", () => {
+describe("OverrideModal", () => {
     let props;
     const renderComponent = (props) => {
         render(<OverrideModal {...props} />)

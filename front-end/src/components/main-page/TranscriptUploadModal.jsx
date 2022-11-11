@@ -23,7 +23,7 @@ class TranscriptUploadModal extends React.Component {
   }
 
   handleUploadOverride = () => {
-    this.setState({override: true},() => {
+    this.setState({override: true}, () => {
       this.handleUpload(this.state.file)
     });
   }
@@ -82,7 +82,7 @@ class TranscriptUploadModal extends React.Component {
     return (
       <Modal
         isOpen={this.props.show}
-        className="container w-60 md:w-80 mx-auto bg-purple-100 rounded-lg shadow-lg py-3 mt-[40vh] flex flex-col"
+        className="container w-60 md:w-80 mx-auto bg-purple-100 font-cabin rounded-lg shadow-lg py-3 mt-[40vh] flex flex-col"
         onRequestClose={this.props.toggleModal}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
