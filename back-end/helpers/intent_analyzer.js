@@ -13,9 +13,7 @@ export default class IntentAnalyzer{
     let percentageMap;
     if (model.total_children == 0) {
       percentageMap = {"No intents found.": 0};
-    }
-    else {
-    
+    } else {
       percentageMap = this.replacePeriods(model.getPercentages());
     }
 

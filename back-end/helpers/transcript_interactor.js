@@ -16,7 +16,8 @@ export default class TranscriptInteractor extends InputBoundaryInterface{
                 OutputDataBoundary.setOutput(response);
             });
             this.#IntentDao.addListener('getIntent', (response) => {
-                OutputDataBoundary.setOutput(response);
+                const analyzed_response = analyzer.analyzeIntents(response);
+                OutputDataBoundary.setOutput(analyzed_response);
             });
         } else {
             throw new Error("not an IntentInterface");
@@ -24,8 +25,7 @@ export default class TranscriptInteractor extends InputBoundaryInterface{
     }
 
     static async getTranscript(query){
-        //const res = await this.#IntentDao.getIntent(query);
-        const res = analyzer.analyzeIntents(await this.#IntentDao.getIntent(query));
+        const res = await this.#IntentDao.getIntent(query);
     }
 
     static async formatTranscript(rawTranscript, override = false){
