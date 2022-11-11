@@ -39,14 +39,15 @@ describe("PostTranscriptInteractor", () => {
         expect(result.error.message).toBe("error");
     });
 
-    it("should correctly postIntents with override being passed down", async() => {
-        const result = await PostTranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript), true);
-        expect(dao.postIntents).toHaveBeenCalledWith(undefined, true);
+    it("should correctly postIntents with override being passed down defaulting to undefined", async() => {
+        const result = await PostTranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript));
+        expect(dao.postIntents).toHaveBeenCalledWith(undefined, undefined);
     });
 
-    it("should correctly postIntents with override being passed down defaulting to false", async() => {
+    it("should correctly postIntents with override being passed down", async() => {
+        mock_transcript.override = true;
         const result = await PostTranscriptInteractor.formatTranscript(JSON.stringify(mock_transcript));
-        expect(dao.postIntents).toHaveBeenCalledWith(undefined, false);
+        expect(dao.postIntents).toHaveBeenCalledWith(undefined, true);
     });
 
     it("should correctly throw an error for the intent dao not being the right object", () => {
