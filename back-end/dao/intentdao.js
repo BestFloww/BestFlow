@@ -17,6 +17,12 @@ export default class IntentDao extends IntentInterface{
   
   async postIntents(content, override) {
     try {
+      if(override) {
+        // Delete previous intents with same project id
+        const projectId = content[0].project_id
+        await Intent.deleteMany({project_id: projectId})
+      }
+
       const checkedIds = [];
       for (const intent of content) {
 
