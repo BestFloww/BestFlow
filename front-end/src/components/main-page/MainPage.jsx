@@ -23,7 +23,7 @@ class MainPage extends Component {
   openAnalysisPage = async() => {
     try {
       await this.getAnalyzedData();
-      console.log("I'm here")
+      console.log("I'm here");
       store.dispatch(openAnalysisPage());
     } catch (e) {
       window.alert("Error in analyzing transcript. " + e.response.data.error);

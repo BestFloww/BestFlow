@@ -15,9 +15,9 @@ describe('App', () => {
     );
 
     afterAll(() => {
-        store.dispatch(setTranscriptUploadStatus(false))
-        store.dispatch(clearAnalyzedTranscript)
-        store.dispatch(setProjectIdToBeAnalyzed(""))
+        store.dispatch(setTranscriptUploadStatus(false));
+        store.dispatch(clearAnalyzedTranscript);
+        store.dispatch(setProjectIdToBeAnalyzed(""));
     });
 
     it('should display MainPage on load', () => {
@@ -27,9 +27,9 @@ describe('App', () => {
     });
     
     it('should display AnalysisPage when View Analysis button is pressed on MainPage', async() => {
-        store.dispatch(setTranscriptUploadStatus(true))
-        store.dispatch(setProjectIdToBeAnalyzed("1"))
-        store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}))
+        store.dispatch(setTranscriptUploadStatus(true));
+        store.dispatch(setProjectIdToBeAnalyzed("1"));
+        store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         userEvent.click(screen.getByText('View Analysis'));
         expect(screen.getByTestId('analysis-page')).toBeInTheDocument();

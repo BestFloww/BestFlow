@@ -15,9 +15,9 @@ describe('MainPage', () => {
     );
 
     afterAll(() => {
-        store.dispatch(setTranscriptUploadStatus(false))
-        store.dispatch(clearAnalyzedTranscript)
-        store.dispatch(setProjectIdToBeAnalyzed(""))
+        store.dispatch(setTranscriptUploadStatus(false));
+        store.dispatch(clearAnalyzedTranscript);
+        store.dispatch(setProjectIdToBeAnalyzed(""));
     });
 
     it('should not display Upload Transcript Modal initially', () => {
@@ -34,9 +34,9 @@ describe('MainPage', () => {
     });
 
     it('should dispatch openAnalysisPage when View Analysis button is clicked', () => {
-        store.dispatch(setTranscriptUploadStatus(true))
-        store.dispatch(setProjectIdToBeAnalyzed("1"))
-        store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}))
+        store.dispatch(setTranscriptUploadStatus(true));
+        store.dispatch(setProjectIdToBeAnalyzed("1"));
+        store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.click(screen.getByText('View Analysis'));
