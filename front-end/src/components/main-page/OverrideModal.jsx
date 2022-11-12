@@ -2,12 +2,15 @@ import React from 'react';
 import Modal from 'react-modal';
 import BaseButton from '../general/BaseButton';
 import PropTypes from "prop-types";
+import store from '../../store.js';
+import { setOverrideStatus } from '../../store/analyzeTranscriptSlice.js';
 
 class OverrideModal extends React.Component {
 
     overrideFile(){
         this.props.uploadFileWithOverride();
         this.props.toggleModal();
+        store.dispatch(setOverrideStatus(true));
     }
 
     componentDidMount() {

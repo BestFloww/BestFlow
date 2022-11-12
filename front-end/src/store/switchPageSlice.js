@@ -7,10 +7,10 @@ export const switchPageSlice = createSlice({
   },
   reducers: {
     openMainPage: state => {
-      state.page = "MainPage"
+      state.page = "MainPage";
     },
     openAnalysisPage: state => {
-      state.page = "AnalysisPage"
+      state.page = "AnalysisPage";
     },
   }
 })

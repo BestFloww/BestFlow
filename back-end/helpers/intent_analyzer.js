@@ -3,9 +3,8 @@ export default class IntentAnalyzer{
       const newIntents = [];
 
       for (const model of models) {
-        newIntents.push(this.formatModel(model))
+        newIntents.push(this.formatModel(model));
       }
-
       return newIntents;
     }
 
@@ -29,7 +28,7 @@ export default class IntentAnalyzer{
     const newMap = {};
     Object.entries(map).forEach(([intent, percentage]) => {
         const replacedIntent = intent.replace("-DOT-", ".")
-        newMap[replacedIntent] = +(percentage); //casting .toFixed() string into a float
+        newMap[replacedIntent] = +(percentage * 100); //casting .toFixed() string into a float
     });
     return newMap;
   }

@@ -32,7 +32,7 @@ export default class IntentDao extends IntentInterface{
         await newIntent.save();
         checkedIds.push(intent.project_id);
       }
-      this.emit("postIntent",{status: 201, message: "success"});
+      this.emit("postIntent",{status: 201, message: "success", projectIds: checkedIds});
     } catch (e) {
       this.emit("postIntent",{status: 500, error: e.message});
     }

@@ -27,7 +27,7 @@ describe("intentAnalyzer", () => {
     fakeMap.set("Intent 1-DOT-", 1);
     const input = factory.generateModel("Question 1-DOT-", fakeMap, 1, 1);
     input.getPercentages.mockImplementation(() => {return getPercentages(input.children, input.total_children)});
-    const output = factory.generateAnalyzedIntent("Question 1.", {"Intent 1.": 1.00});
+    const output = factory.generateAnalyzedIntent("Question 1.", {"Intent 1.": 100});
 
     expect(analyzer.analyzeIntents([input])).toStrictEqual([output]);
   });
@@ -47,7 +47,7 @@ describe("intentAnalyzer", () => {
     input2.getPercentages.mockImplementation(() => {return getPercentages(input2.children, input2.total_children)});
     input3.getPercentages.mockImplementation(() => {return getPercentages(input3.children, input3.total_children)});
 
-    const output = factory.generateMultipleIntents([["Question 1.", {"Intent 1.": 1.00}], ["Question 2.", {"Intent 2.": 1.00}], ["Question 3.", {"Intent 3.": 1.00}]]);
+    const output = factory.generateMultipleIntents([["Question 1.", {"Intent 1.": 100}], ["Question 2.", {"Intent 2.": 100}], ["Question 3.", {"Intent 3.": 100}]]);
     expect(analyzer.analyzeIntents([input1, input2, input3])).toStrictEqual(output);
   });
 
@@ -65,7 +65,7 @@ describe("intentAnalyzer", () => {
 
     const input = factory.generateModel("Question 1-DOT-", fakeMap, 10, 1);
     input.getPercentages.mockImplementation(() => {return getPercentages(input.children, input.total_children)});
-    const output = factory.generateAnalyzedIntent("Question 1.", {"Intent 1.": 0.70, "Intent 2.": 0.20, "Intent 3.": 0.10});
+    const output = factory.generateAnalyzedIntent("Question 1.", {"Intent 1.": 70, "Intent 2.": 20, "Intent 3.": 10});
 
     expect(analyzer.analyzeIntents([input])).toStrictEqual([output]);
   })
