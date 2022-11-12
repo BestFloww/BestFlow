@@ -59,7 +59,7 @@ describe("IntentDao", () => {
         await dao.postIntents(fakeIntents);
         expect(Intent).toHaveBeenCalledTimes(2);
         expect(fakeModel.save).toHaveBeenCalled();
-        expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success", projectIds: [1,1]});
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success", projectIds: [1]});
     });
 
     it("should correctly throw an error for post", async() => {
@@ -83,7 +83,7 @@ describe("IntentDao", () => {
         Intent.mockImplementationOnce(() => {save: jest.fn()});
         await dao.postIntents(fakeIntents, true);
         expect(Intent.find).not.toHaveBeenCalled();
-        expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success", projectIds: [1,1]});
+        expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success", projectIds: [1]});
     });
 
     it("Put an intent", async() => {

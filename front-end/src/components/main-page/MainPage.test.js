@@ -16,7 +16,7 @@ describe('MainPage', () => {
 
     afterAll(() => {
         store.dispatch(setTranscriptUploadStatus(false));
-        store.dispatch(clearAnalyzedTranscript);
+        store.dispatch(clearAnalyzedTranscript());
         store.dispatch(setProjectIdToBeAnalyzed(""));
     });
 
