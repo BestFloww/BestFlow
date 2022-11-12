@@ -71,7 +71,8 @@ class AnalysisPage extends Component {
               <div className="flex gap-y-10 w-full flex-col h-full">
                 <div className="justify-left flex cursor-pointer m-5 w-[5em]"
                   onClick={this.openMainPage}
-                  data-testid="logo-button">
+                  data-testid="logo-button"
+                >
                   <Logo />
                 </div>
                 <div className="w-4/5 h-4/5 mx-auto">
