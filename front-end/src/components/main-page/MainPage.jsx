@@ -31,11 +31,11 @@ class MainPage extends Component {
 
   getAnalyzedData = async() =>{
       const override = store.getState().analyzeTranscript.override;
-      const projetId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
+      const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
       const transcripts = store.getState().analyzeTranscript.analyzedTranscripts;
-      if(override || (!(projetId in transcripts))){
-        const analyzedData = await TranscriptAPI.getAnalysis({project_id: projetId});
-        store.dispatch(addAnalyzedTranscript({projectId: projetId, transcript: analyzedData.data}));
+      if(override || (!(projectId in transcripts))){
+        const analyzedData = await TranscriptAPI.getAnalysis({project_id: projectId});
+        store.dispatch(addAnalyzedTranscript({projectId: projectId, transcript: analyzedData.data}));
         store.dispatch(setOverrideStatus(false));
       }
   }

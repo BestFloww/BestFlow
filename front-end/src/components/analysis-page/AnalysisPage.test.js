@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import store from '../../store.js';
-import {AnalysisPage} from './AnalysisPage.jsx';
+import { AnalysisPage } from './AnalysisPage.jsx';
 
 describe('AnalysisPage', () => {
     let props;
