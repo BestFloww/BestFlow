@@ -34,7 +34,7 @@ export class AnalysisPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  projectId: state.analyzeTranscript.projectIdToBeAnalyzed,
+  projectId: state.analyzeTranscript.projectIdToBeDisplayed,
   analyzedTranscripts: state.analyzeTranscript.analyzedTranscripts
 });
 

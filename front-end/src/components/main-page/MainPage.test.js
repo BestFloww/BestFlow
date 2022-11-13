@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store from '../../store.js';
 import MainPage from './MainPage.jsx';
 import {setTranscriptUploadStatus} from "../../store/transcriptUploadSlice.js";
-import {setProjectIdToBeAnalyzed, addAnalyzedTranscript, clearAnalyzedTranscript} from "../../store/analyzeTranscriptSlice.js"
+import {setProjectIdToBeDisplayed, addAnalyzedTranscript, clearAnalyzedTranscript} from "../../store/analyzeTranscriptSlice.js"
 
 describe('MainPage', () => {
     const renderComponent = () => render(
@@ -15,9 +15,10 @@ describe('MainPage', () => {
     );
 
     afterAll(() => {
+        // restoring the store to default
         store.dispatch(setTranscriptUploadStatus(false));
         store.dispatch(clearAnalyzedTranscript());
-        store.dispatch(setProjectIdToBeAnalyzed(""));
+        store.dispatch(setProjectIdToBeDisplayed(""));
     });
 
     it('should not display Upload Transcript Modal initially', () => {
@@ -35,7 +36,7 @@ describe('MainPage', () => {
 
     it('should dispatch openAnalysisPage when View Analysis button is clicked', async() => {
         store.dispatch(setTranscriptUploadStatus(true));
-        store.dispatch(setProjectIdToBeAnalyzed("1"));
+        store.dispatch(setProjectIdToBeDisplayed("1"));
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');

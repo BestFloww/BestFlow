@@ -5,11 +5,12 @@ export const analyzeTranscriptSlice = createSlice({
   initialState: {
     analyzedTranscripts: {},
     override : false,
-    projectIdToBeAnalyzed : ""
+    projectIdToBeDisplayed : ""
   },
 
   reducers: {
     addAnalyzedTranscript: (state, action) => {
+      // Adds an element to analyzedTranscripts object mapping the project id to the analyzed transcript 
       state.analyzedTranscripts[action.payload.projectId] = action.payload.transcript;
     },
     deleteAnalyzedTranscript: (state, action) => {
@@ -21,12 +22,12 @@ export const analyzeTranscriptSlice = createSlice({
     setOverrideStatus: (state, action) => {
       state.override = action.payload;
     },
-    setProjectIdToBeAnalyzed: (state, action) => {
-      state.projectIdToBeAnalyzed = action.payload;
+    setProjectIdToBeDisplayed: (state, action) => {
+      state.projectIdToBeDisplayed = action.payload;
     },
   }
 })
 
-export const { addAnalyzedTranscript,deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeAnalyzed } = analyzeTranscriptSlice.actions
+export const { addAnalyzedTranscript,deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed } = analyzeTranscriptSlice.actions
 
 export default analyzeTranscriptSlice.reducer

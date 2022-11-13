@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import reducer, {addAnalyzedTranscript, deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeAnalyzed, } from "./analyzeTranscriptSlice.js"
+import reducer, {addAnalyzedTranscript, deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed, } from "./analyzeTranscriptSlice.js"
 
 describe('analyzeTranscriptSlice', () => {
     const initialState = {
@@ -18,7 +18,7 @@ describe('analyzeTranscriptSlice', () => {
         const expected = reducer(undefined, { type: undefined });
         expect(expected.analyzedTranscripts).toEqual({});
         expect(expected.override).toBe(false);
-        expect(expected.projectIdToBeAnalyzed).toBe("");
+        expect(expected.projectIdToBeDisplayed).toBe("");
     });
 
     it('should add an analyzed transcript with the right project id to analyzedTranscripts', () => {
@@ -48,14 +48,14 @@ describe('analyzeTranscriptSlice', () => {
         const previousState2 = {
             analyzedTranscripts: {},
             override : true,
-            projectIdToBeAnalyzed : ""
+            projectIdToBeDisplayed : ""
         };
         const expected = reducer(previousState2, setOverrideStatus(false))
         expect(expected.override).toBe(false);
     });
-    it('should set projectId to the String passed by setProjectIdToBeAnalyzed', () => {
-        const expected = reducer(previousState, setProjectIdToBeAnalyzed("100642Amh632"));
-        expect(expected.projectIdToBeAnalyzed).toBe("100642Amh632");
+    it('should set projectId to the String passed by setProjectIdToBeDisplayed', () => {
+        const expected = reducer(previousState, setProjectIdToBeDisplayed("100642Amh632"));
+        expect(expected.projectIdToBeDisplayed).toBe("100642Amh632");
     });
 
 });

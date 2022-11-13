@@ -31,7 +31,7 @@ class MainPage extends Component {
 
   getAnalyzedData = async() =>{
       const override = store.getState().analyzeTranscript.override;
-      const projetId = store.getState().analyzeTranscript.projectIdToBeAnalyzed;
+      const projetId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
       const transcripts = store.getState().analyzeTranscript.analyzedTranscripts;
       if(override || (!(projetId in transcripts))){
         const analyzedData = await TranscriptAPI.getAnalysis({project_id: projetId});
