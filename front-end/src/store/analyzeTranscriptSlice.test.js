@@ -53,7 +53,7 @@ describe('analyzeTranscriptSlice', () => {
         const expected = reducer(previousState2, setOverrideStatus(false))
         expect(expected.override).toBe(false);
     });
-    it('should set projectId to the Srting passed by setProjectIdToBeAnalyzed', () => {
+    it('should set projectId to the String passed by setProjectIdToBeAnalyzed', () => {
         const expected = reducer(previousState, setProjectIdToBeAnalyzed("100642Amh632"));
         expect(expected.projectIdToBeAnalyzed).toBe("100642Amh632");
     });
