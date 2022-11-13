@@ -77,12 +77,12 @@ describe("IntentDao", () => {
         expect(emit).toHaveBeenCalledWith("postIntent", {status: 500, error: expectedError.message});
     });
 
-    it("should correctly post if override is true", async() => {
+    it("should correctly post and delete past transcript if override is true", async() => {
         const fakeIntents = [{goodDog: "prr", project_id: 1}, {badDog: "barkbark", project_id: 1}];
-        Intent.find.mockImplementationOnce(() => [1]);
+        Intent.find.mockImplementation(() => [1]);
         Intent.mockImplementationOnce(() => {save: jest.fn()});
         await dao.postIntents(fakeIntents, true);
-        expect(Intent.find).not.toHaveBeenCalled();
+        expect(Intent.deleteMany).toHaveBeenCalledWith({project_id: 1});
         expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success"});
     });
 
