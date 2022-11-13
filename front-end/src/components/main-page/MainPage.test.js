@@ -33,13 +33,13 @@ describe('MainPage', () => {
         expect(screen.queryByText("Drag and drop file or upload below.")).not.toBeInTheDocument();
     });
 
-    it('should dispatch openAnalysisPage when View Analysis button is clicked', () => {
+    it('should dispatch openAnalysisPage when View Analysis button is clicked', async() => {
         store.dispatch(setTranscriptUploadStatus(true));
         store.dispatch(setProjectIdToBeAnalyzed("1"));
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
-        userEvent.click(screen.getByText('View Analysis'));
+        await userEvent.click(screen.getByText('View Analysis'));
         expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
     });
 

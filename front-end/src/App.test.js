@@ -32,7 +32,7 @@ describe('App', () => {
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         userEvent.click(screen.getByText('View Analysis'));
-        expect(screen.getByTestId('analysis-page')).toBeInTheDocument();
+        await screen.findByTestId('analysis-page');
         expect(screen.queryByTestId('main-page')).not.toBeInTheDocument();
     });
 
