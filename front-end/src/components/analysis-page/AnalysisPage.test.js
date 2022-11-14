@@ -21,10 +21,8 @@ describe('AnalysisPage', () => {
         </Provider>
     );
 
-
     it('should dispatch openMainPage when logo button is clicked', () => {
         renderComponent(props);
-
         const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.click(screen.getByTestId('logo-button'));
         expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openMainPage' });

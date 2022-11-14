@@ -82,7 +82,6 @@ describe("IntentDao", () => {
         Intent.find.mockImplementation(() => [1]);
         Intent.mockImplementationOnce(() => {save: jest.fn()});
         await dao.postIntents(fakeIntents, true);
-
         expect(Intent.deleteMany).toHaveBeenCalledWith({project_id: 1});
         expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success", projectIds: [1]});
     });

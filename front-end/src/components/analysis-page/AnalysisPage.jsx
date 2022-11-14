@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-
 import store from "../../store.js";
 import { openMainPage } from "../../store/switchPageSlice.js";
 import Logo from "../icons/logo.jsx";
