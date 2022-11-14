@@ -65,7 +65,7 @@ class MainPage extends Component {
           <div className="justify-center flex">
             <Title />
           </div>
-          <p className="justify-center text-xl flex font-cabin -mt-7 text-center"> Problem diagnostic tool for chatbot transcripts </p>
+          <p className="justify-center text-2xl flex font-cabin -mt-7 text-center"> Problem diagnostic tool for chatbot transcripts </p>
           <div className="flex flex-row pt-10 justify-center gap-x-20">
             <div className="justify-center flex">
               <BaseButton
