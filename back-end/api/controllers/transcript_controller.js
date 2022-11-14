@@ -23,7 +23,7 @@ export default class TranscriptController {
         try {
             await this.#inputBoundary.getTranscript(query);
             const intentList = this.#outputBoundary.getOutput();
-            res.json(intentList);
+            res.status(200).json(intentList);
         } catch (e) {
             res.status(500).json({ error: e.message });
         }

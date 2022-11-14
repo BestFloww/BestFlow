@@ -1,7 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 import store from "../../store.js";
-import { setTranscriptUploadStatus } from '../../store/transcriptUploadSlice.js';
+import { setTranscriptUploadStatus, setUploadedProjectIds } from '../../store/transcriptUploadSlice.js';
+import { setProjectIdToBeDisplayed, setOverrideStatus } from '../../store/analyzeTranscriptSlice.js';
 import TranscriptAPI from '../../services/TranscriptAPI';
 import BaseButton from '../general/BaseButton';
 import OverrideModal from "./OverrideModal";
@@ -19,6 +20,7 @@ class TranscriptUploadModal extends React.Component {
   }
 
   toggleOverrideModal = () => {
+    store.dispatch(setOverrideStatus(false));
     this.setState({showOverrideModal: !this.state.showOverrideModal});
   }
 
@@ -60,9 +62,13 @@ class TranscriptUploadModal extends React.Component {
         file.override = true;
         this.setState({override: false});
       }
-      await TranscriptAPI.post(file);
+
+      const response = await TranscriptAPI.post(file);
       this.props.toggleModal();
-      store.dispatch(setTranscriptUploadStatus(true))
+      store.dispatch(setTranscriptUploadStatus(true));
+      store.dispatch(setUploadedProjectIds(response.data.projectIds));
+      store.dispatch(setProjectIdToBeDisplayed(response.data.projectIds[0]));
+
     } catch (e) {
       if(e.response.data.error === "Project ID is already present. Do you want to override?"){
         this.toggleOverrideModal();

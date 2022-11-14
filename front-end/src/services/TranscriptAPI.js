@@ -5,7 +5,7 @@ const baseURL = `${process.env.REACT_APP_BASE_URL}/api/transcript`;
 const API = {
     /**
      * @param {Object} params filter for the get 
-     * @returns {Object} analyszed transcript
+     * @returns {Array} analyzed transcript
      */
     getAnalysis: async(params = {}) => {
         return await axios.get(baseURL, params);

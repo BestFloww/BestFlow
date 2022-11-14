@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import store from "../../store.js";
 import { openAnalysisPage } from "../../store/switchPageSlice.js";
+import { addAnalyzedTranscript, setOverrideStatus } from '../../store/analyzeTranscriptSlice.js';
 import BaseButton from "../general/BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import Title from "../icons/title.jsx";
 import {exampleTranscript} from "../helpers/ExampleTranscript.js";
-import TranscriptDescription from "./TranscriptDescription.jsx"
+import TranscriptDescription from "./TranscriptDescription.jsx";
+import TranscriptAPI from "../../services/TranscriptAPI.js";
+
 
 class MainPage extends Component {
   state = {
@@ -17,8 +20,24 @@ class MainPage extends Component {
     this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
   }
 
-  openAnalysisPage = () => {
-    store.dispatch(openAnalysisPage());
+  openAnalysisPage = async() => {
+    try {
+      await this.getAnalyzedData();
+      store.dispatch(openAnalysisPage());
+    } catch (e) {
+      window.alert("Error in analyzing transcript. " + e.response.data.error);
+    }
+  }
+
+  getAnalyzedData = async() =>{
+      const override = store.getState().analyzeTranscript.override;
+      const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
+      const transcripts = store.getState().analyzeTranscript.analyzedTranscripts;
+      if(override || (!(projectId in transcripts))){
+        const analyzedData = await TranscriptAPI.getAnalysis({project_id: projectId});
+        store.dispatch(addAnalyzedTranscript({projectId: projectId, transcript: analyzedData.data}));
+        store.dispatch(setOverrideStatus(false));
+      }
   }
 
   downloadTranscriptTemplate = () => {
