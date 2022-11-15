@@ -50,7 +50,18 @@ class TranscriptUploadModal extends React.Component {
   validateData(data) {
     try {
       const parsedData = JSON.parse(data);
-      return parsedData.data;
+      if (parsedData.data){
+        for (var i = 0; i < parsedData.data.length; i++) {
+          const intent = parsedData.data[i]
+          if (!(intent.hasOwnProperty("project_id") && intent.hasOwnProperty("trace_type") &&
+              intent.hasOwnProperty("trace_payload"))){
+            return false;
+          }
+        }
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
       return false;
     }
