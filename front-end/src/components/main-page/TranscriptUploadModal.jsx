@@ -47,10 +47,6 @@ class TranscriptUploadModal extends React.Component {
     }
   }
 
-  checkProperties(intent) {
-    return (!intent.project_id || !intent.trace_type || !intent.trace_payload);
-  }
-
   validateData(data) {
     const intentIsMissingFields = (intent) => {
       return (!intent.project_id || !intent.trace_type || !intent.trace_payload)
