@@ -52,11 +52,14 @@ class TranscriptUploadModal extends React.Component {
   }
 
   validateData(data) {
+    const intentIsMissingFields = (intent) => {
+      return (!intent.project_id || !intent.trace_type || !intent.trace_payload)
+    }
     try {
       const parsedData = JSON.parse(data);
       if (parsedData.data){
         for (const intent of parsedData.data) {
-          if (this.checkProperties(intent)){
+          if (intentIsMissingFields(intent)){
             return false;
           }
         }
