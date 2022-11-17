@@ -1,9 +1,9 @@
-import intentDao from "../dao/intentdao.js";
-import { IntentInterface } from "../interfaces/intent-interface.js";
+import intentDao from "../../dao/intentdao.js";
+import { IntentInterface } from "../../interfaces/intent-interface.js";
 import GetTranscriptInteractor from "./get_transcript_interactor.js";
 
-jest.mock("../dao/intentdao.js");
-jest.mock("../interfaces/intent-interface.js")
+jest.mock("../../dao/intentdao.js");
+jest.mock("../../interfaces/intent-interface.js")
 
 let dao;
 

@@ -30,6 +30,9 @@ export default class TranscriptFormatter {
     static #addIntent(content, message, id){
         if(!((message + id) in content)){
             // adds question only if it's not already existing
+            if (false) {
+
+            }
             const intent = {question: message, children: new Map(), total_children: 0, project_id: id};
             // creates default intent object to be passed to an Intent(see intent-schema)
             content[(message + id)] = intent;

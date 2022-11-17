@@ -1,9 +1,9 @@
 import express from "express";
 import TranscriptController from "../controllers/transcript_controller.js";
 import IntentDao from "../../dao/intentdao.js";
-import GetTranscriptInteractor from "../../helpers/get_transcript_interactor.js";
-import PostTranscriptInteractor from "../../helpers/post_transcript_interactor.js";
-import OutputDataBoundary from "../../helpers/output_data_boundary.js";
+import GetTranscriptInteractor from "../../helpers/get/get_transcript_interactor.js";
+import PostTranscriptInteractor from "../../helpers/post/post_transcript_interactor.js";
+import OutputDataBoundary from "../../helpers/general/output_data_boundary.js";
 
 const router = express.Router();
 

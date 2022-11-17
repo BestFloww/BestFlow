@@ -1,4 +1,4 @@
-import TestIntentFactory from "./test-helpers/testIntentFactory.js";
+import TestIntentFactory from "../test-helpers/testIntentFactory.js";
 import IntentAnalyzer from "./intent_analyzer.js"
 
 let analyzer;
@@ -18,21 +18,21 @@ describe("intentAnalyzer", () => {
     factory = new TestIntentFactory();
   });
 
-  it("Should return an empty array if given no model", () => {
-    expect(analyzer.analyzeIntents([])).toStrictEqual([]);
+  it("Should return an empty array if given no model", async() => {
+    expect(await analyzer.analyzeIntents([])).toStrictEqual([]);
   });
 
-  it("Should properly format one intent", () => {
+  it("Should properly format one intent", async() => {
     const fakeMap = new Map();
     fakeMap.set("Intent 1-DOT-", 1);
     const input = factory.generateModel("Question 1-DOT-", fakeMap, 1, 1);
     input.getPercentages.mockImplementation(() => {return getPercentages(input.children, input.total_children)});
     const output = factory.generateAnalyzedIntent("Question 1.", {"Intent 1.": 100});
 
-    expect(analyzer.analyzeIntents([input])).toStrictEqual([output]);
+    expect(await analyzer.analyzeIntents([input])).toStrictEqual([output]);
   });
 
-  it("Should properly format three intents", () => {
+  it("Should properly format three intents", async() => {
     const fakeMap1 = new Map();
     fakeMap1.set("Intent 1-DOT-", 7);
     const fakeMap2 = new Map();
@@ -48,16 +48,16 @@ describe("intentAnalyzer", () => {
     input3.getPercentages.mockImplementation(() => {return getPercentages(input3.children, input3.total_children)});
 
     const output = factory.generateMultipleIntents([["Question 1.", {"Intent 1.": 100}], ["Question 2.", {"Intent 2.": 100}], ["Question 3.", {"Intent 3.": 100}]]);
-    expect(analyzer.analyzeIntents([input1, input2, input3])).toStrictEqual(output);
+    expect(await analyzer.analyzeIntents([input1, input2, input3])).toStrictEqual(output);
   });
 
-  it("Should properly format question with no intents", () => {
+  it("Should properly format question with no intents", async() => {
     const input = factory.generateModel("Question 1-DOT-", {}, 0, 1);
     const output = factory.generateAnalyzedIntent("Question 1.", {"No intents found.": 0});
-    expect(analyzer.analyzeIntents([input])).toStrictEqual([output]);
+    expect(await analyzer.analyzeIntents([input])).toStrictEqual([output]);
   });
 
-  it("Should properly format question with multiple children", () => {
+  it("Should properly format question with multiple children", async() => {
     const fakeMap = new Map();
     fakeMap.set("Intent 1-DOT-", 7);
     fakeMap.set("Intent 2-DOT-", 2);
@@ -67,6 +67,6 @@ describe("intentAnalyzer", () => {
     input.getPercentages.mockImplementation(() => {return getPercentages(input.children, input.total_children)});
     const output = factory.generateAnalyzedIntent("Question 1.", {"Intent 1.": 70, "Intent 2.": 20, "Intent 3.": 10});
 
-    expect(analyzer.analyzeIntents([input])).toStrictEqual([output]);
+    expect(await analyzer.analyzeIntents([input])).toStrictEqual([output]);
   })
 })
