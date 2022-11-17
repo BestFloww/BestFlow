@@ -1,4 +1,5 @@
 export default class TranscriptFormatter {
+
     static async formatTranscript(rawTranscript){
         let content = {};
         let prev = "";
@@ -17,7 +18,14 @@ export default class TranscriptFormatter {
         if(entry["trace_type"] == "text" || entry["trace_type"] == "speak"){
             const tracePayload = JSON.parse(entry["trace_payload"]);
             const id = entry["project_id"];
-            const message = tracePayload.payload.message;
+            let message = tracePayload.payload.message;
+            if (message.includes("\"")) {
+                // Regex: if it matches " and anything in between the next " is copied
+                const name = message.match(/"([^)]+)"/)[1] + ": ";
+                // Regex: Match < and any text until > then replace with an empty string
+                message = message.replaceAll(/<.*?>/g, '');
+                message = name + message;
+            }
             this.#addIntent(content, message, id);
             if(prev in content){
                 this.#addChild(content, prev, message, id);

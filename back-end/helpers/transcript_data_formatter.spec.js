@@ -11,7 +11,7 @@ describe("formatTranscript", () => {
         const speak1 = {
           "project_id": "1",
           "trace_type": "speak",
-          "trace_payload": "{\"type\":\"speak\",\"payload\":{\"type\":\"message\",\"message\":\"<voice name=\\\"Alexa\\\">\\\"I want to plan my schedule\\\" Is this a key location? </voice>\"}}"
+          "trace_payload": "{\"type\":\"speak\",\"payload\":{\"type\":\"message\",\"message\":\"<voice name=\\\"Alexa\\\">I want to plan my schedule. Is this a key location? </voice>\"}}"
         };
         const text1 = {
           "project_id": "1",
@@ -63,7 +63,7 @@ describe("formatTranscript", () => {
         globalDatabase.rawTranscript.data.push(globalDatabase.speak1);
         const received = await TranscriptFormatter.formatTranscript(globalDatabase.rawTranscript);
         expect(received.length).toBe(1);
-        expect(received[0].question).toBe("<voice name=\"Alexa\">\"I want to plan my schedule\" Is this a key location? </voice>");
+        expect(received[0].question).toBe("Alexa: I want to plan my schedule. Is this a key location? ");
         expect(received[0].children).toEqual(new Map());
         expect(received[0].total_children).toBe(0);
         expect(received[0].project_id).toBe("1");
