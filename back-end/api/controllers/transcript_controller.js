@@ -19,7 +19,7 @@ export default class TranscriptController {
     }
 
     static async getAnalyzedTranscript(req, res, next) {
-        const query = req.body;
+        const query = req.query;
         try {
             await this.#inputBoundary.getTranscript(query);
             const intentList = this.#outputBoundary.getOutput();
