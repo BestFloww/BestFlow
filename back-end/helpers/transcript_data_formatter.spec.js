@@ -59,7 +59,7 @@ describe("formatTranscript", () => {
     });
 
 
-    it("should return an array containing one Intent initializer, when the type of question is speak, no children", async() => {
+    it("should return an array containing one Intent initializer, when the type of question is speak, no children and replaces voice name", async() => {
         globalDatabase.rawTranscript.data.push(globalDatabase.speak1);
         const received = await TranscriptFormatter.formatTranscript(globalDatabase.rawTranscript);
         expect(received.length).toBe(1);
