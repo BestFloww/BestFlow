@@ -29,7 +29,7 @@ export class AnalysisPage extends Component {
                 >
                   <Logo />
                 </div>
-                <div className="w-4/5 h-4/5 mx-auto">
+                <div className="w-4/5 h-4/5 -mt-24 mx-auto">
                   <IntentLister intents={analyzedTranscripts[projectId]} />
                 </div>
               </div>
