@@ -6,14 +6,14 @@ describe('analyzeTranscriptSlice', () => {
         analyzedTranscripts: {},
         DisplayingQuestion: {},
         override : false,
-        projectIdToBeAnalyzed : ""
+        projectIdToBeDisplayed : ""
     };
 
     const previousState = {
         analyzedTranscripts: {"1": [{"a":100}], "2": [[{"b":90}]]},
         DisplayingQuestion: {"1" : 0, "2": 0},
         override : false,
-        projectIdToBeAnalyzed : "1"
+        projectIdToBeDisplayed : "1"
     };
 
     it('should initialize the reducer to the right initial state', () => {
@@ -63,7 +63,7 @@ describe('analyzeTranscriptSlice', () => {
         expect(expected.projectIdToBeDisplayed).toBe("100642Amh632");
     });
     it('should set the index of the given project Id in DisplayingQuestion', () => {
-        const expected = reducer(previousState, setDisplayingQuestion({index:3}));
+        const expected = reducer(previousState, setDisplayingQuestion(3));
         expect(expected.DisplayingQuestion["1"]).toBe(3);
     });
 });

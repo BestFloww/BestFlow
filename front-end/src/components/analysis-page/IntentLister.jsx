@@ -6,7 +6,7 @@ import IntentDiagram from './IntentDiagram.jsx';
 import store from '../../store.js';
 import { setDisplayingQuestion } from '../../store/analyzeTranscriptSlice.js';
 
-export class IntentLister extends Component {
+class IntentLister extends Component {
 
     constructor(props) {
         super(props);
