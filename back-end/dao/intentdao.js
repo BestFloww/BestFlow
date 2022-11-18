@@ -8,9 +8,7 @@ export default class IntentDao extends IntentInterface{
 
   async getIntent(query = {}) {
     try {
-      console.log(query)
       const intentList = await Intent.find(query).exec();
-      console.log(intentList)
       this.emit("getIntent", intentList);
     } catch (e) {
       this.emit("getIntent",{status: 500, error: e});
