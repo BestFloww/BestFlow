@@ -1,8 +1,11 @@
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import IntentLister from './IntentLister.jsx';
+import {IntentLister} from './IntentLister.jsx';
 import sampleIntents from '../test-data/sampleIntents.js';
+import store from "../../store.js"
+import setDisplayingQuestion from "../../store/analyzeTranscriptSlice.js"
+import setProjectIdToBeDisplayed from "../../store/analyzeTranscriptSlice.js"
 
 describe("IntentLister", () => {
     const basicProps = {

@@ -6,14 +6,13 @@ import IntentDiagram from './IntentDiagram.jsx';
 import store from '../../store.js';
 import { setDisplayingQuestion } from '../../store/analyzeTranscriptSlice.js';
 
-class IntentLister extends Component {
+export class IntentLister extends Component {
 
     constructor(props) {
         super(props);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.state = {
-            index: this.props.initialIndex,
             keysHeld: {},
         };
     }
@@ -130,10 +129,10 @@ class IntentLister extends Component {
     render() {
         const MAX_CURRENT_INTENTS = 3;
         let currentIntents = [];
-        let curr = this.props.index;
+        let curr = this.props.initialIndex;
 
         // Choose a sublist of intents to display, up to a maximum of MAX_CURRENT_INTENTS
-        while (this.props.intents[curr] && curr < this.props.index + MAX_CURRENT_INTENTS) {
+        while (this.props.intents[curr] && curr < this.props.initialIndex + MAX_CURRENT_INTENTS) {
             currentIntents.push(this.props.intents[curr]);
             curr++;
         }
@@ -192,13 +191,9 @@ IntentLister.defaultProps = {
     initialIndex: 0,
 };
 
-const mapStateToProps = (state, ownProps) => //console.log(ownProps.initialIndex);
-({
-    index: state.analyzeTranscript.analyzedTranscripts[state.analyzeTranscript.projectIdToBeDisplayed],
-    intents: ownProps.intents,
-    initialIndex: 0 
+const mapStateToProps = (state, ownProps) =>({
+    initialIndex: state.analyzeTranscript.DisplayingQuestion[state.analyzeTranscript.projectIdToBeDisplayed],
+    intents: ownProps.intents
   });
   
 export default connect(mapStateToProps)(IntentLister);
- 
-//export default IntentLister;

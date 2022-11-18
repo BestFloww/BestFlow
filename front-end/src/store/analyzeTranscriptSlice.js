@@ -17,7 +17,7 @@ export const analyzeTranscriptSlice = createSlice({
       state.DisplayingQuestion[action.payload.projectId] = 0;
     },
     setDisplayingQuestion: (state, action) => {
-      state.DisplayingQuestion[state.projectIdToBeDisplayed] = action.payload.index;
+      state.DisplayingQuestion[state.projectIdToBeDisplayed] = action.payload;
     },
     deleteAnalyzedTranscript: (state, action) => {
       delete state.analyzedTranscripts[action.payload];
