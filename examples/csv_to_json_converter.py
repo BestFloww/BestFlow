@@ -1,3 +1,7 @@
+# In order to convert your csv file to JSON you just need to have the file in the same folder as this file.
+# Change the csvFilePath to the name of your csv file and change the jsonFilePath to the name you want your JSON file to have.
+# Run the file and you will have your JSON file in the same folder. 
+
 import csv
 import json
 import sys
