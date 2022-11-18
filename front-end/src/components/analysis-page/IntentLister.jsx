@@ -65,7 +65,6 @@ class IntentLister extends Component {
         // Ctrl + Right goes to last intent set, defalt Right goes to next intent set
         if (this.state.keysHeld["Control"]) {
             // Set index to that of the first intent in the last intent set
-            //this.setState({index: this.props.intents.length - 1 - (this.props.intents.length - 1) % 3});
             store.dispatch(setDisplayingQuestion(this.props.intents.length - 1 - (this.props.intents.length - 1) % 3));
         } else {
             // Increment index by 3 if the index of the last question is beyond the 3 indices currently displayed
@@ -129,10 +128,10 @@ class IntentLister extends Component {
     render() {
         const MAX_CURRENT_INTENTS = 3;
         let currentIntents = [];
-        let curr = this.props.initialIndex;
+        let curr = this.props.index;
 
         // Choose a sublist of intents to display, up to a maximum of MAX_CURRENT_INTENTS
-        while (this.props.intents[curr] && curr < this.props.initialIndex + MAX_CURRENT_INTENTS) {
+        while (this.props.intents[curr] && curr < this.props.index + MAX_CURRENT_INTENTS) {
             currentIntents.push(this.props.intents[curr]);
             curr++;
         }
@@ -184,15 +183,15 @@ class IntentLister extends Component {
 
 IntentLister.propTypes = {
     intents: PropTypes.arrayOf(PropTypes.object).isRequired,
-    initialIndex: PropTypes.number,
+    index: PropTypes.number,
 };
 
 IntentLister.defaultProps = {
-    initialIndex: 0,
+    index: 0,
 };
 
 const mapStateToProps = (state, ownProps) =>({
-    initialIndex: state.analyzeTranscript.DisplayingQuestion[state.analyzeTranscript.projectIdToBeDisplayed],
+    index: state.analyzeTranscript.DisplayingQuestion[state.analyzeTranscript.projectIdToBeDisplayed],
     intents: ownProps.intents
   });
   

@@ -11,7 +11,7 @@ import {setProjectIdToBeDisplayed} from "../../store/analyzeTranscriptSlice.js";
 describe("IntentLister", () => {
     const basicProps = {
         intents: sampleIntents,
-        initialIndex: 0,
+        index: 0,
     };
     let props = {};
 
