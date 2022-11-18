@@ -1,23 +1,37 @@
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
+import { Provider } from 'react-redux';
 import IntentLister from './IntentLister.jsx';
 import sampleIntents from '../test-data/sampleIntents.js';
+import store from "../../store.js";
+import {setDisplayingQuestion} from "../../store/analyzeTranscriptSlice.js";
+import {setProjectIdToBeDisplayed} from "../../store/analyzeTranscriptSlice.js";
 
 describe("IntentLister", () => {
     const basicProps = {
         intents: sampleIntents,
-        initialIndex: 0,
+        index: 0,
     };
     let props = {};
 
     const renderComponent = (props) => {
-        return render(<IntentLister {...props} />);
-    }
+        return render(
+            <Provider store={store} >
+                <IntentLister {...props} />
+            </Provider>
+            );
+    };
 
     beforeEach(() => {
         props = {...basicProps};
+        store.dispatch(setProjectIdToBeDisplayed("1"));
     });
+
+    afterAll(() => {
+        store.dispatch(setProjectIdToBeDisplayed(""));
+        store.dispatch(setDisplayingQuestion(0));
+    }); 
 
     describe("For displaying the proper intents based on the index", () => {
         it ("should display 3 intents if there are at least 3 remaining intents starting from the current index", () => {
@@ -29,7 +43,7 @@ describe("IntentLister", () => {
         });
 
         it ("should display 2 intents if there are 2 remaining intents starting from the current index", () => {
-            props.initialIndex = 7;
+            store.dispatch(setDisplayingQuestion(7));
             renderComponent(props);
             // Intents 0-6 should not display, Intents 7-8 should display
             Object.keys(props.intents).forEach((key) => {
@@ -38,7 +52,7 @@ describe("IntentLister", () => {
         });
 
         it ("should display 1 intent if there is 1 remaining intent starting from the current index", () => {
-            props.initialIndex = 8;
+            store.dispatch(setDisplayingQuestion(8));
             renderComponent(props);
             // Intents 0-7 should not display, Intent 8 should display
             Object.keys(props.intents).forEach((key) => {
@@ -49,35 +63,37 @@ describe("IntentLister", () => {
 
     describe("For disabling and enabling the intent navigation buttons", () => {
         it ("should enable the Next Results button if there are more than 3 remaining intents starting from the current index", () => {
+            store.dispatch(setDisplayingQuestion(0));
             renderComponent(props);
             expect(screen.getByLabelText("Next Results")).not.toBeDisabled();
         });
 
         it ("should disable the Next Results button if there are 3 remaining intents starting from the current index", () => {
-            props.initialIndex = 6;
+            store.dispatch(setDisplayingQuestion(6));
             renderComponent(props);
             expect(screen.getByLabelText("Next Results")).toBeDisabled();
         });
 
         it ("should disable the Next Results button if there are 2 remaining intents starting from the current index", () => {
-            props.initialIndex = 7;
+            store.dispatch(setDisplayingQuestion(7));
             renderComponent(props);
             expect(screen.getByLabelText("Next Results")).toBeDisabled();
         });
 
         it ("should disable the Next Results button if there is 1 remaining intent starting from the current index", () => {
-            props.initialIndex = 8;
+            store.dispatch(setDisplayingQuestion(8));
             renderComponent(props);
             expect(screen.getByLabelText("Next Results")).toBeDisabled();
         });
 
         it ("should enable the Previous Results button if there are intents before the current index", () => {
-            props.initialIndex = 3;
+            store.dispatch(setDisplayingQuestion(3));
             renderComponent(props);
             expect(screen.getByLabelText("Previous Results")).not.toBeDisabled();
         });
 
         it ("should disable the Previous Results button if there are no intents before the current index", () => {
+            store.dispatch(setDisplayingQuestion(0));
             renderComponent(props);
             expect(screen.getByLabelText("Previous Results")).toBeDisabled();
         });
@@ -85,6 +101,7 @@ describe("IntentLister", () => {
 
     describe("For incrementing and decrementing the index using the intent navigation buttons", () => {
         it ("should increment index by 3 if the Next Results button is pressed and there are more than 3 remaining intents starting from the current index", () => {
+            store.dispatch(setDisplayingQuestion(0));
             renderComponent(props);
             userEvent.click(screen.getByLabelText("Next Results"));
             // Intents 0-2 and 6-8 should not display, Intents 3-5 should display
@@ -94,7 +111,7 @@ describe("IntentLister", () => {
         });
 
         it ("should decrement index by 3 if the Previous Results button is pressed and there are intents before the current index", () => {
-            props.initialIndex = 3;
+            store.dispatch(setDisplayingQuestion(3));
             renderComponent(props);
             userEvent.click(screen.getByLabelText("Previous Results"));
             // Intents 0-2 should display, Intents 3-8 should not display
@@ -115,7 +132,7 @@ describe("IntentLister", () => {
         });
 
         it ("should stay on the current index if the Right Arrow key is pressed and there are 3 remaining intents starting from the current index", () => {
-            props.initialIndex = 6;
+            store.dispatch(setDisplayingQuestion(6));
             renderComponent(props);
             userEvent.keyboard("{ArrowRight}");
             // Intents 0-5 should still not display, Intents 6-8 should still display
@@ -125,7 +142,7 @@ describe("IntentLister", () => {
         });
 
         it ("should stay on the current index if the Right Arrow key is pressed and there are 2 remaining intents starting from the current index", () => {
-            props.initialIndex = 6;
+            store.dispatch(setDisplayingQuestion(6));
             props.intents = sampleIntents.slice(0, 8);  // Include only Intents 0-7
             renderComponent(props);
             userEvent.keyboard("{ArrowRight}");
@@ -136,7 +153,7 @@ describe("IntentLister", () => {
         });
 
         it ("should stay on the current index if the Right Arrow key is pressed and there is 1 remaining intent starting from the current index", () => {
-            props.initialIndex = 6;
+            store.dispatch(setDisplayingQuestion(6));
             props.intents = sampleIntents.slice(0, 7);  // Include only Intents 0-6
             renderComponent(props);
             userEvent.keyboard("{ArrowRight}");
@@ -147,7 +164,7 @@ describe("IntentLister", () => {
         });
 
         it ("should decrement index by 3 if the Left Arrow key is pressed and there are intents before the current index", () => {
-            props.initialIndex = 3;
+            store.dispatch(setDisplayingQuestion(3));
             renderComponent(props);
             userEvent.keyboard("{ArrowLeft}");
             // Intents 0-2 should display, Intents 3-8 should not display
@@ -203,7 +220,7 @@ describe("IntentLister", () => {
         });
 
         it ("should correctly skip to the first set of intents if CTRL + Previous Results button is pressed and there are intents before the current index", () => {
-            props.initialIndex = 6;
+            store.dispatch(setDisplayingQuestion(6));
             renderComponent(props);
             userEvent.keyboard("{Control>}");
             userEvent.click(screen.getByLabelText("Previous Results"));
@@ -246,7 +263,7 @@ describe("IntentLister", () => {
         });
         
         it ("should stay on the current index if CTRL + Right Arrow key is pressed and there are 3 remaining intents starting from the current index", () => {
-            props.initialIndex = 6;
+            store.dispatch(setDisplayingQuestion(6));
             renderComponent(props);
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should still not display, Intents 6-8 should still display
@@ -256,7 +273,7 @@ describe("IntentLister", () => {
         });
 
         it ("should stay on the current index if CTRL + Right Arrow key is pressed and there are 2 remaining intents starting from the current index", () => {
-            props.initialIndex = 6;
+            store.dispatch(setDisplayingQuestion(6));
             props.intents = sampleIntents.slice(0, 8);  // Include only Intents 0-7
             renderComponent(props);
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
@@ -267,7 +284,7 @@ describe("IntentLister", () => {
         });
 
         it ("should stay on the current index if CTRL + Right Arrow key is pressed and there is 1 remaining intent starting from the current index", () => {
-            props.initialIndex = 6;
+            store.dispatch(setDisplayingQuestion(6));
             props.intents = sampleIntents.slice(0, 7);  // Include only Intents 0-6
             renderComponent(props);
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
@@ -278,7 +295,7 @@ describe("IntentLister", () => {
         });
 
         it ("should correctly skip to the first set of intents if CTRL + Left Arrow key is pressed and there are intents before the current index", () => {
-            props.initialIndex = 6;
+            store.dispatch(setDisplayingQuestion(6));
             renderComponent(props);
             userEvent.keyboard("{Control>}{ArrowLeft}{/Control}");
             // Intents 0-2 should display, Intents 3-8 should not display

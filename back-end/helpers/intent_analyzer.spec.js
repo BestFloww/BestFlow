@@ -32,22 +32,22 @@ describe("intentAnalyzer", () => {
     expect(analyzer.analyzeIntents([input])).toStrictEqual([output]);
   });
 
-  it("Should properly format three intents", () => {
+  it("Should properly format three intents and multiple dots in one intent", () => {
     const fakeMap1 = new Map();
-    fakeMap1.set("Intent 1-DOT-", 7);
+    fakeMap1.set("Intent 1-DOT-Intent 1-DOT-", 7);
     const fakeMap2 = new Map();
     fakeMap2.set("Intent 2-DOT-", 2);
     const fakeMap3 = new Map();
     fakeMap3.set("Intent 3-DOT-", 1);
 
-    const input1 = factory.generateModel("Question 1-DOT-", fakeMap1, 7, 1);
+    const input1 = factory.generateModel("Question 1-DOT-Question 1-DOT-", fakeMap1, 7, 1);
     const input2 = factory.generateModel("Question 2-DOT-", fakeMap2, 2, 1);
     const input3 = factory.generateModel("Question 3-DOT-", fakeMap3, 1, 1);
     input1.getPercentages.mockImplementation(() => {return getPercentages(input1.children, input1.total_children)});
     input2.getPercentages.mockImplementation(() => {return getPercentages(input2.children, input2.total_children)});
     input3.getPercentages.mockImplementation(() => {return getPercentages(input3.children, input3.total_children)});
 
-    const output = factory.generateMultipleIntents([["Question 1.", {"Intent 1.": 100}], ["Question 2.", {"Intent 2.": 100}], ["Question 3.", {"Intent 3.": 100}]]);
+    const output = factory.generateMultipleIntents([["Question 1.Question 1.", {"Intent 1.Intent 1.": 100}], ["Question 2.", {"Intent 2.": 100}], ["Question 3.", {"Intent 3.": 100}]]);
     expect(analyzer.analyzeIntents([input1, input2, input3])).toStrictEqual(output);
   });
 

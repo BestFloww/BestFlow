@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import BaseButton from "../general/BaseButton.jsx";
 import IntentDiagram from './IntentDiagram.jsx';
+import store from '../../store.js';
+import { setDisplayingQuestion } from '../../store/analyzeTranscriptSlice.js';
 
 class IntentLister extends Component {
 
@@ -10,7 +13,6 @@ class IntentLister extends Component {
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this);
         this.state = {
-            index: this.props.initialIndex,
             keysHeld: {},
         };
     }
@@ -63,10 +65,12 @@ class IntentLister extends Component {
         // Ctrl + Right goes to last intent set, defalt Right goes to next intent set
         if (this.state.keysHeld["Control"]) {
             // Set index to that of the first intent in the last intent set
-            this.setState({index: this.props.intents.length - 1 - (this.props.intents.length - 1) % 3});
+            store.dispatch(setDisplayingQuestion(this.props.intents.length - 1 - (this.props.intents.length - 1) % 3));
         } else {
             // Increment index by 3 if the index of the last question is beyond the 3 indices currently displayed
-            this.setState({index: Math.min(this.state.index + 3, this.props.intents.length - 1 - (this.props.intents.length - 1) % 3)});
+            const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
+            const indexes = store.getState().analyzeTranscript.DisplayingQuestion;
+            store.dispatch(setDisplayingQuestion(Math.min(indexes[projectId] + 3, this.props.intents.length - 1 - (this.props.intents.length - 1) % 3)));
         }
     }
   
@@ -74,21 +78,27 @@ class IntentLister extends Component {
         // Ctrl + Left goes to first intent set, default Left goes to previous intent set
         if (this.state.keysHeld["Control"]) {
             // Set index to 0
-            this.setState({index: 0});
+            store.dispatch(setDisplayingQuestion(0));
         } else {
             // Decrement index by 3, stopping at 0 to avoid negative indices
-            this.setState({index: Math.max(this.state.index - 3, 0)});
+            const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
+            const indexes = store.getState().analyzeTranscript.DisplayingQuestion;
+            store.dispatch(setDisplayingQuestion(Math.max(indexes[projectId] - 3, 0)));
         }
     }
 
     checkIfMaxIndex = () => {
         // Check if the lister is displaying the last possible set of questions
-        return this.props.intents.length - this.state.index <= 3;
+        const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
+        const indexes = store.getState().analyzeTranscript.DisplayingQuestion;
+        return this.props.intents.length - indexes[projectId] <= 3;
     }
 
     checkIfMinIndex = () => {
         // Check if the lister is displaying the first possible set of questions
-        return this.state.index === 0;
+        const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
+        const indexes = store.getState().analyzeTranscript.DisplayingQuestion;
+        return indexes[projectId] === 0;
     }
 
     generateIntents = (currentIntents) => {
@@ -118,10 +128,10 @@ class IntentLister extends Component {
     render() {
         const MAX_CURRENT_INTENTS = 3;
         let currentIntents = [];
-        let curr = this.state.index;
+        let curr = this.props.index;
 
         // Choose a sublist of intents to display, up to a maximum of MAX_CURRENT_INTENTS
-        while (this.props.intents[curr] && curr < this.state.index + MAX_CURRENT_INTENTS) {
+        while (this.props.intents[curr] && curr < this.props.index + MAX_CURRENT_INTENTS) {
             currentIntents.push(this.props.intents[curr]);
             curr++;
         }
@@ -173,11 +183,16 @@ class IntentLister extends Component {
 
 IntentLister.propTypes = {
     intents: PropTypes.arrayOf(PropTypes.object).isRequired,
-    initialIndex: PropTypes.number,
+    index: PropTypes.number,
 };
 
 IntentLister.defaultProps = {
-    initialIndex: 0,
+    index: 0,
 };
- 
-export default IntentLister;
+
+const mapStateToProps = (state, ownProps) =>({
+    index: state.analyzeTranscript.DisplayingQuestion[state.analyzeTranscript.projectIdToBeDisplayed],
+    intents: ownProps.intents
+  });
+  
+export default connect(mapStateToProps)(IntentLister);
