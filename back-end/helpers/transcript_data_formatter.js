@@ -21,7 +21,7 @@ export default class TranscriptFormatter {
             let message = tracePayload.payload.message;
             if (message.includes("\"")) {
                 // Regex: if it matches " and anything in between the next " is copied
-                const name = message.match(/"([^)]+)"/)[1] + ": ";
+                const name = message.match(/"([^"]+)"/)[1] + ": ";
                 // Regex: Match < and any text until > then replace with an empty string
                 message = message.replaceAll(/<.*?>/g, '');
                 message = name + message;
