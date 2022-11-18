@@ -4,9 +4,9 @@ import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import IntentLister from './IntentLister.jsx';
 import sampleIntents from '../test-data/sampleIntents.js';
-import store from "../../store.js"
-import {setDisplayingQuestion} from "../../store/analyzeTranscriptSlice.js"
-import {setProjectIdToBeDisplayed} from "../../store/analyzeTranscriptSlice.js"
+import store from "../../store.js";
+import {setDisplayingQuestion} from "../../store/analyzeTranscriptSlice.js";
+import {setProjectIdToBeDisplayed} from "../../store/analyzeTranscriptSlice.js";
 
 describe("IntentLister", () => {
     const basicProps = {
