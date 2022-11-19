@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import store from "../../store.js";
 import { openAnalysisPage } from "../../store/switchPageSlice.js";
 import { addAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed } from '../../store/analyzeTranscriptSlice.js';
@@ -16,7 +17,6 @@ class MainPage extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       showTranscriptUploadModal: false,
-      inputValue: "",
     };
   }
 
@@ -27,13 +27,11 @@ class MainPage extends Component {
   handleChange = (event) => {
     // Update the Project ID of the analyzed transcript to display in redux based on input field
     store.dispatch(setProjectIdToBeDisplayed(event.target.value));
-    // Update value to display in input field
-    this.setState({inputValue: event.target.value});
   }
 
   isInputBlank() {
     // Return whether the input field is blank. If so, it disables the View Analysis button
-    return this.state.inputValue === "";
+    return this.props.projectIdToBeDisplayed === "";
   }
 
   openAnalysisPage = async() => {
@@ -49,14 +47,13 @@ class MainPage extends Component {
       const override = store.getState().analyzeTranscript.override;
       const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
       const analyzedTranscripts = store.getState().analyzeTranscript.analyzedTranscripts;
-      console.log(projectId)
       if(override || (!(projectId in analyzedTranscripts))){
         // Call API if either the user wants to override or the project ID is not stored in this session's transcripts
         const analyzedData = await TranscriptAPI.getAnalysis({project_id: projectId});
         if (analyzedData.data.length === 0) {
           // Throw an error if getAnalysis returns an empty array, as this means no transcript with that project ID was found
           const missingIdError = new Error();
-          missingIdError.response = {data: {error: "Your project ID was not in our database. Please try again."}}
+          missingIdError.response = {data: {error: "Your project ID is not in our database. Please try again."}}
           throw missingIdError;
         } else {
           store.dispatch(addAnalyzedTranscript({projectId: projectId, transcript: analyzedData.data}));
@@ -112,7 +109,7 @@ class MainPage extends Component {
                   aria-label="Enter Project ID"
                   placeholder="Enter Project ID"
                   onChange={this.handleChange}
-                  value={this.state.inputValue}
+                  value={this.props.projectIdToBeDisplayed}
                   title="Each transcript has a unique Project ID that you can enter to specify which analysis to view."
                 />
               </div>      
@@ -150,4 +147,8 @@ class MainPage extends Component {
   };
 }
 
-export default MainPage;
+const mapStateToProps = (state) => ({
+  projectIdToBeDisplayed: state.analyzeTranscript.projectIdToBeDisplayed
+});
+
+export default connect(mapStateToProps)(MainPage);

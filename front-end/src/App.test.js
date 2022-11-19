@@ -28,6 +28,7 @@ describe('App', () => {
     });
     
     it('should display AnalysisPage when a transcript has been uploaded and analyzed successfully and View Analysis button is pressed on MainPage with a valid Project ID', async() => {
+        store.dispatch(setTranscriptUploadStatus(true));
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");

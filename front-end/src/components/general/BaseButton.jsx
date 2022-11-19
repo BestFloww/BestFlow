@@ -33,7 +33,7 @@ const BaseButton = (props) => {
                 onClick={props.click}
                 className={getButtonStyle()}
                 disabled={props.isDisabled}
-                aria-label={props.text || props.label}
+                aria-label={props.label || props.text}
                 data-testid="custom-button"
             >
                 <div className="flex items-center space-x-2">

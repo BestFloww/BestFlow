@@ -41,21 +41,30 @@ describe('MainPage', () => {
         expect(screen.queryByText("Drag and drop file or upload below.")).not.toBeInTheDocument();
     });
 
-    it('should dispatch setProjectIdToBeDisplayed with correct Project ID if a Project ID is entered', async() => {
+    it('should dispatch setProjectIdToBeDisplayed with correct Project ID if a Project ID is entered', () => {
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
+        userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
         expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: '1'});
     });
 
-    it('should enable View Analysis button if a Project ID is entered', async() => {
+    it('should automatically write the current Project ID into the Project ID input', async() => {
+        store.dispatch(setProjectIdToBeDisplayed("Most recent Project ID"));
         renderComponent();
+        expect(screen.getByDisplayValue("Most recent Project ID")).toBeInTheDocument();
+    });
+
+    it('should enable View Analysis button if a Project ID is entered', () => {
+        renderComponent();
+        userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
         expect(screen.getByLabelText("View Analysis")).not.toBeDisabled();
     });
 
-    it('should disable View Analysis button if no Project ID is entered', async() => {
+    it('should disable View Analysis button if no Project ID is entered', () => {
         renderComponent();
+        userEvent.clear(screen.getByLabelText("Enter Project ID"));
         expect(screen.getByLabelText("View Analysis")).toBeDisabled();
     });
 
@@ -63,6 +72,7 @@ describe('MainPage', () => {
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
+        userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
         await userEvent.click(screen.getByText('View Analysis'));
         expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
@@ -73,6 +83,7 @@ describe('MainPage', () => {
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
+        userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "2");
         await userEvent.click(screen.getByText('View Analysis'));
         // Check that the switch to analysis page has not been dispatched; this implicitly tests the alert as well
@@ -83,6 +94,7 @@ describe('MainPage', () => {
         jest.spyOn(TranscriptAPI, "getAnalysis").mockImplementationOnce(() => {return {data: [{question: "a", children: {"b": 100,}}]}});
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
+        userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "2");
         await userEvent.click(screen.getByText('View Analysis'));
         // Check that if no transcript with the ID is stored in analyzedTranscripts, but it exists on the database, it properly dispatches reducers to store it
