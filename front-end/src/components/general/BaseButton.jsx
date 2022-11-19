@@ -5,7 +5,7 @@ import Icon from './Icon.jsx';
 const BaseButton = (props) => {
     // Change button styling based on whether it is enabled or disabled
     const getButtonStyle = () => {
-        let styling = "font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 group relative inline-block "
+        let styling = "font-cabin bg-purple-300 rounded-lg shadow-lg shadow-blue/30 group relative inline-block transition ease-in-out "
         // Styling for enabled vs. disabled buttons
         if (props.isDisabled) {
             styling += "opacity-50 ";

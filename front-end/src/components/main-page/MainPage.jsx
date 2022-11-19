@@ -141,12 +141,12 @@ class MainPage extends Component {
             </div>
             <div className="mx-auto">
               <BaseButton
-                  click={this.downloadTranscriptTemplate}
-                  text="Download Transcript Template"
-                  icon={{
-                    name: "download-note",
-                    size: "25"
-                  }}
+                click={this.downloadTranscriptTemplate}
+                text="Download Transcript Template"
+                icon={{
+                  name: "download-note",
+                  size: "25"
+                }}
               />
             </div>
           </div>
