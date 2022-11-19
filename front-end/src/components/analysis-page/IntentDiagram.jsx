@@ -58,6 +58,7 @@ class IntentDiagram extends Component {
                     <h3
                         className="rounded-lg bg-off-white self-center p-5 shadow-lg shadow-blue/10 break-words text-center md:text-xl 2xl:text-2xl min-w-[30rem] max-w-[35rem] md:min-h-32 md:max-h-36 2xl:min-h-36 2xl:max-h-64"
                         data-testid={this.props.question}
+                        tabIndex={0}
                     >
                         {this.props.question}
                     </h3>
