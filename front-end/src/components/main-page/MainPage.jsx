@@ -101,17 +101,25 @@ class MainPage extends Component {
             </div>
             <div className="justify-center flex flex-col sm:flex-row">
               <div className="absolute py-32">
-                <input
-                  className="bg-off-white text-xl rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
-                  border border-solid border-purple-100
-                  hover:border-purple-200
-                  focus:border-purple-300 focus:ring-purple-300"
-                  aria-label="Enter Project ID"
-                  placeholder="Enter Project ID"
-                  onChange={this.handleChange}
-                  value={this.props.projectIdToBeDisplayed}
-                  title="Each transcript has a unique Project ID that you can enter to specify which analysis to view."
-                />
+                <div className="group">
+                  <input
+                    className="bg-off-white text-xl rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
+                    border border-solid border-purple-100
+                    hover:border-purple-200
+                    focus:border-purple-300 focus:ring-purple-300"
+                    aria-label="Enter Project ID"
+                    placeholder="Enter Project ID"
+                    onChange={this.handleChange}
+                    value={this.props.projectIdToBeDisplayed}
+                  />
+                  <div className="group-hover:flex">
+                    <span
+                      className="absolute hidden group-hover:flex right-16 -bottom-4 -translate-y-full w-32 px-2 py-1 bg-gray rounded-lg text-center text-off-white text-sm after:content-[''] after:rotate-180 after:absolute after:left-1/2 after:-top-[22%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray"
+                    >
+                      Enter the Project ID that you want to analyze
+                    </span>
+                  </div>
+                </div>
               </div>      
               <BaseButton
                 click={this.openAnalysisPage}
