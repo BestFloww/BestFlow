@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import transcriptAPI from "./api/routes/transcript_route.js"
 import starAPI from "./api/routes/star_route.js"
 
 

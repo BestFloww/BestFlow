@@ -17,6 +17,10 @@ const intentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    star: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 intentSchema.methods.getPercentages = function() {
