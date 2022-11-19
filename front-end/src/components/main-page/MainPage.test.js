@@ -15,7 +15,7 @@ describe('MainPage', () => {
     );
 
     afterAll(() => {
-        // restoring the store to default
+        // Restore the store to default
         store.dispatch(setTranscriptUploadStatus(false));
         store.dispatch(clearAnalyzedTranscript());
         store.dispatch(setProjectIdToBeDisplayed(""));
@@ -34,8 +34,8 @@ describe('MainPage', () => {
         expect(screen.queryByText("Drag and drop file or upload below.")).not.toBeInTheDocument();
     });
 
-    it('should dispatch openAnalysisPage when View Analysis button is clicked', async() => {
-        store.dispatch(setTranscriptUploadStatus(true));
+    it('should dispatch openAnalysisPage when valid Project ID is entered and View Analysis button is clicked', async() => {
+        //store.dispatch(setTranscriptUploadStatus(true));
         store.dispatch(setProjectIdToBeDisplayed("1"));
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
