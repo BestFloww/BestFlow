@@ -44,8 +44,8 @@ class IntentDiagram extends Component {
 
     render() { 
         return (
-            <div className="text-black font-cabin flex flex-col pt-1 -mb-7">
-                <div className="inline-flex place-self-center max-w-[33rem] min-h-32 max-h-36">
+            <div className="text-black font-cabin flex flex-col place-self-center pt-1 -mb-9">
+                <div className="inline-flex max-w-[47rem]">
                     <button onClick={this.toggleStar} aria-label="star button">
                         <label>
                             <svg
@@ -56,7 +56,7 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                     <h3
-                        className="rounded-lg bg-off-white self-center p-5 shadow-lg shadow-blue/10 break-words text-center md:text-xl 2xl:text-2xl"
+                        className="rounded-lg bg-off-white self-center p-5 shadow-lg shadow-blue/10 break-words text-center md:text-xl 2xl:text-2xl min-w-[30rem] max-w-[35rem] md:min-h-32 md:max-h-36 2xl:min-h-36 2xl:max-h-64"
                         data-testid={this.props.question}
                     >
                         {this.props.question}
