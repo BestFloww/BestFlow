@@ -45,11 +45,11 @@ class IntentDiagram extends Component {
     render() { 
         return (
             <div className="text-black font-cabin flex flex-col place-self-center pt-1 -mb-9">
-                <div className="inline-flex max-w-[47rem]">
-                    <button onClick={this.toggleStar} aria-label="star button">
+                <div className="inline-flex place-items-center max-w-[47rem]">
+                    <button className="w-16 h-16" onClick={this.toggleStar} aria-label="star button">
                         <label>
                             <svg
-                            className={this.isStarred ? "w-16 m-3 fill-yellow cursor-pointer": "w-16 m-3 fill-transparent cursor-pointer"}
+                            className={this.isStarred ? "w-16 fill-yellow cursor-pointer": "w-16 flex fill-transparent cursor-pointer"}
                             viewBox="0 0 25 25" fillRule="evenodd" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.9,2.6l2.3,5c0.1,0.3,0.4,0.5,0.7,0.6l5.2,0.8C22,9,22.3,10,21.7,10.6l-3.8,3.9c-0.2,0.2-0.3,0.6-0.3,0.9   l0.9,5.4c0.1,0.8-0.7,1.5-1.4,1.1l-4.7-2.6c-0.3-0.2-0.6-0.2-0.9,0l-4.7,2.6c-0.7,0.4-1.6-0.2-1.4-1.1l0.9-5.4   c0.1-0.3-0.1-0.7-0.3-0.9l-3.8-3.9C1.7,10,2,9,2.8,8.9l5.2-0.8c0.3,0,0.6-0.3,0.7-0.6l2.3-5C11.5,1.8,12.5,1.8,12.9,2.6z" stroke-width="1.5px" stroke="#000000"/>  
                             </svg>
@@ -61,10 +61,10 @@ class IntentDiagram extends Component {
                     >
                         {this.props.question}
                     </h3>
-                    <button onClick={this.toggleFlag} aria-label="flag-button">
+                    <button className="w-16 h-16" onClick={this.toggleFlag} aria-label="flag-button">
                         <label>
                             <svg
-                            className={this.isFlagged ? "w-16 m-3 fill-red cursor-pointer": "w-16 m-3 fill-transparent cursor-pointer"}
+                            className={this.isFlagged ? "w-16 fill-red cursor-pointer": "w-16 fill-transparent cursor-pointer"}
                             viewBox="0 0 512 512" fillRule="evenodd" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M368,112c-11,1.4-24.9,3.5-39.7,3.5c-23.1,0-44-5.7-65.2-10.2c-21.5-4.6-43.7-9.3-67.2-9.3c-46.9,0-62.8,10.1-64.4,11.2   l-3.4,2.4v2.6v161.7V416h16V272.7c6-2.5,21.8-6.9,51.9-6.9c21.8,0,42.2,8.3,63.9,13c22,4.7,44.8,9.6,69.5,9.6   c14.7,0,27.7-2,38.7-3.3c6-0.7,11.3-1.4,16-2.2V126v-16.5C379.4,110.4,374,111.2,368,112z" stroke-width="2em" stroke="#000000" fill="content"/>
                             </svg>
