@@ -7,8 +7,8 @@ const Logo = () => {
             <path d="M14.7988 55.0793C14.7988 55.0793 19.2797 50.0925 21.6126 48.5793C25.287 46.1959 28.7881 45.516 29.7893 50.0793C30.462 53.1457 30.2476 55.6613 27.9722 57.5793C24.23 60.7338 14.7988 55.0793 14.7988 55.0793Z" fill="#C57EDE"/>
             </g>
             <defs>
-            <filter id="filter0_d_1_4" x="0" y="0" width="93" height="129.163" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <filter id="filter0_d_1_4" x="0" y="0" width="93" height="129.163" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+            <feFlood floodOpacity="0" result="BackgroundImageFix"/>
             <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
             <feOffset dx="2" dy="1.5"/>
             <feGaussianBlur stdDeviation="1.3"/>

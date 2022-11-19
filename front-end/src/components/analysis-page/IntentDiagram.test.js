@@ -12,7 +12,7 @@ describe("IntentDiagram", () => {
     beforeEach(() => {
         props = {
             question: "question",
-            branches: {
+            children: {
                 q1: 100
             },
         };
@@ -25,24 +25,24 @@ describe("IntentDiagram", () => {
         expect(question.textContent).toBe(props.question);
     });
 
-    it("correctly displays 1 branch", () => {
+    it("correctly displays 1 child", () => {
         renderComponent(props);
         const q1 = screen.getByTestId("q1");
         const percentage = screen.getByTestId("q1-100");
         expect(q1).toBeInTheDocument();
         expect(q1.textContent).toBe("q1");
         expect(percentage).toBeInTheDocument();
-        expect(percentage.textContent).toBe(`${props.branches.q1}%`)
+        expect(percentage.textContent).toBe(`${props.children.q1}%`)
     });
 
-    it("correctly displays 2 branches", () => {
-        props.branches = {
+    it("correctly displays 2 children", () => {
+        props.children = {
             q1: 50,
             q2: 50,
         };
         renderComponent(props);
-        for (const key of Object.keys(props.branches)) {
-        const value = props.branches[key];
+        for (const key of Object.keys(props.children)) {
+        const value = props.children[key];
         const q = screen.getByTestId(key);
         const percentage = screen.getByTestId(`${key}-${value}`);
         expect(q).toBeInTheDocument();
@@ -52,15 +52,15 @@ describe("IntentDiagram", () => {
         }
     });
 
-    it("correctly displays 3 branches", () => {
-        props.branches = {
+    it("correctly displays 3 children", () => {
+        props.children = {
             q1: 50,
             q2: 20,
             q3: 30,
         };
         renderComponent(props);
-        for (const key of Object.keys(props.branches)) {
-        const value = props.branches[key];
+        for (const key of Object.keys(props.children)) {
+        const value = props.children[key];
         const q = screen.getByTestId(key);
         const percentage = screen.getByTestId(`${key}-${value}`);
         expect(q).toBeInTheDocument();
