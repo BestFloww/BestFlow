@@ -6,7 +6,8 @@ export default class TestIntentFactory {
             children: intents,
             total_children: total_intents,
             project_id: id,
-            getPercentages: jest.fn()
+            getPercentages: jest.fn(),
+            star: false
         };
         return generatedModel;
     };
@@ -15,6 +16,7 @@ export default class TestIntentFactory {
         const generatedIntent = {
             question: questionMsg,
             children: intents,
+            star: false
         };
 
         return generatedIntent;
