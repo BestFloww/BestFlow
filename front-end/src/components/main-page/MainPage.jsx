@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import store from "../../store.js";
 import { openAnalysisPage } from "../../store/switchPageSlice.js";
-import { addAnalyzedTranscript, setOverrideStatus } from '../../store/analyzeTranscriptSlice.js';
+import { addAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed } from '../../store/analyzeTranscriptSlice.js';
 import BaseButton from "../general/BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import Title from "../icons/title.jsx";
@@ -12,12 +12,22 @@ import TranscriptAPI from "../../services/TranscriptAPI.js";
 
 
 class MainPage extends Component {
-  state = {
-    showTranscriptUploadModal: false
+
+  constructor() {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      showTranscriptUploadModal: false,
+    };
   }
 
   toggleTranscriptUploadModal = () => {
     this.setState({showTranscriptUploadModal: !this.state.showTranscriptUploadModal});
+  }
+
+  handleChange = (event) => {
+    // Update the Project ID of the analyzed transcript to display in redux based on input field
+    store.dispatch(setProjectIdToBeDisplayed(event.target.value));
   }
 
   openAnalysisPage = async() => {
@@ -29,7 +39,7 @@ class MainPage extends Component {
     }
   }
 
-  getAnalyzedData = async() =>{
+  getAnalyzedData = async() => {
       const override = store.getState().analyzeTranscript.override;
       const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
       const transcripts = store.getState().analyzeTranscript.analyzedTranscripts;
@@ -78,7 +88,13 @@ class MainPage extends Component {
                 }}
               />
             </div>
-            <div className="justify-center flex">
+            <div className="justify-center flex flex-col sm:flex-row">
+              <div className="absolute py-32">
+                <input
+                  onChange={this.handleChange}
+                  value={this.state.projectId}
+                />
+              </div>      
               <BaseButton
                 click={this.openAnalysisPage}
                 text="View Analysis"
