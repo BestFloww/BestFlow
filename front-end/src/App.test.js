@@ -27,11 +27,10 @@ describe('App', () => {
         expect(screen.queryByTestId('analysis-page')).not.toBeInTheDocument();
     });
     
-    it('should display AnalysisPage when a transcript has been uploaded and analyzed successfully and View Analysis button is pressed on MainPage', async() => {
-        store.dispatch(setTranscriptUploadStatus(true));
-        store.dispatch(setProjectIdToBeDisplayed("1"));
+    it('should display AnalysisPage when a transcript has been uploaded and analyzed successfully and View Analysis button is pressed on MainPage with a valid Project ID', async() => {
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
+        userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
         userEvent.click(screen.getByText('View Analysis'));
         await screen.findByTestId('analysis-page');
         expect(screen.queryByTestId('main-page')).not.toBeInTheDocument();

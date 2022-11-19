@@ -49,7 +49,13 @@ describe("BaseButton", () => {
         expect(await screen.findByTestId("custom-button")).toHaveTextContent(props.text);
     });
 
-    it("should have the given aria label", async() => {
+    it("should have an aria label matching the given text if there is any", async() => {
+        renderComponent(props);
+        expect(await screen.findByTestId("custom-button")).toHaveAttribute("aria-label", props.text);
+    });
+
+    it("should have the given aria label if there is no given text", async() => {
+        props.text = null;
         renderComponent(props);
         expect(await screen.findByTestId("custom-button")).toHaveAttribute("aria-label", props.label);
     });
