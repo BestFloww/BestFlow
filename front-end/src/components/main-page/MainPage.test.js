@@ -76,7 +76,7 @@ describe('MainPage', () => {
         expect(dispatch).not.toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
     });
 
-    it.only("should dispatch addAnalyzedTranscript when valid Project ID is entered and View Analysis button is clicked but the Project ID is not stored in this session's transcripts", async() => {
+    it("should dispatch addAnalyzedTranscript when valid Project ID is entered and View Analysis button is clicked but the Project ID is not stored in this session's transcripts", async() => {
         jest.spyOn(TranscriptAPI, "getAnalysis").mockImplementationOnce(() => {return [{question: "a", children: {"b": 100,}}]});
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
