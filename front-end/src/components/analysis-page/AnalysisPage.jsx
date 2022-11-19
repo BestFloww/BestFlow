@@ -26,6 +26,7 @@ export class AnalysisPage extends Component {
                     aria-label="Home Button"
                     tooltip="Click here to return to homepage"
                     data-testid="logo-button"
+                    tabIndex={0}
                   >
                     <Logo />
                   </div>
