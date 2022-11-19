@@ -31,7 +31,7 @@ class MainPage extends Component {
     this.setState({inputValue: event.target.value});
   }
 
-  checkIfInputIsBlank() {
+  isInputBlank() {
     // Return whether the input field is blank. If so, it disables the View Analysis button
     return this.state.inputValue === "";
   }
@@ -40,9 +40,7 @@ class MainPage extends Component {
     try {
       await this.getAnalyzedData();
       store.dispatch(openAnalysisPage());
-      console.log("hi5")
     } catch (e) {
-      console.log("hi4")
       window.alert("Error in analyzing transcript. " + e.response.data.error);
     }
   }
@@ -51,23 +49,18 @@ class MainPage extends Component {
       const override = store.getState().analyzeTranscript.override;
       const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
       const analyzedTranscripts = store.getState().analyzeTranscript.analyzedTranscripts;
-      console.log("hi1")
       console.log(projectId)
       if(override || (!(projectId in analyzedTranscripts))){
         // Call API if either the user wants to override or the project ID is not stored in this session's transcripts
-        console.log('hi1.5')
         const analyzedData = await TranscriptAPI.getAnalysis({project_id: projectId});
-        console.log("hi2")
         if (analyzedData.data.length === 0) {
           // Throw an error if getAnalysis returns an empty array, as this means no transcript with that project ID was found
           const missingIdError = new Error();
           missingIdError.response = {data: {error: "Your project ID was not in our database. Please try again."}}
-          console.log("hi3")
           throw missingIdError;
         } else {
           store.dispatch(addAnalyzedTranscript({projectId: projectId, transcript: analyzedData.data}));
           store.dispatch(setOverrideStatus(false));
-          console.log("hi6")
         }
       }
   }
@@ -127,7 +120,7 @@ class MainPage extends Component {
                 click={this.openAnalysisPage}
                 text="View Analysis"
                 size="lg"
-                isDisabled={this.checkIfInputIsBlank()}
+                isDisabled={this.isInputBlank()}
                 icon={{
                   name: "analyze-note",
                   size: "40"

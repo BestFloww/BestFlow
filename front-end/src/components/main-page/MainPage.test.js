@@ -1,4 +1,4 @@
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
@@ -16,6 +16,10 @@ describe('MainPage', () => {
             <MainPage/>
         </Provider>
     );
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    })
 
     afterAll(() => {
         // Restore the store to default
@@ -55,7 +59,7 @@ describe('MainPage', () => {
         expect(screen.getByLabelText("View Analysis")).toBeDisabled();
     });
 
-    it('should dispatch openAnalysisPage when valid Project ID is entered and View Analysis button is clicked', async() => {
+    it('should dispatch openAnalysisPage when a valid Project ID is entered and View Analysis button is clicked', async() => {
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
@@ -64,25 +68,27 @@ describe('MainPage', () => {
         expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
     });
 
-    it('should show an alert and not dispatch openAnalysisPage when invalid Project ID is entered and View Analysis button is clicked', async() => {
-        const mockAlert = jest.spyOn(global, "alert").mockImplementation(); 
-        jest.spyOn(TranscriptAPI, "getAnalysis").mockImplementationOnce(() => {return []});
+    it('should show an alert and not dispatch openAnalysisPage when an invalid Project ID is entered and View Analysis button is clicked', async() => {
+        jest.spyOn(TranscriptAPI, "getAnalysis").mockImplementationOnce(() => {return {data: []}});
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.type(screen.getByLabelText("Enter Project ID"), "2");
         await userEvent.click(screen.getByText('View Analysis'));
-        expect(mockAlert).toHaveBeenCalledWith("Error in analyzing transcript. Your project ID was not in our database. Please try again.");
+        // Check that the switch to analysis page has not been dispatched; this implicitly tests the alert as well
         expect(dispatch).not.toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
     });
 
-    it("should dispatch addAnalyzedTranscript when valid Project ID is entered and View Analysis button is clicked but the Project ID is not stored in this session's transcripts", async() => {
-        jest.spyOn(TranscriptAPI, "getAnalysis").mockImplementationOnce(() => {return [{question: "a", children: {"b": 100,}}]});
+    it("should dispatch addAnalyzedTranscript with correct ID-transcript mapping and setOverrideStatus with false when a valid Project ID is entered and View Analysis button is clicked, but the Project ID is not stored in this session's transcripts", async() => {
+        jest.spyOn(TranscriptAPI, "getAnalysis").mockImplementationOnce(() => {return {data: [{question: "a", children: {"b": 100,}}]}});
         renderComponent();
         const dispatch = jest.spyOn(store, 'dispatch');
-        userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
+        userEvent.type(screen.getByLabelText("Enter Project ID"), "2");
         await userEvent.click(screen.getByText('View Analysis'));
-        expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
+        // Check that if no transcript with the ID is stored in analyzedTranscripts, but it exists on the database, it properly dispatches reducers to store it
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/addAnalyzedTranscript', payload: {projectId: "2", transcript: [{question: "a", children: {"b": 100,}}]} });
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setOverrideStatus', payload: false });
+        await waitFor(() => expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' }));
     });        
 
     it('should download transcript template when Download Transcript Template button is clicked', () => {
