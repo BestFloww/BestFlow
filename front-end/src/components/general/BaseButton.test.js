@@ -54,6 +54,12 @@ describe("BaseButton", () => {
         expect(await screen.findByTestId("custom-button")).toHaveAttribute("aria-label", props.label);
     });
 
+    it("should have an aria label matching the given text if there is no label", async() => {
+        props.label = null;
+        renderComponent(props);
+        expect(await screen.findByTestId("custom-button")).toHaveAttribute("aria-label", props.text);
+    });
+
     it("should have a tooltip if tooltip prop is not null", () => {
         props.tooltip = "have fun kids";
         renderComponent(props);
