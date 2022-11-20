@@ -26,7 +26,7 @@ export class AnalysisPage extends Component {
       return (
         <div className="AnalysisPage bg-purple-100 flex h-screen" data-testid="analysis-page">
           <div /*display sidebar if toggled on*/>
-            {this.state.showIntentMenu && <IntentMenu/>}
+            {this.state.showIntentMenu && <IntentMenu intents={analyzedTranscripts[projectId]} />}
           </div>
           <div className="flex gap-y-10 w-full flex-col h-full">
             <div /*second line of className is tooltip styling*/
