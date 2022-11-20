@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import store from "../../store.js";
 import { setDisplayingQuestion } from '../../store/analyzeTranscriptSlice.js';
+import BaseButton from "../general/BaseButton.jsx";
 import IntentSearch from "../helpers/IntentSearch.js";
 
 let search = new IntentSearch();
@@ -98,7 +99,18 @@ class IntentMenu extends Component {
                 data-testid="intent-menu"
                 ref={this.ref}
             >
-                <ul className='text-center font-bold text-xl mt-20'> 
+                <div className="ml-4 mt-4">
+                    <BaseButton
+                        click={this.props.onClickOutside}
+                        label="Close intent menu"
+                        icon={{
+                            name: "x",
+                            size: "20",
+                            color: "black"
+                        }}
+                    />
+                </div>
+                <ul className="text-center font-bold text-xl mt-10"> 
                     Transcript Intents:
                 </ul>
                 <ul className="h-2/3 relative overflow-y-scroll bg-off-white-100 shadow-inner-lg rounded p-2 my-4 mx-4">
@@ -106,7 +118,7 @@ class IntentMenu extends Component {
                 </ul>
                 <ul className="flex flex-col" >
                     <input /* Transcript search input */
-                        className="bg-off-white text-xl ml-4 mr-4 mt-8 rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
+                        className="bg-off-white text-xl ml-4 mr-4 mt-4 rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
                         border border-solid border-purple-100
                         hover:border-purple-200
                         focus:border-purple-300 focus:ring-purple-300"
