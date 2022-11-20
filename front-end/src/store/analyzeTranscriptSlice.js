@@ -62,6 +62,6 @@ export const analyzeTranscriptSlice = createSlice({
   }
 })
 
-export const { addAnalyzedTranscript, setDisplayingQuestion, deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed, toggleBookmark } = analyzeTranscriptSlice.actions
+export const { addAnalyzedTranscript, setDisplayingQuestion, deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed, toggleFlag, toggleStar } = analyzeTranscriptSlice.actions
 
 export default analyzeTranscriptSlice.reducer
