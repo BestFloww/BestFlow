@@ -24,7 +24,7 @@ and then run `nodemon server` where our backend will start listening on port 500
 
 ### Frontend Terminal
 
-In this terminal, run `cd back-end` to navigate to our backend folder, `npm install` to stay up-to-date,
+In this terminal, run `cd front-end` to navigate to our backend folder, `npm install` to stay up-to-date,
 and then run `npm start` where our react app will run in http://localhost:3000/ in your browser.
 
 ## Testing/How to Check Test Coverage:
@@ -36,29 +36,21 @@ Then navigate to our frontend folder by running `cd..`, then `cd front-end`. You
 ## Attribution:
 
 ### Icons:
+See icon_bibliography.md in front-end/src/components/icons for more details
 
 #### "magnifying-glass"
 Link: https://www.svgrepo.com/svg/127033/magnifying-glass
-
 #### "arrow-left"
 Link: https://www.iconfinder.com/icons/211646/left_chevron_icon
-
 #### "arrow-right"
 Link: https://www.iconfinder.com/icons/211647/right_chevron_icon
-
 #### "skip-left"
 Link: https://www.iconfinder.com/icons/211820/skipbackward_icon
-
 #### "skip-right"
 Link: https://www.iconfinder.com/icons/211822/skipforward_icon
-
 #### "upload-note"
 Link: https://uxwing.com/upload-note-icon/
-
 #### "download-note"
 Link: https://uxwing.com/file-download-import-icon/
-
 #### "analyze-note"
 Link: https://uxwing.com/file-search-icon/
-
-#### See icon_bibliography.md in front-end/src/components/icons for more details
