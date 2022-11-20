@@ -6,7 +6,7 @@ Diagnostic tool for chatbot transcripts that help retailers identify poor or str
 We aim to:
 - Reduce time spent on chatbot optimization
 - Reduce bad chatbot intents
-- Display an average of 70% of diagnostic problems in any transcripts’ flow
+- Display an average of 30% of diagnostic problems in any transcripts’ flow
 - Optimize the flow of at least three intents in x transcripts
 
 Each transcript will be displayed with a question and the responses it leads to.
