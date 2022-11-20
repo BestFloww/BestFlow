@@ -10,11 +10,16 @@ import IntentMenu from "./IntentMenu.jsx";
 export class AnalysisPage extends Component {
 
     state = {
-      showIntentMenu: true,
+      showIntentMenu: false,
     }
 
     toggleIntentMenu = () => {
       this.setState({showIntentMenu: !this.state.showIntentMenu});
+    }
+  
+    hideIntentMenu = () => {
+      // Hide intent menu; use instead of toggleIntentMenu in scenarios when hiding the menu is the only desired outcome
+      this.setState({showIntentMenu: false});
     }
   
     openMainPage = () => {
@@ -27,7 +32,11 @@ export class AnalysisPage extends Component {
       return (
         <div className="AnalysisPage" data-testid="analysis-page">
           <div /*display sidebar if toggled on*/>
-            <IntentMenu intents={analyzedTranscripts[projectId]} isOpen={this.state.showIntentMenu} />
+            <IntentMenu
+              intents={analyzedTranscripts[projectId]}
+              isOpen={this.state.showIntentMenu}
+              onClickOutside={this.hideIntentMenu}
+            />
           </div>
           <div /*darken screen if sidebar is toggled on*/
             className={"bg-purple-100 h-screen transition ease-in-out" + (this.state.showIntentMenu ? " brightness-75" : "")}

@@ -7,13 +7,30 @@ class IntentMenu extends Component {
     
     constructor(props) {
         super(props);
+        this.ref = React.createRef();
+        this.handleClickOutside = this.handleClickOutside.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
             inputValue: "",
         };
     }
+
+    componentDidMount() {
+        document.addEventListener('mousedown', this.handleClickOutside, false);
+    }
     
-    handleChange = (event) => {
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClickOutside, false);
+    }
+    
+    handleClickOutside(event) {
+        // Detect when the user clicks outside of the intent menu to hide it
+        if (this.ref.current && !this.ref.current.contains(event.target)) {
+          this.props.onClickOutside();
+        }
+    }
+
+    handleChange(event) {
         // Update the input value state based on input field
         this.setState({inputValue: event.target.value});
     }
@@ -50,33 +67,37 @@ class IntentMenu extends Component {
 
 	render() {
 		return (
-            <div className={"z-10 w-1/4 h-full bg-off-white font-cabin absolute shadow-lg shadow-blue/30 transition ease-in-out " + (this.props.isOpen ? "translate-x-0" : "-translate-x-full")}>
-                <ul className='text-center font-bold text-xl mt-20'> 
-                    Transcript Intents:
-                </ul>
-                <ul className="h-2/3 relative overflow-y-scroll bg-off-white-100 shadow-inner-lg rounded p-2 my-4 mx-4">
-                    {this.listIntents() /* List of intent buttons*/}
-                </ul>
-                <ul className="flex flex-col" >
-                    <input /*Transcript search bar*/
-                        className="bg-off-white text-xl ml-4 mr-4 mt-8 rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
-                        border border-solid border-purple-100
-                        hover:border-purple-200
-                        focus:border-purple-300 focus:ring-purple-300"
-                        aria-label="Search by intent contents"
-                        placeholder="Search by intent contents"
-                        onChange={this.handleChange}
-                        value={this.state.inputValue}
-                    />
-                </ul>
+            <div ref={this.ref}>
+                <div className={"z-10 w-1/4 h-full bg-off-white font-cabin absolute shadow-lg shadow-blue/30 transition ease-in-out " + (this.props.isOpen ? "translate-x-0" : "-translate-x-full")}>
+                    <ul className='text-center font-bold text-xl mt-20'> 
+                        Transcript Intents:
+                    </ul>
+                    <ul className="h-2/3 relative overflow-y-scroll bg-off-white-100 shadow-inner-lg rounded p-2 my-4 mx-4">
+                        {this.listIntents() /* List of intent buttons*/}
+                    </ul>
+                    <ul className="flex flex-col" >
+                        <input /*Transcript search bar*/
+                            className="bg-off-white text-xl ml-4 mr-4 mt-8 rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
+                            border border-solid border-purple-100
+                            hover:border-purple-200
+                            focus:border-purple-300 focus:ring-purple-300"
+                            aria-label="Search by intent contents"
+                            placeholder="Search by intent contents"
+                            onChange={this.handleChange}
+                            value={this.state.inputValue}
+                        />
+                    </ul>
+                </div>
             </div>
+            
         );
     }
 }
 
 IntentMenu.propTypes = {
     intents: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isOpen: PropTypes.bool,
+    isOpen: PropTypes.bool.isRequired,
+    onClickOutside: PropTypes.func,
 };
 
 export default IntentMenu;
