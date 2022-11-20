@@ -35,7 +35,7 @@ class IntentMenu extends Component {
                 <li className="relative" key={buttonIndex}>
                     <button
                         className="w-full text-left text-lg py-0 px-4 h-10 rounded truncate overflow-hidden box-border 
-                        hover:bg-gray-100 hover:text-black transition duration-300 ease-in-out
+                        hover:bg-gray-100 hover:text-black transition ease-in-out
                         focus-within:bg-gray-100 focus-within:text-black"
                         onClick={goToIntent}
                     >
@@ -50,17 +50,16 @@ class IntentMenu extends Component {
 
 	render() {
 		return (
-            <div className="z-10 w-1/4 h-full bg-off-white font-cabin absolute shadow-lg shadow-blue/30">
-                <ul className='text-center font-bold text-xl mt-24'> 
+            <div className={"z-10 w-1/4 h-full bg-off-white font-cabin absolute shadow-lg shadow-blue/30 transition ease-in-out " + (this.props.isOpen ? "translate-x-0" : "-translate-x-full")}>
+                <ul className='text-center font-bold text-xl mt-20'> 
                     Transcript Intents:
                 </ul>
-                <ul className="h-2/3 relative overflow-y-scroll bg-off-white-100 shadow-inner-lg rounded p-2 my-4 mx-4"
-                    /*List of intent buttons*/>
-                    {this.listIntents()}
+                <ul className="h-2/3 relative overflow-y-scroll bg-off-white-100 shadow-inner-lg rounded p-2 my-4 mx-4">
+                    {this.listIntents() /* List of intent buttons*/}
                 </ul>
-                <ul className="flex flex-col">
-                    <input
-                        className="bg-off-white text-xl ml-4 mr-4 my-4 rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
+                <ul className="flex flex-col" >
+                    <input /*Transcript search bar*/
+                        className="bg-off-white text-xl ml-4 mr-4 mt-8 rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
                         border border-solid border-purple-100
                         hover:border-purple-200
                         focus:border-purple-300 focus:ring-purple-300"
@@ -77,6 +76,7 @@ class IntentMenu extends Component {
 
 IntentMenu.propTypes = {
     intents: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isOpen: PropTypes.bool,
 };
 
 export default IntentMenu;

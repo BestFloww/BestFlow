@@ -27,16 +27,16 @@ export class AnalysisPage extends Component {
       return (
         <div className="AnalysisPage" data-testid="analysis-page">
           <div /*display sidebar if toggled on*/>
-            {this.state.showIntentMenu && <IntentMenu intents={analyzedTranscripts[projectId]} />}
+            <IntentMenu intents={analyzedTranscripts[projectId]} isOpen={this.state.showIntentMenu} />
           </div>
           <div /*darken screen if sidebar is toggled on*/
-            className={"bg-purple-100 h-screen" + (this.state.showIntentMenu ? " brightness-75" : "")}
+            className={"bg-purple-100 h-screen transition ease-in-out" + (this.state.showIntentMenu ? " brightness-75" : "")}
             data-testid="analysis-page-main"
           >
             <div className="flex gap-y-10 w-full flex-col h-full">
               <div /*second line of className is tooltip styling*/
                 className="justify-left relative text-center text-sm
-                  before:z-10 before:absolute before:-right-5 before:top-1/2 before:w-max before:max-w-xs before:translate-x-full before:-translate-y-1/2 before:rounded-md before:bg-gray before:px-3 before:py-2 before:text-off-white before:invisible before:content-[attr(tooltip)] after:z-10 after:absolute after:-right-[0.8rem] after:top-1/2 after:h-0 after:w-0 after:translate-x-2 after:-translate-y-1/2 after:border-8 after:border-r-gray after:border-l-transparent after:border-b-transparent after:border-t-transparent after:invisible hover:before:visible hover:after:visible
+                  before:z-10 before:absolute before:-right-5 before:top-1/2 before:w-max before:max-w-xs before:translate-x-full before:-translate-y-1/2 before:rounded-md before:bg-gray-200 before:px-3 before:py-2 before:text-off-white before:invisible before:content-[attr(tooltip)] after:z-10 after:absolute after:-right-[0.8rem] after:top-1/2 after:h-0 after:w-0 after:translate-x-2 after:-translate-y-1/2 after:border-8 after:border-r-gray-200 after:border-l-transparent after:border-b-transparent after:border-t-transparent after:invisible hover:before:visible hover:after:visible
                   cursor-pointer m-5 w-[5em]"
                 role="button"
                 onClick={this.openMainPage}
@@ -51,7 +51,9 @@ export class AnalysisPage extends Component {
               </div>
             </div>
 
-            <div className="fixed right-40 bottom-8" data-testid="arrow-right">
+            <div /*TEMPORARY SIDEBAR CONTROL BUTTON - WHEN DELETING THIS, DELETE BASEBUTTON IMPORT TOO!*/
+              className="fixed right-40 bottom-8" data-testid="arrow-right"
+            >
               <BaseButton
                 click={this.toggleIntentMenu}
                 icon={{
