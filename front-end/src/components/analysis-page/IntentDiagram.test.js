@@ -69,4 +69,16 @@ describe("IntentDiagram", () => {
         expect(percentage.textContent).toBe(`${value}%`)
         }
     });
+    it("correctly displays flagged icon when intent is flagged", () => {
+
+    });
+    it("correctly displays starred icon when intent is starred", () => {
+
+    });
+    it("should dispatch intent when flag button is clicked", () => {
+
+    });
+    it("should dispatch intent when star button is clicked", () => {
+
+    });
 });
