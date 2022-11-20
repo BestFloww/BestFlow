@@ -62,8 +62,9 @@ We also have a template transcript available to be downloaded which shows the mi
 Once a transcript is uploaded, you can click on View Analysis which will take you to the analysis page.
 This page can also be reached by inputting a valid project id already in our database.
 On the page, all the intents will be displayed along with previously starred and flagged intents.
+Our intent menu also allows for users to filter the questions by flags or stars to easily find their important questions.
 
-To load a new transcript, go back to the main page and upload another transcript.
+To load a new transcript, go back to the main page by pressing on the logo in the menu and upload another transcript.
 
 ## Testing/How to Check Test Coverage:
 
