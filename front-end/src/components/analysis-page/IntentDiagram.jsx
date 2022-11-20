@@ -60,7 +60,7 @@ class IntentDiagram extends Component {
         return (
             <div className="container mx-auto text-black font-cabin flex flex-col pt-1 gap-y-2">
                 <div className="inline-flex place-self-center">
-                    <button onClick={this.toggleStarred()} aria-label="star button">
+                    <button onClick={this.toggleStarred} aria-label="star button">
                         <label>
                             <svg
                             className={this.props.isStarred ? "w-16 m-3 fill-yellow cursor-pointer": "w-16 m-3 fill-transparent cursor-pointer"}
@@ -75,7 +75,7 @@ class IntentDiagram extends Component {
                     >
                         {this.props.question}
                     </h3>
-                    <button onClick={this.toggleFlagged()} aria-label="flag-button">
+                    <button onClick={this.toggleFlagged} aria-label="flag-button">
                         <label>
                             <svg
                             className={this.props.isFlagged ? "w-16 m-3 fill-red cursor-pointer": "w-16 m-3 fill-transparent cursor-pointer"}
