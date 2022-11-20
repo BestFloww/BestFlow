@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import store from '../../store.js';
-// import { toggleBookmark } from '../../store/analyzeTranscriptSlice.js';
-// import StarAPI from "../../services/StarAPI.js";
-// import FlagAPI from "../../services/FlagAPI.js";
+import store from '../../store.js';
+import { toggleFlag, toggleStar } from '../../store/analyzeTranscriptSlice.js';
+import StarAPI from "../../services/StarAPI.js";
+import FlagAPI from "../../services/FlagAPI.js";
 
 class IntentDiagram extends Component {
     listLeaves = () => {
@@ -34,23 +34,25 @@ class IntentDiagram extends Component {
         });
     }
 
-    toggleStar = async(intentQuestion) => {
-        // const status = await StarAPI.getStatus({question: intentQuestion})
-        // store.dispatch(setBookmarkState({question: intentQuestion, bookmarkType: "star", currentState: status}))
-        // note: currentState may not be needed, re: setBookmarkState notes
+    toggleStarred = async(intentQuestion) => {
+        const newStarredStatus = !this.props.isStarred;
+        store.dispatch(toggleStar(intentQuestion));
+        const changedIntent = {question: this.props.question, children: this.props.children, star: newStarredStatus, flag: this.props.isFlagged};
+        await StarAPI.put(changedIntent);
     }
 
-    toggleFlag = async(intentQuestion) => {
-        // const status = await FlagAPI.getStatus({question: intentQuestion})
-        // store.dispatch(setBookmarkState({question: intentQuestion, bookmarkType: "flag", currentState: status}))
-        // note: currentState may not be needed, re: setBookmarkState notes
+    toggleFlagged = async(intentQuestion) => {
+        const newFlaggedStatus = !this.props.isFlagged;
+        store.dispatch(toggleFlag(intentQuestion));
+        const changedIntent = {question: this.props.question, children: this.props.children, star: this.props.isStarred, flag: newFlaggedStatus};
+        await FlagAPI.put(changedIntent);
     }
 
     render() { 
         return (
             <div className="container mx-auto text-black font-cabin flex flex-col pt-1 gap-y-2">
                 <div className="inline-flex place-self-center">
-                    <button onClick={this.toggleStar(this.props.question)} aria-label="star button">
+                    <button onClick={this.toggleStarred(this.props.question)} aria-label="star button">
                         <label>
                             <svg
                             className={this.props.isStarred ? "w-16 m-3 fill-yellow cursor-pointer": "w-16 m-3 fill-transparent cursor-pointer"}
@@ -65,7 +67,7 @@ class IntentDiagram extends Component {
                     >
                         {this.props.question}
                     </h3>
-                    <button onClick={this.toggleFlag(this.props.question)} aria-label="flag-button">
+                    <button onClick={this.toggleFlagged(this.props.question)} aria-label="flag-button">
                         <label>
                             <svg
                             className={this.props.isFlagged ? "w-16 m-3 fill-red cursor-pointer": "w-16 m-3 fill-transparent cursor-pointer"}

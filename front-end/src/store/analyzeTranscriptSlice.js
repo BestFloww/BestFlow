@@ -31,24 +31,28 @@ export const analyzeTranscriptSlice = createSlice({
     setProjectIdToBeDisplayed: (state, action) => {
       state.projectIdToBeDisplayed = action.payload;
     },
-    setBookmarkState: (state, action) => {
+    toggleStar: (state, action) => {
       // get the index of the first intent being displayed
       const firstIndex = state.DisplayingQuestion[state.projectIdToBeDisplayed];
       // get the transcript that is being displayed and has the indices of the intents
       const transcript = state.analyzedTranscripts[state.projectIdToBeDisplayed];
-      // change the bookmark of the intent being changed
+      // change the star state of the intent being changed
       for (let i = firstIndex; i < firstIndex+3; i++) {
-        // should I use if-else or switch?
-        if (transcript[i].question === action.payload.question && action.payload.bookmarkType === "star") {
+        if (transcript[i].question === action.payload) {
           transcript[i].star = !transcript[i].star
-          // or should I make it based off of action payload being passed in from intentDiagram?
-          // where rather than it being based off of whats in state.analyzedTranscripts, it's based off of the API call or the proptype?
-          // transcript[i].star = !action.payload.currentState
         }
-        else if (transcript[i].question === action.payload.question && action.payload.bookmarkType === "flag") {
+      }
+    },
+    toggleFlag: (state, action) => {
+      // get the index of the first intent being displayed
+      const firstIndex = state.DisplayingQuestion[state.projectIdToBeDisplayed];
+      // get the transcript that is being displayed and has the indices of the intents
+      const transcript = state.analyzedTranscripts[state.projectIdToBeDisplayed];
+      // change the bookmark state of the intent being changed
+      for (let i = firstIndex; i < firstIndex+3; i++) {
+        if (transcript[i].question === action.payload) {
           transcript[i].flag = !transcript[i].flag
         }
-        // hypothetically, if everything works out as it should, there should be no other branches right? Should I make an else for an edge-case just in case?
       }
     }
   }
