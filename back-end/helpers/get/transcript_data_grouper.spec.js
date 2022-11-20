@@ -176,19 +176,21 @@ describe("TranscriptDataGrouper", () => {
         });
 
         it("should correctly merge 3 similar intents", async() => {
-            const alreadyProcessedIntents = intents.slice(0, 1);
-            const similarIntent1 = intents[1];
-            const similarIntent2 = intents[2];
-            const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
+            // TODO: Test is currently broken, it is changing intents which causes a map expectation not being fulfilled
+            // Tried changing the filter to base intents but that changes the deep copy of this test
 
-            const result1 = await grouper.group(similarIntent1);
-            const result2 = await grouper.group(similarIntent2);
-            expect(fakeDao.getIntent).toHaveBeenCalled();
+            const alreadyProcessedIntents = intents.slice(0, 1);
+
+            for (const similarIntent of intents.slice(0, 3)) {
+                const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
+                const result = await grouper.group(similarIntent);
+                expect(fakeDao.getIntent).toHaveBeenCalled();
+                expect(result).toBe(true);
+                alreadyProcessedIntents.push(similarIntent)
+            }
             expect(intents[0].children["h"]).toEqual(33);
             expect(intents[0].children["c"]).toEqual(22);
             expect(intents[0].children["b"]).toEqual(44);
-            expect(result1).toBe(true);
-            expect(result2).toBe(true);
         });
     });
 });

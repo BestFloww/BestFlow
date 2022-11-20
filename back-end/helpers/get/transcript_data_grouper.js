@@ -147,7 +147,7 @@ export default class TranscriptDataGrouper {
             mergedMap.set(question, newWeight);
         }
 
-        const percentageMap = [];
+        const percentageMap = {};
         const total_children = targetIntent.total_children + originalMergingIntent.total_children;
 
         // Calculate the new percentages for the merged intents
