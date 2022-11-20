@@ -31,25 +31,26 @@ export const analyzeTranscriptSlice = createSlice({
     setProjectIdToBeDisplayed: (state, action) => {
       state.projectIdToBeDisplayed = action.payload;
     },
-    toggleBookmark: (state, action) => {
+    setBookmarkState: (state, action) => {
       // get the index of the first intent being displayed
       const firstIndex = state.DisplayingQuestion[state.projectIdToBeDisplayed];
       // get the transcript that is being displayed and has the indices of the intents
       const transcript = state.analyzedTranscripts[state.projectIdToBeDisplayed];
-      // get the intents currently being displayed
-      const intents = new Array([transcript[firstIndex], transcript[firstIndex+1], transcript[firstIndex+2]]);
-      // get the intent that is being toggled
-      const chosenIntent = intents.filter((intent) => {
-        return intent.question === action.payload.question
-      })[0];
-      // toggle the bookmarking whether it's as a star or flag
-      if (action.payload.bookmarkType === "star") {
-        chosenIntent.star = !action.payload.currentState
+      // change the bookmark of the intent being changed
+      for (let i = firstIndex; i < firstIndex+3; i++) {
+        // should I use if-else or switch?
+        if (transcript[i].question === action.payload.question && action.payload.bookmarkType === "star") {
+          transcript[i].star = !transcript[i].star
+          // or should I make it based off of action payload being passed in from intentDiagram?
+          // where rather than it being based off of whats in state.analyzedTranscripts, it's based off of the API call or the proptype?
+          // transcript[i].star = !action.payload.currentState
+        }
+        else if (transcript[i].question === action.payload.question && action.payload.bookmarkType === "flag") {
+          transcript[i].flag = !transcript[i].flag
+        }
+        // hypothetically, if everything works out as it should, there should be no other branches right? Should I make an else for an edge-case just in case?
       }
-      else {
-        chosenIntent.flag = !action.payload.currentState
-      }
-      },
+    }
   }
 })
 
