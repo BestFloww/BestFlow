@@ -15,6 +15,8 @@ describe("IntentDiagram", () => {
             children: {
                 q1: 100
             },
+            isStarred: false,
+            isFlagged: false,
         };
     });
 
