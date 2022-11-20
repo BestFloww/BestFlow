@@ -88,15 +88,23 @@ export default class TranscriptDataGrouper {
      * Merges 2 intents
      */
     async #mergeIntent(comparedIntent) {
-        if (comparedIntent.question.length >= 2) {
-            const splitIntent = comparedIntent.question.split(" ");
-            for (const index of this.differentWordsIndices) {
-                splitIntent[index] = "[merged]";
+        if (comparedIntent.previous_intents) {
+            for (const intent of this.previous_intents) {
+                await this.#recalculatePercentages(intent)
+
+                const splitIntent = intent.question.split(" ");
+
+                for (const index of this.differentWordsIndices) {
+                    splitIntent[index] = "[merged]";
+                }
+
+                if (this.differentWordsIndices.length > 0) {
+                    comparedIntent.question = splitIntent.join(" ");
+                }
             }
 
-            if (this.differentWordsIndices.length > 0) {
-                comparedIntent.question = splitIntent.join(" ");
-            }
+        } else {
+            this.previous_intents = [];
         }
 
         await this.#recalculatePercentages(comparedIntent)
@@ -109,6 +117,12 @@ export default class TranscriptDataGrouper {
         if (this.differentWordsIndices.length > 0) {
             comparedIntent.question = splitIntent.join(" ");
         }
+
+        this.previous_intents.push(comparedIntent);
+
+    }
+
+    async #mergingTwoIntents(comparedIntent) {
 
     }
 
@@ -133,7 +147,7 @@ export default class TranscriptDataGrouper {
             mergedMap.set(question, newWeight);
         }
 
-        const percentageMap = {};
+        const percentageMap = [];
         const total_children = targetIntent.total_children + originalMergingIntent.total_children;
 
         // Calculate the new percentages for the merged intents

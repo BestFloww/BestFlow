@@ -43,7 +43,7 @@ describe("TranscriptDataGrouper", () => {
                 project_id: 1,
             },
             {
-                question: "hi I am Mr Bob but",
+                question: "hi I Mr Bob but",
                 children: mapMaker({
                     "h": 1,
                     "b": 2,
@@ -80,6 +80,17 @@ describe("TranscriptDataGrouper", () => {
             expect(result).toBe(false);
             expect(fakeDao.getIntent).not.toHaveBeenCalled();
         });
+
+        it("should not merge intents which are completely different", async() => {
+            const alreadyProcessedIntents = [];
+            for (const dissimilarIntent of intents) {
+                const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1)
+                const result = await grouper.group(dissimilarIntent);
+                expect(result).toBe(false);
+                expect(fakeDao.getIntent).not.toHaveBeenCalled();
+                alreadyProcessedIntents.push(dissimilarIntent);
+            }
+        });
     });
     describe("when intents are similar", () => {
         // Create fake intents where some should be merged, and some should not be
@@ -98,6 +109,15 @@ describe("TranscriptDataGrouper", () => {
                 children: mapMaker({
                     "h": 1,
                     "c": 2,
+                }),
+                total_children:3,
+                project_id: 1,
+            },
+            {
+                question: "hi how are you I am Tom",
+                children: mapMaker({
+                    "h": 1,
+                    "b": 2,
                 }),
                 total_children:3,
                 project_id: 1,
@@ -153,6 +173,22 @@ describe("TranscriptDataGrouper", () => {
             expect(intents[0].children["c"]).toEqual(33);
             expect(intents[0].children["b"]).toEqual(33);
             expect(result).toBe(true);
+        });
+
+        it("should correctly merge 3 similar intents", async() => {
+            const alreadyProcessedIntents = intents.slice(0, 1);
+            const similarIntent1 = intents[1];
+            const similarIntent2 = intents[2];
+            const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
+
+            const result1 = await grouper.group(similarIntent1);
+            const result2 = await grouper.group(similarIntent2);
+            expect(fakeDao.getIntent).toHaveBeenCalled();
+            expect(intents[0].children["h"]).toEqual(33);
+            expect(intents[0].children["c"]).toEqual(22);
+            expect(intents[0].children["b"]).toEqual(44);
+            expect(result1).toBe(true);
+            expect(result2).toBe(true);
         });
     });
 });
