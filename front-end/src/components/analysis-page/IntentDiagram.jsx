@@ -34,25 +34,33 @@ class IntentDiagram extends Component {
         });
     }
 
-    toggleStarred = async(intentQuestion) => {
-        const newStarredStatus = !this.props.isStarred;
-        store.dispatch(toggleStar(intentQuestion));
-        const changedIntent = {question: this.props.question, children: this.props.children, star: newStarredStatus, flag: this.props.isFlagged};
-        await StarAPI.put(changedIntent);
+    toggleStarred = async() => {
+        try {
+            const newStarredStatus = !this.props.isStarred;
+            store.dispatch(toggleStar(this.props.question));
+            const changedIntent = {question: this.props.question, children: this.props.children, star: newStarredStatus, flag: this.props.isFlagged};
+            await StarAPI.put(changedIntent);
+        } catch (e) {
+            window.alert("Error in starring question. Please try again. " + e.response.data.error);
+        }
     }
 
-    toggleFlagged = async(intentQuestion) => {
-        const newFlaggedStatus = !this.props.isFlagged;
-        store.dispatch(toggleFlag(intentQuestion));
-        const changedIntent = {question: this.props.question, children: this.props.children, star: this.props.isStarred, flag: newFlaggedStatus};
-        await FlagAPI.put(changedIntent);
+    toggleFlagged = async() => {
+        try {
+            const newFlaggedStatus = !this.props.isFlagged;
+            store.dispatch(toggleFlag(this.props.question));
+            const changedIntent = {question: this.props.question, children: this.props.children, star: this.props.isStarred, flag: newFlaggedStatus};
+            await FlagAPI.put(changedIntent);
+        } catch (e) {
+            window.alert("Error in flagging question. Please try again. " + e.response.data.error);
+        }
     }
 
     render() { 
         return (
             <div className="container mx-auto text-black font-cabin flex flex-col pt-1 gap-y-2">
                 <div className="inline-flex place-self-center">
-                    <button onClick={this.toggleStarred(this.props.question)} aria-label="star button">
+                    <button onClick={this.toggleStarred()} aria-label="star button">
                         <label>
                             <svg
                             className={this.props.isStarred ? "w-16 m-3 fill-yellow cursor-pointer": "w-16 m-3 fill-transparent cursor-pointer"}
@@ -67,7 +75,7 @@ class IntentDiagram extends Component {
                     >
                         {this.props.question}
                     </h3>
-                    <button onClick={this.toggleFlagged(this.props.question)} aria-label="flag-button">
+                    <button onClick={this.toggleFlagged()} aria-label="flag-button">
                         <label>
                             <svg
                             className={this.props.isFlagged ? "w-16 m-3 fill-red cursor-pointer": "w-16 m-3 fill-transparent cursor-pointer"}

@@ -39,8 +39,10 @@ export const analyzeTranscriptSlice = createSlice({
       // change the star state of the intent being changed
       for (let i = firstIndex; i < firstIndex+3; i++) {
         if (transcript[i].question === action.payload) {
-          transcript[i].star = !transcript[i].star
+          transcript[i].star = !transcript[i].star;
+          return true;
         }
+        return false;
       }
     },
     toggleFlag: (state, action) => {
@@ -51,8 +53,10 @@ export const analyzeTranscriptSlice = createSlice({
       // change the bookmark state of the intent being changed
       for (let i = firstIndex; i < firstIndex+3; i++) {
         if (transcript[i].question === action.payload) {
-          transcript[i].flag = !transcript[i].flag
+          transcript[i].flag = !transcript[i].flag;
+          return true;
         }
+        return false;
       }
     }
   }
