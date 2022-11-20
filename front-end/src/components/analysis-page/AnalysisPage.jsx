@@ -13,12 +13,11 @@ export class AnalysisPage extends Component {
       showIntentMenu: false,
     }
 
-    toggleIntentMenu = () => {
-      this.setState({showIntentMenu: !this.state.showIntentMenu});
+    openIntentMenu = () => {
+      this.setState({showIntentMenu: true});
     }
   
-    hideIntentMenu = () => {
-      // Hide intent menu; use instead of toggleIntentMenu in scenarios when hiding the menu is the only desired outcome
+    closeIntentMenu = () => {
       this.setState({showIntentMenu: false});
     }
   
@@ -35,7 +34,7 @@ export class AnalysisPage extends Component {
             <IntentMenu
               intents={analyzedTranscripts[projectId]}
               isOpen={this.state.showIntentMenu}
-              onClickOutside={this.hideIntentMenu}
+              onClickOutside={this.closeIntentMenu}
             />
           </div>
           <div /* darken screen if sidebar is toggled on */
@@ -64,10 +63,11 @@ export class AnalysisPage extends Component {
               className="fixed right-40 bottom-8" data-testid="arrow-right"
             >
               <BaseButton
-                click={this.toggleIntentMenu}
+                click={this.openIntentMenu}
+                label="Open intent menu"
                 icon={{
                     name: "hamburger",
-                    size: "40"
+                    size: "40",
                 }}
               />
             </div>
