@@ -40,3 +40,8 @@ Uploader: UXWing
 Link: https://uxwing.com/file-search-icon/
 Uploader: UXWing
 "All icons are free to use any personal and commercial projects without any attribution or credit."
+
+## "hamburger"
+Link: https://www.svgrepo.com/svg/422486/hamburger-menu-more-2
+Uploader: Ayub Irawan on SVG Repo
+CC Attribution License
