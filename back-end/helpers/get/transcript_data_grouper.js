@@ -43,7 +43,7 @@ export default class TranscriptDataGrouper {
     #generateSimilarityScore(comparedIntent) {
         const splitIntent1 = this.intent.question.split(" ");
         const splitIntent2 = comparedIntent.question.split(" ");
-        this.similarIndices = [];
+        this.differentWordsIndices = [];
 
         // If the length is significantly different we do not want to merge
         if (Math.abs(splitIntent1.length - splitIntent2.length) > 3) {
@@ -67,9 +67,14 @@ export default class TranscriptDataGrouper {
         while (index1 < splitIntent1.length && index2 < splitIntent2.length) {
             if (splitIntent1[index1] !== splitIntent2[index2] && splitIntent2 !== "[merged]") {
                 score -= weight * DECREMENTOR;
+                this.differentWordsIndices.push(index1);
+
                 // Attempt to not be off-by-1 index for names by identifying titles
+                if (titles.includes(splitIntent1[index1].toUpperCase())) {
+                    index1 += 1;
+                }
                 if (titles.includes(splitIntent2[index2].toUpperCase())) {
-                    index2 += 1
+                    index2 += 1;
                 }
             }
             index1 += 1;
@@ -83,14 +88,25 @@ export default class TranscriptDataGrouper {
      * Merges 2 intents
      */
     async #mergeIntent(comparedIntent) {
+        if (comparedIntent.question.length >= 2) {
+            const splitIntent = comparedIntent.question.split(" ");
+            for (const index of this.differentWordsIndices) {
+                splitIntent[index] = "[merged]";
+            }
+
+            if (this.differentWordsIndices.length > 0) {
+                comparedIntent.question = splitIntent.join(" ");
+            }
+        }
+
         await this.#recalculatePercentages(comparedIntent)
 
         const splitIntent = comparedIntent.question.split(" ");
-        for (const index of this.similarIndices) {
+        for (const index of this.differentWordsIndices) {
             splitIntent[index] = "[merged]";
         }
 
-        if (this.similarIndices.length > 0) {
+        if (this.differentWordsIndices.length > 0) {
             comparedIntent.question = splitIntent.join(" ");
         }
 

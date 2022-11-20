@@ -65,7 +65,11 @@ describe("TranscriptDataGrouper", () => {
             // create a new deep copy of the array each test to prevent bleeding
             intents = [];
             for (const fake of baseFakeIntents) {
-                intents.push({...fake});
+                // make a deep copy of the map
+                intents.push({
+                    ...fake,
+                    children: new Map(fake.children),
+                });
             }
         });
         it("should not merge 2 intents which are completely different", async() => {
@@ -140,10 +144,10 @@ describe("TranscriptDataGrouper", () => {
 
         it("should correctly merge 2 similar intents", async() => {
             const alreadyProcessedIntents = intents.slice(0, 1);
-            const dissimilarIntent = intents[1];
+            const similarIntent = intents[1];
             const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
             
-            const result = await grouper.group(dissimilarIntent);
+            const result = await grouper.group(similarIntent);
             expect(fakeDao.getIntent).toHaveBeenCalled();
             expect(intents[0].children["h"]).toEqual(33);
             expect(intents[0].children["c"]).toEqual(33);
