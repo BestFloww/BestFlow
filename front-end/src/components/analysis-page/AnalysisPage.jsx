@@ -31,19 +31,19 @@ export class AnalysisPage extends Component {
       let analyzedTranscripts = this.props.analyzedTranscripts;
       return (
         <div className="AnalysisPage" data-testid="analysis-page">
-          <div /*display sidebar if toggled on*/>
+          <div /* display sidebar if toggled on */>
             <IntentMenu
               intents={analyzedTranscripts[projectId]}
               isOpen={this.state.showIntentMenu}
               onClickOutside={this.hideIntentMenu}
             />
           </div>
-          <div /*darken screen if sidebar is toggled on*/
+          <div /* darken screen if sidebar is toggled on */
             className={"bg-purple-100 h-screen transition ease-in-out" + (this.state.showIntentMenu ? " brightness-75" : "")}
             data-testid="analysis-page-main"
           >
             <div className="flex gap-y-10 w-full flex-col h-full">
-              <div /*second line of className is tooltip styling*/
+              <div /* second line of className is tooltip styling */
                 className="justify-left relative text-center text-sm
                   before:z-10 before:absolute before:-right-5 before:top-1/2 before:w-max before:max-w-xs before:translate-x-full before:-translate-y-1/2 before:rounded-md before:bg-gray-200 before:px-3 before:py-2 before:text-off-white before:invisible before:content-[attr(tooltip)] after:z-10 after:absolute after:-right-[0.8rem] after:top-1/2 after:h-0 after:w-0 after:translate-x-2 after:-translate-y-1/2 after:border-8 after:border-r-gray-200 after:border-l-transparent after:border-b-transparent after:border-t-transparent after:invisible hover:before:visible hover:after:visible
                   cursor-pointer m-5 w-[5em]"

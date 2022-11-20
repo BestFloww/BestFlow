@@ -21,6 +21,20 @@ describe('AnalysisPage', () => {
         </Provider>
     );
 
+    it('should not display Intent Menu initially', () => {
+        // renderComponent(props);
+        // expect(screen.queryByTestId('intent-menu')).not.toBeVisible();
+    });
+
+    it('should toggle Intent Menu when Intent Menu hamburger button is pressed', () => {
+    });
+
+    it('should reduce the brightness of the main section of the page when the Intent Menu is open', () => {
+    });
+
+    it('should close the Intent Menu when clicking elsewhere on the page while it is open', () => {
+    });
+
     it('should dispatch openMainPage when logo button is clicked', () => {
         renderComponent(props);
         const dispatch = jest.spyOn(store, 'dispatch');
