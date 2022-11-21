@@ -197,6 +197,6 @@ IntentLister.defaultProps = {
 const mapStateToProps = (state, ownProps) =>({
     index: state.analyzeTranscript.DisplayingQuestion[state.analyzeTranscript.projectIdToBeDisplayed],
     intents: ownProps.intents
-  });
+});
   
 export default connect(mapStateToProps)(IntentLister);
