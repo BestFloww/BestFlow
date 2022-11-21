@@ -66,4 +66,16 @@ describe('analyzeTranscriptSlice', () => {
         const expected = reducer(previousState, setDisplayingQuestion(3));
         expect(expected.DisplayingQuestion["1"]).toBe(3);
     });
+    it("should switch flag of given intent to false", () => {
+        
+    });
+    it("should switch star of given intent to false", () => {
+
+    });
+    it("should switch flag of given intent to true", () => {
+
+    });
+    it("should switch star of given intent to true", () => {
+
+    });
 });

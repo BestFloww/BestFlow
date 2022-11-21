@@ -31,28 +31,37 @@ export const analyzeTranscriptSlice = createSlice({
     setProjectIdToBeDisplayed: (state, action) => {
       state.projectIdToBeDisplayed = action.payload;
     },
-    toggleBookmark: (state, action) => {
+    toggleStar: (state, action) => {
       // get the index of the first intent being displayed
       const firstIndex = state.DisplayingQuestion[state.projectIdToBeDisplayed];
       // get the transcript that is being displayed and has the indices of the intents
       const transcript = state.analyzedTranscripts[state.projectIdToBeDisplayed];
-      // get the intents currently being displayed
-      const intents = new Array([transcript[firstIndex], transcript[firstIndex+1], transcript[firstIndex+2]]);
-      // get the intent that is being toggled
-      const chosenIntent = intents.filter((intent) => {
-        return intent.question === action.payload.question
-      })[0];
-      // toggle the bookmarking whether it's as a star or flag
-      if (action.payload.bookmarkType === "star") {
-        chosenIntent.star = !action.payload.currentState
+      // change the star state of the intent being changed
+      for (let i = firstIndex; i < firstIndex+3; i++) {
+        if (transcript[i].question === action.payload) {
+          transcript[i].star = !transcript[i].star;
+          return true;
+        }
+        return false;
       }
-      else {
-        chosenIntent.flag = !action.payload.currentState
+    },
+    toggleFlag: (state, action) => {
+      // get the index of the first intent being displayed
+      const firstIndex = state.DisplayingQuestion[state.projectIdToBeDisplayed];
+      // get the transcript that is being displayed and has the indices of the intents
+      const transcript = state.analyzedTranscripts[state.projectIdToBeDisplayed];
+      // change the bookmark state of the intent being changed
+      for (let i = firstIndex; i < firstIndex+3; i++) {
+        if (transcript[i].question === action.payload) {
+          transcript[i].flag = !transcript[i].flag;
+          return true;
+        }
+        return false;
       }
-      },
+    }
   }
 })
 
-export const { addAnalyzedTranscript, setDisplayingQuestion, deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed, toggleBookmark } = analyzeTranscriptSlice.actions
+export const { addAnalyzedTranscript, setDisplayingQuestion, deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed, toggleFlag, toggleStar } = analyzeTranscriptSlice.actions
 
 export default analyzeTranscriptSlice.reducer

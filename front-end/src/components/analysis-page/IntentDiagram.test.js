@@ -15,6 +15,8 @@ describe("IntentDiagram", () => {
             children: {
                 q1: 100
             },
+            isStarred: false,
+            isFlagged: false,
         };
     });
 
@@ -68,5 +70,17 @@ describe("IntentDiagram", () => {
         expect(percentage).toBeInTheDocument();
         expect(percentage.textContent).toBe(`${value}%`)
         }
+    });
+    it("correctly displays flagged icon when intent is flagged", () => {
+
+    });
+    it("correctly displays starred icon when intent is starred", () => {
+
+    });
+    it("should dispatch intent when flag button is clicked", () => {
+
+    });
+    it("should dispatch intent when star button is clicked", () => {
+
     });
 });
