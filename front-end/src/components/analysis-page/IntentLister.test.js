@@ -12,6 +12,7 @@ describe("IntentLister", () => {
     const basicProps = {
         intents: sampleIntents,
         index: 0,
+        isIntentMenuOpen: false,
     };
     let props = {};
 
@@ -356,6 +357,29 @@ describe("IntentLister", () => {
             // Expect the function arguments to correspond to the correct event handler functions in IntentLister.jsx
             expect(document.removeEventListener.mock.calls[0][1].name).toBe("bound handleKeyDown");
             expect(document.removeEventListener.mock.calls[1][1].name).toBe("bound handleKeyUp");
+        });
+    });
+    
+    describe("For disabling the Right and Left Arrow keys if the Intent Menu is open", () => {
+        it ("should stay on the current index if the Right Arrow key is pressed and the Intent Menu is open", () => {
+            props.isIntentMenuOpen = true;
+            renderComponent(props);
+            userEvent.keyboard("{ArrowRight}");
+            // Intents 0-2 should still display, Intents 3-8 should still not display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe((key < 3) ? 1 : 0);
+            });
+        });
+
+        it ("should stay on the current index if the Left Arrow key is pressed and the Intent Menu is open", () => {
+            props.isIntentMenuOpen = true;
+            store.dispatch(setDisplayingQuestion(3));
+            renderComponent(props);
+            userEvent.keyboard("{ArrowLeft}");
+            // Intents 0-2 and 6-8 should still not display, Intents 3-5 should still display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe((key < 3 || key >= 6) ? 0 : 1);
+            });
         });
     });
 });

@@ -31,8 +31,9 @@ class IntentMenu extends Component {
     }
     
     handleClickOutside(event) {
-        if (this.ref.current && !this.ref.current.contains(event.target)) {  // Check if ref (this element) contains the click target
-          this.props.onClickOutside();
+        if (this.ref.current && !this.ref.current.contains(event.target)) {
+            // Close menu if ref (this element) contains the click target
+            this.props.onClickOutside();
         }
     }
 
@@ -41,10 +42,21 @@ class IntentMenu extends Component {
     }
 
     handleKeyDown(event) {
-        // Map keys to close menu on press
-        if (["Enter", "Space", "Escape", "ArrowLeft", "ArrowRight"].includes(event.key)) {
-            this.props.onClickOutside();
-        }
+        switch(event.key) {
+            case "Enter":
+            case "Space":
+                if (!this.ref.current.contains(event.target)) {
+                    // Close menu if ref (this element) does not contain the key target, and the key is used for accessibility
+                    this.props.onClickOutside();
+                }
+                break;
+            case "Escape":
+                // If the key is Escape, close menu no matter the target
+                this.props.onClickOutside();
+                break;
+            default:
+                break;
+        };
     }
 
     formatSearchResult = (text, slices) => {

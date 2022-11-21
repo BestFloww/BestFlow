@@ -153,34 +153,36 @@ describe("IntentMenu", () => {
         });
     });
 
-    describe("For keyboard shortcuts to close the menu", () => {
-        it ("should call its onClickOutside prop function if pressing Enter key", () => {
+    describe("For keyboard shortcuts to close the Intent Menu", () => {
+        it ("should call its onClickOutside prop function if pressing Enter key while focused on the Intent Menu", () => {
             renderComponent(props);
             userEvent.keyboard("{Enter}");
             expect(props.onClickOutside).toHaveBeenCalled();
         });
 
-        it ("should call its onClickOutside prop function if pressing Space key", () => {
+        it ("should call its onClickOutside prop function if pressing Space key while focused on the Intent Menu", () => {
             renderComponent(props);
             userEvent.keyboard("{Space}");
             expect(props.onClickOutside).toHaveBeenCalled();
         });
 
+        it ("should not call its onClickOutside prop function if pressing Enter key while focused on the Intent Menu", () => {
+            renderComponent(props);
+            userEvent.click(screen.getByLabelText("Search by intent contents"));
+            userEvent.keyboard("{Enter}");
+            expect(props.onClickOutside).not.toHaveBeenCalled();
+        });
+
+        it ("should not call its onClickOutside prop function if pressing Space key while focused on the Intent Menu", () => {
+            renderComponent(props);
+            userEvent.click(screen.getByLabelText("Search by intent contents"));
+            userEvent.keyboard("{Space}");
+            expect(props.onClickOutside).not.toHaveBeenCalled();
+        });
+
         it ("should call its onClickOutside prop function if pressing Escape key", () => {
             renderComponent(props);
             userEvent.keyboard("{Escape}");
-            expect(props.onClickOutside).toHaveBeenCalled();
-        });
-
-        it ("should call its onClickOutside prop function if pressing Left Arrow key", () => {
-            renderComponent(props);
-            userEvent.keyboard("{ArrowLeft}");
-            expect(props.onClickOutside).toHaveBeenCalled();
-        });
-
-        it ("should call its onClickOutside prop function if pressing Right Arrow key", () => {
-            renderComponent(props);
-            userEvent.keyboard("{ArrowRight}");
             expect(props.onClickOutside).toHaveBeenCalled();
         });
     });

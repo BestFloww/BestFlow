@@ -61,7 +61,10 @@ export class AnalysisPage extends Component {
                 <Logo />
               </div>
               <div className="w-4/5 h-4/5 mx-auto">
-                <IntentLister intents={analyzedTranscripts[projectId]} />
+                <IntentLister
+                  intents={analyzedTranscripts[projectId]}
+                  isIntentMenuOpen={this.state.showIntentMenu}
+                />
               </div>
             </div>
 
