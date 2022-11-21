@@ -4,13 +4,13 @@
 
 const sampleIntents = [
     {
-      question: "Sample Intent 0",
+      question: "Sample Intent 0 (special search substring)",
       children: {
         "q1": 100,
       }
     },
     {
-      question: "Sample Intent 1",
+      question: "Sample Intent 1 (special search substring)",
       children: {
         "q1": 10,
         "q2": 90

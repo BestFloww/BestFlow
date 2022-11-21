@@ -5,7 +5,8 @@ import { setDisplayingQuestion } from '../../store/analyzeTranscriptSlice.js';
 import BaseButton from "../general/BaseButton.jsx";
 import IntentSearch from "../helpers/IntentSearch.js";
 
-let search = new IntentSearch();
+// Create search logic
+const search = new IntentSearch();
 
 class IntentMenu extends Component {
     
@@ -28,30 +29,41 @@ class IntentMenu extends Component {
     }
     
     handleClickOutside(event) {
-        // Detect when the user clicks outside of the intent menu to hide it
-        // This works by checking whether the click target is contained by the intent menu element, which is identified through the ref created in the constructor. If not contained, then the click was outside of the menu and it should close.
+        /**
+         * Detect when the user clicks outside of the intent menu to hide it.
+         * This works by checking whether the click target is contained by the intent menu element, which is identified through the ref created in the constructor. If not contained, then the click was outside of the menu and it should close.
+         * */
         if (this.ref.current && !this.ref.current.contains(event.target)) {
           this.props.onClickOutside();
         }
     }
 
     handleChange(event) {
-        // Update the input value state based on the search input field
+        /**
+         * Update the input value state based on the search input field 
+         * */
         this.setState({inputValue: event.target.value});
     }
 
     formatSearchResult = (text, slices) => {
-        // Return an element that displays and formats a slice of <text> based on <slices>
-        // Used to highlight the slice of an intent's question that matches the search string, and display the remaining text normally
+        /** 
+        * Return an element that displays and formats a slice of <text> based on <slices>.
+        * Used to highlight the slice of an intent's question that matches the search string, and display the remaining text normally.
+        * */
 
         // First, create slice boundaries to define when to change the text format
         const startText = Math.max(slices[text].start - 5, 0);  // Display <text> starting a few chars before the searched portion
         const startSearchSlice = slices[text].start;  // Receive the starting index of the searched portion
         const endSearchSlice = slices[text].end;  // Receive the ending index of the searched portion
 
-        return(
+        return (
             <div className="truncate" /* Display <text> in 3 slices, with the middle one having highlighted formatting */>
-                {(startText > 0 ? "..." : "") + text.slice(startText, startSearchSlice) /* Begin text with ellipsis if preceding characters are truncated */}<span className='bg-gray-100'>{text.slice(startSearchSlice, endSearchSlice)}</span>{text.slice(endSearchSlice)}
+                {(startText > 0 ? "..." : "") + text.slice(startText, startSearchSlice)
+                /* Begin text with ellipsis if preceding characters are truncated */}
+                <span /* */
+                    className='bg-gray-100'>{text.slice(startSearchSlice, endSearchSlice)}
+                </span>
+                {text.slice(endSearchSlice)}
             </div>
         );
     }
@@ -71,7 +83,6 @@ class IntentMenu extends Component {
                 originalIndex = originalIndex - (originalIndex % 3);
                 // Dispatch the index to display the correct set of intents
                 store.dispatch(setDisplayingQuestion(originalIndex));
-                console.log(intent)
             }
 
             return (
@@ -82,6 +93,8 @@ class IntentMenu extends Component {
                         hover:bg-gray-100 hover:text-black transition ease-in-out
                         focus-within:bg-gray-100 focus-within:text-black"
                         onClick={goToIntent}
+                        aria-label={intent.question}
+                        data-testid="intent-menu-list-item"
                     >
                         <div /* Format the text representation of the intent in the intent menu */>
                             {this.formatSearchResult(intent.question, searchSlices)}
@@ -124,6 +137,7 @@ class IntentMenu extends Component {
                         focus:border-purple-300 focus:ring-purple-300"
                         aria-label="Search by intent contents"
                         placeholder="Search by intent contents"
+                        id="intent-menu-search"
                         onChange={this.handleChange}
                         value={this.state.inputValue}
                     />

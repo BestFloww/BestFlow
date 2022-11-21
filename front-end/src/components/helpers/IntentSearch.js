@@ -1,8 +1,10 @@
 // This file defines several helper functions used to implement the intent search feature on AnalysisPage.
 
-export default class IntentAnalyzer{
+export default class IntentSearch{
     filterIntents = (intents, searchString) => {
-        // Return (1) an array of intents filtered by the searchString, and (2) a mapping of each filtered intent to the indices describing where the searchString appears in the intent's content
+        /**
+         * Return (1) an array of intents filtered by the searchString, and (2) a mapping of each filtered intent to the indices describing where the searchString appears in the intent's content.
+         * */
         let filteredIntents = [];
         let searchSlices = {};
         intents.forEach((intent) => this.addFilteredIntent(intent, searchString, filteredIntents, searchSlices));
@@ -25,10 +27,12 @@ export default class IntentAnalyzer{
     }
     
     approximateIndexOf = (targetString, searchString) => {
-        // Return the index of the substring searchString in targetString, ignoring case and punctuation
-        // If searchString is not a substring of targetString under these conditions, returns -1
-        const approximateSearchString = searchString.toLowerCase()//.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()'"‘’“”]/g, "");
-        const approximateTargetString = targetString.toLowerCase()//.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()'"‘’“”]/g,"");
+        /**
+         * Return the index of the substring searchString in targetString, ignoring case.
+         * If searchString is not a substring of targetString under these conditions, returns -1.
+         * */
+        const approximateSearchString = searchString.toLowerCase()
+        const approximateTargetString = targetString.toLowerCase()
         return approximateTargetString.indexOf(approximateSearchString);
     }
 }

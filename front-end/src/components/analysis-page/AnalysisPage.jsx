@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import store from "../../store.js";
 import { openMainPage } from "../../store/switchPageSlice.js";
 import Logo from "../icons/logo.jsx";
-import BaseButton from "../general/BaseButton.jsx"; // REMOVE!
+import BaseButton from "../general/BaseButton.jsx";
 import IntentLister from "./IntentLister.jsx";
 import IntentMenu from "./IntentMenu.jsx";
 
@@ -15,6 +15,7 @@ export class AnalysisPage extends Component {
 
     openIntentMenu = () => {
       this.setState({showIntentMenu: true});
+      document.getElementById("intent-menu-search").focus();
     }
   
     closeIntentMenu = () => {
@@ -59,7 +60,7 @@ export class AnalysisPage extends Component {
               </div>
             </div>
 
-            <div /*TEMPORARY SIDEBAR CONTROL BUTTON - WHEN DELETING THIS, DELETE BASEBUTTON IMPORT TOO!*/
+            <div /*TEMPORARY SIDEBAR CONTROL BUTTON!*/
               className="fixed right-40 bottom-8" data-testid="arrow-right"
             >
               <BaseButton
