@@ -191,8 +191,10 @@ describe("IntentMenu", () => {
             renderComponent(props);
             // Expect addEventListener to be called with proper event types and some functions
             expect(document.addEventListener).toHaveBeenCalledWith("mousedown", expect.any(Function), false);
+            expect(document.addEventListener).toHaveBeenCalledWith("keydown", expect.any(Function), false);
             // Expect the function argument to correspond to the correct event handler function in IntentMenu.jsx
             expect(document.addEventListener.mock.calls[0][1].name).toBe("bound handleClickOutside");
+            expect(document.addEventListener.mock.calls[1][1].name).toBe("bound handleKeyDown");
         });
 
         it ("should remove correct event listeners when the component unmounts", () => {
@@ -201,8 +203,10 @@ describe("IntentMenu", () => {
             unmount();
             // Expect removeEventListener to be called with proper event type and some function
             expect(document.removeEventListener).toBeCalledWith("mousedown", expect.any(Function), false);
+            expect(document.removeEventListener).toBeCalledWith("keydown", expect.any(Function), false);
             // Expect the function argument to correspond to the correct event handler function in IntentMenu.jsx
             expect(document.removeEventListener.mock.calls[0][1].name).toBe("bound handleClickOutside");
+            expect(document.removeEventListener.mock.calls[1][1].name).toBe("bound handleKeyDown");
         });
     });
 });

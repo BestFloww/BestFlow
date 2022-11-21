@@ -41,9 +41,8 @@ class IntentMenu extends Component {
     }
 
     handleKeyDown(event) {
-        // Map keys to methods for keyboard shortcuts
+        // Map keys to close menu on press
         if (["Enter", "Space", "Escape", "ArrowLeft", "ArrowRight"].includes(event.key)) {
-            console.log('hi')
             this.props.onClickOutside();
         }
     }
