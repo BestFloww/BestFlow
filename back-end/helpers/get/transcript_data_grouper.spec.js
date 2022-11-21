@@ -16,11 +16,6 @@ const mapMaker = (keysAndPairs) => {
 
 describe("TranscriptDataGrouper", () => {
     let intents;
-    jest.spyOn(fakeDao, "getIntent").mockImplementation((query) => {
-        return intents.filter((intent) => {
-            return intent.question === query.question && intent.project_id === query.project_id;
-        });
-    });
     describe("when intents are not similar", () => {
         // Create a variety of non-similar intents
         const baseFakeIntents = [
@@ -71,6 +66,11 @@ describe("TranscriptDataGrouper", () => {
                     children: new Map(fake.children),
                 });
             }
+            jest.spyOn(fakeDao, "getIntent").mockImplementation((query) => {
+                return intents.filter((intent) => {
+                    return intent.question === query.question && intent.project_id === query.project_id;
+                });
+            });
         });
         it("should not merge 2 intents which are completely different", async() => {
             const alreadyProcessedIntents = intents.slice(0, 1);
@@ -153,13 +153,23 @@ describe("TranscriptDataGrouper", () => {
         beforeEach(() => {
             // create a new deep copy of the array each test to prevent bleeding
             intents = [];
+            let filter = [];
             for (const fake of baseFakeIntents) {
                 // make a deep copy of the map
                 intents.push({
                     ...fake,
                     children: new Map(fake.children),
                 });
+                filter.push({
+                    ...fake,
+                    children: new Map(fake.children),
+                });
             }
+            jest.spyOn(fakeDao, "getIntent").mockImplementation((query) => {
+                return filter.filter((intent) => {
+                    return intent.question === query.question && intent.project_id === query.project_id;
+                });
+            });
         });
 
         it("should correctly merge 2 similar intents", async() => {
@@ -180,14 +190,13 @@ describe("TranscriptDataGrouper", () => {
             / Tried changing the filter to base intents but that changes the deep copy of this test
             */
 
-            const alreadyProcessedIntents = [];
+            const alreadyProcessedIntents = intents.slice(0, 1);
+            const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
 
-            for (const similarIntent of intents.slice(0, 3)) {
-                const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
+            for (const similarIntent of intents.slice(1, 3)) {
                 const result = await grouper.group(similarIntent);
                 expect(fakeDao.getIntent).toHaveBeenCalled();
                 expect(result).toBe(true);
-                alreadyProcessedIntents.push(similarIntent);
             }
             expect(intents[0].children["h"]).toEqual(33);
             expect(intents[0].children["c"]).toEqual(22);
@@ -197,13 +206,12 @@ describe("TranscriptDataGrouper", () => {
         it("should correctly merge first 3 similar intents and not the rest", async() => {
             // TODO: Test is also broken
 
-            const alreadyProcessedIntents = [];
+            const alreadyProcessedIntents = intents.slice(0, 1);
+            const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
 
             for (const intent of intents) {
-                const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
-                const result = await grouper.group(intent);
+                await grouper.group(intent);
                 expect(fakeDao.getIntent).toHaveBeenCalled();
-                alreadyProcessedIntents.push(intent);
             }
             expect(intents[0].children["h"]).toEqual(33);
             expect(intents[0].children["c"]).toEqual(22);

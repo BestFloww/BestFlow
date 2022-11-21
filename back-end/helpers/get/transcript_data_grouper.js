@@ -88,26 +88,20 @@ export default class TranscriptDataGrouper {
      * Merges 2 intents
      */
     async #mergeIntent(comparedIntent) {
-        if (comparedIntent.previous_intents) {
-            for (const intent of this.previous_intents) {
-                await this.#recalculatePercentages(intent)
-
-                const splitIntent = intent.question.split(" ");
-
-                for (const index of this.differentWordsIndices) {
-                    splitIntent[index] = "[merged]";
-                }
-
-                if (this.differentWordsIndices.length > 0) {
-                    comparedIntent.question = splitIntent.join(" ");
-                }
+        if (comparedIntent.previousIntents) {
+            let original = JSON.parse(JSON.stringify(comparedIntent.previousIntents[0]));
+            for (let i = 1; i < comparedIntent.previousIntents.length; i++) {
+                await this.#recalculatePercentages(comparedIntent.previousIntents[i], original);
             }
-
+            original.previousIntents = comparedIntent.previousIntents;
+            comparedIntent = original;
         } else {
-            this.previous_intents = [];
+            comparedIntent.previousIntents = [];
+            const copyComparedIntent = JSON.parse(JSON.stringify(comparedIntent))
+            comparedIntent.previousIntents.push(copyComparedIntent);
         }
 
-        await this.#recalculatePercentages(comparedIntent)
+        await this.#recalculatePercentages(this.intent, comparedIntent)
 
         const splitIntent = comparedIntent.question.split(" ");
         for (const index of this.differentWordsIndices) {
@@ -118,7 +112,8 @@ export default class TranscriptDataGrouper {
             comparedIntent.question = splitIntent.join(" ");
         }
 
-        this.previous_intents.push(comparedIntent);
+        const copyIntent = JSON.parse(JSON.stringify(this.intent))
+        comparedIntent.previousIntents.push(copyIntent);
 
     }
 
@@ -131,8 +126,8 @@ export default class TranscriptDataGrouper {
     * @param Object Formatted intent to merge percentages
      * Recalculates the percentage of the compared intent based on the original model
      */
-    async #recalculatePercentages(comparedIntent) {
-        const originalMergingIntent = await TranscriptDataGrouper.#IntentDao.getIntent({question: this.intent.question, project_id: this.project_id})[0];
+    async #recalculatePercentages(intent, comparedIntent) {
+        const originalMergingIntent = await TranscriptDataGrouper.#IntentDao.getIntent({question: intent.question, project_id: this.project_id})[0];
         const targetIntent = await TranscriptDataGrouper.#IntentDao.getIntent({question: comparedIntent.question, project_id: this.project_id})[0];
 
         const mergedMap = targetIntent.children;
@@ -157,5 +152,6 @@ export default class TranscriptDataGrouper {
         }
 
         comparedIntent.children = percentageMap;
+        comparedIntent.total_children = total_children;
     }
 }
