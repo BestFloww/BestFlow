@@ -38,8 +38,9 @@ export class AnalysisPage extends Component {
               onClickOutside={this.closeIntentMenu}
             />
           </div>
-          <div /* darken screen if sidebar is toggled on */
+          <div /* darken screen and hide content from accessibility API if sidebar is toggled on */
             className={"bg-purple-100 h-screen transition ease-in-out" + (this.state.showIntentMenu ? " brightness-75" : "")}
+            aria-hidden={this.state.showIntentMenu ? "true" : "false"}
             data-testid="analysis-page-main"
           >
             <div className="flex gap-y-10 w-full flex-col h-full">

@@ -68,6 +68,17 @@ describe('AnalysisPage', () => {
             userEvent.click(screen.getByLabelText("Open intent menu"));
             expect(screen.getByTestId("analysis-page-main")).toHaveClass("brightness-75");
         });
+
+        it('should not hide the content of the main section of the page from accessibility API when the Intent Menu is closed', () => {
+            renderComponent(props);
+            expect(screen.getByTestId("analysis-page-main").getAttribute("aria-hidden")).toBe("false");
+        });
+    
+        it('should hide the content of the main section of the page from accessibility API when the Intent Menu is opened', () => {
+            renderComponent(props);
+            userEvent.click(screen.getByLabelText("Open intent menu"));
+            expect(screen.getByTestId("analysis-page-main").getAttribute("aria-hidden")).toBe("true");
+        });
     });
 
 });
