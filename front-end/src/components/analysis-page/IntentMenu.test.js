@@ -6,6 +6,8 @@ import IntentMenu from './IntentMenu.jsx';
 import sampleIntents from '../test-data/sampleIntents.js';
 import store from "../../store.js";
 
+const dispatch = jest.spyOn(store, 'dispatch');
+
 describe("IntentMenu", () => {
     const basicProps = {
         intents: sampleIntents,
@@ -25,6 +27,7 @@ describe("IntentMenu", () => {
     beforeEach(() => {
         props = {...basicProps};
         jest.clearAllMocks();
+        
     });
 
     describe("For generating and listing intent buttons", () => {
@@ -35,7 +38,7 @@ describe("IntentMenu", () => {
         });
         
         it ("should generate and display a button corresponding to each intent if there is 1 intent", () => {
-            props.intents = sampleIntents.slice(0, 1);  // Include only Intent 0
+            props.intents = sampleIntents.slice(0, 1);
             renderComponent(props);
             // A button for Intents 0 should display
             Object.keys(props.intents).forEach((key) => {
@@ -44,7 +47,7 @@ describe("IntentMenu", () => {
         });
 
         it ("should generate and display a button corresponding to each intent if there are 2 intents", () => {
-            props.intents = sampleIntents.slice(0, 2);  // Include only Intents 0-1
+            props.intents = sampleIntents.slice(0, 2);
             renderComponent(props);
             // A button for each of Intents 0-1 should display
             Object.keys(props.intents).forEach((key) => {
@@ -56,21 +59,18 @@ describe("IntentMenu", () => {
     describe("For clicking on intent navigation buttons", () => {
         it ("should correctly dispatch the selected intent index if that intent is the 1st of the 3 intents on its page", () => {
             renderComponent(props);
-            const dispatch = jest.spyOn(store, 'dispatch');
             userEvent.click(screen.getByLabelText("Sample Intent 3"));
             expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setDisplayingQuestion', payload: 3});
         });
 
         it ("should correctly dispatch the selected intent index if that intent is the 2nd of the 3 intents on its page", () => {
             renderComponent(props);
-            const dispatch = jest.spyOn(store, 'dispatch');
             userEvent.click(screen.getByLabelText("Sample Intent 4"));
             expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setDisplayingQuestion', payload: 3});
         });
 
         it ("should correctly dispatch the selected intent index if that intent is the 3rd of the 3 intents on its page", () => {
             renderComponent(props);
-            const dispatch = jest.spyOn(store, 'dispatch');
             userEvent.click(screen.getByLabelText("Sample Intent 5"));
             expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setDisplayingQuestion', payload: 3});
         });
@@ -104,9 +104,9 @@ describe("IntentMenu", () => {
                 expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 2 ? 1 : 0);
             });
             // Check for styling of each slice of text in each of the intent buttons
-            expect(screen.getByText(/...nt 0/)).not.toHaveClass("bg-gray-100");  // First slice of the first intent "[Sample Inte]nt 0  "
-            expect(screen.getByText(/...nt 1/)).not.toHaveClass("bg-gray-100");  // First slice of the second intent "[Sample Inte]nt 1 "
-            screen.getAllByText("(special search substring)").forEach((element) => expect(element).toHaveClass("bg-gray-100"));  // Fragment of the second slice of both intents "(special search substring)"
+            expect(screen.getByText(/...nt 0/)).not.toHaveClass("bg-gray-100");  // First slice of the first intent
+            expect(screen.getByText(/...nt 1/)).not.toHaveClass("bg-gray-100");  // First slice of the second intent
+            screen.getAllByText("(special search substring)").forEach((element) => expect(element).toHaveClass("bg-gray-100"));  //Second slice of both intents
             // For both intents, there is no third slice to check as the search string includes the tail of both intents' contents
         });
 
@@ -151,7 +151,41 @@ describe("IntentMenu", () => {
             userEvent.click(screen.getByLabelText("Search by intent contents"));
             expect(props.onClickOutside).not.toHaveBeenCalled();
         });
+    });
 
+    describe("For keyboard shortcuts to close the menu", () => {
+        it ("should call its onClickOutside prop function if pressing Enter key", () => {
+            renderComponent(props);
+            userEvent.keyboard("{Enter}");
+            expect(props.onClickOutside).toHaveBeenCalled();
+        });
+
+        it ("should call its onClickOutside prop function if pressing Space key", () => {
+            renderComponent(props);
+            userEvent.keyboard("{Space}");
+            expect(props.onClickOutside).toHaveBeenCalled();
+        });
+
+        it ("should call its onClickOutside prop function if pressing Escape key", () => {
+            renderComponent(props);
+            userEvent.keyboard("{Escape}");
+            expect(props.onClickOutside).toHaveBeenCalled();
+        });
+
+        it ("should call its onClickOutside prop function if pressing Left Arrow key", () => {
+            renderComponent(props);
+            userEvent.keyboard("{ArrowLeft}");
+            expect(props.onClickOutside).toHaveBeenCalled();
+        });
+
+        it ("should call its onClickOutside prop function if pressing Right Arrow key", () => {
+            renderComponent(props);
+            userEvent.keyboard("{ArrowRight}");
+            expect(props.onClickOutside).toHaveBeenCalled();
+        });
+    });
+
+    describe("For event listeners", () => {
         it ("should add correct event listeners when the component mounts", () => {
             document.addEventListener = jest.fn();
             renderComponent(props);

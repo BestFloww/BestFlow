@@ -3,7 +3,9 @@
 export default class IntentSearch{
     filterIntents = (intents, searchString) => {
         /**
-         * Return (1) an array of intents filtered by the searchString, and (2) a mapping of each filtered intent to the indices describing where the searchString appears in the intent's content.
+         * @param {Array} intents array of intents to search through
+         * @param {String} searchString string to search by
+         * @return {Object} an array of intents filtered by searchString and a mapping of each intent to indices describing where the searchString appears in its question
          * */
         let filteredIntents = [];
         let searchSlices = {};
@@ -12,26 +14,21 @@ export default class IntentSearch{
     }
     
     addFilteredIntent = (intent, searchString, filteredIntents, searchSlices) => {
-        // First, find the starting index of searchString
         const indexOfSearch = this.approximateIndexOf(intent.question, searchString);
 
-        // Then, if it is not -1, then it is a (likely) search for the intent
+        // If index of searchString is not -1, then it is a (likely) search for the intent
         if (indexOfSearch !== -1) {
-            filteredIntents.push(intent);  // Add the intent to filteredIntents
-            // Map the intent to the starting and ending index of where the searchString appears in the intent question for reference
+            filteredIntents.push(intent);
+            // Map the intent to the starting and ending index of where the searchString appears in the intent question
             searchSlices[intent.question] = {
-                start: indexOfSearch,  // indexOfSearch corresponds to the starting index
-                end: indexOfSearch + searchString.length,  // Then, the ending index is searchString.length characters after
+                start: indexOfSearch,
+                end: indexOfSearch + searchString.length,
             };
         }
     }
     
     approximateIndexOf = (targetString, searchString) => {
-        /**
-         * Return the index of the substring searchString in targetString, ignoring case.
-         * If searchString is not a substring of targetString under these conditions, returns -1.
-         * */
-        const approximateSearchString = searchString.toLowerCase()
+        const approximateSearchString = searchString.toLowerCase()  // Ignore case
         const approximateTargetString = targetString.toLowerCase()
         return approximateTargetString.indexOf(approximateSearchString);
     }

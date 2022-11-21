@@ -15,7 +15,8 @@ export class AnalysisPage extends Component {
 
     openIntentMenu = () => {
       this.setState({showIntentMenu: true});
-      document.getElementById("intent-menu-search").focus();
+      // Needs a timeout of any duration to wait for the input field to render in Intent Menu
+      setTimeout(() => { document.getElementById("intent-menu-search").focus() }, 0);
     }
   
     closeIntentMenu = () => {
@@ -31,16 +32,19 @@ export class AnalysisPage extends Component {
       let analyzedTranscripts = this.props.analyzedTranscripts;
       return (
         <div className="AnalysisPage" data-testid="analysis-page">
-          <div /* display sidebar if toggled on */>
+          <aside /* display sidebar if toggled on */
+            aria-hidden={!this.state.showIntentMenu}
+            data-testid="analysis-page-sidebar"
+          >
             <IntentMenu
               intents={analyzedTranscripts[projectId]}
               isOpen={this.state.showIntentMenu}
               onClickOutside={this.closeIntentMenu}
             />
-          </div>
+          </aside>
           <div /* darken screen and hide content from accessibility API if sidebar is toggled on */
             className={"bg-purple-100 h-screen transition ease-in-out" + (this.state.showIntentMenu ? " brightness-75" : "")}
-            aria-hidden={this.state.showIntentMenu ? "true" : "false"}
+            aria-hidden={this.state.showIntentMenu}
             data-testid="analysis-page-main"
           >
             <div className="flex gap-y-10 w-full flex-col h-full">

@@ -40,6 +40,7 @@ describe('AnalysisPage', () => {
             userEvent.click(screen.getByLabelText("Open intent menu"));
             // Having this class implies the intent menu is on-screen
             expect(screen.getByTestId("intent-menu")).toHaveClass("translate-x-0");
+            expect(screen.getByTestId("analysis-page-sidebar").getAttribute("aria-hidden")).toBe("false");
         });
     
         it('should close the Intent Menu when the Intent Menu X button is pressed', () => {
@@ -48,6 +49,7 @@ describe('AnalysisPage', () => {
             userEvent.click(screen.getByLabelText("Close intent menu"));
             // Having this class implies the intent menu is off-screen
             expect(screen.getByTestId("intent-menu")).toHaveClass("-translate-x-full");
+            expect(screen.getByTestId("analysis-page-sidebar").getAttribute("aria-hidden")).toBe("true");
         });
     
         it('should close the Intent Menu when clicking elsewhere on the page while it is open', () => {
@@ -56,6 +58,7 @@ describe('AnalysisPage', () => {
             userEvent.click(screen.getByTestId("analysis-page-main"));
             // Having this class implies the intent menu is off-screen
             expect(screen.getByTestId("intent-menu")).toHaveClass("-translate-x-full");
+            expect(screen.getByTestId("analysis-page-sidebar").getAttribute("aria-hidden")).toBe("true");
         });
     
         it('should keep normal brightness for the main section of the page when the Intent Menu is closed', () => {

@@ -5,7 +5,6 @@ import { setDisplayingQuestion } from '../../store/analyzeTranscriptSlice.js';
 import BaseButton from "../general/BaseButton.jsx";
 import IntentSearch from "../helpers/IntentSearch.js";
 
-// Create search logic
 const search = new IntentSearch();
 
 class IntentMenu extends Component {
@@ -15,6 +14,7 @@ class IntentMenu extends Component {
         this.ref = React.createRef();  // Create a React reference to the entire intent menu element
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
         this.state = {
             inputValue: "",
         };
@@ -22,42 +22,39 @@ class IntentMenu extends Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside, false);
+        document.addEventListener("keydown", this.handleKeyDown, false);
     }
     
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside, false);
+        document.removeEventListener("keydown", this.handleKeyDown, false);
     }
     
     handleClickOutside(event) {
-        /**
-         * Detect when the user clicks outside of the intent menu to hide it.
-         * This works by checking whether the click target is contained by the intent menu element, which is identified through the ref created in the constructor. If not contained, then the click was outside of the menu and it should close.
-         * */
-        if (this.ref.current && !this.ref.current.contains(event.target)) {
+        if (this.ref.current && !this.ref.current.contains(event.target)) {  // Check if ref (this element) contains the click target
           this.props.onClickOutside();
         }
     }
 
     handleChange(event) {
-        /**
-         * Update the input value state based on the search input field 
-         * */
         this.setState({inputValue: event.target.value});
     }
 
-    formatSearchResult = (text, slices) => {
-        /** 
-        * Return an element that displays and formats a slice of <text> based on <slices>.
-        * Used to highlight the slice of an intent's question that matches the search string, and display the remaining text normally.
-        * */
+    handleKeyDown(event) {
+        // Map keys to methods for keyboard shortcuts
+        if (["Enter", "Space", "Escape", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+            console.log('hi')
+            this.props.onClickOutside();
+        }
+    }
 
-        // First, create slice boundaries to define when to change the text format
-        const startText = Math.max(slices[text].start - 5, 0);  // Display <text> starting a few chars before the searched portion
-        const startSearchSlice = slices[text].start;  // Receive the starting index of the searched portion
-        const endSearchSlice = slices[text].end;  // Receive the ending index of the searched portion
+    formatSearchResult = (text, slices) => {
+        const startText = Math.max(slices[text].start - 5, 0);  // Display text starting a few chars before the searched portion
+        const startSearchSlice = slices[text].start;
+        const endSearchSlice = slices[text].end;
 
         return (
-            <div className="truncate" /* Display <text> in 3 slices, with the middle one having highlighted formatting */>
+            <div className="truncate" /* Display text in 3 slices, with the middle one having highlighted styling */>
                 {(startText > 0 ? "..." : "") + text.slice(startText, startSearchSlice)
                 /* Begin text with ellipsis if preceding characters are truncated */}
                 <span /* */
@@ -69,19 +66,15 @@ class IntentMenu extends Component {
     }
 
     listIntents = () => {
-        // Filter intents based on search input value
         const { filteredIntents, searchSlices } = search.filterIntents(this.props.intents, this.state.inputValue);
 
-        // Generate a list of navigation buttons with each corresponding to 1 intent from the filtered transcript, in order
-        // Intents which do not pass the search filter are not rendered in the list
+        // Generate a list of buttons with each corresponding to 1 intent from the filtered intents list, in order
         return filteredIntents.map((intent, filteredIndex) => {
 
-            // Create a function to change this transcript's display index to the index necessary for displaying the current intent
             const goToIntent = () => {
-                // Find the index in the original, unfiltered intent list necessary to display this intent
+                // Dispatch the index in the original, unfiltered intent list necessary to display this intent
                 let originalIndex = this.props.intents.indexOf(intent);
                 originalIndex = originalIndex - (originalIndex % 3);
-                // Dispatch the index to display the correct set of intents
                 store.dispatch(setDisplayingQuestion(originalIndex));
             }
 
@@ -110,38 +103,43 @@ class IntentMenu extends Component {
             <div /* Ternary operator is used in class below to animate sliding in/out of intent menu depending on isOpen prop */
                 className={"z-10 w-1/4 h-full bg-off-white font-cabin absolute shadow-lg shadow-blue/30 transition ease-in-out " + (this.props.isOpen ? "translate-x-0" : "-translate-x-full")}
                 data-testid="intent-menu"
+                aria-hidden={!this.props.isOpen}
                 ref={this.ref}
             >
-                <div className="ml-4 mt-4">
-                    <BaseButton
-                        click={this.props.onClickOutside}
-                        label="Close intent menu"
-                        icon={{
-                            name: "x",
-                            size: "20",
-                            color: "black"
-                        }}
-                    />
-                </div>
-                <ul className="text-center font-bold text-xl mt-10"> 
-                    Transcript Intents:
-                </ul>
-                <ul className="h-2/3 relative overflow-y-scroll bg-off-white-100 shadow-inner-lg rounded p-2 my-4 mx-4">
-                    {this.listIntents() /* List of intent buttons */}
-                </ul>
-                <ul className="flex flex-col" >
-                    <input /* Transcript search input */
-                        className="bg-off-white text-xl ml-4 mr-4 mt-4 rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
-                        border border-solid border-purple-100
-                        hover:border-purple-200
-                        focus:border-purple-300 focus:ring-purple-300"
-                        aria-label="Search by intent contents"
-                        placeholder="Search by intent contents"
-                        id="intent-menu-search"
-                        onChange={this.handleChange}
-                        value={this.state.inputValue}
-                    />
-                </ul>
+                {this.props.isOpen && /* Only render internal elements if menu isOpen */
+                    <div className="h-5/6">
+                        <div className="ml-4 mt-4">
+                            <BaseButton
+                                click={this.props.onClickOutside}
+                                label="Close intent menu"
+                                icon={{
+                                    name: "x",
+                                    size: "20",
+                                    color: "black"
+                                }}
+                            />
+                        </div>
+                        <ul className="text-center font-bold text-xl mt-10"> 
+                            Transcript Intents:
+                        </ul>
+                        <ul className="h-4/5 relative overflow-y-scroll bg-off-white-100 shadow-inner-lg rounded p-2 my-4 mx-4">
+                            {this.listIntents()}
+                        </ul>
+                        <ul className="flex flex-col" >
+                            <input /* Transcript search input */
+                                className="bg-off-white text-xl ml-4 mr-4 mt-6 rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
+                                border border-solid border-purple-100
+                                hover:border-purple-200
+                                focus:border-purple-300 focus:ring-purple-300"
+                                aria-label="Search by intent contents"
+                                placeholder="Search by intent contents"
+                                id="intent-menu-search"
+                                onChange={this.handleChange}
+                                value={this.state.inputValue}
+                            />
+                        </ul>
+                    </div>
+                }
             </div>
         );
     }
@@ -150,7 +148,7 @@ class IntentMenu extends Component {
 IntentMenu.propTypes = {
     intents: PropTypes.arrayOf(PropTypes.object).isRequired,
     isOpen: PropTypes.bool.isRequired,
-    onClickOutside: PropTypes.func,
+    onClickOutside: PropTypes.func.isRequired,
 };
 
 export default IntentMenu;

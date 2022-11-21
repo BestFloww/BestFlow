@@ -8,6 +8,7 @@ import {setTranscriptUploadStatus} from "../../store/transcriptUploadSlice.js";
 import {setProjectIdToBeDisplayed, addAnalyzedTranscript, clearAnalyzedTranscript} from "../../store/analyzeTranscriptSlice.js"
 import TranscriptAPI from "../../services/TranscriptAPI.js";
 
+const dispatch = jest.spyOn(store, 'dispatch');
 jest.mock("../../services/TranscriptAPI.js");
 
 describe('MainPage', () => {
@@ -43,7 +44,6 @@ describe('MainPage', () => {
 
     it('should dispatch setProjectIdToBeDisplayed with correct Project ID if a Project ID is entered', () => {
         renderComponent();
-        const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
         expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: '1'});
@@ -71,7 +71,6 @@ describe('MainPage', () => {
     it('should dispatch openAnalysisPage when a valid Project ID is entered and View Analysis button is clicked', async() => {
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
-        const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
         await userEvent.click(screen.getByText('View Analysis'));
@@ -82,7 +81,6 @@ describe('MainPage', () => {
         jest.spyOn(TranscriptAPI, "getAnalysis").mockImplementationOnce(() => {return {data: []}});
         store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
-        const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "2");
         await userEvent.click(screen.getByText('View Analysis'));
@@ -93,7 +91,6 @@ describe('MainPage', () => {
     it("should dispatch addAnalyzedTranscript with correct ID-transcript mapping and setOverrideStatus with false when a valid Project ID is entered and View Analysis button is clicked, but the Project ID is not stored in this session's transcripts", async() => {
         jest.spyOn(TranscriptAPI, "getAnalysis").mockImplementationOnce(() => {return {data: [{question: "a", children: {"b": 100,}}]}});
         renderComponent();
-        const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "2");
         await userEvent.click(screen.getByText('View Analysis'));
