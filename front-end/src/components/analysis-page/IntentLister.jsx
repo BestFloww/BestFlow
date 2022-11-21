@@ -39,16 +39,7 @@ class IntentLister extends Component {
 
         // Map keys to methods for keyboard shortcuts
         if (!this.props.isIntentMenuOpen) {
-            switch(event.key) {
-                case "ArrowLeft":
-                    this.decreaseIndex();
-                    break;
-                case "ArrowRight":
-                    this.increaseIndex();
-                    break;
-                default:
-                    break;
-            };
+            event.key === "ArrowLeft" ? this.decreaseIndex() : (event.key === "ArrowRight" && this.increaseIndex());
         }
     }
 

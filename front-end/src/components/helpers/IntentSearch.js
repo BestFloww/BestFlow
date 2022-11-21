@@ -1,12 +1,12 @@
 // This file defines several helper functions used to implement the intent search feature on AnalysisPage.
 
 export default class IntentSearch{
+    /**
+     * @param {Array} intents array of intents to search through
+     * @param {String} searchString string to search by
+     * @return {Object} an array of intents filtered by searchString and a mapping of each intent to indices describing where the searchString appears in its question
+     * */
     filterIntents = (intents, searchString) => {
-        /**
-         * @param {Array} intents array of intents to search through
-         * @param {String} searchString string to search by
-         * @return {Object} an array of intents filtered by searchString and a mapping of each intent to indices describing where the searchString appears in its question
-         * */
         let filteredIntents = [];
         let searchSlices = {};
         intents.forEach((intent) => this.addFilteredIntent(intent, searchString, filteredIntents, searchSlices));
