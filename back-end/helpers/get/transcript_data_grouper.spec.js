@@ -153,22 +153,22 @@ describe("TranscriptDataGrouper", () => {
         beforeEach(() => {
             // create a new deep copy of the array each test to prevent bleeding
             intents = [];
-            let filter = [];
             for (const fake of baseFakeIntents) {
                 // make a deep copy of the map
                 intents.push({
                     ...fake,
                     children: new Map(fake.children),
                 });
-                filter.push({
-                    ...fake,
-                    children: new Map(fake.children),
-                });
             }
             jest.spyOn(fakeDao, "getIntent").mockImplementation((query) => {
-                return filter.filter((intent) => {
+                const result = intents.filter((intent) => {
                     return intent.question === query.question && intent.project_id === query.project_id;
                 });
+                const newChildren = new Map(JSON.parse(JSON.stringify(Array.from(result[0].children))))
+                const deepIntent = JSON.parse(JSON.stringify(result[0]))
+                deepIntent.children = newChildren
+                console.log("deep", deepIntent)
+                return [deepIntent];
             });
         });
 
