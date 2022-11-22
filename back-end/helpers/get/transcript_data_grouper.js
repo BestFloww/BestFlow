@@ -89,7 +89,9 @@ export default class TranscriptDataGrouper {
      */
     async #mergeIntent(comparedIntent) {
         if (comparedIntent.previousIntents) {
+            // Make deep copy of original intent to not create recursion
             let original = JSON.parse(JSON.stringify(comparedIntent.previousIntents[0]));
+            // Calculate percentages of each intent previously merged with the original
             for (let i = 1; i < comparedIntent.previousIntents.length; i++) {
                 await this.#recalculatePercentages(comparedIntent.previousIntents[i], original);
             }

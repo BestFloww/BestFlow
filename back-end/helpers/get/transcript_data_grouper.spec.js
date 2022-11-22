@@ -167,7 +167,6 @@ describe("TranscriptDataGrouper", () => {
                 const newChildren = new Map(JSON.parse(JSON.stringify(Array.from(result[0].children))))
                 const deepIntent = JSON.parse(JSON.stringify(result[0]))
                 deepIntent.children = newChildren
-                console.log("deep", deepIntent)
                 return [deepIntent];
             });
         });
