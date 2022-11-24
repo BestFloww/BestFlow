@@ -35,7 +35,7 @@ class IntentDiagram extends Component {
     toggleStarred = async() => {
         try {
             const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
-            store.dispatch(toggleStar(this.props.question));;
+            store.dispatch(toggleStar(this.props.question));
             await StarAPI.put(
                 {
                     question: this.props.question,

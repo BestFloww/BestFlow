@@ -20,7 +20,7 @@ export default class StarController {
 
     static async putStar(req, res, next) {
         try {
-            const body = req.body.body;
+            const body = req.body;
             const question = body.question;
             const projectId = body.projectId;
             const starStatus = body.starStatus;
