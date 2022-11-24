@@ -5,9 +5,9 @@ import { openAnalysisPage } from "../../store/switchPageSlice.js";
 import { addAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed } from '../../store/analyzeTranscriptSlice.js';
 import BaseButton from "../general/BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
+import TranscriptDescription from "./TranscriptDescription.jsx";
 import Title from "../icons/title.jsx";
 import {exampleTranscript} from "../helpers/ExampleTranscript.js";
-import TranscriptDescription from "./TranscriptDescription.jsx";
 import TranscriptAPI from "../../services/TranscriptAPI.js";
 
 class MainPage extends Component {
@@ -141,12 +141,12 @@ class MainPage extends Component {
             </div>
             <div className="mx-auto">
               <BaseButton
-                  click={this.downloadTranscriptTemplate}
-                  text="Download Transcript Template"
-                  icon={{
-                    name: "download-note",
-                    size: "25"
-                  }}
+                click={this.downloadTranscriptTemplate}
+                text="Download Transcript Template"
+                icon={{
+                  name: "download-note",
+                  size: "25"
+                }}
               />
             </div>
           </div>

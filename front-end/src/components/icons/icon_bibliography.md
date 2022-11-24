@@ -50,3 +50,12 @@ MIT License
 Link: https://www.iconfinder.com/icons/1564507/checked_favorite_star_favourite_rating_icon
 Uploader: Artyom Khamitov
 Creative Commons (Attributiion 3.0 Unported) License
+## "hamburger"
+Link: https://www.svgrepo.com/svg/422486/hamburger-menu-more-2
+Uploader: Ayub Irawan on SVG Repo
+CC Attribution License
+
+## "x"
+Link: https://www.svgrepo.com/svg/349140/x
+Uploader: Open Iconic on SVG Repo
+MIT License
