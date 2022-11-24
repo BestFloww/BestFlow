@@ -40,3 +40,22 @@ Uploader: UXWing
 Link: https://uxwing.com/file-search-icon/
 Uploader: UXWing
 "All icons are free to use any personal and commercial projects without any attribution or credit."
+
+## "flag"
+Link: https://www.iconfinder.com/icons/211747/flag_icon
+Uploader: Ionicons
+MIT License
+
+## "star"
+Link: https://www.iconfinder.com/icons/1564507/checked_favorite_star_favourite_rating_icon
+Uploader: Artyom Khamitov
+Creative Commons (Attributiion 3.0 Unported) License
+## "hamburger"
+Link: https://www.svgrepo.com/svg/422486/hamburger-menu-more-2
+Uploader: Ayub Irawan on SVG Repo
+CC Attribution License
+
+## "x"
+Link: https://www.svgrepo.com/svg/349140/x
+Uploader: Open Iconic on SVG Repo
+MIT License

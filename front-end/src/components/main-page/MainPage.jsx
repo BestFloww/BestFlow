@@ -5,9 +5,9 @@ import { openAnalysisPage } from "../../store/switchPageSlice.js";
 import { addAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed } from '../../store/analyzeTranscriptSlice.js';
 import BaseButton from "../general/BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
+import TranscriptDescription from "./TranscriptDescription.jsx";
 import Title from "../icons/title.jsx";
 import {exampleTranscript} from "../helpers/ExampleTranscript.js";
-import TranscriptDescription from "./TranscriptDescription.jsx";
 import TranscriptAPI from "../../services/TranscriptAPI.js";
 
 class MainPage extends Component {
@@ -83,7 +83,7 @@ class MainPage extends Component {
           />
         </div>
         <div className="flex w-2/3 flex-col sm:mt-[25vh] gap-y-12">
-          <div className="justify-center flex">
+          <div className="justify-center flex max-h-[10rem]">
             <Title />
           </div>
           <p className="justify-center text-2xl flex font-cabin -mt-7 text-center"> Problem diagnostic tool for chatbot transcripts </p>
@@ -114,7 +114,7 @@ class MainPage extends Component {
                   />
                   <div className="group-hover:flex">
                     <span
-                      className="absolute hidden group-hover:flex right-16 -bottom-4 -translate-y-full w-32 px-2 py-1 bg-gray rounded-lg text-center text-off-white text-sm after:content-[''] after:rotate-180 after:absolute after:left-1/2 after:-top-[22%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray"
+                      className="absolute hidden group-hover:flex right-16 -bottom-4 -translate-y-full w-32 px-2 py-1 bg-gray-200 rounded-lg text-center text-off-white text-sm after:content-[''] after:rotate-180 after:absolute after:left-1/2 after:-top-[22%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-200"
                     >
                       Enter the Project ID that you want to analyze
                     </span>
@@ -141,12 +141,12 @@ class MainPage extends Component {
             </div>
             <div className="mx-auto">
               <BaseButton
-                  click={this.downloadTranscriptTemplate}
-                  text="Download Transcript Template"
-                  icon={{
-                    name: "download-note",
-                    size: "25"
-                  }}
+                click={this.downloadTranscriptTemplate}
+                text="Download Transcript Template"
+                icon={{
+                  name: "download-note",
+                  size: "25"
+                }}
               />
             </div>
           </div>
