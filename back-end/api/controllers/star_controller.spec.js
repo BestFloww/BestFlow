@@ -21,7 +21,7 @@ describe("StarController", () => {
 
     it("Should correctly put star", async() => {
         StarController.setTranscriptInteractor(PutStarInteractor);
-        await StarController.putStar({body:{body:{"question" : "a", "projectId" : "b", "starStatus" : true}}}, mockResponse(), {});
+        await StarController.putStar({body:{"question" : "a", "projectId" : "b", "starStatus" : true}}, mockResponse(), {});
         expect(PutStarInteractor.setStarStatus).toHaveBeenCalledWith({question: "a", project_id: "b"}, {star : true});
     });
 
@@ -29,7 +29,7 @@ describe("StarController", () => {
         StarController.setTranscriptInteractor(PutStarInteractor);
         PutStarInteractor.setStarStatus.mockImplementation(() => {throw {message : "error"}});
         const res = mockResponse();
-        await StarController.putStar({body:{body : {"a" : "a"}}}, res,{});
+        await StarController.putStar({body : {"a" : "a"}}, res,{});
         expect(res.json).toHaveBeenCalledWith({error : "error"});
     });
 
