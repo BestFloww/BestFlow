@@ -112,7 +112,9 @@ class IntentLister extends Component {
                     key={key}
                     data-testid={intent.question}
                     question={intent.question}
-                    branches={intent.children}
+                    children={intent.children}
+                    isStarred={intent.star}
+                    isFlagged={intent.flag}
                  />
             );
         });
@@ -140,7 +142,9 @@ class IntentLister extends Component {
                         <IntentDiagram
                             data-testid={currentIntents[2].question}
                             question={currentIntents[2].question}
-                            branches={currentIntents[2].children}
+                            children={currentIntents[2].children}
+                            isStarred={currentIntents[2].star}
+                            isFlagged={currentIntents[2].flag}
                         />
                     </div>
                     }

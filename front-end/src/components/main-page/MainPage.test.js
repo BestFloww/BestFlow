@@ -10,6 +10,7 @@ import TranscriptAPI from "../../services/TranscriptAPI.js";
 
 const dispatch = jest.spyOn(store, 'dispatch');
 jest.mock("../../services/TranscriptAPI.js");
+jest.spyOn(window, "alert").mockImplementation()
 
 describe('MainPage', () => {
     const renderComponent = () => render(

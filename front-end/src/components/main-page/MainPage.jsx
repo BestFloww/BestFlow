@@ -83,7 +83,7 @@ class MainPage extends Component {
           />
         </div>
         <div className="flex w-2/3 flex-col sm:mt-[25vh] gap-y-12">
-          <div className="justify-center flex">
+          <div className="justify-center flex max-h-[10rem]">
             <Title />
           </div>
           <p className="justify-center text-2xl flex font-cabin -mt-7 text-center"> Problem diagnostic tool for chatbot transcripts </p>
