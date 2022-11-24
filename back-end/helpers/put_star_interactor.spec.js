@@ -7,7 +7,7 @@ jest.mock("../interfaces/intent-interface.js")
 
 let dao;
 
-describe("PostTranscriptInteractor", () => {
+describe("PutStarInteractor", () => {
     beforeEach(() => {
         intentDao.prototype = Object.create(IntentInterface.prototype);
         const newDao = new intentDao;

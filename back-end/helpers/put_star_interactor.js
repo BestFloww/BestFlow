@@ -2,7 +2,7 @@ import {InputBoundaryInterface} from "../interfaces/input-boundary-interface.js"
 import OutputDataBoundary from "./output_data_boundary.js";
 import { IntentInterface } from "../interfaces/intent-interface.js";
 
-export default class PutStartInteractor extends InputBoundaryInterface{
+export default class PutStarInteractor extends InputBoundaryInterface{
     static #IntentDao;
 
     static setIntentDao(dao){

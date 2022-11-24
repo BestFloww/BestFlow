@@ -20,9 +20,10 @@ export default class StarController {
 
     static async putStar(req, res, next) {
         try {
-            const question = req.body.question;
-            const projectId = req.body.projectId;
-            const starStatus = req.body.status;
+            const body = req.body.body;
+            const question = body.question;
+            const projectId = body.projectId;
+            const starStatus = body.starStatus;
             await this.#inputBoundary.setStarStatus({question: question, project_id: projectId},{star: starStatus})
             const output = this.#outputBoundary.getOutput();
             const status = output.status;
