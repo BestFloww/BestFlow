@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import store from "../../store.js";
 import { openMainPage } from "../../store/switchPageSlice.js";
 import Title from "../icons/title.jsx";
+import BaseButton from "../general/BaseButton.jsx";
 import IntentLister from "./IntentLister.jsx";
 import IntentMenu from "./IntentMenu.jsx";
 
