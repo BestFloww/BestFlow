@@ -51,11 +51,11 @@ class IntentDiagram extends Component {
         try {
             const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
             store.dispatch(toggleFlag(this.props.question));
-            await StarAPI.put(
+            await FlagAPI.put(
                 {
                     question: this.props.question,
                     project_id: projectId,
-                    starStatus: this.props.isStarred
+                    flagStatus: !this.props.isFlagged
                 });
         } catch (e) {
             window.alert("Error in flagging question. Please try again. " + e.response.error);
