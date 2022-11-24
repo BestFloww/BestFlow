@@ -24,7 +24,7 @@ describe('AnalysisPage', () => {
     it('should dispatch openMainPage when logo button is clicked', () => {
         renderComponent(props);
         const dispatch = jest.spyOn(store, 'dispatch');
-        userEvent.click(screen.getByTestId('logo-button'));
+        userEvent.click(screen.getByTestId('home-button'));
         expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openMainPage' });
     });
 
@@ -46,7 +46,7 @@ describe('AnalysisPage', () => {
         it('should focus the user on the Intent Menu input field when the Intent Menu hamburger button is pressed', async() => {
             renderComponent(props);
             userEvent.click(screen.getByLabelText("Open intent menu"));
-            await waitFor(() => expect(screen.getByLabelText("Search by intent contents")).toHaveFocus());
+            await waitFor(() => expect(screen.getByLabelText("Search by keyword")).toHaveFocus());
         });
     
         it('should close the Intent Menu when the Intent Menu X button is pressed', () => {

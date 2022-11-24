@@ -79,13 +79,13 @@ describe("IntentMenu", () => {
     describe("For the search feature", () => {
         it ("should display an empty list of intents if there are none matching the search input value", () => {
             renderComponent(props);
-            userEvent.type(screen.getByLabelText("Search by intent contents"), "A bad search string");
+            userEvent.type(screen.getByLabelText("Search by keyword"), "A bad search string");
             expect(screen.queryByTestId("intent-menu-list-item")).not.toBeInTheDocument();
         });
 
         it ("should correctly display 1 intent with the proper highlight styling if there is 1 matching the search input value", () => {
             renderComponent(props);
-            userEvent.type(screen.getByLabelText("Search by intent contents"), "Intent 0");
+            userEvent.type(screen.getByLabelText("Search by keyword"), "Intent 0");
             // A button for Intent 0 should display
             Object.keys(props.intents).forEach((key) => {
                 expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 1 ? 1 : 0);
@@ -98,7 +98,7 @@ describe("IntentMenu", () => {
 
         it ("should correctly display 2 intents with the proper highlight styling if there are 2 matching the search input value", () => {
             renderComponent(props);
-            userEvent.type(screen.getByLabelText("Search by intent contents"), "(special search substring)");
+            userEvent.type(screen.getByLabelText("Search by keyword"), "(special search substring)");
             // A button for each of Intents 0-1 should display
             Object.keys(props.intents).forEach((key) => {
                 expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 2 ? 1 : 0);
@@ -112,7 +112,7 @@ describe("IntentMenu", () => {
 
         it ("should display the full list of intents with the proper non-highlight styling if there is no search input value", () => {
             renderComponent(props);
-            userEvent.clear(screen.getByLabelText("Search by intent contents"));
+            userEvent.clear(screen.getByLabelText("Search by keyword"));
             // A button for each of Intents 0-8 should display
             Object.keys(props.intents).forEach((key) => {
                 expect(screen.getByLabelText(`${props.intents[key].question}`)).toBeInTheDocument();
@@ -148,7 +148,7 @@ describe("IntentMenu", () => {
 
         it ("should not call its onClickOutside prop function if clicking inside the component", async() => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Search by intent contents"));
+            userEvent.click(screen.getByLabelText("Search by keyword"));
             expect(props.onClickOutside).not.toHaveBeenCalled();
         });
     });
@@ -168,14 +168,14 @@ describe("IntentMenu", () => {
 
         it ("should not call its onClickOutside prop function if pressing Enter key while focused on the Intent Menu", () => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Search by intent contents"));
+            userEvent.click(screen.getByLabelText("Search by keyword"));
             userEvent.keyboard("{Enter}");
             expect(props.onClickOutside).not.toHaveBeenCalled();
         });
 
         it ("should not call its onClickOutside prop function if pressing Space key while focused on the Intent Menu", () => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Search by intent contents"));
+            userEvent.click(screen.getByLabelText("Search by keyword"));
             userEvent.keyboard("{Space}");
             expect(props.onClickOutside).not.toHaveBeenCalled();
         });

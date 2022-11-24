@@ -56,7 +56,7 @@ export class AnalysisPage extends Component {
                 onClick={this.openMainPage}
                 aria-label="Home Button"
                 tooltip="Click here to return to homepage"
-                data-testid="logo-button"
+                data-testid="home-button"
               >
                 <Logo />
               </div>

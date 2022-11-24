@@ -142,8 +142,8 @@ class IntentMenu extends Component {
                                 border border-solid border-purple-100
                                 hover:border-purple-200
                                 focus:border-purple-300 focus:ring-purple-300"
-                                aria-label="Search by intent contents"
-                                placeholder="Search by intent contents"
+                                aria-label="Search by keyword"
+                                placeholder="Search by keyword"
                                 id="intent-menu-search"
                                 onChange={this.handleChange}
                                 value={this.state.inputValue}
