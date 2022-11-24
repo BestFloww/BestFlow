@@ -9,6 +9,7 @@ import {setProjectIdToBeDisplayed, addAnalyzedTranscript, clearAnalyzedTranscrip
 import TranscriptAPI from "../../services/TranscriptAPI.js";
 
 jest.mock("../../services/TranscriptAPI.js");
+jest.spyOn(window, "alert").mockImplementation()
 
 describe('MainPage', () => {
     const renderComponent = () => render(

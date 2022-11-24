@@ -4,11 +4,11 @@ const baseURL = `${process.env.REACT_APP_BASE_URL}/api/star`;
 
 const API = {
     /**
-     * @param {Object} intent changed intent object being put
+     * @param {Object} intent changed intent's question being put
      * @returns {Object} http resolution
      */
-    put: async(intent) => {
-        return await axios.put(baseURL, {body: intent});
+    put: async(question) => {
+        return await axios.put(baseURL, {body: question});
     },
 };
 

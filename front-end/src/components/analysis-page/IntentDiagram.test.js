@@ -1,15 +1,25 @@
 import {render, screen, waitFor} from '@testing-library/react';
+import { Provider } from 'react-redux';
 import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom';
 import IntentDiagram from './IntentDiagram.jsx';
+import store from '../../store.js';
 import StarAPI from "../../services/StarAPI.js";
 import FlagAPI from "../../services/FlagAPI.js";
+
+jest.spyOn(window, "alert").mockImplementation();
+jest.mock("../../services/StarAPI.js");
+jest.mock("../../services/FlagAPI.js");
 
 describe("IntentDiagram", () => {
     let props;
     
     const renderComponent = (props) => {
-        render(<IntentDiagram {...props} />)
+        render(
+        <Provider store={store}>
+            <IntentDiagram {...props} />
+        </Provider>
+        )
     }
 
     beforeEach(() => {
@@ -72,28 +82,30 @@ describe("IntentDiagram", () => {
         expect(percentage.textContent).toBe(`${value}%`)
         }
     });
-    it.skip("correctly displays flagged icon when intent is flagged", async() => { //remove skip once BE is implemented
+    it("correctly displays flagged icon when intent is flagged", () => {
+        props.isFlagged = true;
         renderComponent(props);
+        expect(screen.getByTestId("flag-svg")).toHaveClass("fill-red");
+    });
+    it("correctly displays starred icon when intent is starred", () => {
+        props.isStarred = true;
+        renderComponent(props);
+        expect(screen.getByTestId("star-svg")).toHaveClass("fill-yellow");
+    });
+    it("should dispatch intent when flag button is clicked", async() => {
+        renderComponent(props);
+        const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.click(screen.getByTestId("flag-button"));
         // Waits for toggleFlagged to run
-        await waitFor(() => expect(screen.getByTestId("flag svg")).toHaveClass("fill-red"));
+        await waitFor(() => expect(FlagAPI.put).toHaveBeenCalled());
+        expect(dispatch).toHaveBeenCalledWith({"payload": "question", "type": "analyzeTranscript/toggleFlag",});
     });
-    it.skip("correctly displays starred icon when intent is starred", async() => { //remove skip once BE is implemented
+    it("should dispatch intent when star button is clicked", async() => {
         renderComponent(props);
+        const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.click(screen.getByTestId("star-button"));
         // Waits for toggleStarred to run
-        await waitFor(() => expect(screen.getByTestId("star svg")).toHaveClass("fill-yellow"));
-    });
-    it.skip("should dispatch intent when flag button is clicked", async() => { //remove skip once BE is implemented
-        renderComponent(props);
-        userEvent.click(screen.getByTestId("flag-button"));
-        // Waits for toggleFlagged to run
-        await waitFor(() => expect(FlagAPI.putFlag).toHaveBeenCalled());
-    });
-    it.skip("should dispatch intent when star button is clicked", async() => { //remove skip once BE is implemented
-        renderComponent(props);
-        userEvent.click(screen.getByTestId("star-button"));
-        // Waits for toggleStarred to run
-        await waitFor(() => expect(StarAPI.putStar).toHaveBeenCalled());
+        await waitFor(() => expect(StarAPI.put).toHaveBeenCalled());
+        expect(dispatch).toHaveBeenCalledWith({"payload": "question", "type": "analyzeTranscript/toggleStar",});
     });
 });
