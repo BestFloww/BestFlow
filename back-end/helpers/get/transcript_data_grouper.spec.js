@@ -209,7 +209,7 @@ describe("TranscriptDataGrouper", () => {
             const alreadyProcessedIntents = intents.slice(0, 1);
             const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
 
-            for (const intent of intents) {
+            for (const intent of intents.slice(1)) {
                 await grouper.group(intent);
                 expect(fakeDao.getIntent).toHaveBeenCalled();
             }
@@ -385,13 +385,33 @@ describe("TranscriptDataGrouper", () => {
                 expect(result).toBe(true);
             }
 
-            expect(intents[0].children["h"]).toEqual(20);
-            expect(intents[0].children["d"]).toEqual(30);
-            expect(intents[0].children["b"]).toEqual(20);
-            expect(intents[0].children["a"]).toEqual(20);
-            expect(intents[0].children["c"]).toEqual(10);
+            expect(intents[7].children["h"]).toEqual(20);
+            expect(intents[7].children["d"]).toEqual(30);
+            expect(intents[7].children["b"]).toEqual(20);
+            expect(intents[7].children["a"]).toEqual(20);
+            expect(intents[7].children["c"]).toEqual(10);
         });
 
-        
+        it("should correctly merge two different groups of similar intents", async() => {
+            // TODO: Test is also broken
+
+            const alreadyProcessedIntents = intents.slice(0, 1);
+            const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
+
+            for (const intent of intents.slice(1)) {
+                await grouper.group(intent)
+                expect(fakeDao.getIntent).toHaveBeenCalled();
+            }
+
+            expect(intents[0].children["h"]).toEqual(42);
+            expect(intents[0].children["c"]).toEqual(17);
+            expect(intents[0].children["b"]).toEqual(33);
+            expect(intents[0].children["a"]).toEqual(8);
+            expect(intents[7].children["h"]).toEqual(20);
+            expect(intents[7].children["d"]).toEqual(30);
+            expect(intents[7].children["b"]).toEqual(20);
+            expect(intents[7].children["a"]).toEqual(20);
+            expect(intents[7].children["c"]).toEqual(10);
+        });
     });
 });
