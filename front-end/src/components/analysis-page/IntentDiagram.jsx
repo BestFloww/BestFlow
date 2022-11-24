@@ -18,12 +18,12 @@ class IntentDiagram extends Component {
                         {this.props.children[key]}%
                     </p>
                     <div
-                        className="w-40 h-36 overflow-hidden hover:overflow-y-scroll"
+                        className="w-40 h-36 overflow-hidden hover:overflow-y-scroll flex justify-center"
                         data-testid={`${key}-container`}
                         key={key}
                     >
                         <h4 
-                            className="break-words"
+                            className="break-words text-center my-auto"
                             data-testid={key}
                             tabIndex={0}
                         >
@@ -89,7 +89,7 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                 </div>
-                <div className="rounded-lg flex flex-row mx-auto justify-between text-center gap-x-9 m-9">
+                <div className="rounded-lg flex flex-col gap-y-3 md:flex-row mx-auto justify-between text-center gap-x-9 m-9">
                     {this.listLeaves()}
                 </div>
             </div>

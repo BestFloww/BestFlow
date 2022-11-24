@@ -75,7 +75,7 @@ class MainPage extends Component {
 
   render() {
     return(
-      <div className="bg-purple-100 absolute gap-y-5 sm:inset-0 flex flex-col sm:flex-row" data-testid="main-page">
+      <div className="bg-purple-100 absolute gap-y-5 sm:inset-0 flex flex-col sm:flex-row w-screen" data-testid="main-page">
         <div className="justify-center flex">
           <TranscriptUploadModal
             show={this.state.showTranscriptUploadModal}
@@ -137,11 +137,11 @@ class MainPage extends Component {
           </div>
           
         </div>
-          <div className="w-1/4 h-7/8 justify-center flex flex-col gap-y-3">
+          <div className=" w-full sm:w-1/4 h-7/8 justify-center flex flex-col gap-y-3">
             <div className="bg-off-white box-border drop-shadow-md rounded-xl p-5 text-lg font-cabin mb-5 overflow-y-auto">
                 <TranscriptDescription/>
             </div>
-            <div className="mx-auto">
+            <div className="mx-auto pb-5">
               <BaseButton
                 click={this.downloadTranscriptTemplate}
                 text="Download Transcript Template"

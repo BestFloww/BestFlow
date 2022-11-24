@@ -19,10 +19,10 @@ const BaseButton = (props) => {
                 styling += "py-1 px-4 md:text-md 2xl:text-lg";
                 break;
             case "lg":
-                styling += "md:py-5 md:px-6 md:text-2xl 2xl:py-8 2xl:px-9 2xl:text-2xl";
+                styling += "md:py-5 md:px-6 md:text-2xl 2xl:py-8 2xl:px-9 2xl:text-2xl p-3 sm:p-0";
                 break;
             default:  // medium-sized button
-                styling += "py-3 px-6 md:text-lg 2xl:text-2xl";
+                styling += "py-3 px-3 sm:py-3 sm:px-6 md:text-lg 2xl:text-2xl";
         }
         return styling;
     };
@@ -36,7 +36,7 @@ const BaseButton = (props) => {
                 aria-label={props.label || props.text}
                 data-testid="custom-button"
             >
-                <div className="flex items-center space-x-2 p-3 sm:p-0">
+                <div className="flex items-center space-x-2">
                     {props.icon && <div className="mx-auto"><Icon icon={props.icon}/></div>}
                     {props.text && <div className="mx-auto">{ props.text }</div>}
                 </div>

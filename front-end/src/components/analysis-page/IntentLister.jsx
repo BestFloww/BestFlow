@@ -149,7 +149,7 @@ class IntentLister extends Component {
                     </div>
                     }
                 </div>
-                <div className="fixed left-1 sm:left-6 bottom-8">
+                <div className="fixed left-1 sm:left-6 bottom-1 sm:bottom-8">
                     <BaseButton
                         click={this.decreaseIndex}
                         isDisabled={this.checkIfMinIndex()}
@@ -161,7 +161,7 @@ class IntentLister extends Component {
                         label="Previous Results"
                     />
                 </div>
-                <div className="fixed right-1 sm:right-6 bottom-8" data-testid="arrow-right">
+                <div className="fixed right-1 sm:right-6 bottom-1 sm:bottom-8" data-testid="arrow-right">
                     <BaseButton
                         click={this.increaseIndex}
                         isDisabled={this.checkIfMaxIndex()}

@@ -32,7 +32,7 @@ export class AnalysisPage extends Component {
       let analyzedTranscripts = this.props.analyzedTranscripts;
       
       return (
-        <div className="AnalysisPage flex flex-col bg-purple-100" data-testid="analysis-page">
+        <div className="AnalysisPage flex flex-col bg-purple-100 w-screen" data-testid="analysis-page">
           <aside /* display sidebar if toggled on */
             aria-hidden={!this.state.showIntentMenu}
             data-testid="analysis-page-sidebar"
@@ -71,7 +71,7 @@ export class AnalysisPage extends Component {
             </div>
           </div>
           <div /*TEMPORARY SIDEBAR CONTROL BUTTON!*/
-              className="fixed right-32 sm:right-40 bottom-8" data-testid="arrow-right"
+              className="fixed right-20 sm:right-40 bottom-1 sm:bottom-8" data-testid="arrow-right"
             >
               <BaseButton
                 click={this.openIntentMenu}
