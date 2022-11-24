@@ -1,4 +1,4 @@
-import TestIntentFactory from "./test-helpers/testIntentFactory.js";
+import TestIntentFactory from "../test-helpers/testIntentFactory.js";
 import IntentAnalyzer from "./intent_analyzer.js"
 
 let analyzer;
