@@ -1,6 +1,9 @@
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom';
 import IntentDiagram from './IntentDiagram.jsx';
+import StarAPI from "../../services/StarAPI.js";
+import FlagAPI from "../../services/FlagAPI.js";
 
 describe("IntentDiagram", () => {
     let props;
@@ -15,8 +18,6 @@ describe("IntentDiagram", () => {
             children: {
                 q1: 100
             },
-            isStarred: false,
-            isFlagged: false,
         };
     });
 
@@ -71,16 +72,28 @@ describe("IntentDiagram", () => {
         expect(percentage.textContent).toBe(`${value}%`)
         }
     });
-    it("correctly displays flagged icon when intent is flagged", () => {
-
+    it.skip("correctly displays flagged icon when intent is flagged", async() => { //remove skip once BE is implemented
+        renderComponent(props);
+        userEvent.click(screen.getByTestId("flag-button"));
+        // Waits for toggleFlagged to run
+        await waitFor(() => expect(screen.getByTestId("flag svg")).toHaveClass("fill-red"));
     });
-    it("correctly displays starred icon when intent is starred", () => {
-
+    it.skip("correctly displays starred icon when intent is starred", async() => { //remove skip once BE is implemented
+        renderComponent(props);
+        userEvent.click(screen.getByTestId("star-button"));
+        // Waits for toggleStarred to run
+        await waitFor(() => expect(screen.getByTestId("star svg")).toHaveClass("fill-yellow"));
     });
-    it("should dispatch intent when flag button is clicked", () => {
-
+    it.skip("should dispatch intent when flag button is clicked", async() => { //remove skip once BE is implemented
+        renderComponent(props);
+        userEvent.click(screen.getByTestId("flag-button"));
+        // Waits for toggleFlagged to run
+        await waitFor(() => expect(FlagAPI.putFlag).toHaveBeenCalled());
     });
-    it("should dispatch intent when star button is clicked", () => {
-
+    it.skip("should dispatch intent when star button is clicked", async() => { //remove skip once BE is implemented
+        renderComponent(props);
+        userEvent.click(screen.getByTestId("star-button"));
+        // Waits for toggleStarred to run
+        await waitFor(() => expect(StarAPI.putStar).toHaveBeenCalled());
     });
 });

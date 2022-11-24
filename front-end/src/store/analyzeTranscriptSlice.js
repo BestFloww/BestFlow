@@ -40,9 +40,8 @@ export const analyzeTranscriptSlice = createSlice({
       for (let i = firstIndex; i < firstIndex+3; i++) {
         if (transcript[i].question === action.payload) {
           transcript[i].star = !transcript[i].star;
-          return true;
+          break; // exit for-loop early when intent is found
         }
-        return false;
       }
     },
     toggleFlag: (state, action) => {
@@ -54,9 +53,8 @@ export const analyzeTranscriptSlice = createSlice({
       for (let i = firstIndex; i < firstIndex+3; i++) {
         if (transcript[i].question === action.payload) {
           transcript[i].flag = !transcript[i].flag;
-          return true;
+          break; // exit for-loop early when intent is found
         }
-        return false;
       }
     }
   }

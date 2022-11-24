@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import reducer, {addAnalyzedTranscript, setDisplayingQuestion, deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed, } from "./analyzeTranscriptSlice.js"
+import reducer, {addAnalyzedTranscript, setDisplayingQuestion, deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed, toggleFlag, toggleStar} from "./analyzeTranscriptSlice.js"
 
 describe('analyzeTranscriptSlice', () => {
     const initialState = {
@@ -10,8 +10,22 @@ describe('analyzeTranscriptSlice', () => {
     };
 
     const previousState = {
-        analyzedTranscripts: {"1": [{"a":100}], "2": [[{"b":90}]]},
+        analyzedTranscripts: {"1": [{question: "q1", children: {"a":100}, star: false, flag: false}], "2": [{question: "q2", children: {"b":90}, star: false, flag: false}]},
         DisplayingQuestion: {"1" : 0, "2": 0},
+        override : false,
+        projectIdToBeDisplayed : "1"
+    };
+
+    const falseState = { // State where the star and flag properties are false
+        analyzedTranscripts: {"1": [{question: "q1", children: {"a":100}, star: false, flag: false}]},
+        DisplayingQuestion: {"1" : 0},
+        override : false,
+        projectIdToBeDisplayed : "1"
+    };
+
+    const trueState = { // State where the star and flag properties are true
+        analyzedTranscripts: {"1": [{question: "q1", children: {"a":100}, star: true, flag: true}]},
+        DisplayingQuestion: {"1" : 0},
         override : false,
         projectIdToBeDisplayed : "1"
     };
@@ -25,20 +39,20 @@ describe('analyzeTranscriptSlice', () => {
     });
 
     it('should add an analyzed transcript with the right project id to analyzedTranscripts', () => {
-        const expected = reducer(initialState, addAnalyzedTranscript({projectId: "1", transcript: [{"c":80}]}));
-        expect(expected.analyzedTranscripts).toEqual({"1": [{"c":80}]});
+        const expected = reducer(initialState, addAnalyzedTranscript({projectId: "1", transcript: [{question: "q3", children: {"c":80}, star: false, flag: false}]}));
+        expect(expected.analyzedTranscripts).toEqual({"1": [{question: "q3", children: {"c":80}, star: false, flag: false}]});
         expect(expected.DisplayingQuestion).toEqual({"1": 0});
     });
 
     it('should replace an analyzed transcript if the project id exists in analyzedTranscripts', () => {
-        const expected = reducer(previousState, addAnalyzedTranscript({projectId: "1", transcript: [{"b":90}]}));
-        expect(expected.analyzedTranscripts["1"]).toEqual([{"b":90}]);
+        const expected = reducer(previousState, addAnalyzedTranscript({projectId: "1", transcript: [{question: "q2", children: {"b":90}, star: false, flag: false}]}));
+        expect(expected.analyzedTranscripts["1"]).toEqual([{question: "q2", children: {"b":90}, star: false, flag: false}]);
         expect(expected.DisplayingQuestion).toEqual({"1": 0, "2":0});
     });
 
     it('should delete the analyzed transcript corresponding to the given project id if it exists in analyzedTranscripts', () => {
         const expected = reducer(previousState, deleteAnalyzedTranscript("1"));
-        expect(expected.analyzedTranscripts).toEqual({"2": [[{"b":90}]]});
+        expect(expected.analyzedTranscripts).toEqual({"2": [{question: "q2", children: {"b":90}, star: false, flag: false}]});
     });
 
     it('should delete all transcripts from the analyzedTranscripts', () => {
@@ -67,15 +81,19 @@ describe('analyzeTranscriptSlice', () => {
         expect(expected.DisplayingQuestion["1"]).toBe(3);
     });
     it("should switch flag of given intent to false", () => {
-        
+        const expected = reducer(trueState, toggleFlag("q1"));
+        expect(expected.analyzedTranscripts).toStrictEqual({"1": [{question: "q1", children: {"a":100}, star: true, flag: false}]});
     });
     it("should switch star of given intent to false", () => {
-
+        const expected = reducer(trueState, toggleStar("q1"));
+        expect(expected.analyzedTranscripts).toStrictEqual({"1": [{question: "q1", children: {"a":100}, star: false, flag: true}]});
     });
     it("should switch flag of given intent to true", () => {
-
+        const expected = reducer(falseState, toggleFlag("q1"));
+        expect(expected.analyzedTranscripts).toStrictEqual({"1": [{question: "q1", children: {"a":100}, star: false, flag: true}]});
     });
     it("should switch star of given intent to true", () => {
-
+        const expected = reducer(falseState, toggleStar("q1"));
+        expect(expected.analyzedTranscripts).toStrictEqual({"1": [{question: "q1", children: {"a":100}, star: true, flag: false}]})
     });
 });
