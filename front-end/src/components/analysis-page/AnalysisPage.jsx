@@ -44,14 +44,15 @@ export class AnalysisPage extends Component {
             />
           </aside>
           <div /* darken screen and hide content from accessibility API if sidebar is toggled on */
-            className={"bg-purple-100 h-screen transition ease-in-out" + (this.state.showIntentMenu ? " brightness-75" : "")}
+            className={"bg-purple-100 h-screen w-screen transition ease-in-out" + (this.state.showIntentMenu ? " brightness-75" : "")}
             aria-hidden={this.state.showIntentMenu}
             data-testid="analysis-page-main"
           >
             <div className="flex gap-y-10 w-full flex-col h-full">
+              <div className= "w-full bg-gray-100 pb-2">
               <div /* first line of className is tooltip styling */
                 className="relative before:z-10 before:absolute before:left-1/2 before:-bottom-3 before:w-max before:max-w-xs before:-translate-x-1/2 before:translate-y-full before:rounded-lg before:bg-gray-200 before:px-2 before:py-1.5 before:text-off-white before:invisible before:content-[attr(tooltip)] after:z-10 after:absolute after:left-1/2 after:-bottom-3 after:h-0 after:w-0 after:-translate-x-1/2 after:border-8 after:border-b-gray-200 after:border-l-transparent after:border-t-transparent after:border-r-transparent after:invisible hover:before:visible hover:after:visible
-                absolute cursor-pointer m-3 xl:w-[11em]"
+                absolute cursor-pointer m-3 xl:w-[11em] mx-auto"
                 role="button"
                 onClick={this.openMainPage}
                 aria-label="Home Button"
@@ -60,7 +61,8 @@ export class AnalysisPage extends Component {
               >
                 <Title />
               </div>
-              <div className="w-4/5 h-4/5 mt-16 mx-auto">
+              </div>
+              <div className="w-4/5 h-4/5 mx-auto">
                 <IntentLister
                   intents={analyzedTranscripts[projectId]}
                   isIntentMenuOpen={this.state.showIntentMenu}
