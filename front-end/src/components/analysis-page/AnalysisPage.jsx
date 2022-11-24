@@ -31,7 +31,7 @@ export class AnalysisPage extends Component {
                   </div>
               </div>
               <div className="flex gap-y-10 justify-center align-middle w-full flex-col h-full">
-                <div className="w-4/5 h-4/5 md:mt-16 2xl:mt-64 mx-auto">
+                <div className="w-4/5 h-4/5 mt-16 mx-auto">
                   <IntentLister intents={analyzedTranscripts[projectId]} />
                 </div>
               </div>
