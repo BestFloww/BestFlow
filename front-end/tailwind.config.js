@@ -9,8 +9,12 @@ module.exports = {
     colors: {
       transparent: "transparent",
       current: "currentColor",
+      "black": "#000000",
       "blue": "#392A94",
-      "gray": "#374151",
+      "gray": {
+        100: "#C7B0D2",
+        200: "#374151",
+      },
       "green": {
         100: "#A0B4B1",
         200: "#3D5245",

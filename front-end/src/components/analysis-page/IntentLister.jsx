@@ -38,16 +38,9 @@ class IntentLister extends Component {
         });
 
         // Map keys to methods for keyboard shortcuts
-        switch(event.key) {
-            case "ArrowLeft":
-                this.decreaseIndex();
-                break;
-            case "ArrowRight":
-                this.increaseIndex();
-                break;
-            default:
-                break;
-        };
+        if (!this.props.isIntentMenuOpen) {
+            event.key === "ArrowLeft" ? this.decreaseIndex() : (event.key === "ArrowRight" && this.increaseIndex());
+        }
     }
 
     handleKeyUp(event) {
@@ -184,6 +177,7 @@ class IntentLister extends Component {
 IntentLister.propTypes = {
     intents: PropTypes.arrayOf(PropTypes.object).isRequired,
     index: PropTypes.number,
+    isIntentMenuOpen: PropTypes.bool.isRequired,
 };
 
 IntentLister.defaultProps = {

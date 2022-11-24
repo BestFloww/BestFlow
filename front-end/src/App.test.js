@@ -39,7 +39,7 @@ describe('App', () => {
 
     it('should display MainPage when logo button is pressed on AnalysisPage', () => {
         renderComponent();
-        userEvent.click(screen.getByTestId('logo-button'));
+        userEvent.click(screen.getByTestId('home-button'));
         expect(screen.getByTestId('main-page')).toBeInTheDocument();
         expect(screen.queryByTestId('analysis-page')).not.toBeInTheDocument();
     });
