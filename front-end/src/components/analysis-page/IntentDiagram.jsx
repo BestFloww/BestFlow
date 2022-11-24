@@ -9,7 +9,10 @@ class IntentDiagram extends Component {
     listLeaves = () => {
         return Object.keys(this.props.children).map((key) => {
             return (
-                <div className="text-md bg-green-100 shadow-md shadow-blue/10 rounded-2xl px-5 pb-2 border-2 border-green-200">
+                <div 
+                    className="text-md bg-green-100 shadow-md shadow-blue/10 rounded-2xl px-5 pb-2 border-2 border-green-200"
+                    key={key}
+                >
                     <p
                         data-testid={`${key}-${this.props.children[key]}`}
                         tabIndex={0}
@@ -20,7 +23,6 @@ class IntentDiagram extends Component {
                     <div
                         className="w-40 h-36 overflow-hidden hover:overflow-y-scroll flex justify-center"
                         data-testid={`${key}-container`}
-                        key={key}
                     >
                         <h4 
                             className="break-words text-center my-auto"
