@@ -54,7 +54,7 @@ class IntentDiagram extends Component {
             await FlagAPI.put(
                 {
                     question: this.props.question,
-                    project_id: projectId,
+                    projectId: projectId,
                     flagStatus: !this.props.isFlagged
                 });
         } catch (e) {
