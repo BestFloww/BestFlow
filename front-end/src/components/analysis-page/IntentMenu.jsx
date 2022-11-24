@@ -112,7 +112,7 @@ class IntentMenu extends Component {
 	render() {
 		return (
             <div /* Ternary operator is used in class below to animate sliding in/out of intent menu depending on isOpen prop */
-                className={"z-10 w-1/4 h-full bg-off-white font-cabin absolute shadow-lg shadow-blue/30 transition ease-in-out " + (this.props.isOpen ? "translate-x-0" : "-translate-x-full")}
+                className={"z-10 w-full sm:w-1/3 lg:w-1/4 h-full bg-off-white font-cabin absolute shadow-lg shadow-blue/30 transition ease-in-out " + (this.props.isOpen ? "translate-x-0" : "-translate-x-full")}
                 data-testid="intent-menu"
                 aria-hidden={!this.props.isOpen}
                 ref={this.ref}
