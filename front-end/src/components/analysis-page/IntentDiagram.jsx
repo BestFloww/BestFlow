@@ -25,7 +25,7 @@ class IntentDiagram extends Component {
                         data-testid={`${key}-container`}
                     >
                         <h4 
-                            className="break-words text-center my-auto"
+                            className="break-words text-center my-auto w-32"
                             data-testid={key}
                             tabIndex={0}
                         >
