@@ -75,19 +75,19 @@ class MainPage extends Component {
 
   render() {
     return(
-      <div className="bg-purple-100 absolute gap-y-5 sm:inset-0 flex flex-col sm:flex-row" data-testid="main-page">
+      <div className="bg-purple-100 absolute gap-y-5 sm:inset-0 flex flex-col sm:flex-row w-screen" data-testid="main-page">
         <div className="justify-center flex">
           <TranscriptUploadModal
             show={this.state.showTranscriptUploadModal}
             toggleModal={this.toggleTranscriptUploadModal}
           />
         </div>
-        <div className="flex w-2/3 flex-col sm:mt-[25vh] gap-y-12">
-          <div className="justify-center flex max-h-[10rem]">
+        <div className="flex w-screen sm:w-2/3 flex-col sm:mt-[25vh] gap-y-12">
+          <div className="justify-center flex max-h-20 sm:max-h-[10rem]">
             <Title />
           </div>
           <p className="justify-center text-2xl flex font-cabin -mt-7 text-center"> Problem diagnostic tool for chatbot transcripts </p>
-          <div className="flex flex-row pt-10 justify-center gap-x-20">
+          <div className="flex flex-col sm:flex-row sm:pt-10 justify-center gap-y-5 gap-x-20">
             <div className="justify-center flex">
               <BaseButton
                 click={this.toggleTranscriptUploadModal}
@@ -99,8 +99,8 @@ class MainPage extends Component {
                 }}
               />
             </div>
-            <div className="justify-center flex flex-col sm:flex-row">
-              <div className="absolute py-32">
+            <div className="justify-center mx-auto sm:mx-0 flex gap-y-5 flex-col-reverse sm:flex-row">
+              <div className="flex sm:absolute sm:py-32">
                 <div className="group">
                   <input
                     className="bg-off-white text-xl rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
@@ -120,26 +120,28 @@ class MainPage extends Component {
                     </span>
                   </div>
                 </div>
+              </div>
+              <div className="mx-auto">
+                <BaseButton
+                  click={this.openAnalysisPage}
+                  text="View Analysis"
+                  size="lg"
+                  isDisabled={this.isInputBlank()}
+                  icon={{
+                    name: "analyze-note",
+                    size: "40"
+                  }}
+                />
               </div>      
-              <BaseButton
-                click={this.openAnalysisPage}
-                text="View Analysis"
-                size="lg"
-                isDisabled={this.isInputBlank()}
-                icon={{
-                  name: "analyze-note",
-                  size: "40"
-                }}
-              />
             </div>
           </div>
           
         </div>
-          <div className="w-1/4 h-7/8 justify-center flex flex-col gap-y-3">
+          <div className=" w-full sm:w-1/4 h-7/8 justify-center flex flex-col gap-y-3">
             <div className="bg-off-white box-border drop-shadow-md rounded-xl p-5 text-lg font-cabin mb-5 overflow-y-auto">
                 <TranscriptDescription/>
             </div>
-            <div className="mx-auto">
+            <div className="mx-auto pb-5">
               <BaseButton
                 click={this.downloadTranscriptTemplate}
                 text="Download Transcript Template"
