@@ -50,7 +50,7 @@ export class AnalysisPage extends Component {
           >
             <div className="flex gap-y-10 w-full flex-col h-full">
               <div className= "w-full bg-gray-100 pb-2">
-                <div /*TEMPORARY SIDEBAR CONTROL BUTTON!*/
+                <div
                   className="absolute m-2 mx-auto px-3" data-testid="arrow-right"
                 >
                   <BaseButton
