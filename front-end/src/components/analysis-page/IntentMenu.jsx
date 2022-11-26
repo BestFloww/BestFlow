@@ -76,6 +76,28 @@ class IntentMenu extends Component {
         );
     }
 
+    addStar = (intent) => {
+        if (intent.star) {
+            return (
+                <div
+                    className="rounded-full h-2 w-2 bg-yellow inline-block align-middle mr-1"
+                >
+                </div>
+            )
+        }
+    }
+
+    addFlag = (intent) => {
+        if (intent.flag) {
+            return (
+                <div
+                    className="rounded-full h-2 w-2 bg-red inline-block align-middle mr-1"
+                >
+                </div>
+            )
+        }
+    }
+
     listIntents = () => {
         const { filteredIntents, searchSlices } = search.filterIntents(this.props.intents, this.state.inputValue);
 
@@ -100,8 +122,14 @@ class IntentMenu extends Component {
                         aria-label={intent.question}
                         data-testid="intent-menu-list-item"
                     >
-                        <div /* Format the text representation of the intent in the intent menu */>
-                            {this.formatSearchResult(intent.question, searchSlices)}
+                        <div>
+                            {this.addStar(intent)}
+                            {this.addFlag(intent)}
+                            <div /* Format the text representation of the intent in the intent menu */
+                                className="inline-block align-middle"
+                            >
+                                {this.formatSearchResult(intent.question, searchSlices)}
+                            </div>
                         </div>
                     </button>
                 </li>

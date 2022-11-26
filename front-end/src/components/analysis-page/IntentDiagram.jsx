@@ -40,8 +40,13 @@ class IntentDiagram extends Component {
     toggleStarred = async() => {
         try {
             const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
-            store.dispatch(toggleStar(this.props.question));;
-            await StarAPI.put(projectId);
+            store.dispatch(toggleStar(this.props.question));
+            await StarAPI.put(
+                {
+                    question: this.props.question,
+                    projectId: projectId,
+                    starStatus: !this.props.isStarred
+                });
         } catch (e) {
             window.alert("Error in starring question. Please try again. " + e.response.error);
         }
@@ -51,7 +56,12 @@ class IntentDiagram extends Component {
         try {
             const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
             store.dispatch(toggleFlag(this.props.question));
-            await FlagAPI.put(projectId);
+            await FlagAPI.put(
+                {
+                    question: this.props.question,
+                    projectId: projectId,
+                    flagStatus: !this.props.isFlagged
+                });
         } catch (e) {
             window.alert("Error in flagging question. Please try again. " + e.response.error);
         }

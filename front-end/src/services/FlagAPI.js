@@ -7,9 +7,9 @@ const API = {
      * @param {Object} intent changed intent's question being put
      * @returns {Object} http resolution
      */
-    put: async(question) => {
-        return await axios.put(baseURL, {body: question});
-    },
+    put: async(intent) => {
+        return await axios.put(baseURL, intent);
+    }
 };
 
 export default API;
