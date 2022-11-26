@@ -47,6 +47,7 @@ module.exports = {
   },
   plugins: [
     plugin(function ({ matchUtilities, theme }) {
+      require('tailwind-scrollbar')({ nocompatible: true }),
       matchUtilities(
         {
           'text-shadow': (value) => ({
