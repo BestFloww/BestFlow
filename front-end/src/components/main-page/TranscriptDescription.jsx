@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {exampleTranscript} from "../helpers/ExampleTranscript.js"; 
+import {exampleTranscript} from "../helpers/ExampleTranscript.js";
 
 class TranscriptDescription extends Component {
 	render() {
