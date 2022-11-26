@@ -6,7 +6,6 @@ import Title from "../icons/title.jsx";
 import BaseButton from "../general/BaseButton.jsx";
 import IntentLister from "./IntentLister.jsx";
 import IntentMenu from "./IntentMenu.jsx";
-import "../general/Scrollbar.css";
 
 export class AnalysisPage extends Component {
 
