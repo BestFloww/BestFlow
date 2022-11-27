@@ -72,14 +72,14 @@ export class AnalysisPage extends Component {
           </div>
           <div /*TEMPORARY SIDEBAR CONTROL BUTTON!*/
               className="fixed right-20 sm:right-40 bottom-1 sm:bottom-8" data-testid="arrow-right"
-          >
+            >
               <BaseButton
-                  click={this.openIntentMenu}
-                  label="Open intent menu"
-                  icon={{
-                      name: "hamburger",
-                      size: "40",
-                  }}
+                click={this.openIntentMenu}
+                label="Open intent menu"
+                icon={{
+                    name: "hamburger",
+                    size: "40",
+                }}
               />
           </div>
         </div>
