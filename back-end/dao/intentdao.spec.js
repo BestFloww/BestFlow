@@ -34,9 +34,25 @@ describe("IntentDao", () => {
         expect(emit).toHaveBeenCalledWith("getIntent", fakePayload);
     });
 
+    it("Should return the intentList on getImmediateIntent", async() => {
+        const fakePayload = {grrr: "meow"};
+        Intent.find.mockImplementationOnce(() => {
+            return {exec: jest.fn().mockReturnValue(fakePayload)};
+        });
+        const result = await dao.getImmediateIntent(fakePayload);
+        expect(Intent.find).toHaveBeenCalledWith(fakePayload);
+        expect(result).toBe(fakePayload);
+    });
+
     it("should correctly throw an error for get", async() => {
         Intent.find.mockImplementationOnce(() => {throw "error"});
         await dao.getIntent();
+        expect(emit).toHaveBeenCalledWith("getIntent", {status: 500, error: "error"});
+    });
+
+    it("should correctly throw an error for getImmmediateIntent", async() => {
+        Intent.find.mockImplementationOnce(() => {throw "error"});
+        await dao.getImmediateIntent();
         expect(emit).toHaveBeenCalledWith("getIntent", {status: 500, error: "error"});
     });
 

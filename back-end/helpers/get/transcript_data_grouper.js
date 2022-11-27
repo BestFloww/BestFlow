@@ -28,7 +28,6 @@ export default class TranscriptDataGrouper {
                     await this.#mergeIntent(comparedIntent);
                     return true;
                 } catch (e) {
-                    console.log(e.message)
                     return false;
                 }
             }
@@ -84,28 +83,66 @@ export default class TranscriptDataGrouper {
     }
 
     /**
-     * @param Object Formatted intent to merge to
+     * @param {Object} comparedIntent Formatted intent to merge to
      * Merges 2 intents
      */
     async #mergeIntent(comparedIntent) {
-        if (comparedIntent.previousIntents) {
-            // Make deep copy of original intent to not create recursion
-            let original = JSON.parse(JSON.stringify(comparedIntent.previousIntents[0]));
-            // Calculate percentages of each intent previously merged with the original
-            for (let i = 1; i < comparedIntent.previousIntents.length; i++) {
-                await this.#recalculatePercentages(comparedIntent.previousIntents[i], original);
-            }
-            original.previousIntents = comparedIntent.previousIntents;
-            comparedIntent = original;
-        } else {
+        if (!comparedIntent.previousIntents) {
             comparedIntent.previousIntents = [];
-            const copyComparedIntent = JSON.parse(JSON.stringify(comparedIntent))
-            comparedIntent.previousIntents.push(copyComparedIntent);
+        }
+        // Create a deep copy of the previous intents
+        const originalPreviousIntents = comparedIntent.previousIntents.map((intent) => {return {question: intent.question}});
+        let newlyMergedIntent = {
+            question: comparedIntent.question, 
+            previousIntents: [],
+        };
+        if (comparedIntent.previousIntents.length > 0){
+            newlyMergedIntent = comparedIntent.previousIntents[0];
+            // initialize a new comparedIntents array with just the base intent
+        } else {
+            newlyMergedIntent.previousIntents.push({question: comparedIntent.question});
+        }
+        // Calculate percentages of each intent previously merged with the original
+        const allMergedMaps = [];
+        for (let i = 0; i + 1 < comparedIntent.previousIntents.length; i+= 2) {
+            const mergedQuestions = await this.#mergeTwoQuestions(comparedIntent.previousIntents[i], comparedIntent.previousIntents[i + 1])
+            allMergedMaps.push(mergedQuestions);
+        }
+        if (comparedIntent.previousIntents.length%2) {
+            // push the odd map
+            const question = comparedIntent.previousIntents[comparedIntent.previousIntents.length - 1];
+            let children = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: question.question, project_id: this.project_id});
+            children = children[0].children; 
+            allMergedMaps.push(children);
         }
 
-        await this.#recalculatePercentages(this.intent, comparedIntent)
 
+        // calculate the new children maps with newlyMergedIntent
+        let mergedMap;
+        newlyMergedIntent.previousIntents = originalPreviousIntents; 
+        if (comparedIntent.previousIntents.length === 0) {
+            mergedMap = await this.#mergeTwoQuestions(this.intent, comparedIntent);
+        } else {
+            // merge all the previous maps
+            mergedMap = allMergedMaps[0];
+            for (let i = 1; i < allMergedMaps.length; i++) {
+                mergedMap = this.#mergeMap(mergedMap, allMergedMaps[i]);
+            }
+            // merge with the new intent
+            let newIntent = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: this.intent.question, project_id: this.project_id});
+            newIntent = newIntent[0];
+            mergedMap = this.#mergeMap(mergedMap, newIntent.children);
+        }
+        
+        // now calculate the percentages
+        const {percentageMap, total_children} = this.#getPercentages(mergedMap)
+        // set them to newlyMergedIntent so they can be transferred to comparedIntent
+        comparedIntent.children = percentageMap;
+        comparedIntent.total_children = total_children;
+
+        // replace matching strings with [merged]
         const splitIntent = comparedIntent.question.split(" ");
+        const mergedQuestion = this.intent.question;
         for (const index of this.differentWordsIndices) {
             splitIntent[index] = "[merged]";
         }
@@ -114,46 +151,67 @@ export default class TranscriptDataGrouper {
             comparedIntent.question = splitIntent.join(" ");
         }
 
-        const copyIntent = JSON.parse(JSON.stringify(this.intent))
-        comparedIntent.previousIntents.push(copyIntent);
-
+        // add to previous intents as necessary
+        comparedIntent.previousIntents.push({question: mergedQuestion});
     }
 
-    async #mergingTwoIntents(comparedIntent) {
+    async #mergeTwoQuestions(intent1, intent2) {
+        let originalMergingIntent = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: intent1.question, project_id: this.project_id});
+        let targetIntent = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: intent2.question, project_id: this.project_id});
 
-    }
+        targetIntent = targetIntent[0];
+        originalMergingIntent = originalMergingIntent[0];
 
-
-    /**
-    * @param Object Formatted intent to merge percentages
-     * Recalculates the percentage of the compared intent based on the original model
-     */
-    async #recalculatePercentages(intent, comparedIntent) {
-        const originalMergingIntent = await TranscriptDataGrouper.#IntentDao.getIntent({question: intent.question, project_id: this.project_id})[0];
-        const targetIntent = await TranscriptDataGrouper.#IntentDao.getIntent({question: comparedIntent.question, project_id: this.project_id})[0];
+        if (!targetIntent && !originalMergingIntent) {
+            return new Map();
+        } else if (!targetIntent) {
+            return originalMergingIntent.children;
+        } else if (!originalMergingIntent) {
+            return targetIntent.childrenl
+        }
 
         const mergedMap = targetIntent.children;
         const newChildren = originalMergingIntent.children;
 
-        // add all the children of mergedMap to newChildren (merge the intents)
-        for (const [question, num] of newChildren) {
-            if (!(mergedMap.has(question))) {
-                mergedMap.set(question, 0);
-            }
-            const newWeight = mergedMap.get(question) + num;
-            mergedMap.set(question, newWeight);
-        }
 
+        // add all the children of mergedMap to newChildren (merge the intents)
+        return this.#mergeMap(newChildren, mergedMap);
+    }
+
+    /**
+    * @param {Object} target map being merged into
+    * @param {Object} merger map being merged out of
+    * Merges 2 maps into target
+    * @return the combined maps
+    */
+    #mergeMap(target, merger) {
+        for (const [question, num] of merger) {
+            if (!(target.has(question))) {
+                target.set(question, 0);
+            }
+            const newWeight = target.get(question) + num;
+            target.set(question, newWeight);
+        }
+        return target;
+    }
+
+    /**
+    * @param {Map} map map being turned into percentageMap
+    * @return {Object} percentageMap 
+    */
+     #getPercentages(map) {
         const percentageMap = {};
-        const total_children = targetIntent.total_children + originalMergingIntent.total_children;
+        let total_children = 0;
+
+        for (const [_, num] of map) {
+            total_children += num;
+        }
 
         // Calculate the new percentages for the merged intents
-        for (const [question, num] of mergedMap) {
-            const newPercentage = (num / total_children).toFixed(2) * 100;
+        for (const [question, num] of map) {
+            const newPercentage = Math.round((num / total_children).toFixed(2) * 100);
             percentageMap[question] = newPercentage;
         }
-
-        comparedIntent.children = percentageMap;
-        comparedIntent.total_children = total_children;
+        return {percentageMap, total_children};
     }
 }
