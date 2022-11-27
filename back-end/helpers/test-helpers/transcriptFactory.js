@@ -21,7 +21,7 @@ export default class TranscriptFactory {
                 "trace_type":"text",
                 "trace_payload":"{\"type\":\"text\",\"payload\":{\"slate\":{\"id\":\"" + id + 
                 "\",\"content\":\"[{\\\"children\\\":[{\\\"text\\\":\\\"" + message +
-                "\\\"}]}]\"},\"message\":\"[INSERT TEXT]\"}}"
+                "\\\"}]}]\"},\"message\":\"" + message + "\"}}"
             };
         }
         else{
