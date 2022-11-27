@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import store from "../../store.js";
 import { openMainPage } from "../../store/switchPageSlice.js";
 import Title from "../icons/title.jsx";
-import BaseButton from "../general/BaseButton.jsx";
 import IntentLister from "./IntentLister.jsx";
 import IntentMenu from "./IntentMenu.jsx";
+import Hamburger from "../icons/hamburger.jsx";
 
 export class AnalysisPage extends Component {
 
@@ -51,16 +51,13 @@ export class AnalysisPage extends Component {
             <div className="flex gap-y-10 w-full flex-col h-full">
               <div className= "w-full bg-gray-100 pb-2">
                 <div
-                  className="absolute m-2 mx-auto px-3" data-testid="arrow-right"
+                  className="absolute m-2 mx-auto px-3"
+                  data-testid="intent-menu-button"
+                  role="button"
+                  onClick={this.openIntentMenu}
+                  aria-label="Intent Menu Button"
                 >
-                  <BaseButton
-                    click={this.openIntentMenu}
-                    label="Open intent menu"
-                    icon={{
-                      name: "hamburger",
-                      size: "40",
-                          }}
-                      />
+                    <Hamburger className=""/>
                 </div>
                 <div /* first line of className is tooltip styling */
                   className="relative before:z-10 before:absolute before:left-1/2 before:-bottom-3 before:w-max before:max-w-xs before:-translate-x-1/2 before:translate-y-full before:rounded-lg before:bg-gray-200 before:px-2 before:py-1.5 before:text-off-white before:invisible before:content-[attr(tooltip)] after:z-10 after:absolute after:left-1/2 after:-bottom-3 after:h-0 after:w-0 after:-translate-x-1/2 after:border-8 after:border-b-gray-200 after:border-l-transparent after:border-t-transparent after:border-r-transparent after:invisible hover:before:visible hover:after:visible
