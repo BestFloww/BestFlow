@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 export default class TranscriptFactory {
     static generateTranscript(root, children) {
         const transcript = []
@@ -29,7 +28,7 @@ export default class TranscriptFactory {
                 "project_id": id,
                 "trace_type": "speak",
                 "trace_payload": "{\"type\":\"speak\",\"payload\":{\"type\":\"message\",\"message\":\"<voice name=\\\"" + 
-                name + "\\\">" + message+ " </voice>\"}}"
+                name + "\\\">" + message+ "</voice>\"}}"
             };
         }
         if(isLeaf){
@@ -38,6 +37,9 @@ export default class TranscriptFactory {
         else{
             return [entry];
         }
-        
+    }
+
+    static generateSingleLeaf(id, type, message, name = ""){
+        return this.generateSingleEntry(id, type, message, name, true)
     }
 }

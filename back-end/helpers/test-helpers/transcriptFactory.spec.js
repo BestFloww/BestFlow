@@ -1,22 +1,43 @@
 import TranscriptFactory from "./transcriptFactory.js";
-describe("formatTranscript", () => {
-    it("checks", () => {
-        const a = TranscriptFactory.generateSingleEntry("yWBrsfuFya", "speak", "a", "Alexa");
-        const b3 = TranscriptFactory.generateSingleEntry("yWBrsfuFya", "speak", "b3", "Alexa");
-        const b6 = TranscriptFactory.generateSingleEntry("yWBrsfuFya", "speak", "b6", "Alexa");
-        const c = TranscriptFactory.generateSingleEntry("yWBrsfuFya", "speak", "c", "Alexa");
-        const d = TranscriptFactory.generateSingleEntry("yWBrsfuFya", "speak", "d", "Alexa", true);
-        const e = TranscriptFactory.generateSingleEntry("yWBrsfuFya", "speak", "e", "Alexa", true);
-        // First create all nodes of your tree passing id, type, message, name(if type = speack), true(if the node is a leaf)
-        const ct = TranscriptFactory.generateTranscript(c, [[1,d]])
-        // Working from leaves upwards create partial transcript for every node that is not a leaf.
-        // give the created root of that tree as the first input 
-        // Second input is more confusing. you should pass a list of lists 
-        // each inner list has the number of occurrence of and the child node. 
-        // the number of occurrence doesn't need to be exact. think of it kinda as RV :)) 
-        // you can costumize that number to get the persentages you want
-        const b6t = TranscriptFactory.generateTranscript(b6, [[1,ct]])
-        const b3t = TranscriptFactory.generateTranscript(b3, [[1,e]])
-        const at = TranscriptFactory.generateTranscript(a, [[2,b6t],[1,b3t]]) 
+import FileGenerator from "./fileGenerator.js"
+describe("TranscriptFactory", () => {
+
+    const questionMsg = "How can I help you?"
+    const text = {
+        "project_id": "1",
+        "trace_type": "text",
+        "trace_payload": "{\"type\":\"text\",\"payload\":{" +
+            "\"slate\":{\"id\":\"1\",\"content\":\"[{\\\"children\\\":[" +
+            "{\\\"text\\\":\\\"How can I help you?\\\"}]}]\"}," +
+            "\"message\":\"How can I help you?\"}}"
+    }
+    const speak = {
+        "project_id": "1",
+        "trace_type": "speak",
+        "trace_payload": "{\"type\":\"speak\",\"payload\":{\"type\":\"message\",\"message\":\"<voice name=\\\"Alexa\\\">How can I help you?</voice>\"}}"
+    }
+
+    it("should create the right format of question for text", () => {
+        const expected = [text]
+        const question = TranscriptFactory.generateSingleEntry("1", "text", questionMsg)
+        expect(question).toEqual(expected);
+    });
+
+    it("should create the right format of question for speak", () => {
+        const expected = [speak]
+        const question = TranscriptFactory.generateSingleEntry("1", "speak", questionMsg, "Alexa");
+        expect(question).toEqual(expected);
+    });
+
+    it("should create the right format of question for text, lead", () => {
+        const expected = [text,{}]
+        const question = TranscriptFactory.generateSingleLeaf("1", "text", questionMsg);
+        expect(question).toEqual(expected);
+    });
+
+    it("should create the right format of question for speak, leaf", () => {
+        const expected = [speak, {}]
+        const question = TranscriptFactory.generateSingleLeaf("1", "speak", questionMsg, "Alexa");
+        expect(question).toEqual(expected);
     });
 });
