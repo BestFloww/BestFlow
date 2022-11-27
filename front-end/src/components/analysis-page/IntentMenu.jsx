@@ -15,8 +15,12 @@ class IntentMenu extends Component {
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleStarChange = this.handleStarChange.bind(this);
+        this.handleFlagChange = this.handleFlagChange.bind(this);
         this.state = {
             inputValue: "",
+            starFilter: false,
+            flagFilter: false,
         };
     }
 
@@ -39,6 +43,14 @@ class IntentMenu extends Component {
 
     handleChange(event) {
         this.setState({inputValue: event.target.value});
+    }
+
+    handleStarChange() {
+        this.setState({starFilter: !this.state.starFilter});
+    }
+
+    handleFlagChange() {
+        this.setState({flagFilter: !this.state.flagFilter});
     }
 
     handleKeyDown(event) {
@@ -76,6 +88,25 @@ class IntentMenu extends Component {
         );
     }
 
+    starAndFlagFilter = (intents) => {
+        const filteredIntents = [];
+
+        for (let intent of intents) {
+            if (this.state.starFilter) {
+                if (intent.star) {
+                    filteredIntents.push(intent);
+                    continue;
+                }
+            }
+            if (this.state.flagFilter) {
+                if (intent.flag) {
+                    filteredIntents.push(intent);
+                }
+            }
+        }
+        return filteredIntents;
+    }
+
     addStar = (intent) => {
         if (intent.star) {
             return (
@@ -99,7 +130,13 @@ class IntentMenu extends Component {
     }
 
     listIntents = () => {
-        const { filteredIntents, searchSlices } = search.filterIntents(this.props.intents, this.state.inputValue);
+        let { filteredIntents, searchSlices } = search.filterIntents(this.props.intents, this.state.inputValue);
+
+        if (this.state.starFilter || this.state.flagFilter) {
+            filteredIntents = this.starAndFlagFilter(filteredIntents);
+        }
+
+        console.log(filteredIntents)
 
         // Generate a list of buttons with each corresponding to 1 intent from the filtered intents list, in order
         return filteredIntents.map((intent, filteredIndex) => {
@@ -158,15 +195,43 @@ class IntentMenu extends Component {
                                 }}
                             />
                         </div>
-                        <ul className="text-center font-bold text-xl mt-10"> 
+                        <div>
+                            <div
+                                className="inline-block align-middle text-xl mx-10 my-5"
+                            >
+                                <input
+                                    type="checkbox"
+                                    onChange={this.handleStarChange}
+                                />
+                                <label
+                                    className="mx-2"
+                                >
+                                    Star
+                                </label>
+                            </div>
+                            <div
+                                className="inline-block align-middle text-xl mx-10 my-5"
+                            >
+                                <input
+                                    type="checkbox"
+                                    onChange={this.handleFlagChange}
+                                />
+                                <label
+                                    className="mx-2"
+                                >
+                                    Flag
+                                </label>
+                            </div>
+                        </div>
+                        <ul className="text-center font-bold text-xl">
                             Transcript Intents:
                         </ul>
-                        <ul className="h-4/5 relative overflow-y-scroll bg-off-white-100 shadow-inner-lg rounded p-2 my-4 mx-4">
+                        <ul className="h-4/5 relative overflow-y-scroll bg-off-white-100 shadow-inner-lg rounded p-2 my-3 mx-4">
                             {this.listIntents()}
                         </ul>
                         <ul className="flex flex-col" >
                             <input /* Transcript search input */
-                                className="bg-off-white text-xl ml-4 mr-4 mt-6 rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
+                                className="bg-off-white text-xl ml-4 mr-4 mt-3 rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
                                 border border-solid border-purple-100
                                 hover:border-purple-200
                                 focus:border-purple-300 focus:ring-purple-300"
