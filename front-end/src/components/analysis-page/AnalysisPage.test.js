@@ -37,7 +37,7 @@ describe('AnalysisPage', () => {
     
         it('should open the Intent Menu when the Intent Menu hamburger button is pressed', () => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Open intent menu"));
+            userEvent.click(screen.getByTestId("intent-menu-button"));
             // Having this class implies the intent menu is on-screen
             expect(screen.getByTestId("intent-menu")).toHaveClass("translate-x-0");
             expect(screen.getByTestId("analysis-page-sidebar").getAttribute("aria-hidden")).toBe("false");
@@ -45,13 +45,13 @@ describe('AnalysisPage', () => {
     
         it('should focus the user on the Intent Menu input field when the Intent Menu hamburger button is pressed', async() => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Open intent menu"));
+            userEvent.click(screen.getByTestId("intent-menu-button"));
             await waitFor(() => expect(screen.getByLabelText("Search by keyword")).toHaveFocus());
         });
     
         it('should close the Intent Menu when the Intent Menu X button is pressed', () => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Open intent menu"));
+            userEvent.click(screen.getByTestId("intent-menu-button"));
             userEvent.click(screen.getByLabelText("Close intent menu"));
             // Having this class implies the intent menu is off-screen
             expect(screen.getByTestId("intent-menu")).toHaveClass("-translate-x-full");
@@ -60,7 +60,7 @@ describe('AnalysisPage', () => {
     
         it('should close the Intent Menu when clicking elsewhere on the page while it is open', () => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Open intent menu"));
+            userEvent.click(screen.getByTestId("intent-menu-button"));
             userEvent.click(screen.getByTestId("analysis-page-main"));
             // Having this class implies the intent menu is off-screen
             expect(screen.getByTestId("intent-menu")).toHaveClass("-translate-x-full");
@@ -74,7 +74,7 @@ describe('AnalysisPage', () => {
     
         it('should reduce the brightness of the main section of the page when the Intent Menu is opened', () => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Open intent menu"));
+            userEvent.click(screen.getByTestId("intent-menu-button"));
             expect(screen.getByTestId("analysis-page-main")).toHaveClass("brightness-75");
         });
 
@@ -85,7 +85,7 @@ describe('AnalysisPage', () => {
     
         it('should hide the content of the main section of the page from accessibility API when the Intent Menu is opened', () => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Open intent menu"));
+            userEvent.click(screen.getByTestId("intent-menu-button"));
             expect(screen.getByTestId("analysis-page-main").getAttribute("aria-hidden")).toBe("true");
         });
     });
