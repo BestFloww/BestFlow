@@ -133,8 +133,8 @@ class IntentLister extends Component {
 
         return (
             <div className="w-full bg-purple-100 pb-40 sm:pb-0">
-                <div className="full h-full flex flex-col mx-auto gap-y-12 justify-evenly">
-                    <div className="flex flex-col gap-y-32 lg:flex-row lg:mx-0 mx-auto sm:justify-around">
+                <div className="full h-full flex flex-col mx-auto justify-evenly">
+                    <div className="flex flex-col lg:flex-row lg:mx-0 mx-auto sm:justify-around">
                         {this.generateIntents(currentIntents)}
                     </div>
                     {currentIntents.length === MAX_CURRENT_INTENTS &&
