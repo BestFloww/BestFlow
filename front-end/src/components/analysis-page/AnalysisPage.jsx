@@ -5,6 +5,7 @@ import { openMainPage } from "../../store/switchPageSlice.js";
 import Title from "../icons/title.jsx";
 import IntentLister from "./IntentLister.jsx";
 import IntentMenu from "./IntentMenu.jsx";
+import Hamburger from "../icons/hamburger.jsx";
 
 export class AnalysisPage extends Component {
 
@@ -48,32 +49,25 @@ export class AnalysisPage extends Component {
             data-testid="analysis-page-main"
           >
             <div className="flex gap-y-10 w-full flex-col h-full">
-              <div className= "w-full bg-gray-100 pb-2">
+              <div className= "flow-root w-full bg-gray-100 pb-2">
                 {
                     !this.state.showIntentMenu &&
                     <button
-                        className="absolute mx-5 my-2"
+                        className="float-left m-auto px-5 py-2"
                         onClick={this.openIntentMenu}
                         aria-label="intent menu button"
                         data-testid="intent-menu-button"
                     >
-                        <label>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="50"
-                                height="60"
-                                viewBox="2 0 30 30"
-                            >
-                                <path d="M26,8c0,1.104-0.896,2-2,2H8c-1.104,0-2-0.896-2-2s0.896-2,2-2h16C25.104,6,26,6.896,26,8z"/>
-                                <path d="M26,16c0,1.104-0.896,2-2,2H8c-1.104,0-2-0.896-2-2s0.896-2,2-2h16C25.104,14,26,14.896,26,16z"/>
-                                <path d="M26,24c0,1.104-0.896,2-2,2H8c-1.104,0-2-0.896-2-2s0.896-2,2-2h16C25.104,22,26,22.896,26,24z"/>
-                            </svg>
+                        <label
+                          className="cursor-pointer"
+                        >
+                          <Hamburger />
                         </label>
                     </button>
                 }
                 <div /* first line of className is tooltip styling */
                   className="relative before:z-10 before:absolute before:left-1/2 before:-bottom-3 before:w-max before:max-w-xs before:-translate-x-1/2 before:translate-y-full before:rounded-lg before:bg-gray-200 before:px-2 before:py-1.5 before:text-off-white before:invisible before:content-[attr(tooltip)] after:z-10 after:absolute after:left-1/2 after:-bottom-3 after:h-0 after:w-0 after:-translate-x-1/2 after:border-8 after:border-b-gray-200 after:border-l-transparent after:border-t-transparent after:border-r-transparent after:invisible hover:before:visible hover:after:visible
-                  absolute cursor-pointer m-3 sm:w-[11em] mx-auto"
+                  float-none cursor-pointer m-3 sm:w-[11em] mx-auto"
                   role="button"
                   onClick={this.openMainPage}
                   aria-label="Home Button"
