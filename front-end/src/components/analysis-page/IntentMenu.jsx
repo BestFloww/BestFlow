@@ -112,6 +112,7 @@ class IntentMenu extends Component {
             return (
                 <div
                     className="rounded-full h-2 w-2 bg-yellow inline-block align-middle mr-1"
+                    data-testid="star-circle"
                 >
                 </div>
             )
@@ -123,6 +124,7 @@ class IntentMenu extends Component {
             return (
                 <div
                     className="rounded-full h-2 w-2 bg-red inline-block align-middle mr-1"
+                    data-testid="flag-circle"
                 >
                 </div>
             )
@@ -135,8 +137,6 @@ class IntentMenu extends Component {
         if (this.state.starFilter || this.state.flagFilter) {
             filteredIntents = this.starAndFlagFilter(filteredIntents);
         }
-
-        console.log(filteredIntents)
 
         // Generate a list of buttons with each corresponding to 1 intent from the filtered intents list, in order
         return filteredIntents.map((intent, filteredIndex) => {
@@ -200,6 +200,8 @@ class IntentMenu extends Component {
                                 className="inline-block align-middle text-xl mx-10 my-5"
                             >
                                 <input
+                                    data-testid="star-filter"
+                                    id="star-filter"
                                     type="checkbox"
                                     onChange={this.handleStarChange}
                                 />
@@ -213,6 +215,8 @@ class IntentMenu extends Component {
                                 className="inline-block align-middle text-xl mx-10 my-5"
                             >
                                 <input
+                                    data-testid="flag-filter"
+                                    id="flag-filter"
                                     type="checkbox"
                                     onChange={this.handleFlagChange}
                                 />

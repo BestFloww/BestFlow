@@ -27,7 +27,7 @@ describe("IntentMenu", () => {
     beforeEach(() => {
         props = {...basicProps};
         jest.clearAllMocks();
-        
+
     });
 
     describe("For generating and listing intent buttons", () => {
@@ -116,6 +116,128 @@ describe("IntentMenu", () => {
             // A button for each of Intents 0-8 should display
             Object.keys(props.intents).forEach((key) => {
                 expect(screen.getByLabelText(`${props.intents[key].question}`)).toBeInTheDocument();
+            });
+        });
+    });
+
+    describe("For the star and flag circle", () => {
+        it ("should display a yellow circle if starred", () => {
+            // Create a deep copy to prevent change of star attributes for future tests
+            props.intents = JSON.parse(JSON.stringify(sampleIntents));
+            props.intents[0].star = true;
+            renderComponent(props);
+            expect(screen.getByTestId("star-circle")).toBeInTheDocument();
+        });
+
+        it ("should display a red circle if flagged", () => {
+            // Create a deep copy to prevent change of flag attributes for future tests
+            props.intents = JSON.parse(JSON.stringify(sampleIntents));
+            props.intents[0].flag = true;
+            renderComponent(props);
+            expect(screen.getByTestId("flag-circle")).toBeInTheDocument();
+        });
+
+        it ("should display both circles if both flagged and starred", () => {
+            // Create a deep copy to prevent change of attributes for future tests
+            props.intents = JSON.parse(JSON.stringify(sampleIntents));
+            props.intents[0].star = true;
+            props.intents[1].flag = true;
+            renderComponent(props);
+            expect(screen.getByTestId("star-circle")).toBeInTheDocument();
+            expect(screen.getByTestId("flag-circle")).toBeInTheDocument();
+        });
+    });
+
+    describe("For the star and flag filter feature", () => {
+        it ("should display an empty list of intents if there are no stars", () => {
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("star-filter"));
+            expect(screen.queryByTestId("intent-menu-list-item")).not.toBeInTheDocument();
+        });
+
+        it ("should display an empty list of intents if there are no flags", () => {
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("flag-filter"));
+            expect(screen.queryByTestId("intent-menu-list-item")).not.toBeInTheDocument();
+        });
+
+        it ("should correctly display 1 intent when only one is starred", () => {
+            // Create a deep copy to prevent change of star attributes for future tests
+            props.intents = JSON.parse(JSON.stringify(sampleIntents));
+            props.intents[0].star = true;
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("star-filter"));
+            // A button for Intent 0 should display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 1 ? 1 : 0);
+            });
+        });
+
+        it ("should correctly display 1 intent when only one is flagged", () => {
+            // Create a deep copy to prevent change of flag attributes for future tests
+            props.intents = JSON.parse(JSON.stringify(sampleIntents));
+            props.intents[0].flag = true;
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("flag-filter"));
+            // A button for Intent 0 should display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 1 ? 1 : 0);
+            });
+        });
+
+        it ("should correctly display 2 intents when two are starred", () => {
+            // Create a deep copy to prevent change of star attributes for future tests
+            props.intents = JSON.parse(JSON.stringify(sampleIntents));
+            props.intents[0].star = true;
+            props.intents[1].star = true;
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("star-filter"));
+            // A button for each of Intents 0-1 should display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 2 ? 1 : 0);
+            });
+        });
+
+        it ("should correctly display 2 intents when two are flagged", () => {
+            // Create a deep copy to prevent change of flag attributes for future tests
+            props.intents = JSON.parse(JSON.stringify(sampleIntents));
+            props.intents[0].flag = true;
+            props.intents[1].flag = true;
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("flag-filter"));
+            // A button for each of Intents 0-1 should display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 2 ? 1 : 0);
+            });
+        });
+
+        it ("should display only one intent when a single intent is both starred and flagged", () => {
+            // Create a deep copy to prevent change of attributes for future tests
+            props.intents = JSON.parse(JSON.stringify(sampleIntents));
+            props.intents[0].star = true;
+            props.intents[0].flag = true;
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("star-filter"));
+            userEvent.click(screen.getByTestId("flag-filter"));
+            // A button for Intent 0 should display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 1 ? 1 : 0);
+            });
+        });
+
+        it ("should display two intents when two intents are both starred and flagged", () => {
+            // Create a deep copy to prevent change of attributes for future tests
+            props.intents = JSON.parse(JSON.stringify(sampleIntents));
+            props.intents[0].star = true;
+            props.intents[0].flag = true;
+            props.intents[1].star = true;
+            props.intents[1].flag = true;
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("star-filter"));
+            userEvent.click(screen.getByTestId("flag-filter"));
+            // A button for each of Intents 0-1 should display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 2 ? 1 : 0);
             });
         });
     });
