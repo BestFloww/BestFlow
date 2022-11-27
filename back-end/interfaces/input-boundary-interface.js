@@ -21,4 +21,12 @@ export class InputBoundaryInterface{
     static async formatTranscript(rawTranscript = {}) {
         throw new Error("not implemented");
     }
+
+    /**
+     *  @param {Object} filter filters to find the question
+     *  @param {Object} status the star status
+     * */
+     static async setStarStatus(filter = {}, status = {}) {
+        throw new Error("not implemented");
+    }
 }

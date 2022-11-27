@@ -38,16 +38,9 @@ class IntentLister extends Component {
         });
 
         // Map keys to methods for keyboard shortcuts
-        switch(event.key) {
-            case "ArrowLeft":
-                this.decreaseIndex();
-                break;
-            case "ArrowRight":
-                this.increaseIndex();
-                break;
-            default:
-                break;
-        };
+        if (!this.props.isIntentMenuOpen) {
+            event.key === "ArrowLeft" ? this.decreaseIndex() : (event.key === "ArrowRight" && this.increaseIndex());
+        }
     }
 
     handleKeyUp(event) {
@@ -119,7 +112,9 @@ class IntentLister extends Component {
                     key={key}
                     data-testid={intent.question}
                     question={intent.question}
-                    branches={intent.children}
+                    children={intent.children}
+                    isStarred={intent.star}
+                    isFlagged={intent.flag}
                  />
             );
         });
@@ -137,22 +132,24 @@ class IntentLister extends Component {
         }
 
         return (
-            <div>
+            <div className="w-full bg-purple-100 pb-40 sm:pb-0">
                 <div className="full h-full flex flex-col mx-auto gap-y-12 justify-evenly">
-                    <div className="flex flex-col gap-y-32 sm:flex-row sm:mx-0 mx-auto sm:justify-around">
+                    <div className="flex flex-col gap-y-32 lg:flex-row lg:mx-0 mx-auto sm:justify-around">
                         {this.generateIntents(currentIntents)}
                     </div>
                     {currentIntents.length === MAX_CURRENT_INTENTS &&
-                    <div className="flex mx-auto">
+                    <div className="flex md:flex-row flex-col mx-auto">
                         <IntentDiagram
                             data-testid={currentIntents[2].question}
                             question={currentIntents[2].question}
-                            branches={currentIntents[2].children}
+                            children={currentIntents[2].children}
+                            isStarred={currentIntents[2].star}
+                            isFlagged={currentIntents[2].flag}
                         />
                     </div>
                     }
                 </div>
-                <div className="fixed left-6 bottom-8">
+                <div className="fixed left-1 sm:left-6 bottom-1 sm:bottom-8">
                     <BaseButton
                         click={this.decreaseIndex}
                         isDisabled={this.checkIfMinIndex()}
@@ -164,7 +161,7 @@ class IntentLister extends Component {
                         label="Previous Results"
                     />
                 </div>
-                <div className="fixed right-6 bottom-8" data-testid="arrow-right">
+                <div className="fixed right-1 sm:right-6 bottom-1 sm:bottom-8" data-testid="arrow-right">
                     <BaseButton
                         click={this.increaseIndex}
                         isDisabled={this.checkIfMaxIndex()}
@@ -184,6 +181,7 @@ class IntentLister extends Component {
 IntentLister.propTypes = {
     intents: PropTypes.arrayOf(PropTypes.object).isRequired,
     index: PropTypes.number,
+    isIntentMenuOpen: PropTypes.bool.isRequired,
 };
 
 IntentLister.defaultProps = {

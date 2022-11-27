@@ -112,12 +112,12 @@ class TranscriptUploadModal extends React.Component {
           </h3>
         }
         
-        <h2 className="justify-center flex m-3 -mb-2" data-testid="upload-transcript-modal">
+        <h2 className="justify-center flex m-3 -mb-2 text-sm sm:text-base" data-testid="upload-transcript-modal">
           Drag and drop file or upload below. 
         </h2>
           <div className="justify-center flex m-7 flex-col">
               <input
-                className="mb-7 ml-7"
+                className="mb-7 ml-7 text-sm sm:text-base"
                 type="file"
                 name="transcript"
                 data-testid="fileInput"

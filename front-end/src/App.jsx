@@ -6,7 +6,7 @@ function App() {
   const page = useSelector((state) => state.switchPage.page);
 
   return (
-    <div>
+    <div className="bg-purple-100">
       {page === "MainPage" && <MainPage />}
       {page === "AnalysisPage" && <AnalysisPage />}
     </div>

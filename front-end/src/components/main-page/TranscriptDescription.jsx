@@ -8,7 +8,7 @@ class TranscriptDescription extends Component {
                 <ul className='text-center font-bold text-lg'> 
                     Required Data Format:
                 </ul>
-                <pre className='overflow-x-scroll leading-7 text-sm bg-green-100 shadow-inner-lg rounded p-2 my-4 mx-2'
+                <pre className='overflow-x-scroll leading-7 text-sm bg-off-white shadow-inner-lg rounded p-2 my-4 mx-2'
                      data-testid="sampleTranscript"
                 >
                     {JSON.stringify(exampleTranscript, null, 2)}
@@ -17,7 +17,7 @@ class TranscriptDescription extends Component {
                     Your file can contain up to 180 questions.
                 <br/>
                 <br/>
-                    Questions must be chonologically ordered.
+                    Questions must be chronologically ordered.
                 </ul>
             </div>
             
