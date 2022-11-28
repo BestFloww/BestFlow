@@ -4,23 +4,20 @@ import store from "../../store.js";
 import { setDisplayingQuestion } from '../../store/analyzeTranscriptSlice.js';
 import BaseButton from "../general/BaseButton.jsx";
 import IntentSearch from "../helpers/IntentSearch.js";
+import {connect} from "react-redux";
 
 const search = new IntentSearch();
 
 class IntentMenu extends Component {
-    
+
     constructor(props) {
         super(props);
         this.ref = React.createRef();  // Create a React reference to the entire intent menu element
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.handleStarChange = this.handleStarChange.bind(this);
-        this.handleFlagChange = this.handleFlagChange.bind(this);
         this.state = {
             inputValue: "",
-            starFilter: false,
-            flagFilter: false,
         };
     }
 
@@ -28,12 +25,12 @@ class IntentMenu extends Component {
         document.addEventListener('mousedown', this.handleClickOutside, false);
         document.addEventListener("keydown", this.handleKeyDown, false);
     }
-    
+
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside, false);
         document.removeEventListener("keydown", this.handleKeyDown, false);
     }
-    
+
     handleClickOutside(event) {
         if (this.ref.current && !this.ref.current.contains(event.target)) {
             // Close menu if ref (this element) contains the click target
@@ -68,7 +65,7 @@ class IntentMenu extends Component {
                 break;
             default:
                 break;
-        };
+        }
     }
 
     formatSearchResult = (text, slices) => {
@@ -107,11 +104,11 @@ class IntentMenu extends Component {
         return filteredIntents;
     }
 
-    addStar = (intent) => {
+    addStarIndicator = (intent) => {
         if (intent.star) {
             return (
                 <div
-                    className="rounded-full h-2 w-2 bg-yellow inline-block align-middle mr-1"
+                    className="rounded-full h-2 w-2 bg-yellow my-0.5 mr-1"
                     data-testid="star-circle"
                 >
                 </div>
@@ -119,11 +116,11 @@ class IntentMenu extends Component {
         }
     }
 
-    addFlag = (intent) => {
+    addFlagIndicator = (intent) => {
         if (intent.flag) {
             return (
                 <div
-                    className="rounded-full h-2 w-2 bg-red inline-block align-middle mr-1"
+                    className="rounded-full h-2 w-2 bg-red my-0.5 mr-1"
                     data-testid="flag-circle"
                 >
                 </div>
@@ -152,7 +149,7 @@ class IntentMenu extends Component {
                 // Generate and display a unique button element for this intent
                 <li className="relative" key={filteredIndex}>
                     <button
-                        className="w-full text-left text-lg py-0 px-4 h-10 rounded truncate overflow-hidden box-border 
+                        className="w-full text-left text-lg py-0 px-4 h-10 rounded truncate overflow-hidden box-border
                         hover:bg-gray-100 hover:text-black transition ease-in-out
                         focus-within:bg-gray-100 focus-within:text-black"
                         onClick={goToIntent}
@@ -160,8 +157,12 @@ class IntentMenu extends Component {
                         data-testid="intent-menu-list-item"
                     >
                         <div>
-                            {this.addStar(intent)}
-                            {this.addFlag(intent)}
+                            <div
+                                className="inline-block align-middle"
+                            >
+                                {this.addStarIndicator(intent)}
+                                {this.addFlagIndicator(intent)}
+                            </div>
                             <div /* Format the text representation of the intent in the intent menu */
                                 className="inline-block align-middle"
                             >
@@ -259,4 +260,9 @@ IntentMenu.propTypes = {
     onClickOutside: PropTypes.func.isRequired,
 };
 
-export default IntentMenu;
+const mapStateToProps = (state) => ({
+    starFilter: state.starFilter.starFilterState,
+    flagFilter: state.flagFilter.flagFilterState
+});
+
+export default connect(mapStateToProps)(IntentMenu);
