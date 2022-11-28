@@ -10,18 +10,18 @@ class IntentDiagram extends Component {
         return Object.keys(this.props.children).map((key) => {
             return (
                 <div 
-                    className="text-md bg-green-100 shadow-md shadow-blue/10 rounded-2xl px-5 pb-2 border-2 border-green-200"
+                    className="text-md bg-green-100 shadow-md shadow-blue/10 rounded-2xl pb-2 border-2 border-green-200"
                     key={key}
                 >
                     <p
                         data-testid={`${key}-${this.props.children[key]}`}
                         tabIndex={0}
-                        className="w-20 h-5 text-md mx-auto"
+                        className="w-20 h-9 p-2 flex align-center justify-center text-md mx-auto"
                     >
                         {this.props.children[key]}%
                     </p>
                     <div
-                        className="w-40 h-36 overflow-hidden hover:overflow-y-scroll flex justify-center"
+                        className="w-40 h-24 overflow-hidden overflow-y-scroll flex align-center justify-center"
                         data-testid={`${key}-container`}
                     >
                         <h4 
@@ -40,8 +40,13 @@ class IntentDiagram extends Component {
     toggleStarred = async() => {
         try {
             const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
-            store.dispatch(toggleStar(this.props.question));;
-            await StarAPI.put(projectId);
+            store.dispatch(toggleStar(this.props.question));
+            await StarAPI.put(
+                {
+                    question: this.props.question,
+                    projectId: projectId,
+                    starStatus: !this.props.isStarred
+                });
         } catch (e) {
             window.alert("Error in starring question. Please try again. " + e.response.error);
         }
@@ -51,7 +56,12 @@ class IntentDiagram extends Component {
         try {
             const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
             store.dispatch(toggleFlag(this.props.question));
-            await FlagAPI.put(projectId);
+            await FlagAPI.put(
+                {
+                    question: this.props.question,
+                    projectId: projectId,
+                    flagStatus: !this.props.isFlagged
+                });
         } catch (e) {
             window.alert("Error in flagging question. Please try again. " + e.response.error);
         }
@@ -73,7 +83,7 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                     <h3
-                        className="rounded-lg bg-off-white self-center p-5 shadow-lg shadow-blue/10 break-words text-center md:text-xl 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[15rem]"
+                        className="rounded-lg bg-off-white self-center p-5 shadow-lg shadow-blue/10 break-words text-center md:text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem]"
                         data-testid={this.props.question}
                         tabIndex={0}
                     >

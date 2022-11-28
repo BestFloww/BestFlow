@@ -54,9 +54,9 @@ export default class IntentDao extends IntentInterface{
     return query.length !== 0;
   }
 
-  async putIntent(intentID, newContent) {
+  async putIntent(filter, newContent) {
     try {
-      Intent.findByIdAndUpdate(intentID, newContent);
+      await Intent.findOneAndUpdate(filter, newContent);
       this.emit("putIntent",{status: 200});
     } catch (e) {
       this.emit("putIntent",{status: 500, error: e});

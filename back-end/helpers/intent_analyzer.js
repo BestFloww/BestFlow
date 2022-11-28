@@ -18,8 +18,10 @@ export default class IntentAnalyzer{
 
     const intents = {
       question: model.question.replaceAll("-DOT-", "."),
-      children: percentageMap
-    }
+      children: percentageMap,
+      star: model.star,
+      flag: model.flag
+    };
 
     return intents;
   }
