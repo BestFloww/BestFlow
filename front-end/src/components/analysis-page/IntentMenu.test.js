@@ -243,6 +243,29 @@ describe("IntentMenu", () => {
             userEvent.click(screen.getByTestId("star-filter"));
             userEvent.click(screen.getByTestId("flag-filter"));
         });
+
+        it ("should display two intents when two intents are both starred and flagged and menu is closed and opened", () => {
+            props.intents[0].star = true;
+            props.intents[0].flag = true;
+            props.intents[1].star = true;
+            props.intents[1].flag = true;
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("star-filter"));
+            userEvent.click(screen.getByTestId("flag-filter"));
+            // A button for each of Intents 0-1 should display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 2 ? 1 : 0);
+            });
+            // Close intent menu
+            userEvent.click(screen.getByLabelText("Close intent menu"));
+            // Button amount stays the same even when closed
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 2 ? 1 : 0);
+            });
+            // To get make the filters false for future testing
+            userEvent.click(screen.getByTestId("star-filter"));
+            userEvent.click(screen.getByTestId("flag-filter"));
+        });
     });
 
     describe("For opening and closing", () => {
