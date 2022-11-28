@@ -58,6 +58,44 @@ describe("IntentSearch", () => {
     });
   });
 
+  describe("For starAndFlagFilter", () => {
+    it("should add no intents to filteredIntents if starFilter and flagFilter are false", () => {
+      sampleIntents[0].star = true;
+      sampleIntents[1].flag = true;
+      filteredIntents = search.starAndFlagFilter(sampleIntents, false, false);
+      expect(filteredIntents).toStrictEqual([]);
+    });
+
+    it("should add one intent to filteredIntents if starFilter is true", () => {
+      filteredIntents = search.starAndFlagFilter(sampleIntents, true, false);
+      expect(filteredIntents).toEqual([sampleIntents[0]]);
+    });
+
+    it("should add one intent to filteredIntents if flagFilter is true", () => {
+      filteredIntents = search.starAndFlagFilter(sampleIntents, false, true);
+      expect(filteredIntents).toEqual([sampleIntents[1]]);
+    });
+
+    it("should add two intents if starFilter and flagFilter is true", () => {
+      filteredIntents = search.starAndFlagFilter(sampleIntents, true, true);
+      expect(filteredIntents).toEqual(sampleIntents.slice(0, 2));
+    });
+
+    it("should add one intent if both starred and flagged", () => {
+      sampleIntents[0].flag = true;
+      sampleIntents[1].flag = false;
+      filteredIntents = search.starAndFlagFilter(sampleIntents, true, true);
+      expect(filteredIntents).toEqual([sampleIntents[0]]);
+    });
+
+    it("should add no intent if none are starred and flagged", () => {
+      sampleIntents[0].star = false;
+      sampleIntents[0].flag = false;
+      filteredIntents = search.starAndFlagFilter(sampleIntents, true, true);
+      expect(filteredIntents).toStrictEqual([]);
+    });
+  });
+
   describe("For filterIntents", () => {
     it("should add no intents to filteredIntents or mappings to searchSlices if the searchString is contained in no intents", () => {
       expect(search.filterIntents(sampleIntents, "Bad search")).toStrictEqual({

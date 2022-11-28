@@ -18,17 +18,17 @@ export default class IntentSearch{
         return { filteredIntents, searchSlices };
     }
 
-    starAndFlagFilter = (intents, star, flag) => {
+    starAndFlagFilter = (intents, starFilter, flagFilter) => {
         const filteredIntents = [];
 
         for (let intent of intents) {
-            if (star) {
+            if (starFilter) {
                 if (intent.star) {
                     filteredIntents.push(intent);
                     continue;
                 }
             }
-            if (flag) {
+            if (flagFilter) {
                 if (intent.flag) {
                     filteredIntents.push(intent);
                 }
