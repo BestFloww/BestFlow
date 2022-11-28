@@ -5,7 +5,12 @@ export default class TranscriptFormatter {
         let prev = "";
         try{
             for(const entry of rawTranscript["data"]){
-                prev = this.#updateContent(entry, content, prev);
+                if(Object.keys(entry).length !=0){
+                    prev = this.#updateContent(entry, content, prev);
+                }
+                else{
+                    prev = "";
+                }
             }
             return Object.values(content);   
         }
