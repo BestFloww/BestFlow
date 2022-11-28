@@ -111,7 +111,7 @@ describe("BaseButton", () => {
 
         it("should be medium if size is null", () => {
             renderComponent(props);
-            expect(screen.getByTestId("custom-button")).toHaveClass("py-3 px-6");
+            expect(screen.getByTestId("custom-button")).toHaveClass("py-3 px-3");
         });
 
         it("should be small if size is small", () => {

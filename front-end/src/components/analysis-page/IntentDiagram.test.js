@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import '@testing-library/jest-dom';
 import IntentDiagram from './IntentDiagram.jsx';
 import store from '../../store.js';
+import { setProjectIdToBeDisplayed } from '../../store/analyzeTranscriptSlice.js';
 import StarAPI from "../../services/StarAPI.js";
 import FlagAPI from "../../services/FlagAPI.js";
 
@@ -28,8 +29,16 @@ describe("IntentDiagram", () => {
             children: {
                 q1: 100
             },
+            isStarred: false,
+            isFlagged: false,
         };
+
+        store.dispatch(setProjectIdToBeDisplayed("1"));
     });
+
+    afterAll(() => {
+        store.dispatch(setProjectIdToBeDisplayed(""));
+    }); 
 
     it("correctly displays the question", () => {
         renderComponent(props);
@@ -97,7 +106,7 @@ describe("IntentDiagram", () => {
         const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.click(screen.getByTestId("flag-button"));
         // Waits for toggleFlagged to run
-        await waitFor(() => expect(FlagAPI.put).toHaveBeenCalled());
+        await waitFor(() => expect(FlagAPI.put).toHaveBeenCalledWith({question: "question", projectId: "1", flagStatus: true}));
         expect(dispatch).toHaveBeenCalledWith({"payload": "question", "type": "analyzeTranscript/toggleFlag",});
     });
     it("should dispatch intent when star button is clicked", async() => {
@@ -105,7 +114,7 @@ describe("IntentDiagram", () => {
         const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.click(screen.getByTestId("star-button"));
         // Waits for toggleStarred to run
-        await waitFor(() => expect(StarAPI.put).toHaveBeenCalled());
+        await waitFor(() => expect(StarAPI.put).toHaveBeenCalledWith({question: "question", projectId: "1", starStatus: true}));
         expect(dispatch).toHaveBeenCalledWith({"payload": "question", "type": "analyzeTranscript/toggleStar",});
     });
 });

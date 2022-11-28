@@ -86,19 +86,19 @@ describe("IntentDao", () => {
         expect(emit).toHaveBeenCalledWith("postIntent", {status: 201, message: "success", projectIds: [1]});
     });
 
-    it("Put an intent", async() => {
-        const id = 1;
+    it("should put an intent", async() => {
+        const filter = {question: "a", project_id: "b"};
         const content = {"meow": "kitten"};
 
-        await dao.putIntent(id, content);
-        expect(Intent.findByIdAndUpdate).toHaveBeenCalledWith(
-            id,
+        await dao.putIntent(filter, content);
+        expect(Intent.findOneAndUpdate).toHaveBeenCalledWith(
+            filter,
             content,
         );
     });
 
     it("should correctly throw an error for put", async() => {
-        Intent.findByIdAndUpdate.mockImplementation(() => {throw "error"});
+        Intent.findOneAndUpdate.mockImplementation(() => {throw "error"});
         await dao.putIntent();
         expect(emit).toHaveBeenCalledWith("putIntent", {status: 500, error: "error"});
     });

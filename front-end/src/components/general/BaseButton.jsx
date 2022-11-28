@@ -19,10 +19,10 @@ const BaseButton = (props) => {
                 styling += "py-1 px-4 md:text-md 2xl:text-lg";
                 break;
             case "lg":
-                styling += "md:py-5 md:px-6 md:text-2xl 2xl:py-8 2xl:px-9 2xl:text-2xl";
+                styling += "md:py-5 md:px-6 md:text-2xl 2xl:py-8 2xl:px-9 2xl:text-2xl p-3 sm:p-0";
                 break;
             default:  // medium-sized button
-                styling += "py-3 px-6 md:text-lg 2xl:text-2xl";
+                styling += "py-3 px-3 sm:py-3 sm:px-6 md:text-lg 2xl:text-2xl";
         }
         return styling;
     };
@@ -43,7 +43,7 @@ const BaseButton = (props) => {
                 <div className="group-hover:flex hidden">
                 {/* Render tooltip */ !props.isDisabled && props.tooltip &&
                     <span
-                        className="absolute hidden group-hover:flex -right-5 -top-2 -translate-y-full w-32 px-2 py-1 bg-gray-200 rounded-lg text-center text-off-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-200"
+                        className="absolute hidden group-hover:flex -right-5 -top-2 -translate-y-full w-32 px-2 py-1 bg-gray-300 rounded-lg text-center text-off-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-300"
                         data-testid="tooltip"
                     >
                         {props.tooltip}

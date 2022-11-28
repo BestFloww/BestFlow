@@ -10,23 +10,28 @@ class IntentDiagram extends Component {
         return Object.keys(this.props.children).map((key) => {
             return (
                 <div 
-                    className="w-40 h-32 overflow-hidden hover:overflow-y-scroll text-md bg-green-100 shadow-md shadow-blue/10 rounded-2xl p-5 border-2 border-green-200"
-                    data-testid={`${key}-container`}
+                    className="text-md bg-green-100 shadow-md shadow-blue/10 rounded-2xl pb-2 border-2 border-green-200"
                     key={key}
                 >
-                    <h4 
-                        className="break-words"
-                        data-testid={key}
-                        tabIndex={0}
-                    >
-                        {key} 
-                    </h4>
                     <p
                         data-testid={`${key}-${this.props.children[key]}`}
                         tabIndex={0}
+                        className="w-20 h-9 p-2 flex align-center justify-center text-md mx-auto"
                     >
                         {this.props.children[key]}%
                     </p>
+                    <div
+                        className="w-40 h-24 overflow-hidden overflow-y-scroll flex align-center justify-center"
+                        data-testid={`${key}-container`}
+                    >
+                        <h4 
+                            className="break-words text-center my-auto w-32"
+                            data-testid={key}
+                            tabIndex={0}
+                        >
+                            {key} 
+                        </h4>
+                    </div>
                 </div>
             );
         });
@@ -35,8 +40,13 @@ class IntentDiagram extends Component {
     toggleStarred = async() => {
         try {
             const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
-            store.dispatch(toggleStar(this.props.question));;
-            await StarAPI.put(projectId);
+            store.dispatch(toggleStar(this.props.question));
+            await StarAPI.put(
+                {
+                    question: this.props.question,
+                    projectId: projectId,
+                    starStatus: !this.props.isStarred
+                });
         } catch (e) {
             window.alert("Error in starring question. Please try again. " + e.response.error);
         }
@@ -46,7 +56,12 @@ class IntentDiagram extends Component {
         try {
             const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
             store.dispatch(toggleFlag(this.props.question));
-            await FlagAPI.put(projectId);
+            await FlagAPI.put(
+                {
+                    question: this.props.question,
+                    projectId: projectId,
+                    flagStatus: !this.props.isFlagged
+                });
         } catch (e) {
             window.alert("Error in flagging question. Please try again. " + e.response.error);
         }
@@ -55,7 +70,7 @@ class IntentDiagram extends Component {
     render() { 
         return (
             <div className="text-black font-cabin flex flex-col place-self-center pt-1 -mb-9">
-                <div className="inline-flex place-items-center max-w-[47rem]">
+                <div className="inline-flex place-items-center max-w-[20rem] sm:max-w-[47rem]">
                     <button className="w-16 h-16" onClick={this.toggleStarred} aria-label="star button" data-testid="star-button">
                         <label>
                             <svg
@@ -68,7 +83,7 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                     <h3
-                        className="rounded-lg bg-off-white self-center p-5 shadow-lg shadow-blue/10 break-words text-center md:text-xl 2xl:text-2xl min-w-[30rem] max-w-[35rem] 2xl:max-h-[15rem]"
+                        className="rounded-lg bg-off-white self-center p-5 shadow-lg shadow-blue/10 break-words text-center md:text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem]"
                         data-testid={this.props.question}
                         tabIndex={0}
                     >
@@ -86,7 +101,7 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                 </div>
-                <div className="rounded-lg flex flex-row mx-auto justify-between text-center gap-x-9 m-9">
+                <div className="rounded-lg flex flex-col gap-y-3 md:flex-row mx-auto justify-between text-center gap-x-9 m-9">
                     {this.listLeaves()}
                 </div>
             </div>

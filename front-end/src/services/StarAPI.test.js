@@ -4,8 +4,12 @@ jest.mock("axios");
 
 describe("Star API", () => {
     it("put intent question", async() => {
-        const body = "so... wanna... go bowling with me later tonight... uwu?"
+        const body = {
+            question: "some question",
+            projectId: "the id",
+            starStatus : true
+            }
         await StarAPI.put(body);
-        expect(axios.put).toHaveBeenCalledWith(expect.any(String), {body});
+        expect(axios.put).toHaveBeenCalledWith(expect.any(String), body);
     });
 });

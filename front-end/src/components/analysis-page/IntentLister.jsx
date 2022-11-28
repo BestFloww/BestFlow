@@ -132,13 +132,13 @@ class IntentLister extends Component {
         }
 
         return (
-            <div>
-                <div className="full h-full flex flex-col mx-auto gap-y-12 justify-evenly">
-                    <div className="flex flex-col gap-y-32 sm:flex-row sm:mx-0 mx-auto sm:justify-around">
+            <div className="w-full bg-purple-100 pb-40 sm:pb-0">
+                <div className="full h-full flex flex-col mx-auto justify-evenly">
+                    <div className="flex flex-col lg:flex-row lg:mx-0 mx-auto sm:justify-around">
                         {this.generateIntents(currentIntents)}
                     </div>
                     {currentIntents.length === MAX_CURRENT_INTENTS &&
-                    <div className="flex mx-auto">
+                    <div className="flex md:flex-row flex-col mx-auto">
                         <IntentDiagram
                             data-testid={currentIntents[2].question}
                             question={currentIntents[2].question}
@@ -149,7 +149,7 @@ class IntentLister extends Component {
                     </div>
                     }
                 </div>
-                <div className="fixed left-6 bottom-8">
+                <div className="fixed left-1 sm:left-6 bottom-1 sm:bottom-8">
                     <BaseButton
                         click={this.decreaseIndex}
                         isDisabled={this.checkIfMinIndex()}
@@ -161,7 +161,7 @@ class IntentLister extends Component {
                         label="Previous Results"
                     />
                 </div>
-                <div className="fixed right-6 bottom-8" data-testid="arrow-right">
+                <div className="fixed right-1 sm:right-6 bottom-1 sm:bottom-8" data-testid="arrow-right">
                     <BaseButton
                         click={this.increaseIndex}
                         isDisabled={this.checkIfMaxIndex()}
