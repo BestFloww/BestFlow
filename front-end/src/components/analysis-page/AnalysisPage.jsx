@@ -54,12 +54,11 @@ export class AnalysisPage extends Component {
                     !this.state.showIntentMenu &&
                     <nav>
                       <button
-                        className="float-left m-auto px-5 py-2"
+                        className="float-left m-auto px-5 py-3"
                         onClick={this.openIntentMenu}
                         aria-label="intent menu button"
                         data-testid="intent-menu-button"
                         aria-haspopup="menu"
-                        type="button"
                       >
                         <label
                           className="cursor-pointer"
@@ -71,7 +70,7 @@ export class AnalysisPage extends Component {
                 }
                 <div /* first line of className is tooltip styling */
                   className="relative before:z-10 before:absolute before:left-1/2 before:-bottom-3 before:w-max before:max-w-xs before:-translate-x-1/2 before:translate-y-full before:rounded-lg before:bg-gray-200 before:px-2 before:py-1.5 before:text-off-white before:invisible before:content-[attr(tooltip)] after:z-10 after:absolute after:left-1/2 after:-bottom-3 after:h-0 after:w-0 after:-translate-x-1/2 after:border-8 after:border-b-gray-200 after:border-l-transparent after:border-t-transparent after:border-r-transparent after:invisible hover:before:visible hover:after:visible
-                  float-none cursor-pointer m-3 sm:w-[11em] mx-auto"
+                  float-none cursor-pointer m-3 w-[11em] mx-auto"
                   role="button"
                   onClick={this.openMainPage}
                   aria-label="Home Button"
