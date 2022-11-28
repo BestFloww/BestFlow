@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import store from "../../store.js";
 import { setDisplayingQuestion } from '../../store/analyzeTranscriptSlice.js';
+import { toggleStarFilter } from "../../store/starFilterSlice.js";
+import { toggleFlagFilter } from "../../store/flagFilterSlice.js";
 import BaseButton from "../general/BaseButton.jsx";
 import IntentSearch from "../helpers/IntentSearch.js";
 import {connect} from "react-redux";
@@ -43,11 +45,11 @@ class IntentMenu extends Component {
     }
 
     handleStarChange() {
-        this.setState({starFilter: !this.state.starFilter});
+        store.dispatch(toggleStarFilter());
     }
 
     handleFlagChange() {
-        this.setState({flagFilter: !this.state.flagFilter});
+        store.dispatch(toggleFlagFilter());
     }
 
     handleKeyDown(event) {
@@ -65,7 +67,7 @@ class IntentMenu extends Component {
                 break;
             default:
                 break;
-        }
+        };
     }
 
     formatSearchResult = (text, slices) => {
@@ -76,32 +78,13 @@ class IntentMenu extends Component {
         return (
             <div className="truncate" /* Display text in 3 slices, with the middle one having highlighted styling */>
                 {(startText > 0 ? "..." : "") + text.slice(startText, startSearchSlice)
-                /* Begin text with ellipsis if preceding characters are truncated */}
+                    /* Begin text with ellipsis if preceding characters are truncated */}
                 <span /* */
                     className='bg-gray-100'>{text.slice(startSearchSlice, endSearchSlice)}
                 </span>
                 {text.slice(endSearchSlice)}
             </div>
         );
-    }
-
-    starAndFlagFilter = (intents) => {
-        const filteredIntents = [];
-
-        for (let intent of intents) {
-            if (this.state.starFilter) {
-                if (intent.star) {
-                    filteredIntents.push(intent);
-                    continue;
-                }
-            }
-            if (this.state.flagFilter) {
-                if (intent.flag) {
-                    filteredIntents.push(intent);
-                }
-            }
-        }
-        return filteredIntents;
     }
 
     addStarIndicator = (intent) => {
@@ -129,11 +112,8 @@ class IntentMenu extends Component {
     }
 
     listIntents = () => {
-        let { filteredIntents, searchSlices } = search.filterIntents(this.props.intents, this.state.inputValue);
-
-        if (this.state.starFilter || this.state.flagFilter) {
-            filteredIntents = this.starAndFlagFilter(filteredIntents);
-        }
+        let { filteredIntents, searchSlices } = search.filterIntents(this.props.intents, this.state.inputValue,
+            this.props.starFilter, this.props.flagFilter);
 
         // Generate a list of buttons with each corresponding to 1 intent from the filtered intents list, in order
         return filteredIntents.map((intent, filteredIndex) => {
@@ -175,8 +155,8 @@ class IntentMenu extends Component {
         });
     }
 
-	render() {
-		return (
+    render() {
+        return (
             <div /* Ternary operator is used in class below to animate sliding in/out of intent menu depending on isOpen prop */
                 className={"z-10 w-full sm:w-1/3 lg:w-1/4 h-full bg-off-white font-cabin fixed sm:absolute shadow-lg shadow-blue/30 transition ease-in-out " + (this.props.isOpen ? "translate-x-0" : "-translate-x-full")}
                 data-testid="intent-menu"
@@ -254,15 +234,15 @@ class IntentMenu extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    starFilter: state.starFilter.starFilterState,
+    flagFilter: state.flagFilter.flagFilterState
+});
+
 IntentMenu.propTypes = {
     intents: PropTypes.arrayOf(PropTypes.object).isRequired,
     isOpen: PropTypes.bool.isRequired,
     onClickOutside: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = (state) => ({
-    starFilter: state.starFilter.starFilterState,
-    flagFilter: state.flagFilter.flagFilterState
-});
 
 export default connect(mapStateToProps)(IntentMenu);
