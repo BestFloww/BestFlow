@@ -13,7 +13,7 @@ export default class IntentSearch{
         let searchSlices = {};
         intents.forEach((intent) => this.addFilteredIntent(intent, searchString, filteredIntents, searchSlices));
         if (starFilter || flagFilter) {
-            this.starAndFlagFilter(filteredIntents, starFilter, flagFilter);
+            filteredIntents = this.starAndFlagFilter(filteredIntents, starFilter, flagFilter);
         }
         return { filteredIntents, searchSlices };
     }
