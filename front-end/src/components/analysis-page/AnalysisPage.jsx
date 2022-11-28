@@ -57,6 +57,8 @@ export class AnalysisPage extends Component {
                         onClick={this.openIntentMenu}
                         aria-label="intent menu button"
                         data-testid="intent-menu-button"
+                        aria-haspopup=menu
+                        type="button"
                     >
                         <label
                           className="cursor-pointer"
