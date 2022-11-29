@@ -53,7 +53,7 @@ describe("intentAnalyzer", () => {
 
   it("Should properly format question with no intents", () => {
     const input = factory.generateModel("Question 1-DOT-", {}, 0, 1);
-    const output = factory.generateAnalyzedIntent("Question 1.", {"No intents found.": 0});
+    const output = factory.generateAnalyzedIntent("Question 1.", {"[END OF CONVERSATION]": 0});
     expect(analyzer.analyzeIntents([input])).toStrictEqual([output]);
   });
 
