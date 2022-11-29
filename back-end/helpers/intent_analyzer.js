@@ -11,7 +11,7 @@ export default class IntentAnalyzer{
   formatModel(model) {//Formats the mongoose model into desired array for IntentLister to use
     let percentageMap;
     if (model.total_children == 0) {
-      percentageMap = {"No intents found.": 0};
+      percentageMap = {"[END OF CONVERSATION]": 0};
     } else {
       percentageMap = this.replacePeriods(model.getPercentages());
     }
