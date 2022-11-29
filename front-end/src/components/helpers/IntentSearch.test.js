@@ -58,40 +58,40 @@ describe("IntentSearch", () => {
     });
   });
 
-  describe("For starAndFlagFilter", () => {
-    it("should add no intents to filteredIntents if starFilter and flagFilter are false", () => {
+  describe("For starFilter and flagFilter", () => {
+    it("should add all intents to filteredIntents if starFilter and flagFilter are false", () => {
       sampleIntents[0].star = true;
       sampleIntents[1].flag = true;
-      filteredIntents = search.starAndFlagFilter(sampleIntents, false, false);
-      expect(filteredIntents).toStrictEqual([]);
+      let { filteredIntents, searchSlices } = search.filterIntents(sampleIntents,"Sample", false, false);
+      expect(filteredIntents).toStrictEqual(sampleIntents);
     });
 
     it("should add one intent to filteredIntents if starFilter is true", () => {
-      filteredIntents = search.starAndFlagFilter(sampleIntents, true, false);
+      let { filteredIntents, searchSlices } = search.filterIntents(sampleIntents,"Sample", true, false);
       expect(filteredIntents).toEqual([sampleIntents[0]]);
     });
 
     it("should add one intent to filteredIntents if flagFilter is true", () => {
-      filteredIntents = search.starAndFlagFilter(sampleIntents, false, true);
+      let { filteredIntents, searchSlices } = search.filterIntents(sampleIntents,"Sample", false, true);
       expect(filteredIntents).toEqual([sampleIntents[1]]);
     });
 
-    it("should add two intents if starFilter and flagFilter is true", () => {
-      filteredIntents = search.starAndFlagFilter(sampleIntents, true, true);
+    it("should add two intents if starFilter and flagFilter are true", () => {
+      let { filteredIntents, searchSlices } = search.filterIntents(sampleIntents,"Sample", true, true);
       expect(filteredIntents).toEqual(sampleIntents.slice(0, 2));
     });
 
     it("should add one intent if both starred and flagged", () => {
       sampleIntents[0].flag = true;
       sampleIntents[1].flag = false;
-      filteredIntents = search.starAndFlagFilter(sampleIntents, true, true);
+      let { filteredIntents, searchSlices } = search.filterIntents(sampleIntents,"Sample", true, true);
       expect(filteredIntents).toEqual([sampleIntents[0]]);
     });
 
     it("should add no intent if none are starred and flagged", () => {
       sampleIntents[0].star = false;
       sampleIntents[0].flag = false;
-      filteredIntents = search.starAndFlagFilter(sampleIntents, true, true);
+      let { filteredIntents, searchSlices } = search.filterIntents(sampleIntents,"Sample", true, true);
       expect(filteredIntents).toStrictEqual([]);
     });
   });

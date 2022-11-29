@@ -11,30 +11,12 @@ export default class IntentSearch{
     filterIntents = (intents, searchString,starFilter=false, flagFilter=false) => {
         let filteredIntents = [];
         let searchSlices = {};
-        intents.forEach((intent) => this.addFilteredIntent(intent, searchString, filteredIntents, searchSlices));
-        if (starFilter || flagFilter) {
-            filteredIntents = this.starAndFlagFilter(filteredIntents, starFilter, flagFilter);
-        }
+        intents.forEach((intent) => {
+            if (!(starFilter || flagFilter) || (intent.star && starFilter) || (intent.flag && flagFilter)) {
+                this.addFilteredIntent(intent, searchString, filteredIntents, searchSlices);
+            }
+        });
         return { filteredIntents, searchSlices };
-    }
-
-    starAndFlagFilter = (intents, starFilter, flagFilter) => {
-        const filteredIntents = [];
-
-        for (let intent of intents) {
-            if (starFilter) {
-                if (intent.star) {
-                    filteredIntents.push(intent);
-                    continue;
-                }
-            }
-            if (flagFilter) {
-                if (intent.flag) {
-                    filteredIntents.push(intent);
-                }
-            }
-        }
-        return filteredIntents;
     }
     
     addFilteredIntent = (intent, searchString, filteredIntents, searchSlices) => {
