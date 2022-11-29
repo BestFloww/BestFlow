@@ -7,7 +7,7 @@ let factory;
 const getPercentages = ((children, total_children) => {
   const percentageMap = {}
     children.forEach((numTimesCalled, intent) => {
-      percentageMap[intent] = (numTimesCalled / total_children).toFixed(2);
+      percentageMap[intent] = (numTimesCalled / total_children * 100).toFixed(2);
     })
     return percentageMap;
 })
