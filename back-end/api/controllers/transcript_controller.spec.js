@@ -1,11 +1,11 @@
 import TranscriptController from "./transcript_controller.js";
-import GetTranscriptInteractor from "../../helpers/get_transcript_interactor.js";
-import PostTranscriptInteractor from "../../helpers/post_transcript_interactor.js";
-import OutputDataBoundary from "../../helpers/output_data_boundary.js"
+import GetTranscriptInteractor from "../../helpers/get/get_transcript_interactor.js";
+import PostTranscriptInteractor from "../../helpers/post/post_transcript_interactor.js";
+import OutputDataBoundary from "../../helpers/general/output_data_boundary.js"
 
-jest.mock("../../helpers/get_transcript_interactor.js");
-jest.mock("../../helpers/post_transcript_interactor.js");
-jest.mock("../../helpers/output_data_boundary.js")
+jest.mock("../../helpers/get/get_transcript_interactor.js");
+jest.mock("../../helpers/post/post_transcript_interactor.js");
+jest.mock("../../helpers/general/output_data_boundary.js")
 
 const mockResponse = () => {
     let res = {};

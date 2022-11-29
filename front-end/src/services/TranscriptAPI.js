@@ -8,7 +8,8 @@ const API = {
      * @returns {Array} analyzed transcript
      */
     getAnalysis: async(params = {}) => {
-        return await axios.get(baseURL, {params: params});
+        const result = await axios.get(baseURL, {params: params});
+        return result;
     },
 
     /**

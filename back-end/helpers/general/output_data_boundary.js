@@ -1,4 +1,4 @@
-import { OutputBoundaryInterface } from "../interfaces/output-boundary-interface.js";
+import { OutputBoundaryInterface } from "../../interfaces/output-boundary-interface.js";
 
 export default class OutputDataBoundary extends OutputBoundaryInterface{
     static #output = {};

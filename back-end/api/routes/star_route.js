@@ -1,8 +1,8 @@
 import express from "express";
 import StarController from "../controllers/star_controller.js";
 import IntentDao from "../../dao/intentdao.js";
-import PutStarInteractor from "../../helpers/put_star_interactor.js";
-import OutputDataBoundary from "../../helpers/output_data_boundary.js";
+import PutStarInteractor from "../../helpers/put/put_star_interactor.js";
+import OutputDataBoundary from "../../helpers/general/output_data_boundary.js";
 
 const router = express.Router();
 

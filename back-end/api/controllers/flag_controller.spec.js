@@ -1,9 +1,9 @@
 import FlagController from "./flag_controller.js";
-import PutFlagInteractor from "../../helpers/put_flag_interactor.js";
-import OutputDataBoundary from "../../helpers/output_data_boundary.js"
+import PutFlagInteractor from "../../helpers/put/put_flag_interactor.js";
+import OutputDataBoundary from "../../helpers/general/output_data_boundary.js"
 
-jest.mock("../../helpers/put_flag_interactor.js");
-jest.mock("../../helpers/output_data_boundary.js")
+jest.mock("../../helpers/put/put_flag_interactor.js");
+jest.mock("../../helpers/general/output_data_boundary.js")
 
 const mockResponse = () => {
     let res = {};
@@ -21,7 +21,7 @@ describe("FlagController", () => {
 
     it("Should correctly put flag", async() => {
         FlagController.setTranscriptInteractor(PutFlagInteractor);
-        await FlagController.putStar({body:{"question" : "a", "projectId" : "b", "starStatus" : true}}, mockResponse(), {});
+        await FlagController.putFlag({body:{"question" : "a", "projectId" : "b", "flagStatus" : true}}, mockResponse(), {});
         expect(PutFlagInteractor.setFlagStatus).toHaveBeenCalledWith({question: "a", project_id: "b"}, {flag : true});
     });
 
@@ -29,7 +29,7 @@ describe("FlagController", () => {
         FlagController.setTranscriptInteractor(PutFlagInteractor);
         PutFlagInteractor.setFlagStatus.mockImplementation(() => {throw {message : "error"}});
         const res = mockResponse();
-        await StarController.putFlag({body : {"a" : "a"}}, res,{});
+        await FlagController.putFlag({body : {question : "a"}}, res,{});
         expect(res.json).toHaveBeenCalledWith({error : "error"});
     });
 

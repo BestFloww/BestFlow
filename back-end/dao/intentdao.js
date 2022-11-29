@@ -3,13 +3,24 @@ import {IntentInterface} from "../interfaces/intent-interface.js";
 
 export default class IntentDao extends IntentInterface{
   /**
-   *  @param {Object} query find specific intent(s)
+   *  @param {Object} query find specific intent(s) and emit it
    * */
-
   async getIntent(query = {}) {
     try {
       const intentList = await Intent.find(query).exec();
       this.emit("getIntent", intentList);
+    } catch (e) {
+      this.emit("getIntent",{status: 500, error: e});
+    }
+  }
+  /**
+   *  @param {Object} query find specific intent(s) and return it
+   *  @return {Array} return list of intents
+   * */
+  async getImmediateIntent(query = {}) {
+    try {
+      const intentList = await Intent.find(query).exec();
+      return intentList;
     } catch (e) {
       this.emit("getIntent",{status: 500, error: e});
     }
