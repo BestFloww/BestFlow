@@ -69,12 +69,13 @@ export class AnalysisPage extends Component {
                 {
                     this.state.showIntentMenu
                 }
-                <div className="justify-self-center">
-                  <button /* first line of className is tooltip styling */
+                <div /* first line of className is tooltip styling */
                   className="relative before:z-10 before:absolute before:left-1/2 before:-bottom-3 before:w-max before:max-w-xs before:-translate-x-1/2 before:translate-y-full before:rounded-lg before:bg-gray-300 before:px-2 before:py-1.5 before:text-off-white before:invisible before:content-[attr(tooltip)] after:z-10 after:absolute after:left-1/2 after:-bottom-3 after:h-0 after:w-0 after:-translate-x-1/2 after:border-8 after:border-b-gray-300 after:border-l-transparent after:border-t-transparent after:border-r-transparent after:invisible hover:before:visible hover:after:visible
-                  m-3 w-[11em] 2xl:w-[15em] mx-auto"
-                  aria-label="Home Button"
+                  justify-self-center"
                   tooltip="Click here to return to homepage"
+                  >
+                  <button className="m-3 w-[11em] 2xl:w-[15em] mx-auto"
+                  aria-label="Home Button"
                   data-testid="home-button"
                   onClick={this.openMainPage}
                   tabIndex={this.state.showIntentMenu ? "-1" : "0"}
