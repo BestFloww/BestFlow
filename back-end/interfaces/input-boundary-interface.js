@@ -23,10 +23,18 @@ export class InputBoundaryInterface{
     }
 
     /**
-     *  @param {Object} filter filters to find the question
+     *  @param {Object} filter object passed to mangoose to find the question
      *  @param {Object} status the star status
      * */
      static async setStarStatus(filter = {}, status = {}) {
+        throw new Error("not implemented");
+    }
+
+    /**
+     *  @param {Object} filter object passed to mangoose to find the question
+     *  @param {Object} status the flag status
+     * */
+     static async setFlagStatus(filter = {}, status = {}) {
         throw new Error("not implemented");
     }
 }

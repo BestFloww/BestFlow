@@ -21,12 +21,16 @@ const intentSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    flag: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 intentSchema.methods.getPercentages = function() {
     const percentageMap = {};
     this.children.forEach((numTimesCalled, intent) => {
-        percentageMap[intent] = (numTimesCalled / this.total_children).toFixed(2);
+        percentageMap[intent] = (numTimesCalled / this.total_children * 100).toFixed(2);
     });
     return percentageMap;
 };

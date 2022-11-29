@@ -1,4 +1,4 @@
-export default class StarController {
+export default class FlagController {
     static #inputBoundary;
     static #outputBoundary;
 
@@ -18,13 +18,13 @@ export default class StarController {
         }
     }
 
-    static async putStar(req, res, next) {
+    static async putFlag(req, res, next) {
         try {
             const body = req.body;
             const question = body.question.replaceAll(".", "-DOT-");
             const projectId = body.projectId;
-            const starStatus = body.starStatus;
-            await this.#inputBoundary.setStarStatus({question: question, project_id: projectId},{star: starStatus})
+            const flagStatus = body.flagStatus;
+            await this.#inputBoundary.setFlagStatus({question: question, project_id: projectId},{flag: flagStatus})
             const output = this.#outputBoundary.getOutput();
             const status = output.status;
             res.status(status).json(output);

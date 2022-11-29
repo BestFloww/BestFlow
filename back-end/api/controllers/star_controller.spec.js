@@ -29,7 +29,7 @@ describe("StarController", () => {
         StarController.setTranscriptInteractor(PutStarInteractor);
         PutStarInteractor.setStarStatus.mockImplementation(() => {throw {message : "error"}});
         const res = mockResponse();
-        await StarController.putStar({body : {"a" : "a"}}, res,{});
+        await StarController.putStar({body : {question : "a"}}, res,{});
         expect(res.json).toHaveBeenCalledWith({error : "error"});
     });
 

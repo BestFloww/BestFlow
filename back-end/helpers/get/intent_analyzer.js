@@ -20,32 +20,34 @@ export default class IntentAnalyzer{
         }
         return newIntents;
     }
-
+  
     async #formatModel(model) {//Formats the mongoose model into desired array for IntentLister to use
-        let percentageMap;
-        if (model.total_children == 0) {
-            percentageMap = {"No intents found.": 0};
-        } else {
-            percentageMap = this.#replacePeriods(model.getPercentages());
-        }
-
-        const intents = {
-            question: model.question.replaceAll("-DOT-", "."),
-            children: percentageMap
-        }
-        let result = false
-        if (this.group) {
-            result = await this.grouper.group(intents);
-        }
-        return result ? null : intents;
+      let percentageMap;
+      if (model.total_children === 0) {
+        percentageMap = {"[END OF CONVERSATION]": 0};
+      } else {
+        percentageMap = this.#replacePeriods(model.getPercentages());
+      }
+  
+      const intents = {
+        question: model.question.replaceAll("-DOT-", "."),
+        children: percentageMap,
+        star: model.star,
+        flag: model.flag
+      };
+      let result = false
+      if (this.group) {
+        result = await this.grouper.group(intents);
+      }
+      return result ? null : intents;
     }
-
+  
     #replacePeriods(map) {
-        const newMap = {};
-        Object.entries(map).forEach(([intent, percentage]) => {
-            const replacedIntent = intent.replaceAll("-DOT-", ".")
-            newMap[replacedIntent] = +(percentage * 100); //casting .toFixed() string into a float
-        });
-        return newMap;
+      const newMap = {};
+      Object.entries(map).forEach(([intent, percentage]) => {
+          const replacedIntent = intent.replaceAll("-DOT-", ".")
+          newMap[replacedIntent] = parseFloat(percentage); //casting .toFixed() string into a float
+      });
+      return newMap;
     }
 }
