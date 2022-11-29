@@ -55,8 +55,10 @@ class TranscriptUploadModal extends React.Component {
       const parsedData = JSON.parse(data);
       if (parsedData.data){
         for (const intent of parsedData.data) {
-          if (intentIsMissingFields(intent)){
-            return false;
+          if (Object.keys(intent).length !== 0){
+            if (intentIsMissingFields(intent)){
+              return false;
+            }
           }
         }
         return true;

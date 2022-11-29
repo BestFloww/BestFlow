@@ -19,7 +19,8 @@ export default class IntentAnalyzer{
     const intents = {
       question: model.question.replaceAll("-DOT-", "."),
       children: percentageMap,
-      star: model.star
+      star: model.star,
+      flag: model.flag
     };
 
     return intents;
@@ -29,7 +30,7 @@ export default class IntentAnalyzer{
     const newMap = {};
     Object.entries(map).forEach(([intent, percentage]) => {
         const replacedIntent = intent.replaceAll("-DOT-", ".")
-        newMap[replacedIntent] = +(percentage * 100); //casting .toFixed() string into a float
+        newMap[replacedIntent] = parseFloat(percentage); //casting .toFixed() string into a float
     });
     return newMap;
   }
