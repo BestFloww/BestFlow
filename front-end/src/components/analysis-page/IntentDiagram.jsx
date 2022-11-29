@@ -10,7 +10,7 @@ class IntentDiagram extends Component {
         return Object.keys(this.props.children).map((key) => {
             return (
                 <div 
-                    className="text-md bg-green-100 shadow-md shadow-blue/10 rounded-2xl pb-2 border-2 border-green-200"
+                    className="text-md bg-green-100 shadow-md shadow-blue/10 rounded-2xl pb-2 mb-5 border-2 border-green-200"
                     key={key}
                 >
                     <p
