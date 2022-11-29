@@ -1,8 +1,8 @@
-import {InputBoundaryInterface} from "../../interfaces/input-boundary-interface.js";
+import { SetFlagInterface } from "../../interfaces/set-flag-interface.js";
 import OutputDataBoundary from "../general/output_data_boundary.js";
 import { IntentInterface } from "../../interfaces/intent-interface.js";
 
-export default class PutFlagInteractor extends InputBoundaryInterface{
+export default class PutFlagInteractor extends SetFlagInterface{
     static #IntentDao;
 
     static setIntentDao(dao){

@@ -1,11 +1,11 @@
-import {InputBoundaryInterface} from "../../interfaces/input-boundary-interface.js";
+import {GetTranscriptInterface} from "../../interfaces/get-trancript-interface.js";
 import IntentAnalyzer from "./intent_analyzer.js";
 import OutputDataBoundary from "../general/output_data_boundary.js";
 import { IntentInterface } from "../../interfaces/intent-interface.js";
 
 let analyzer = new IntentAnalyzer();
 
-export default class GetTranscriptInteractor extends InputBoundaryInterface{
+export default class GetTranscriptInteractor extends GetTranscriptInterface{
     static #IntentDao;
 
     static setIntentDao(dao){
