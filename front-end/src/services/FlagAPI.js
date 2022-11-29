@@ -8,8 +8,9 @@ const API = {
      * @returns {Object} http resolution
      */
     put: async(intent) => {
+        console.log(intent)
         return await axios.put(baseURL, intent);
-    }
+    },
 };
 
 export default API;
