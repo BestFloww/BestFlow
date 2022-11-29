@@ -15,7 +15,6 @@ class IntentDiagram extends Component {
                 >
                     <p
                         data-testid={`${key}-${this.props.children[key]}`}
-                        tabIndex={0}
                         className="w-20 h-9 p-2 flex align-center justify-center text-md mx-auto"
                     >
                         {this.props.children[key]}%
@@ -27,7 +26,6 @@ class IntentDiagram extends Component {
                         <h4 
                             className="break-words text-center my-auto w-32"
                             data-testid={key}
-                            tabIndex={0}
                         >
                             {key} 
                         </h4>
@@ -85,7 +83,6 @@ class IntentDiagram extends Component {
                     <h3
                         className="rounded-lg bg-off-white self-center p-5 shadow-lg shadow-blue/10 break-words text-center md:text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem]"
                         data-testid={this.props.question}
-                        tabIndex={0}
                     >
                         {this.props.question}
                     </h3>
