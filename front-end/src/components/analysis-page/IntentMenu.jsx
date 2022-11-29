@@ -44,11 +44,11 @@ class IntentMenu extends Component {
         this.setState({inputValue: event.target.value});
     }
 
-    handleStarChange() {
+    handleStarFilterChange() {
         store.dispatch(toggleStarFilter());
     }
 
-    handleFlagChange() {
+    handleFlagFilterChange() {
         store.dispatch(toggleFlagFilter());
     }
 
@@ -184,7 +184,7 @@ class IntentMenu extends Component {
                             >
                                 <button
                                     className="w-10 h-10"
-                                    onClick={this.handleStarChange}
+                                    onClick={this.handleStarFilterChange}
                                     aria-label="filter star button"
                                     data-testid="star-filter"
                                 >
@@ -203,7 +203,7 @@ class IntentMenu extends Component {
                             >
                                 <button
                                     className="w-10 h-10"
-                                    onClick={this.handleFlagChange}
+                                    onClick={this.handleFlagFilterChange}
                                     aria-label="filter flag button"
                                     data-testid="flag-filter"
                                 >
