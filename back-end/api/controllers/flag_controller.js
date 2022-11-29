@@ -21,7 +21,7 @@ export default class FlagController {
     static async putFlag(req, res, next) {
         try {
             const body = req.body;
-            const question = body.question;
+            const question = body.question.replaceAll(".", "-DOT-");
             const projectId = body.projectId;
             const flagStatus = body.flagStatus;
             await this.#inputBoundary.setFlagStatus({question: question, project_id: projectId},{flag: flagStatus})
