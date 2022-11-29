@@ -4,12 +4,18 @@ export default class IntentSearch{
     /**
      * @param {Array} intents array of intents to search through
      * @param {String} searchString string to search by
-     * @return {Object} an array of intents filtered by searchString and a mapping of each intent to indices describing where the searchString appears in its question
+     * @param {Boolean} [starFilter=false] if needed to filter by star
+     * @param {Boolean} [flagFilter=false] if needed to filter by flag
+     * @return {Object} an array of intents filtered by searchString, starFilter, and flagFilter and a mapping of each intent to indices describing where the searchString appears in its question
      * */
-    filterIntents = (intents, searchString) => {
+    filterIntents = (intents, searchString,starFilter=false, flagFilter=false) => {
         let filteredIntents = [];
         let searchSlices = {};
-        intents.forEach((intent) => this.addFilteredIntent(intent, searchString, filteredIntents, searchSlices));
+        intents.forEach((intent) => {
+            if (!(starFilter || flagFilter) || (intent.star && starFilter) || (intent.flag && flagFilter)) {
+                this.addFilteredIntent(intent, searchString, filteredIntents, searchSlices);
+            }
+        });
         return { filteredIntents, searchSlices };
     }
     
