@@ -286,8 +286,6 @@ describe("TranscriptDataGrouper", () => {
         });
 
         it("should correctly merge 3 similar intents in different places", async() => {
-            // TODO: Test is currently broken
-
             const alreadyProcessedIntents = intents.slice(0, 8);
             const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
 
