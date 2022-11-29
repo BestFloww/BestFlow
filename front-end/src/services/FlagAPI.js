@@ -9,7 +9,7 @@ const API = {
      */
     put: async(intent) => {
         return await axios.put(baseURL, intent);
-    }
+    },
 };
 
 export default API;

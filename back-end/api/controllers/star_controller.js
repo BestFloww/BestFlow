@@ -21,7 +21,7 @@ export default class StarController {
     static async putStar(req, res, next) {
         try {
             const body = req.body;
-            const question = body.question;
+            const question = body.question.replaceAll(".", "-DOT-");
             const projectId = body.projectId;
             const starStatus = body.starStatus;
             await this.#inputBoundary.setStarStatus({question: question, project_id: projectId},{star: starStatus})

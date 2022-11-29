@@ -1,8 +1,8 @@
-import {InputBoundaryInterface} from "../interfaces/input-boundary-interface.js";
-import OutputDataBoundary from "./output_data_boundary.js";
-import { IntentInterface } from "../interfaces/intent-interface.js";
+import {InputBoundaryInterface} from "../../interfaces/input-boundary-interface.js";
+import OutputDataBoundary from "../general/output_data_boundary.js";
+import { IntentInterface } from "../../interfaces/intent-interface.js";
 
-export default class PutFlagInteractor extends InputBoundaryInterface{
+export default class PutStarInteractor extends InputBoundaryInterface{
     static #IntentDao;
 
     static setIntentDao(dao){
@@ -16,7 +16,7 @@ export default class PutFlagInteractor extends InputBoundaryInterface{
         }
     }
 
-    static async setFlagStatus(filter, status){
+    static async setStarStatus(filter, status){
         try{
             const res = await this.#IntentDao.putIntent(filter, status);
         } catch (e) {

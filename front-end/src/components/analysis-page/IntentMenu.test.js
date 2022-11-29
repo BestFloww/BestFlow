@@ -27,7 +27,10 @@ describe("IntentMenu", () => {
     beforeEach(() => {
         props = {...basicProps};
         jest.clearAllMocks();
-        
+        for (let intent of props.intents) {
+            intent.star = false;
+            intent.flag = false;
+        }
     });
 
     describe("For generating and listing intent buttons", () => {
@@ -77,11 +80,6 @@ describe("IntentMenu", () => {
     });
 
     describe("For the search feature", () => {
-        it ("should display an empty list of intents if there are none matching the search input value", () => {
-            renderComponent(props);
-            userEvent.type(screen.getByLabelText("Search by keyword"), "A bad search string");
-            expect(screen.queryByTestId("intent-menu-list-item")).not.toBeInTheDocument();
-        });
 
         it ("should correctly display 1 intent with the proper highlight styling if there is 1 matching the search input value", () => {
             renderComponent(props);
@@ -96,20 +94,6 @@ describe("IntentMenu", () => {
             expect(screen.getByText(/special/)).not.toHaveClass("bg-gray-100");  // Fragment of the last slice " (special search substring)"
         });
 
-        it ("should correctly display 2 intents with the proper highlight styling if there are 2 matching the search input value", () => {
-            renderComponent(props);
-            userEvent.type(screen.getByLabelText("Search by keyword"), "(special search substring)");
-            // A button for each of Intents 0-1 should display
-            Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 2 ? 1 : 0);
-            });
-            // Check for styling of each slice of text in each of the intent buttons
-            expect(screen.getByText(/...nt 0/)).not.toHaveClass("bg-gray-100");  // First slice of the first intent
-            expect(screen.getByText(/...nt 1/)).not.toHaveClass("bg-gray-100");  // First slice of the second intent
-            screen.getAllByText("(special search substring)").forEach((element) => expect(element).toHaveClass("bg-gray-100"));  //Second slice of both intents
-            // For both intents, there is no third slice to check as the search string includes the tail of both intents' contents
-        });
-
         it ("should display the full list of intents with the proper non-highlight styling if there is no search input value", () => {
             renderComponent(props);
             userEvent.clear(screen.getByLabelText("Search by keyword"));
@@ -117,6 +101,93 @@ describe("IntentMenu", () => {
             Object.keys(props.intents).forEach((key) => {
                 expect(screen.getByLabelText(`${props.intents[key].question}`)).toBeInTheDocument();
             });
+        });
+    });
+
+    describe("For the star and flag circle", () => {
+        it ("should display a yellow circle if starred", () => {
+            props.intents[0].star = true;
+            renderComponent(props);
+            expect(screen.getByTestId("star-circle")).toBeInTheDocument();
+        });
+
+        it ("should display a red circle if flagged", () => {
+            props.intents[0].flag = true;
+            renderComponent(props);
+            expect(screen.getByTestId("flag-circle")).toBeInTheDocument();
+        });
+
+        it ("should display both circles if both flagged and starred", () => {
+            props.intents[0].star = true;
+            props.intents[1].flag = true;
+            renderComponent(props);
+            expect(screen.getByTestId("star-circle")).toBeInTheDocument();
+            expect(screen.getByTestId("flag-circle")).toBeInTheDocument();
+        });
+    });
+
+    describe("For the star and flag filter feature", () => {
+        it ("should display an empty list of intents if there are no stars", () => {
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("star-filter"));
+            expect(screen.queryByTestId("intent-menu-list-item")).not.toBeInTheDocument();
+            // To get make the starFilter false for future testing
+            userEvent.click(screen.getByTestId("star-filter"));
+        });
+
+        it ("should display an empty list of intents if there are no flags", () => {
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("flag-filter"));
+            expect(screen.queryByTestId("intent-menu-list-item")).not.toBeInTheDocument();
+            // To get make the flagFilter false for future testing
+            userEvent.click(screen.getByTestId("flag-filter"));
+        });
+
+        it ("should correctly display 1 intent when only one is starred", () => {
+            props.intents[0].star = true;
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("star-filter"));
+            // A button for Intent 0 should display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 1 ? 1 : 0);
+            });
+            // To get make the starFilter false for future testing
+            userEvent.click(screen.getByTestId("star-filter"));
+        });
+
+        it ("should correctly display 1 intent when only one is flagged", () => {
+            props.intents[0].flag = true;
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("flag-filter"));
+            // A button for Intent 0 should display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 1 ? 1 : 0);
+            });
+            // To get make the flagFilter false for future testing
+            userEvent.click(screen.getByTestId("flag-filter"));
+        });
+
+        it ("should display two intents when two intents are both starred and flagged and menu is closed", () => {
+            props.intents[0].star = true;
+            props.intents[0].flag = true;
+            props.intents[1].star = true;
+            props.intents[1].flag = true;
+            renderComponent(props);
+            userEvent.click(screen.getByTestId("star-filter"));
+            userEvent.click(screen.getByTestId("flag-filter"));
+            // A button for each of Intents 0-1 should display
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 2 ? 1 : 0);
+            });
+            // Close intent menu
+            userEvent.click(screen.getByLabelText("Close intent menu"));
+            // Button amount stays the same even when closed
+            Object.keys(props.intents).forEach((key) => {
+                expect(screen.queryAllByLabelText(`${props.intents[key].question}`).length).toBe(key < 2 ? 1 : 0);
+            });
+            // To get make the filters false for future testing
+            userEvent.click(screen.getByTestId("star-filter"));
+            userEvent.click(screen.getByTestId("flag-filter"));
         });
     });
 

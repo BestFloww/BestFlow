@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export default class TranscriptFactory {
     static generateTranscript(root, children) {
         const transcript = []

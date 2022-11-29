@@ -1,8 +1,8 @@
 import express from "express";
 import FlagController from "../controllers/flag_controller.js";
 import IntentDao from "../../dao/intentdao.js";
-import PutFlagInteractor from "../../helpers/put_flag_interactor.js";
-import OutputDataBoundary from "../../helpers/output_data_boundary.js";
+import PutFlagInteractor from "../../helpers/put/put_flag_interactor.js";
+import OutputDataBoundary from "../../helpers/general/output_data_boundary.js";
 
 const router = express.Router();
 

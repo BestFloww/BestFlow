@@ -1,9 +1,9 @@
 import StarController from "./star_controller.js";
-import PutStarInteractor from "../../helpers/put_star_interactor.js";
-import OutputDataBoundary from "../../helpers/output_data_boundary.js"
+import PutStarInteractor from "../../helpers/put/put_star_interactor.js";
+import OutputDataBoundary from "../../helpers/general/output_data_boundary.js"
 
-jest.mock("../../helpers/put_star_interactor.js");
-jest.mock("../../helpers/output_data_boundary.js")
+jest.mock("../../helpers/put/put_star_interactor.js");
+jest.mock("../../helpers/general/output_data_boundary.js")
 
 const mockResponse = () => {
     let res = {};
@@ -29,7 +29,7 @@ describe("StarController", () => {
         StarController.setTranscriptInteractor(PutStarInteractor);
         PutStarInteractor.setStarStatus.mockImplementation(() => {throw {message : "error"}});
         const res = mockResponse();
-        await StarController.putStar({body : {"a" : "a"}}, res,{});
+        await StarController.putStar({body : {question : "a"}}, res,{});
         expect(res.json).toHaveBeenCalledWith({error : "error"});
     });
 

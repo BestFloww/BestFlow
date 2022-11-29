@@ -1,10 +1,10 @@
-import intentDao from "../dao/intentdao.js";
-import { IntentInterface } from "../interfaces/intent-interface.js";
-import PostTranscriptInteractor from "./post_transcript_interactor.js";
+import intentDao from "../../dao/intentdao.js";
+import { IntentInterface } from "../../interfaces/intent-interface.js";
+import PostTranscriptInteractor from "../post/post_transcript_interactor.js";
 import TranscriptFormatter from "./transcript_data_formatter.js";
 
-jest.mock("../dao/intentdao.js");
-jest.mock("../interfaces/intent-interface.js")
+jest.mock("../../dao/intentdao.js");
+jest.mock("../../interfaces/intent-interface.js")
 jest.mock("./transcript_data_formatter.js");
 
 const mock_transcript = {transcript: JSON.stringify({})};
