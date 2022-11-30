@@ -70,6 +70,20 @@ describe("formatTranscript", () => {
         
     });
 
+    it("should return an array with one intent and END child when given one question and an empty object", async() => {
+      globalDatabase.rawTranscript.data.push(globalDatabase.speak1);
+      globalDatabase.rawTranscript.data.push({});
+      const received = await TranscriptFormatter.formatTranscript(globalDatabase.rawTranscript);
+      const children = new Map();
+      children.set("END OF CONVERSATION", 1);
+      expect(received.length).toBe(1);
+      expect(received[0].question).toBe("Alexa: I want to plan my schedule. Is this a key location? ");
+      expect(received[0].children).toEqual(children);
+      expect(received[0].total_children).toBe(1);
+      expect(received[0].project_id).toBe("1");
+      
+  });
+
     it("should return an array containing one Intent initializer, when the type of question is text, no children", async() => {
         globalDatabase.rawTranscript.data.push(globalDatabase.text2);
         const received = await TranscriptFormatter.formatTranscript(globalDatabase.rawTranscript);
@@ -80,13 +94,19 @@ describe("formatTranscript", () => {
         expect(received[0].project_id).toBe("2");
     });
 
-    it("should return an array containing two Intent initializers, two different project ids, no children", async() => {
+    it("should return an array containing two Intent initializers, two different project ids, divided by an empty object", async() => {
         globalDatabase.rawTranscript.data.push(globalDatabase.speak1);
+        globalDatabase.rawTranscript.data.push({});
         globalDatabase.rawTranscript.data.push(globalDatabase.text2);
         const received = await TranscriptFormatter.formatTranscript(globalDatabase.rawTranscript);
+        const children = new Map();
+        children.set("END OF CONVERSATION", 1);
         expect(received.length).toBe(2);
-        expect(received[0].children).toEqual(new Map());
-        expect(received[0].total_children).toBe(0);
+        expect(received[0].children).toEqual(children);
+        expect(received[0].total_children).toBe(1);
+        expect(received[1].children).toEqual(new Map());
+        expect(received[1].total_children).toBe(0);
+
     });
 
 
@@ -102,19 +122,29 @@ describe("formatTranscript", () => {
       
     });
 
-
     it("should return an array containing 3 Intent initializers, various project ids, one children twice", async() => {
         globalDatabase.rawTranscript.data.push(globalDatabase.speak1);
         globalDatabase.rawTranscript.data.push(globalDatabase.text1);
+        globalDatabase.rawTranscript.data.push({});
         globalDatabase.rawTranscript.data.push(globalDatabase.text2);
+        globalDatabase.rawTranscript.data.push({});
         globalDatabase.rawTranscript.data.push(globalDatabase.speak1);
         globalDatabase.rawTranscript.data.push(globalDatabase.text1);
-        const children = new Map();
-        children.set("What would you like to buy?", 2);
+        globalDatabase.rawTranscript.data.push({});
+        const children0 = new Map();
+        children0.set("What would you like to buy?", 2);
+        const children1 = new Map();
+        children1.set("END OF CONVERSATION", 2);
+        const children2 = new Map();
+        children2.set("END OF CONVERSATION", 1);
         const received = await TranscriptFormatter.formatTranscript(globalDatabase.rawTranscript);
         expect(received.length).toBe(3);
-        expect(received[0].children).toEqual(children);
+        expect(received[0].children).toEqual(children0);
         expect(received[0].total_children).toBe(2);
+        expect(received[1].children).toEqual(children1);
+        expect(received[1].total_children).toBe(2);
+        expect(received[2].children).toEqual(children2);
+        expect(received[2].total_children).toBe(1);
       
     });
 });

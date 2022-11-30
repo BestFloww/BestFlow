@@ -10,6 +10,7 @@ class TranscriptDescription extends Component {
                 </ul>
                 <pre className='overflow-x-scroll leading-7 text-sm bg-off-white shadow-inner-lg rounded p-2 my-4 mx-2'
                      data-testid="sampleTranscript"
+                     tabIndex = "0"
                 >
                     {JSON.stringify(exampleTranscript, null, 2)}
                 </pre>

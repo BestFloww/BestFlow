@@ -9,6 +9,7 @@ export default class TranscriptFormatter {
                     prev = this.#updateContent(entry, content, prev);
                 }
                 else{
+                    this.#addChild(content, prev, "END OF CONVERSATION", content[prev].project_id);
                     prev = "";
                 }
             }
