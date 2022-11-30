@@ -135,12 +135,12 @@ class MainPage extends Component {
                 </div>
               </div>
               <div className="flex sm:absolute sm:py-52">
-                <label className="text-xl flex font-cabin -mt-7 text-center">
+                <label className="text-l flex font-cabin -mt-7 text-center">
                   <input
-                  className= "checked:green-200"
+                  className= "appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-off-white checked:bg-purple-300 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox" 
                   onChange={this.toggleMerge}/>
-                  Merge similar questions
+                  Merge similar questions (Beta)
                 </label>
               </div>
               <div className="mx-auto">
