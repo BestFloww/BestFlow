@@ -69,11 +69,21 @@ describe('MainPage', () => {
         expect(screen.getByLabelText("View Analysis")).toBeDisabled();
     });
 
-    it('should dispatch openAnalysisPage when a valid Project ID is entered and View Analysis button is clicked', async() => {
+    it('should dispatch openAnalysisPage when a valid Project ID is entered and View Analysis button is clicked, merge false', async() => {
         store.dispatch(addAnalyzedTranscript({projectId: "1mergefalse", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
+        await userEvent.click(screen.getByText('View Analysis'));
+        expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
+    });
+
+    it('should dispatch openAnalysisPage when a valid Project ID is entered and View Analysis button is clicked, merge true', async() => {
+        store.dispatch(addAnalyzedTranscript({projectId: "1mergetrue", transcript: [{question: "a", children: {"b": 100,}}]}));
+        renderComponent();
+        userEvent.clear(screen.getByLabelText("Enter Project ID"));
+        userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
+        userEvent.click(screen.getByTestId("checkbox"));
         await userEvent.click(screen.getByText('View Analysis'));
         expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
     });
