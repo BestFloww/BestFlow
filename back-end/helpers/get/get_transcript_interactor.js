@@ -21,7 +21,7 @@ export default class GetTranscriptInteractor extends InputBoundaryInterface{
     }
 
     static async getTranscript(query){
-        analyzer.analyzeIntents.group = query.useMerger;
+        analyzer.group = query.useMerger == "true";
         const res = await this.#IntentDao.getIntent({project_id : query.projectId});
     }
 }
