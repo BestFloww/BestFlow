@@ -31,7 +31,15 @@ class MainPage extends Component {
 
   handleChange = (event) => {
     // Update the Project ID of the analyzed transcript to display in redux based on input field
-    store.dispatch(setProjectIdToBeDisplayed(event.target.value));
+    const enteredId = event.target.value
+    if(enteredId){
+      store.dispatch(setProjectIdToBeDisplayed(event.target.value + "merge" + this.state.useMerger));
+    }
+    else{
+      store.dispatch(setProjectIdToBeDisplayed(event.target.value));
+    }
+    
+    console.log("arrrrrrrrrr",event.target.value + "merge" + this.state.useMerger)
   }
 
   isInputBlank() {
@@ -44,15 +52,17 @@ class MainPage extends Component {
       await this.getAnalyzedData();
       store.dispatch(openAnalysisPage());
     } catch (e) {
+      console.log(e)
       window.alert("Error in analyzing transcript. " + e.response.data.error);
     }
   }
 
   getAnalyzedData = async() => {
       const override = store.getState().analyzeTranscript.override;
-      const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
+      const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed.split("merge")[0] ;
       const analyzedTranscripts = store.getState().analyzeTranscript.analyzedTranscripts;
-      if(override || (!(projectId in analyzedTranscripts))){
+      const mergeId = projectId + "merge" + this.state.useMerger;
+      if(override || (!((mergeId) in analyzedTranscripts))){
         // Call API if either the user wants to override or the project ID is not stored in this session's transcripts
         const analyzedData = await TranscriptAPI.getAnalysis({projectId: projectId, useMerger: this.state.useMerger});
         if (analyzedData.data.length === 0) {
@@ -61,7 +71,8 @@ class MainPage extends Component {
           missingIdError.response = {data: {error: "Your project ID is not in our database. Please try again."}}
           throw missingIdError;
         } else {
-          store.dispatch(addAnalyzedTranscript({projectId: projectId, transcript: analyzedData.data}));
+          store.dispatch(setProjectIdToBeDisplayed(mergeId))
+          store.dispatch(addAnalyzedTranscript({projectId: mergeId , transcript: analyzedData.data}));
           store.dispatch(setOverrideStatus(false));
         }
       }
@@ -115,7 +126,7 @@ class MainPage extends Component {
                     aria-label="Enter Project ID"
                     placeholder="Enter Project ID"
                     onChange={this.handleChange}
-                    value={this.props.projectIdToBeDisplayed}
+                    value={this.props.projectIdToBeDisplayed.split("merge")[0]}
                   />
                   <div className="group-hover:flex">
                     <span

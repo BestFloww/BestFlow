@@ -47,7 +47,7 @@ describe('MainPage', () => {
         renderComponent();
         userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
-        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: '1'});
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: '1mergefalse'});
     });
 
     it('should automatically write the current Project ID into the Project ID input', async() => {
@@ -70,7 +70,7 @@ describe('MainPage', () => {
     });
 
     it('should dispatch openAnalysisPage when a valid Project ID is entered and View Analysis button is clicked', async() => {
-        store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
+        store.dispatch(addAnalyzedTranscript({projectId: "1mergefalse", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
@@ -96,7 +96,7 @@ describe('MainPage', () => {
         userEvent.type(screen.getByLabelText("Enter Project ID"), "2");
         await userEvent.click(screen.getByText('View Analysis'));
         // Check that if no transcript with the ID is stored in analyzedTranscripts, but it exists on the database, it properly dispatches reducers to store it
-        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/addAnalyzedTranscript', payload: {projectId: "2", transcript: [{question: "a", children: {"b": 100,}}]} });
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/addAnalyzedTranscript', payload: {projectId: "2mergefalse", transcript: [{question: "a", children: {"b": 100,}}]} });
         expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setOverrideStatus', payload: false });
         await waitFor(() => expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' }));
     });        
