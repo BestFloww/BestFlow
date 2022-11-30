@@ -31,8 +31,7 @@ class MainPage extends Component {
 
   handleChange = (event) => {
     // Update the Project ID of the analyzed transcript to display in redux based on input field
-    const enteredId = event.target.value
-    if(enteredId){
+    if(event.target.value){
       store.dispatch(setProjectIdToBeDisplayed(event.target.value + "merge" + this.state.useMerger));
     }
     else{
