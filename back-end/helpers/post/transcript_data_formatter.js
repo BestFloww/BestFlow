@@ -36,7 +36,7 @@ export default class TranscriptFormatter {
             if(prev in content){
                 this.#addChild(content, prev, message, id);
             }
-            prev = (message + "" + id);
+            prev = (message + id);
         }
         return prev;
     }
