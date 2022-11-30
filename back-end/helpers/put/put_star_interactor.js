@@ -1,8 +1,8 @@
-import {InputBoundaryInterface} from "../../interfaces/input-boundary-interface.js";
+import { SetStarInterface } from "../../interfaces/set-star-interface.js"
 import OutputDataBoundary from "../general/output_data_boundary.js";
 import { IntentInterface } from "../../interfaces/intent-interface.js";
 
-export default class PutStarInteractor extends InputBoundaryInterface{
+export default class PutStarInteractor extends SetStarInterface{
     static #IntentDao;
 
     static setIntentDao(dao){
