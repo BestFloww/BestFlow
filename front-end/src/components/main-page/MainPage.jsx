@@ -10,7 +10,7 @@ import Title from "../icons/title.jsx";
 import Logo from "../icons/logo.jsx";
 import {exampleTranscript} from "../helpers/ExampleTranscript.js";
 import TranscriptAPI from "../../services/TranscriptAPI.js";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 class MainPage extends Component {
 
@@ -19,7 +19,12 @@ class MainPage extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       showTranscriptUploadModal: false,
+      renderAnimation: true,
     };
+  }
+
+  setRenderAnimationFalse = () => {
+    this.setState({renderAnimation: false});
   }
 
   toggleTranscriptUploadModal = () => {
@@ -76,20 +81,30 @@ class MainPage extends Component {
   }
 
   render() {
+    setTimeout(() => {
+      console.log(this.renderAnimation)
+      this.setRenderAnimationFalse();
+    }, 6500);
     return(
       <div className="bg-purple-100 absolute gap-y-5 sm:inset-0 flex flex-col sm:flex-row w-screen" data-testid="main-page">
-          <div className="fixed w-screen sm:w-2/3 flex-col sm:mt-[25vh] gap-y-12">
-            <motion.div
-            className={!this.props.newVisiter ? "hidden" : "z-40 bg-purple-100 flex justify-center max-h-20 sm:max-h-[10rem] -ml-[29rem] mt-[0.75rem]"}
-            aria-hidden={!this.props.newVisiter}
-            data-testid="animation-overlay"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 3, delay: 5 }}>
-              <Logo />
-            </motion.div>
-          </div>
+        <div className={!this.props.newVisiter ? "hidden" : "fixed w-screen sm:w-2/3 flex-col sm:mt-[25vh] gap-y-12"}
+          data-testid="animation-div"
+          aria-hidden={!this.props.newVisiter}
+          >
+            {this.renderAnimation && (
+            <AnimatePresence>
+              <motion.div
+              key="animation"
+              className="z-40 bg-purple-100 flex justify-center max-h-28 sm:max-h-[10rem] sm:ml-[3rem] sm:mt-[10rem] md:-ml-[29rem] md:mt-[0.75rem]"
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5, delay: 3 }}
+              >
+                <Logo />
+              </motion.div>
+            </AnimatePresence>)}
+        </div>
         <div className="justify-center flex">
           <TranscriptUploadModal
             show={this.state.showTranscriptUploadModal}

@@ -113,4 +113,16 @@ describe('MainPage', () => {
         expect(mockElement.click).toHaveBeenCalled();
     });
 
+    it('should show animated logo if it is the first visit of the Main Page', () => {
+        renderComponent();
+        const logo = screen.getByTestId("animation-div");
+        expect(logo).toHaveClass("z-40 bg-purple-100");
+    });
+
+    it('should not show animated logo if the Main Page has been visited', () => {
+        renderComponent({newVisiter: false});
+        const logo = screen.getByTestId("animation-div");
+        expect(logo).toHaveClass("hidden");
+    })
+
 });
