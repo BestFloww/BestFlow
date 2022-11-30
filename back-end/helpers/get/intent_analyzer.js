@@ -7,7 +7,9 @@ export default class IntentAnalyzer{
 
     async analyzeIntents(models) {
         const newIntents = [];
+        console.log("here")
         if (this.group) {
+          console.log("yessss")
             this.grouper = new TranscriptDataGrouper(newIntents, models[0].project_id);
             TranscriptDataGrouper.setIntentDao(new IntentDao());
         }
