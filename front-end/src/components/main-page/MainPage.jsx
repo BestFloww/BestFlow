@@ -7,8 +7,10 @@ import BaseButton from "../general/BaseButton.jsx";
 import TranscriptUploadModal from "./TranscriptUploadModal.jsx";
 import TranscriptDescription from "./TranscriptDescription.jsx";
 import Title from "../icons/title.jsx";
+import Logo from "../icons/logo.jsx";
 import {exampleTranscript} from "../helpers/ExampleTranscript.js";
 import TranscriptAPI from "../../services/TranscriptAPI.js";
+import { motion } from "framer-motion";
 
 class MainPage extends Component {
 
@@ -76,6 +78,18 @@ class MainPage extends Component {
   render() {
     return(
       <div className="bg-purple-100 absolute gap-y-5 sm:inset-0 flex flex-col sm:flex-row w-screen" data-testid="main-page">
+          <div className="fixed w-screen sm:w-2/3 flex-col sm:mt-[25vh] gap-y-12">
+            <motion.div
+            className={!this.props.newVisiter ? "hidden" : "z-40 bg-purple-100 flex justify-center max-h-20 sm:max-h-[10rem] -ml-[29rem] mt-[0.75rem]"}
+            aria-hidden={!this.props.newVisiter}
+            data-testid="animation-overlay"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 3, delay: 5 }}>
+              <Logo />
+            </motion.div>
+          </div>
         <div className="justify-center flex">
           <TranscriptUploadModal
             show={this.state.showTranscriptUploadModal}
@@ -158,7 +172,8 @@ class MainPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  projectIdToBeDisplayed: state.analyzeTranscript.projectIdToBeDisplayed
+  projectIdToBeDisplayed: state.analyzeTranscript.projectIdToBeDisplayed,
+  newVisiter: state.switchPage.newVisiter
 });
 
 export default connect(mapStateToProps)(MainPage);

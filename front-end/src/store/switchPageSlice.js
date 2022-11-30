@@ -4,6 +4,7 @@ export const switchPageSlice = createSlice({
   name: 'switchPage',
   initialState: {
     page: "MainPage",
+    newVisiter: true,
   },
   reducers: {
     openMainPage: state => {
@@ -11,7 +12,9 @@ export const switchPageSlice = createSlice({
     },
     openAnalysisPage: state => {
       state.page = "AnalysisPage";
-    },
+      // Save that analysis page has been visited.
+      state.newVisiter = false;
+    }
   }
 })
 

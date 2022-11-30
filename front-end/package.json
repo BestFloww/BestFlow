@@ -6,6 +6,7 @@
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
     "dotenv": "^16.0.3",
+    "framer-motion": "^7.6.15",
     "fs": "^0.0.1-security",
     "lodash": ">=4.17.21",
     "moment": ">=2.29.4",
