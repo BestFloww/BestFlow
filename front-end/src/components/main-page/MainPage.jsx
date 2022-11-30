@@ -38,8 +38,6 @@ class MainPage extends Component {
     else{
       store.dispatch(setProjectIdToBeDisplayed(event.target.value));
     }
-    
-    console.log("arrrrrrrrrr",event.target.value + "merge" + this.state.useMerger)
   }
 
   isInputBlank() {
@@ -52,7 +50,6 @@ class MainPage extends Component {
       await this.getAnalyzedData();
       store.dispatch(openAnalysisPage());
     } catch (e) {
-      console.log(e)
       window.alert("Error in analyzing transcript. " + e.response.data.error);
     }
   }
