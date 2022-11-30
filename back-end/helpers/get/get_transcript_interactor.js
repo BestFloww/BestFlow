@@ -1,4 +1,4 @@
-import {GetTranscriptInterface} from "../../interfaces/get-trancript-interface.js";
+import {GetTranscriptInterface} from "../../interfaces/get-transcript-interface.js";
 import IntentAnalyzer from "./intent_analyzer.js";
 import OutputDataBoundary from "../general/output_data_boundary.js";
 import { IntentInterface } from "../../interfaces/intent-interface.js";
