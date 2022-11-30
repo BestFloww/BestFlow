@@ -113,7 +113,7 @@ class MainPage extends Component {
               />
             </div>
             <div className="justify-center mx-auto sm:mx-0 flex gap-y-5 flex-col-reverse sm:flex-row">
-              <div className="flex sm:absolute sm:py-32">
+              <div className="flex sm:absolute sm:py-28">
                 <div className="group">
                   <input
                     className="bg-off-white text-xl rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
@@ -134,14 +134,15 @@ class MainPage extends Component {
                   </div>
                 </div>
               </div>
-              <div className="justify-center mx-auto sm:mx-0 flex gap-y-5 flex-col-reverse sm:flex-row">
-              <div className="flex sm:absolute sm:py-32">
-                <label className="justify-center text-2xl flex font-cabin -mt-7 text-center">
-                  <input className="" type="checkbox" onChange={this.toggleMerge}></input>
+              <div className="flex sm:absolute sm:py-52">
+                <label className="text-xl flex font-cabin -mt-7 text-center">
+                  <input
+                  className= "checked:green-200"
+                  type="checkbox" 
+                  onChange={this.toggleMerge}/>
                   Merge similar questions
                 </label>
-                </div>
-              </div>  
+              </div>
               <div className="mx-auto">
                 <BaseButton
                   click={this.openAnalysisPage}
