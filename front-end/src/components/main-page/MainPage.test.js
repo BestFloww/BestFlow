@@ -47,7 +47,7 @@ describe('MainPage', () => {
         renderComponent();
         userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
-        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: '1'});
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: '1Mergefalse'});
     });
 
     it('should automatically write the current Project ID into the Project ID input', async() => {
@@ -69,11 +69,21 @@ describe('MainPage', () => {
         expect(screen.getByLabelText("View Analysis")).toBeDisabled();
     });
 
-    it('should dispatch openAnalysisPage when a valid Project ID is entered and View Analysis button is clicked', async() => {
-        store.dispatch(addAnalyzedTranscript({projectId: "1", transcript: [{question: "a", children: {"b": 100,}}]}));
+    it('should dispatch openAnalysisPage when a valid Project ID is entered and View Analysis button is clicked, merge false', async() => {
+        store.dispatch(addAnalyzedTranscript({projectId: "1Mergefalse", transcript: [{question: "a", children: {"b": 100,}}]}));
         renderComponent();
         userEvent.clear(screen.getByLabelText("Enter Project ID"));
         userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
+        await userEvent.click(screen.getByText('View Analysis'));
+        expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
+    });
+
+    it('should dispatch openAnalysisPage when a valid Project ID is entered and View Analysis button is clicked, merge true', async() => {
+        store.dispatch(addAnalyzedTranscript({projectId: "1Mergetrue", transcript: [{question: "a", children: {"b": 100,}}]}));
+        renderComponent();
+        userEvent.clear(screen.getByLabelText("Enter Project ID"));
+        userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
+        userEvent.click(screen.getByTestId("checkbox"));
         await userEvent.click(screen.getByText('View Analysis'));
         expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' });
     });
@@ -93,10 +103,12 @@ describe('MainPage', () => {
         jest.spyOn(TranscriptAPI, "getAnalysis").mockImplementationOnce(() => {return {data: [{question: "a", children: {"b": 100,}}]}});
         renderComponent();
         userEvent.clear(screen.getByLabelText("Enter Project ID"));
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: "" });
         userEvent.type(screen.getByLabelText("Enter Project ID"), "2");
         await userEvent.click(screen.getByText('View Analysis'));
         // Check that if no transcript with the ID is stored in analyzedTranscripts, but it exists on the database, it properly dispatches reducers to store it
-        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/addAnalyzedTranscript', payload: {projectId: "2", transcript: [{question: "a", children: {"b": 100,}}]} });
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: "2Mergefalse" });
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/addAnalyzedTranscript', payload: {projectId: "2Mergefalse", transcript: [{question: "a", children: {"b": 100,}}]} });
         expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setOverrideStatus', payload: false });
         await waitFor(() => expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' }));
     });        

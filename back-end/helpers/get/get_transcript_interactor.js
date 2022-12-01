@@ -21,6 +21,7 @@ export default class GetTranscriptInteractor extends GetTranscriptInterface{
     }
 
     static async getTranscript(query){
-        const res = await this.#IntentDao.getIntent(query);
+        analyzer.group = query.useMerger == "true";
+        const res = await this.#IntentDao.getIntent({project_id : query.projectId});
     }
 }
