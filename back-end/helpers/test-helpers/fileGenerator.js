@@ -23,7 +23,6 @@ export default class FileGenerator{
 
         const transcript = {"data": at};
         const jsonTranscript = JSON.stringify(transcript);
-        console.log("2")
         fs.writeFile("sample_transcript_test.json", jsonTranscript, (err) => {
             if (err)
               console.log(err);
