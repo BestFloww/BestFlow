@@ -32,7 +32,7 @@ class MainPage extends Component {
   handleChange = (event) => {
     // Update the Project ID of the analyzed transcript to display in redux based on input field
     if(event.target.value){
-      store.dispatch(setProjectIdToBeDisplayed(event.target.value + "merge" + this.state.useMerger));
+      store.dispatch(setProjectIdToBeDisplayed(event.target.value + "Merge" + this.state.useMerger));
     }
     else{
       store.dispatch(setProjectIdToBeDisplayed(event.target.value));
@@ -55,9 +55,9 @@ class MainPage extends Component {
 
   getAnalyzedData = async() => {
       const override = store.getState().analyzeTranscript.override;
-      const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed.split("merge")[0] ;
+      const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed.split("Merge")[0] ;
       const analyzedTranscripts = store.getState().analyzeTranscript.analyzedTranscripts;
-      const mergeId = projectId + "merge" + this.state.useMerger;
+      const mergeId = projectId + "Merge" + this.state.useMerger;
       if(override || (!((mergeId) in analyzedTranscripts))){
         // Call API if either the user wants to override or the project ID is not stored in this session's transcripts
         const analyzedData = await TranscriptAPI.getAnalysis({projectId: projectId, useMerger: this.state.useMerger});
@@ -112,7 +112,7 @@ class MainPage extends Component {
               />
             </div>
             <div className="justify-center mx-auto sm:mx-0 flex gap-y-5 flex-col-reverse sm:flex-row">
-              <div className="flex sm:absolute sm:py-28">
+              <div className="flex sm:absolute sm:py-28" >
                 <div className="group">
                   <input
                     className="bg-off-white text-xl rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
@@ -122,7 +122,7 @@ class MainPage extends Component {
                     aria-label="Enter Project ID"
                     placeholder="Enter Project ID"
                     onChange={this.handleChange}
-                    value={this.props.projectIdToBeDisplayed.split("merge")[0]}
+                    value={this.props.projectIdToBeDisplayed.split("Merge")[0]}
                   />
                   <div className="group-hover:flex">
                     <span
@@ -131,19 +131,19 @@ class MainPage extends Component {
                       Enter the Project ID that you want to analyze
                     </span>
                   </div>
-                </div>
-              </div>
-              <div className="flex sm:absolute sm:py-52">
+                  <div className="flex sm:absolute mx-auto sm:py-12">
                 <label className="text-l flex font-cabin -mt-7 text-center">
                   <input
-                  className= "appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-off-white checked:bg-purple-300 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  className= "appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-off-white checked:bg-purple-300 checked:border-blue-600 focus:outline-none focus:border-purple-300 focus:ring-purple-300 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                   type="checkbox" 
                   data-testid="checkbox"
                   onChange={this.toggleMerge}/>
                   (Beta) Merge similar questions
                 </label>
               </div>
-              <div className="mx-auto">
+                </div>
+              </div>
+              <div className="mx-auto bg-green-100">
                 <BaseButton
                   click={this.openAnalysisPage}
                   text="View Analysis"
