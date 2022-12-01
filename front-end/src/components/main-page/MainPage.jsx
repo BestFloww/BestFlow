@@ -118,7 +118,7 @@ class MainPage extends Component {
                     className="bg-off-white text-xl rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
                     border border-solid border-purple-100
                     hover:border-purple-200
-                    focus:border-purple-300 focus:ring-purple-300"
+                    focus:border-purple-300 focus:ring"
                     aria-label="Enter Project ID"
                     placeholder="Enter Project ID"
                     onChange={this.handleChange}
@@ -135,7 +135,7 @@ class MainPage extends Component {
                 <div className="flex mx-auto sm:py-12">
                   <label className="text-l flex font-cabin mt-2 sm:-mt-7 text-center">
                     <input
-                    className= "appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-off-white checked:bg-purple-300 checked:border-blue-600 focus:ring focus:ring-purple-300 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                    className= "appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-off-white checked:bg-purple-300 checked:border-blue-600 focus:ring transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                     type="checkbox" 
                     data-testid="checkbox"
                     onChange={this.toggleMerge}/>
@@ -143,7 +143,7 @@ class MainPage extends Component {
                   </label>
                 </div>
               </div>
-              <div className="mx-auto bg-green-100">
+              <div className="mx-auto">
                 <BaseButton
                   click={this.openAnalysisPage}
                   text="View Analysis"
