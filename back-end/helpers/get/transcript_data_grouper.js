@@ -40,6 +40,7 @@ export default class TranscriptDataGrouper {
      * @return number in [0, 1]
      */
     #generateSimilarityScore(comparedIntent) {
+        
         const splitIntent1 = this.intent.question.split(" ");
         const splitIntent2 = comparedIntent.question.split(" ");
         this.differentWordsIndices = [];
@@ -156,9 +157,9 @@ export default class TranscriptDataGrouper {
     }
 
     async #mergeTwoQuestions(intent1, intent2) {
-        let originalMergingIntent = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: intent1.question, project_id: this.project_id});
-        let targetIntent = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: intent2.question, project_id: this.project_id});
-
+        // need to replace "." for mongodb
+        let originalMergingIntent = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: intent1.question.replaceAll(".", "-DOT-"), project_id: this.project_id});
+        let targetIntent = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: intent2.question.replaceAll(".", "-DOT-"), project_id: this.project_id});
         targetIntent = targetIntent[0];
         originalMergingIntent = originalMergingIntent[0];
 
@@ -206,12 +207,12 @@ export default class TranscriptDataGrouper {
         for (const [_, num] of map) {
             total_children += num;
         }
-
         // Calculate the new percentages for the merged intents
         for (const [question, num] of map) {
             const newPercentage = Math.round((num / total_children).toFixed(2) * 100);
-            percentageMap[question] = newPercentage;
+            percentageMap[question.replaceAll("-DOT-", ".")] = newPercentage;
         }
+        
         return {percentageMap, total_children};
     }
 }
