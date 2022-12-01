@@ -98,7 +98,7 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                 </div>
-                <div className="rounded-lg flex flex-col gap-y-3 md:flex-row mx-auto justify-evenly text-center overflow-auto gap-x-5 m-9 sm:min-w-[37rem] sm:max-w-[35rem] 2xl:max-w-[50rem] 2xl:max-h-[14rem]">
+                <div className="rounded-lg flex flex-col gap-y-3 md:flex-row mx-auto md:justify-evenly text-center md:overflow-auto gap-x-5 m-9 md:min-w-[37rem] sm:max-w-[35rem] 2xl:max-w-[50rem] 2xl:max-h-[14rem]">
                     {this.listLeaves()}
                 </div>
             </div>
