@@ -112,8 +112,8 @@ class MainPage extends Component {
               />
             </div>
             <div className="justify-center mx-auto sm:mx-0 flex gap-y-5 flex-col-reverse sm:flex-row">
-              <div className="flex sm:absolute sm:py-28" >
-                <div className="group">
+              <div className="flex sm:absolute sm:py-28 flex-col" >
+              <div className="group">
                   <input
                     className="bg-off-white text-xl rounded-md px-4 py-2 drop-shadow-md outline-none transition ease-in-out
                     border border-solid border-purple-100
@@ -126,21 +126,21 @@ class MainPage extends Component {
                   />
                   <div className="group-hover:flex">
                     <span
-                      className="absolute hidden group-hover:flex right-16 -bottom-4 -translate-y-full w-32 px-2 py-1 bg-gray-300 rounded-lg text-center text-off-white text-sm after:content-[''] after:rotate-180 after:absolute after:left-1/2 after:-top-[22%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-300"
+                      className="absolute hidden group-hover:flex right-16 bottom-16 -translate-y-full w-32 px-2 py-1 bg-gray-300 rounded-lg text-center text-off-white text-sm after:content-[''] after:rotate-180 after:absolute after:left-1/2 after:-top-[22%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-300"
                     >
                       Enter the Project ID that you want to analyze
                     </span>
                   </div>
-                  <div className="flex sm:absolute mx-auto sm:py-12">
-                <label className="text-l flex font-cabin -mt-7 text-center">
-                  <input
-                  className= "appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-off-white checked:bg-purple-300 checked:border-blue-600 focus:outline-none focus:border-purple-300 focus:ring-purple-300 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                  type="checkbox" 
-                  data-testid="checkbox"
-                  onChange={this.toggleMerge}/>
-                  (Beta) Merge similar questions
-                </label>
-              </div>
+                </div>
+                <div className="flex mx-auto sm:py-12">
+                  <label className="text-l flex font-cabin mt-2 sm:-mt-7 text-center">
+                    <input
+                    className= "appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-off-white checked:bg-purple-300 checked:border-blue-600 focus:ring focus:ring-purple-300 transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                    type="checkbox" 
+                    data-testid="checkbox"
+                    onChange={this.toggleMerge}/>
+                    (Beta) Merge similar questions
+                  </label>
                 </div>
               </div>
               <div className="mx-auto bg-green-100">
