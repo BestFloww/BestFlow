@@ -102,7 +102,8 @@ class IntentDiagram extends Component {
                     </button>
                 </div>
                 <div // Use ternary operator to either center leaves evenly when there are 3 or less or to have them justified at the start and overflow otherwise
-                    className={Object.keys(this.props.children).length > 3 ? leafStyling + " md:overflow-auto": leafStyling + " justify-evenly"}>
+                    className={Object.keys(this.props.children).length > 3 ? leafStyling + " md:overflow-auto": leafStyling + " justify-evenly"}
+                    data-testid="listLeaves-div">
                     {this.listLeaves()}
                 </div>
             </div>
