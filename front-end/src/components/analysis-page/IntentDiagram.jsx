@@ -66,12 +66,15 @@ class IntentDiagram extends Component {
     }
 
     render() { 
+        // Tailwind styilng for the leaves in line 104
+        const leafStyling = "rounded-lg flex flex-col gap-y-3 md:flex-row mx-auto text-center gap-x-5 m-9 md:min-w-[37rem] sm:max-w-[35rem] 2xl:max-w-[50rem] 2xl:max-h-[14rem]";
+
         return (
             <div className="text-black font-cabin flex flex-col place-self-center pt-1 -mb-9">
-                <div className="inline-flex place-items-center max-w-[20rem] sm:max-w-[47rem]">
+                <div className="inline-flex place-items-center justify-center max-w-[20rem] sm:max-w-[47rem]">
                     <button className="w-16 h-16" onClick={this.toggleStarred} aria-label="star button" data-testid="star-button">
                         <label>
-                            <svg
+                            <svg // Use ternary operator to fill in star appropriately depending on the status of its starring
                             className={this.props.isStarred ? "w-16 fill-yellow cursor-pointer": "w-16 fill-transparent cursor-pointer"}
                             data-testid="star-svg"
 
@@ -81,14 +84,14 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                     <h3
-                        className="rounded-lg bg-off-white self-center p-5 shadow-lg shadow-blue/10 break-words text-center md:text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem]"
+                        className="rounded-lg bg-off-white p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem]"
                         data-testid={this.props.question}
                     >
                         {this.props.question}
                     </h3>
                     <button className="w-16 h-16" onClick={this.toggleFlagged} aria-label="flag button" data-testid="flag-button">
                         <label>
-                            <svg
+                            <svg // Use ternary operator to fill in flag appropriately depending on the status of its flagging
                             className={this.props.isFlagged ? "w-16 fill-red cursor-pointer": "w-16 fill-transparent cursor-pointer"}
                             data-testid="flag-svg"
 
@@ -98,7 +101,9 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                 </div>
-                <div className="rounded-lg flex flex-col gap-y-3 md:flex-row mx-auto justify-between text-center gap-x-9 m-9">
+                <div // Use ternary operator to either center leaves evenly when there are 3 or less or to have them justified at the start and overflow otherwise
+                    className={Object.keys(this.props.children).length > 3 ? leafStyling + " md:overflow-auto": leafStyling + " justify-evenly"}
+                    data-testid="listLeaves-div">
                     {this.listLeaves()}
                 </div>
             </div>

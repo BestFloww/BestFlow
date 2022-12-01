@@ -48,7 +48,7 @@ export class AnalysisPage extends Component {
             aria-hidden={this.state.showIntentMenu}
             data-testid="analysis-page-main"
           >
-            <div className="flex gap-y-10 w-full h-full flex-col">
+            <div className="flex w-full h-full flex-col">
               <div className= "flex w-full items-center justify-between bg-gray-100">
                 {
                     <nav>

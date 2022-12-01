@@ -117,4 +117,23 @@ describe("IntentDiagram", () => {
         await waitFor(() => expect(StarAPI.put).toHaveBeenCalledWith({question: "question", projectId: "1", starStatus: true}));
         expect(dispatch).toHaveBeenCalledWith({"payload": "question", "type": "analyzeTranscript/toggleStar",});
     });
+    it("correctly justifies when number of children are three or less", async() => {
+        props.children = {
+            q1: 50,
+            q2: 20,
+            q3: 30,
+        };
+        renderComponent(props);
+        expect(screen.getByTestId("listLeaves-div")).toHaveClass("justify-evenly");
+    });
+    it("correctly justifies when number of children are more than three", async() => {
+        props.children = {
+            q1: 50,
+            q2: 20,
+            q3: 30,
+            q4: 90,
+        };
+        renderComponent(props);
+        expect(screen.getByTestId("listLeaves-div")).toHaveClass("md:overflow-auto");
+    })
 });
