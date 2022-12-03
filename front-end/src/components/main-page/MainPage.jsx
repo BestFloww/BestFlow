@@ -119,6 +119,7 @@ class MainPage extends Component {
                     border border-solid border-purple-100
                     hover:border-purple-200
                     focus:border-purple-300 focus:ring"
+                    aria-required="true"
                     aria-label="Enter Project ID"
                     placeholder="Enter Project ID"
                     onChange={this.handleChange}
