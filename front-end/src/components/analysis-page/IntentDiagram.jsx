@@ -6,27 +6,33 @@ import StarAPI from "../../services/StarAPI.js";
 import FlagAPI from "../../services/FlagAPI.js";
 
 class IntentDiagram extends Component {
-    
-    state = {
-        // Define two appearances of the intent question box to alternate between when flashing
-        flashingStyling: "rounded-lg p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem] bg-purple-200",
-        notFlashingStyling: "rounded-lg p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem] bg-off-white",
-    }  
+
+    generateIntentBoxStyling = (flash) => {
+        // Base styling
+        let styling = "rounded-lg p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem] ";
+        // Add color based on whether the box is flashing
+        styling += flash ? "bg-green-100" : "bg-off-white";
+        // Add any previous intents merged into this intent, if any
+        if (this.props.previousIntents) {
+
+        }
+        return styling
+    }
 
     listLeaves = () => {
         return Object.keys(this.props.children).map((key) => {
             const isEndOfConversation = (key === "END OF CONVERSATION");
 
             const goToLeaf = () => {
-                store.dispatch(goToIntentByQuestion(key));
+                store.dispatch(goToIntentByQuestion(key))
                 // Reset focus on clicked leaf (it doesn't do it automatically)
                 document.activeElement.blur()
                 // Find the new intent question box by id, then focus and flash it to highlight its position
                 setTimeout(() => { document.getElementById(key).focus() }, 0);
-                setTimeout(() => { document.getElementById(key).className = this.state.flashingStyling }, 0);
-                setTimeout(() => { document.getElementById(key).className = this.state.notFlashingStyling }, 150);
-                setTimeout(() => { document.getElementById(key).className = this.state.flashingStyling }, 300);
-                setTimeout(() => { document.getElementById(key).className = this.state.notFlashingStyling }, 450);
+                setTimeout(() => { document.getElementById(key).className = this.generateIntentBoxStyling(true) }, 0);
+                setTimeout(() => { document.getElementById(key).className = this.generateIntentBoxStyling(false) }, 150);
+                setTimeout(() => { document.getElementById(key).className = this.generateIntentBoxStyling(true) }, 300);
+                setTimeout(() => { document.getElementById(key).className = this.generateIntentBoxStyling(false) }, 450);
             }
 
             return (
@@ -113,7 +119,7 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                     <h3
-                        className={this.state.notFlashingStyling}  // Render non-flash styling by default
+                        className={this.generateIntentBoxStyling(false)}  // Render non-flash styling by default
                         id={this.props.question}
                         data-testid={this.props.question}
                     >
