@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import store from '../../store.js';
-import { toggleFlag, toggleStar } from '../../store/analyzeTranscriptSlice.js';
+import { goToIntentByQuestion, toggleFlag, toggleStar } from '../../store/analyzeTranscriptSlice.js';
 import StarAPI from "../../services/StarAPI.js";
 import FlagAPI from "../../services/FlagAPI.js";
 
 class IntentDiagram extends Component {
     listLeaves = () => {
         return Object.keys(this.props.children).map((key) => {
+            const isEndOfConversation = (key === "END OF CONVERSATION");
+
+            const goToLeaf = () => {
+                store.dispatch(goToIntentByQuestion(key));
+            }
+
             return (
                 <div 
-                    className="text-md bg-green-100 shadow-md shadow-blue/10 rounded-2xl pb-2 mb-5 border-2 border-green-200"
+                    className={"text-md bg-green-200 shadow-md shadow-blue/10 rounded-2xl pb-2 mb-5 border-2 border-green-300 " +
+                    (!isEndOfConversation ? "hover:bg-green-100 focus:bg-green-100 " : "")}
                     key={key}
+                    role={!isEndOfConversation && "button"}
+                    onClick={!isEndOfConversation && goToLeaf}  // Clicking on a leaf displays the intent it corresponds to
+                    tabindex={!isEndOfConversation && 0}
                 >
                     <p
                         data-testid={`${key}-${this.props.children[key]}`}
@@ -23,12 +33,12 @@ class IntentDiagram extends Component {
                         className="w-40 h-24 overflow-hidden overflow-y-scroll flex align-center justify-center"
                         data-testid={`${key}-container`}
                     >
-                        <h4 
+                        <p 
                             className="break-words text-center my-auto w-32"
                             data-testid={key}
                         >
                             {key} 
-                        </h4>
+                        </p>
                     </div>
                 </div>
             );
