@@ -18,7 +18,7 @@ class IntentDiagram extends Component {
             return (
                 <div 
                     className={"text-md bg-green-200 shadow-md shadow-blue/10 rounded-2xl pb-2 mb-5 border-2 border-green-300 " +
-                    (!isEndOfConversation ? "hover:bg-green-100 focus:bg-green-100 " : "")}
+                    (!isEndOfConversation ? "hover:bg-green-100 focus:bg-green-100 transition ease-in-out" : "")}
                     key={key}
                     role={!isEndOfConversation && "button"}
                     onKeyDown={e => (e.key === "Enter" || e.key === "Space") && !isEndOfConversation && goToLeaf()}

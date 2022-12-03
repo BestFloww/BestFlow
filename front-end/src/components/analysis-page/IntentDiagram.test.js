@@ -170,7 +170,7 @@ describe("IntentDiagram", () => {
 
     it("should have proper hover styling on a leaf if it is not End of Conversation", () => {
         renderComponent(props);
-        expect(screen.getByTestId("leaf-q1")).toHaveClass("hover:bg-green-100 focus:bg-green-100");
+        expect(screen.getByTestId("leaf-q1")).toHaveClass("hover:bg-green-100");
     });
 
     it("should have button role on a leaf if it is not End of Conversation", () => {
@@ -188,7 +188,7 @@ describe("IntentDiagram", () => {
             "END OF CONVERSATION": 100,
         };
         renderComponent(props);
-        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveClass("hover:bg-green-100 focus:bg-green-100");
+        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveClass("hover:bg-green-100");
     });
 
     it("should not have button role on a leaf if it is End of Conversation", () => {
