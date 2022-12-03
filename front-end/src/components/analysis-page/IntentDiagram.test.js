@@ -146,6 +146,14 @@ describe("IntentDiagram", () => {
         expect(dispatch).toHaveBeenCalledWith({"payload": "q1", "type": "analyzeTranscript/goToIntentByQuestion",});
     });
 
+    it("should not have click function if a leaf is End of Conversation", () => {
+        props.children = {
+            "END OF CONVERSATION": 100,
+        };
+        renderComponent(props);
+        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveAttribute("onClick");
+    });
+
     it("should not dispatch goToIntentByQuestion if a leaf is focused and End of Conversation and Enter is pressed", () => {
         props.children = {
             "END OF CONVERSATION": 100,
@@ -183,6 +191,11 @@ describe("IntentDiagram", () => {
         expect(screen.getByTestId("leaf-q1")).toHaveAttribute("tabIndex", "0");
     });
 
+    it("should have proper aria label on a leaf if it is not End of Conversation", () => {
+        renderComponent(props);
+        expect(screen.getByTestId("leaf-q1")).toHaveAttribute("aria-label", "Click to view intent: q1");
+    });
+
     it("should not have hover styling on a leaf if it is End of Conversation", () => {
         props.children = {
             "END OF CONVERSATION": 100,
@@ -196,7 +209,7 @@ describe("IntentDiagram", () => {
             "END OF CONVERSATION": 100,
         };
         renderComponent(props);
-        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveAttribute("role", "button");
+        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveAttribute("role");
     });
 
     it("should not have tab index on a leaf if it is End of Conversation", () => {
@@ -204,7 +217,15 @@ describe("IntentDiagram", () => {
             "END OF CONVERSATION": 100,
         };
         renderComponent(props);
-        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveAttribute("tabIndex", "0");
+        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveAttribute("tabIndex");
+    });
+
+    it("should not have aria label on a leaf if it is End of Conversation", () => {
+        props.children = {
+            "END OF CONVERSATION": 100,
+        };
+        renderComponent(props);
+        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveAttribute("aria-label");
     });
 
     it("correctly justifies when number of children are three or less", async() => {

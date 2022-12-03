@@ -19,11 +19,13 @@ class IntentDiagram extends Component {
                 <div 
                     className={"text-md bg-green-200 shadow-md shadow-blue/10 rounded-2xl pb-2 mb-5 border-2 border-green-300 " +
                     (!isEndOfConversation ? "hover:bg-green-100 focus:bg-green-100 transition ease-in-out" : "")}
+                    // As long as the leaf is not End of Conversation, make it a button that displays the corresponding intent when clicked
+                    role={!isEndOfConversation ? "button" : null}
+                    aria-label={!isEndOfConversation ? `Click to view intent: ${key}` : null}
+                    onClick={!isEndOfConversation ? goToLeaf : null}
+                    onKeyDown={e => ((e.key === "Enter" || e.key === "Space") && !isEndOfConversation) ? goToLeaf() : null}
+                    tabIndex={!isEndOfConversation ? 0 : null}
                     key={key}
-                    role={!isEndOfConversation && "button"}
-                    onKeyDown={e => (e.key === "Enter" || e.key === "Space") && !isEndOfConversation && goToLeaf()}
-                    onClick={!isEndOfConversation && goToLeaf}  // Clicking on a leaf displays the intent it corresponds to
-                    tabIndex={!isEndOfConversation && 0}
                     data-testid={`leaf-${key}`}
                 >
                     <p
