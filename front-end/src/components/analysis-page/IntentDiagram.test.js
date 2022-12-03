@@ -33,7 +33,7 @@ describe("IntentDiagram", () => {
             isFlagged: false,
         };
 
-        store.dispatch(setProjectIdToBeDisplayed("1"));
+        store.dispatch(setProjectIdToBeDisplayed("1Mergefalse"));
     });
 
     afterAll(() => {

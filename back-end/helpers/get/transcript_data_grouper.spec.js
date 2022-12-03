@@ -223,10 +223,13 @@ describe("TranscriptDataGrouper", () => {
             });
         });
 
-        it("should correctly merge 2 similar intents", async() => {
+        it("should correctly merge 2 similar intents and keep star/flag", async() => {
             const alreadyProcessedIntents = intents.slice(0, 1);
             const similarIntent = intents[1];
             const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
+
+            alreadyProcessedIntents[0].star = true;
+            alreadyProcessedIntents[0].flag = true;
             
             const result = await grouper.group(similarIntent);
             expect(fakeDao.getImmediateIntent).toHaveBeenCalledTimes(2);
@@ -245,7 +248,7 @@ describe("TranscriptDataGrouper", () => {
                 const result = await grouper.group(similarIntent);
                 expect(result).toBe(true);
             }
-            expect(fakeDao.getImmediateIntent).toHaveBeenCalledTimes(4);
+            expect(fakeDao.getImmediateIntent).toHaveBeenCalledTimes(5);
             expect(intents[0].children["h"]).toEqual(33);
             expect(intents[0].children["c"]).toEqual(22);
             expect(intents[0].children["b"]).toEqual(44);
@@ -258,7 +261,7 @@ describe("TranscriptDataGrouper", () => {
             for (const intent of intents.slice(1)) {
                 await grouper.group(intent);
             }
-            expect(fakeDao.getImmediateIntent).toHaveBeenCalledTimes(11);
+            expect(fakeDao.getImmediateIntent).toHaveBeenCalledTimes(14);
             expect(intents[0].children["h"]).toEqual(38);
             expect(intents[0].children["c"]).toEqual(8);
             expect(intents[0].children["b"]).toEqual(50);
@@ -276,7 +279,7 @@ describe("TranscriptDataGrouper", () => {
 
             const lastIntent = intents[6];
             const result = await grouper.group(lastIntent)
-            expect(fakeDao.getImmediateIntent).toHaveBeenCalledTimes(7);
+            expect(fakeDao.getImmediateIntent).toHaveBeenCalledTimes(9);
             expect(result).toBe(true);
 
             expect(intents[0].children["h"]).toEqual(40);
@@ -298,7 +301,7 @@ describe("TranscriptDataGrouper", () => {
                 const result = await grouper.group(similarIntent);
                 expect(result).toBe(true);
             }
-            expect(fakeDao.getImmediateIntent).toHaveBeenCalledTimes(4);
+            expect(fakeDao.getImmediateIntent).toHaveBeenCalledTimes(5);
 
             expect(intents[7].children["h"]).toEqual(20);
             expect(intents[7].children["d"]).toEqual(30);

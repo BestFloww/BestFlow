@@ -8,7 +8,11 @@ const API = {
      * @returns {Object} http resolution
      */
     put: async(intent) => {
-        return await axios.put(baseURL, intent);
+        let payload = {...intent}
+        if (intent.previousIntents && intent.previousIntents.length > 0) {
+            payload.question = intent.previousIntents[1].question;
+        }
+        return await axios.put(baseURL, payload);
     },
 };
 
