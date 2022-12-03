@@ -12,6 +12,7 @@ class IntentDiagram extends Component {
 
             const goToLeaf = () => {
                 store.dispatch(goToIntentByQuestion(key));
+                document.activeElement.blur()
             }
 
             return (
@@ -20,6 +21,7 @@ class IntentDiagram extends Component {
                     (!isEndOfConversation ? "hover:bg-green-100 focus:bg-green-100 " : "")}
                     key={key}
                     role={!isEndOfConversation && "button"}
+                    onKeyDown={e => (e.key === "Enter" || e.key === "Space") && goToLeaf()}
                     onClick={!isEndOfConversation && goToLeaf}  // Clicking on a leaf displays the intent it corresponds to
                     tabindex={!isEndOfConversation && 0}
                 >
