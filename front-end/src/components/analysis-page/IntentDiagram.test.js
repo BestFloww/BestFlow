@@ -157,7 +157,7 @@ describe("IntentDiagram", () => {
         expect(dispatch).not.toHaveBeenCalled();
     });
 
-    it("should dispatch goToIntentByQuestion if a leaf is focused and End of Conversation and Space is pressed", () => {
+    it("should not dispatch goToIntentByQuestion if a leaf is focused and End of Conversation and Space is pressed", () => {
         props.children = {
             "END OF CONVERSATION": 100,
         };
@@ -175,8 +175,12 @@ describe("IntentDiagram", () => {
 
     it("should have button role on a leaf if it is not End of Conversation", () => {
         renderComponent(props);
-        // There should be 3 buttons - star, flag, and 1 leaf
-        expect(screen.queryAllByRole("button").length).toBe(3);
+        expect(screen.getByTestId("leaf-q1")).toHaveAttribute("role", "button");
+    });
+
+    it("should have tabIndex=0 on a leaf if it is not End of Conversation", () => {
+        renderComponent(props);
+        expect(screen.getByTestId("leaf-q1")).toHaveAttribute("tabIndex", "0");
     });
 
     it("should not have hover styling on a leaf if it is End of Conversation", () => {
@@ -192,8 +196,15 @@ describe("IntentDiagram", () => {
             "END OF CONVERSATION": 100,
         };
         renderComponent(props);
-        // There should be 2 buttons - star and flag
-        expect(screen.queryAllByRole("button").length).toBe(2);
+        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveAttribute("role", "button");
+    });
+
+    it("should not have tab index on a leaf if it is End of Conversation", () => {
+        props.children = {
+            "END OF CONVERSATION": 100,
+        };
+        renderComponent(props);
+        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveAttribute("tabIndex", "0");
     });
 
     it("correctly justifies when number of children are three or less", async() => {
