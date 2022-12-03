@@ -7,32 +7,29 @@ import FlagAPI from "../../services/FlagAPI.js";
 
 class IntentDiagram extends Component {
 
-    generateIntentBoxStyling = (flash) => {
-        // Base styling
-        let styling = "rounded-lg p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem] ";
-        // Add color based on whether the box is flashing
-        styling += flash ? "bg-green-100" : "bg-off-white";
-        // Add any previous intents merged into this intent, if any
+    generateIntentBoxStyling = () => {
+        // Base className
+        let className = "rounded-lg p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem] bg-off-white ";
+        // Add any intent's question and those of any previous intents, so it can be targeted by className
+        className += `intent-box-${this.props.question} `;
         if (this.props.previousIntents) {
-
+            this.props.previousIntents.forEach((intent) => { className += `intent-box-${intent.question} ` })
         }
-        return styling
+        return className
     }
 
     listLeaves = () => {
         return Object.keys(this.props.children).map((key) => {
-            const isEndOfConversation = (key === "END OF CONVERSATION");
+            const isEndOfConversation = (key === "[END OF CONVERSATION]");
 
             const goToLeaf = () => {
                 store.dispatch(goToIntentByQuestion(key))
                 // Reset focus on clicked leaf (it doesn't do it automatically)
                 document.activeElement.blur()
                 // Find the new intent question box by id, then focus and flash it to highlight its position
-                setTimeout(() => { document.getElementById(key).focus() }, 0);
-                setTimeout(() => { document.getElementById(key).className = this.generateIntentBoxStyling(true) }, 0);
-                setTimeout(() => { document.getElementById(key).className = this.generateIntentBoxStyling(false) }, 150);
-                setTimeout(() => { document.getElementById(key).className = this.generateIntentBoxStyling(true) }, 300);
-                setTimeout(() => { document.getElementById(key).className = this.generateIntentBoxStyling(false) }, 450);
+                setTimeout(() => { document.getElementsByClassName(`intent-box-${key}`)[0].focus() }, 0);
+                setTimeout(() => { document.getElementsByClassName(`intent-box-${key}`)[0].className = document.getElementsByClassName(`intent-box-${key}`)[0].className.replace("bg-off-white", "bg-green-100") }, 0);
+                setTimeout(() => { document.getElementsByClassName(`intent-box-${key}`)[0].className = document.getElementsByClassName(`intent-box-${key}`)[0].className.replace("bg-green-100", "bg-off-white") }, 600);
             }
 
             return (
@@ -101,7 +98,7 @@ class IntentDiagram extends Component {
     }
 
     render() { 
-        // Tailwind styilng for the leaves in line 104
+        // Tailwind styilng for the leaves in line 138
         const leafStyling = "rounded-lg flex flex-col gap-y-3 md:flex-row mx-auto text-center gap-x-5 m-9 md:min-w-[37rem] sm:max-w-[35rem] 2xl:max-w-[50rem] 2xl:max-h-[14rem]";
 
         return (
@@ -119,8 +116,7 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                     <h3
-                        className={this.generateIntentBoxStyling(false)}  // Render non-flash styling by default
-                        id={this.props.question}
+                        className={this.generateIntentBoxStyling()}
                         data-testid={this.props.question}
                     >
                         {this.props.question}
