@@ -20,7 +20,7 @@ class IntentDiagram extends Component {
 
     listLeaves = () => {
         return Object.keys(this.props.children).map((key) => {
-            const isEndOfConversation = (key === "[END OF CONVERSATION]");
+            const isEndOfConversation = (key === "[END OF CONVERSATION]" || key === "END OF CONVERSATION");
 
             const goToLeaf = () => {
                 store.dispatch(goToIntentByQuestion(key))
@@ -28,14 +28,15 @@ class IntentDiagram extends Component {
                 document.activeElement.blur()
                 // Find the new intent question box by id, then focus and flash it to highlight its position
                 setTimeout(() => { document.getElementsByClassName(`intent-box-${key}`)[0].focus() }, 0);
+                // Swap background color in the intent box's between off-white and green-100 by reassigning className
                 setTimeout(() => { document.getElementsByClassName(`intent-box-${key}`)[0].className = document.getElementsByClassName(`intent-box-${key}`)[0].className.replace("bg-off-white", "bg-green-100") }, 0);
                 setTimeout(() => { document.getElementsByClassName(`intent-box-${key}`)[0].className = document.getElementsByClassName(`intent-box-${key}`)[0].className.replace("bg-green-100", "bg-off-white") }, 600);
             }
 
             return (
                 <div 
-                    className={"text-md bg-green-200 shadow-md shadow-blue/10 rounded-2xl pb-2 mb-5 border-2 border-green-300 " +
-                    (!isEndOfConversation ? "hover:bg-green-100 focus:bg-green-100 transition ease-in-out" : "")}
+                    className={"text-md shadow-md shadow-blue/10 rounded-2xl pb-2 mb-5 border-2 border-green-300 " +
+                    (!isEndOfConversation ? "bg-green-200 hover:bg-green-100 focus:bg-green-100 transition ease-in-out" : "bg-red border-black")}
                     // As long as the leaf is not End of Conversation, make it a button that displays the corresponding intent when clicked
                     role={!isEndOfConversation ? "button" : null}
                     aria-label={!isEndOfConversation ? `Click to view intent: ${key}` : null}
