@@ -88,6 +88,7 @@ export default class TranscriptDataGrouper {
      * Merges 2 intents
      */
     async #mergeIntent(comparedIntent) {
+        const originalIntent = comparedIntent.question;
         if (!comparedIntent.previousIntents) {
             comparedIntent.previousIntents = [];
         }
@@ -106,13 +107,13 @@ export default class TranscriptDataGrouper {
         // Calculate percentages of each intent previously merged with the original
         const allMergedMaps = [];
         for (let i = 0; i + 1 < comparedIntent.previousIntents.length; i+= 2) {
-            const mergedQuestions = await this.#mergeTwoQuestions(comparedIntent.previousIntents[i], comparedIntent.previousIntents[i + 1])
+            const mergedQuestions = await this.#mergeTwoQuestions(comparedIntent.previousIntents[i], comparedIntent.previousIntents[i + 1]);
             allMergedMaps.push(mergedQuestions);
         }
-        if (comparedIntent.previousIntents.length%2) {
+        if (comparedIntent.previousIntents.length % 2 === 1) {
             // push the odd map
             const question = comparedIntent.previousIntents[comparedIntent.previousIntents.length - 1];
-            let children = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: question.question, project_id: this.project_id});
+            let children = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: question.question.replaceAll(".", "-DOT-"), project_id: this.project_id});
             children = children[0].children; 
             allMergedMaps.push(children);
         }
@@ -130,7 +131,7 @@ export default class TranscriptDataGrouper {
                 mergedMap = this.#mergeMap(mergedMap, allMergedMaps[i]);
             }
             // merge with the new intent
-            let newIntent = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: this.intent.question, project_id: this.project_id});
+            let newIntent = await TranscriptDataGrouper.#IntentDao.getImmediateIntent({question: this.intent.question.replaceAll(".", "-DOT-"), project_id: this.project_id});
             newIntent = newIntent[0];
             mergedMap = this.#mergeMap(mergedMap, newIntent.children);
         }
@@ -154,6 +155,9 @@ export default class TranscriptDataGrouper {
 
         // add to previous intents as necessary
         comparedIntent.previousIntents.push({question: mergedQuestion});
+        if (comparedIntent.previousIntents.length === 1) {
+            comparedIntent.previousIntents.push({question: originalIntent});
+        }
     }
 
     async #mergeTwoQuestions(intent1, intent2) {
