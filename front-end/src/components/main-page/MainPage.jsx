@@ -73,7 +73,7 @@ class MainPage extends Component {
           store.dispatch(setOverrideStatus(false));
         }
       }
-      else if (mergeId in analyzedTranscripts & mergeId != projectId){
+      else if (mergeId in analyzedTranscripts & mergeId !== projectId){
           store.dispatch(setProjectIdToBeDisplayed(mergeId));
       }
   }
