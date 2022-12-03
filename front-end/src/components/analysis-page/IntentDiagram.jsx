@@ -21,9 +21,10 @@ class IntentDiagram extends Component {
                     (!isEndOfConversation ? "hover:bg-green-100 focus:bg-green-100 " : "")}
                     key={key}
                     role={!isEndOfConversation && "button"}
-                    onKeyDown={e => (e.key === "Enter" || e.key === "Space") && goToLeaf()}
+                    onKeyDown={e => (e.key === "Enter" || e.key === "Space") && !isEndOfConversation && goToLeaf()}
                     onClick={!isEndOfConversation && goToLeaf}  // Clicking on a leaf displays the intent it corresponds to
-                    tabindex={!isEndOfConversation && 0}
+                    tabIndex={!isEndOfConversation && 0}
+                    data-testid={`leaf-${key}`}
                 >
                     <p
                         data-testid={`${key}-${this.props.children[key]}`}

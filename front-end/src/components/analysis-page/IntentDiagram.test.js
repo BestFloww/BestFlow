@@ -34,6 +34,7 @@ describe("IntentDiagram", () => {
         };
 
         store.dispatch(setProjectIdToBeDisplayed("1"));
+        jest.clearAllMocks();
     });
 
     afterAll(() => {
@@ -91,16 +92,19 @@ describe("IntentDiagram", () => {
         expect(percentage.textContent).toBe(`${value}%`)
         }
     });
+
     it("correctly displays flagged icon when intent is flagged", () => {
         props.isFlagged = true;
         renderComponent(props);
         expect(screen.getByTestId("flag-svg")).toHaveClass("fill-red");
     });
+
     it("correctly displays starred icon when intent is starred", () => {
         props.isStarred = true;
         renderComponent(props);
         expect(screen.getByTestId("star-svg")).toHaveClass("fill-yellow");
     });
+
     it("should dispatch intent when flag button is clicked", async() => {
         renderComponent(props);
         const dispatch = jest.spyOn(store, 'dispatch');
@@ -109,6 +113,7 @@ describe("IntentDiagram", () => {
         await waitFor(() => expect(FlagAPI.put).toHaveBeenCalledWith({question: "question", projectId: "1", flagStatus: true}));
         expect(dispatch).toHaveBeenCalledWith({"payload": "question", "type": "analyzeTranscript/toggleFlag",});
     });
+
     it("should dispatch intent when star button is clicked", async() => {
         renderComponent(props);
         const dispatch = jest.spyOn(store, 'dispatch');
@@ -117,6 +122,80 @@ describe("IntentDiagram", () => {
         await waitFor(() => expect(StarAPI.put).toHaveBeenCalledWith({question: "question", projectId: "1", starStatus: true}));
         expect(dispatch).toHaveBeenCalledWith({"payload": "question", "type": "analyzeTranscript/toggleStar",});
     });
+
+    it("should dispatch goToIntentByQuestion with the leaf's question if a leaf is clicked and is not End of Conversation", () => {
+        renderComponent(props);
+        const dispatch = jest.spyOn(store, 'dispatch');
+        userEvent.click(screen.getByTestId("leaf-q1"));
+        expect(dispatch).toHaveBeenCalledWith({"payload": "q1", "type": "analyzeTranscript/goToIntentByQuestion",});
+    });
+
+    it("should dispatch goToIntentByQuestion with the leaf's question if a leaf is focused and not End of Conversation and Enter is pressed", () => {
+        renderComponent(props);
+        const dispatch = jest.spyOn(store, 'dispatch');
+        screen.getByTestId("leaf-q1").focus();
+        userEvent.keyboard("{Enter}");
+        expect(dispatch).toHaveBeenCalledWith({"payload": "q1", "type": "analyzeTranscript/goToIntentByQuestion",});
+    });
+
+    it("should dispatch goToIntentByQuestion with the leaf's question if a leaf is focused and not End of Conversation and Space is pressed", () => {
+        renderComponent(props);
+        const dispatch = jest.spyOn(store, 'dispatch');
+        screen.getByTestId("leaf-q1").focus();
+        userEvent.keyboard("{Space}");
+        expect(dispatch).toHaveBeenCalledWith({"payload": "q1", "type": "analyzeTranscript/goToIntentByQuestion",});
+    });
+
+    it("should not dispatch goToIntentByQuestion if a leaf is focused and End of Conversation and Enter is pressed", () => {
+        props.children = {
+            "END OF CONVERSATION": 100,
+        };
+        renderComponent(props);
+        const dispatch = jest.spyOn(store, 'dispatch');
+        screen.getByTestId("leaf-END OF CONVERSATION").focus();
+        userEvent.keyboard("{Enter}");
+        expect(dispatch).not.toHaveBeenCalled();
+    });
+
+    it("should dispatch goToIntentByQuestion if a leaf is focused and End of Conversation and Space is pressed", () => {
+        props.children = {
+            "END OF CONVERSATION": 100,
+        };
+        renderComponent(props);
+        const dispatch = jest.spyOn(store, 'dispatch');
+        screen.getByTestId("leaf-END OF CONVERSATION").focus();
+        userEvent.keyboard("{Space}");
+        expect(dispatch).not.toHaveBeenCalled();
+    });
+
+    it("should have proper hover styling on a leaf if it is not End of Conversation", () => {
+        renderComponent(props);
+        expect(screen.getByTestId("leaf-q1")).toHaveClass("hover:bg-green-100 focus:bg-green-100");
+    });
+
+    it("should have button role on a leaf if it is not End of Conversation", () => {
+        renderComponent(props);
+        // There should be 3 buttons - star, flag, and 1 leaf
+        expect(screen.queryAllByRole("button").length).toBe(3);
+    });
+
+    it("should not have hover styling on a leaf if it is End of Conversation", () => {
+        props.children = {
+            "END OF CONVERSATION": 100,
+        };
+        renderComponent(props);
+        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveClass("hover:bg-green-100 focus:bg-green-100");
+    });
+
+    it("should not have button role on a leaf if it is End of Conversation", () => {
+        props.children = {
+            "END OF CONVERSATION": 100,
+        };
+        renderComponent(props);
+        // There should be 2 buttons - star and flag
+        expect(screen.queryAllByRole("button").length).toBe(2);
+    });
+
     it("correctly justifies when number of children are three or less", async() => {
         props.children = {
             q1: 50,
@@ -126,6 +205,7 @@ describe("IntentDiagram", () => {
         renderComponent(props);
         expect(screen.getByTestId("listLeaves-div")).toHaveClass("justify-evenly");
     });
+
     it("correctly justifies when number of children are more than three", async() => {
         props.children = {
             q1: 50,
@@ -135,5 +215,5 @@ describe("IntentDiagram", () => {
         };
         renderComponent(props);
         expect(screen.getByTestId("listLeaves-div")).toHaveClass("md:overflow-auto");
-    })
+    });
 });

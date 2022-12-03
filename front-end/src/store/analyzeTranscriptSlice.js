@@ -33,7 +33,7 @@ export const analyzeTranscriptSlice = createSlice({
     },
     goToIntentByQuestion: (state, action) => {
       // get the transcript that is being displayed
-      const transcript = state.analyzedTranscripts[state.projectIdToBeDisplayed];
+      const transcript = state.analyzedTranscripts[state.projectIdToBeDisplayed] || [];
       // find the intent whose question matches the given string
       for (let i = 0; i < transcript.length; i++) {
         if (transcript[i].question === action.payload) {
