@@ -223,10 +223,13 @@ describe("TranscriptDataGrouper", () => {
             });
         });
 
-        it("should correctly merge 2 similar intents", async() => {
+        it("should correctly merge 2 similar intents and keep star/flag", async() => {
             const alreadyProcessedIntents = intents.slice(0, 1);
             const similarIntent = intents[1];
             const grouper = new TranscriptDataGrouper(alreadyProcessedIntents, 1);
+
+            alreadyProcessedIntents[0].star = true;
+            alreadyProcessedIntents[0].flag = true;
             
             const result = await grouper.group(similarIntent);
             expect(fakeDao.getImmediateIntent).toHaveBeenCalledTimes(2);

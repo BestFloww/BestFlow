@@ -22,10 +22,14 @@ export default class TranscriptDataGrouper {
 
     async group(intent) {
         this.intent = intent;
+        
         for (const comparedIntent of this.transcript) {
             if (this.#generateSimilarityScore(comparedIntent) >= 0.9) {
+                (comparedIntent)
                 try {
                     await this.#mergeIntent(comparedIntent);
+                    (comparedIntent)
+                    ("-----")
                     return true;
                 } catch (e) {
                     return false;
