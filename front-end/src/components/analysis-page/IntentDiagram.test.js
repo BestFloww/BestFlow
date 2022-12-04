@@ -32,8 +32,8 @@ describe("IntentDiagram", () => {
             isStarred: false,
             isFlagged: false,
         };
-        jest.clearAllMocks();
         store.dispatch(setProjectIdToBeDisplayed("1Mergefalse"));
+        jest.clearAllMocks();
     });
 
     afterAll(() => {

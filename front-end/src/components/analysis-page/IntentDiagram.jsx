@@ -12,7 +12,7 @@ class IntentDiagram extends Component {
         // Add any intent's question and those of any previous intents, so it can be targeted by className
         className += `intent-box-${this.props.question.replaceAll(" ", "")} `;
         if (this.props.previousIntents) {
-            this.props.previousIntents.forEach((intent) => { className += `intent-box-${intent.question.replaceAll(" ", "")} ` })
+            this.props.previousIntents.forEach((intent) => { className += `intent-box-${intent.question.replaceAll(" ", "")} ` });
         }
         return className
     }
@@ -27,9 +27,9 @@ class IntentDiagram extends Component {
                 document.activeElement.blur()
                 // Find the new intent question box by id, then focus and flash it to highlight its position
                 setTimeout(() => { document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].focus() }, 0);
-                // FLash intent box green-100 for 0.75s by reassigning className
+                // FLash intent box green-100 for 0.8s by reassigning className
                 setTimeout(() => { document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className = document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className.replace("bg-off-white", "bg-green-100") }, 0);
-                setTimeout(() => { document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className = document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className.replace("bg-green-100", "bg-off-white") }, 750);
+                setTimeout(() => { document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className = document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className.replace("bg-green-100", "bg-off-white") }, 800);
             }
 
             return (
