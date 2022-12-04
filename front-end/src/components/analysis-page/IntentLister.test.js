@@ -39,7 +39,7 @@ describe("IntentLister", () => {
             renderComponent(props);
             // Intents 0-2 should display, Intents 3-8 should not display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
             });
         });
 
@@ -48,7 +48,7 @@ describe("IntentLister", () => {
             renderComponent(props);
             // Intents 0-6 should not display, Intents 7-8 should display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 7 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 7 ? 0 : 1);
             });
         });
 
@@ -57,7 +57,7 @@ describe("IntentLister", () => {
             renderComponent(props);
             // Intents 0-7 should not display, Intent 8 should display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 8 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 8 ? 0 : 1);
             });
         });
     });
@@ -107,7 +107,7 @@ describe("IntentLister", () => {
             userEvent.click(screen.getByLabelText("Next Results"));
             // Intents 0-2 and 6-8 should not display, Intents 3-5 should display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe((key < 3 || key >= 6) ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe((key < 3 || key >= 6) ? 0 : 1);
             });
         });
 
@@ -117,7 +117,7 @@ describe("IntentLister", () => {
             userEvent.click(screen.getByLabelText("Previous Results"));
             // Intents 0-2 should display, Intents 3-8 should not display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
             });
         });
     });
@@ -128,7 +128,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{ArrowRight}");
             // Intents 0-2 and 6-8 should not display, Intents 3-5 should display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe((key < 3 || key >= 6) ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe((key < 3 || key >= 6) ? 0 : 1);
             });
         });
 
@@ -138,7 +138,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{ArrowRight}");
             // Intents 0-5 should still not display, Intents 6-8 should still display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -149,7 +149,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{ArrowRight}");
             // Intents 0-5 should still not display, Intents 6-7 should still display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -160,7 +160,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{ArrowRight}");
             // Intents 0-5 should still not display, Intent 6 should still display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -170,7 +170,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{ArrowLeft}");
             // Intents 0-2 should display, Intents 3-8 should not display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
             });
         });
 
@@ -179,7 +179,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{ArrowLeft}");
             // Intents 0-2 should still display, Intents 3-8 should still not display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
             });
         });
     });
@@ -192,7 +192,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{/Control}");
             // Intents 0-5 should not display, Intents 6-8 should display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -204,7 +204,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{/Control}");
             // Intents 0-5 should not display, Intents 6-7 should display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -216,7 +216,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{/Control}");
             // Intents 0-5 should not display, Intent 6 should display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -228,7 +228,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{/Control}");
             // Intents 0-2 should display, Intents 3-8 should not display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
             });
         });
     });
@@ -239,7 +239,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should not display, Intents 6-8 should display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -249,7 +249,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should not display, Intents 6-7 should display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -259,7 +259,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should not display, Intent 6 should display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
         
@@ -269,7 +269,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should still not display, Intents 6-8 should still display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -280,7 +280,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should still not display, Intents 6-7 should still display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -291,7 +291,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{Control>}{ArrowRight}{/Control}");
             // Intents 0-5 should still not display, Intent 6 should still display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 6 ? 0 : 1);
             });
         });
 
@@ -301,7 +301,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{Control>}{ArrowLeft}{/Control}");
             // Intents 0-2 should display, Intents 3-8 should not display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
             });
         });
 
@@ -310,7 +310,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{Control>}{ArrowLeft}{/Control}");
             // Intents 0-2 should still display, Intents 3-8 should still not display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe(key < 3 ? 1 : 0);
             });
         });
     });
@@ -367,7 +367,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{ArrowRight}");
             // Intents 0-2 should still display, Intents 3-8 should still not display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe((key < 3) ? 1 : 0);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe((key < 3) ? 1 : 0);
             });
         });
 
@@ -378,7 +378,7 @@ describe("IntentLister", () => {
             userEvent.keyboard("{ArrowLeft}");
             // Intents 0-2 and 6-8 should still not display, Intents 3-5 should still display
             Object.keys(props.intents).forEach((key) => {
-                expect(screen.queryAllByTestId(`${props.intents[key].question}`).length).toBe((key < 3 || key >= 6) ? 0 : 1);
+                expect(screen.queryAllByTestId(`intent-box-${props.intents[key].question}`).length).toBe((key < 3 || key >= 6) ? 0 : 1);
             });
         });
     });

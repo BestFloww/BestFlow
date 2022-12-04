@@ -43,7 +43,7 @@ describe("IntentDiagram", () => {
 
     it("correctly displays the question", () => {
         renderComponent(props);
-        const question = screen.getByTestId(props.question);
+        const question = screen.getByTestId(`intent-box-${props.question}`);
         expect(question).toBeInTheDocument();
         expect(question.textContent).toBe(props.question);
     });
@@ -105,6 +105,17 @@ describe("IntentDiagram", () => {
         expect(screen.getByTestId("star-svg")).toHaveClass("fill-yellow");
     });
 
+    it("should correctly add the question to the intent box's className", async() => {
+        renderComponent(props);
+        expect(screen.getByTestId("intent-box-question")).toHaveClass("intent-box-question");
+    });
+
+    it("should correctly add previous intents to the intent box's className if there are any", async() => {
+        props.previousIntents = [{question: "merged question"}];
+        renderComponent(props);
+        expect(screen.getByTestId("intent-box-question")).toHaveClass("intent-box-mergedquestion");
+    });
+
     it("should dispatch intent when flag button is clicked", async() => {
         renderComponent(props);
         const dispatch = jest.spyOn(store, 'dispatch');
@@ -123,11 +134,19 @@ describe("IntentDiagram", () => {
         expect(dispatch).toHaveBeenCalledWith({"payload": "question", "type": "analyzeTranscript/toggleStar",});
     });
 
-    it("should dispatch goToIntentByQuestion with the leaf's question if a leaf is clicked and is not End of Conversation", () => {
+    it("should dispatch goToIntentByQuestion with the leaf's question if a leaf is clicked", () => {
         renderComponent(props);
         const dispatch = jest.spyOn(store, 'dispatch');
         userEvent.click(screen.getByTestId("leaf-q1"));
         expect(dispatch).toHaveBeenCalledWith({"payload": "q1", "type": "analyzeTranscript/goToIntentByQuestion",});
+    });
+
+    it("should flash the intent box green and then reset when a corresponding leaf is clicked", async() => {
+        renderComponent(props);
+        jest.spyOn(document, 'getElementsByClassName').mockImplementation(() => [screen.getByTestId("intent-box-question")]);
+        userEvent.click(screen.getByTestId("leaf-q1"));
+        await waitFor(() => expect(screen.getByTestId("intent-box-question")).toHaveClass("bg-green-100"));
+        await waitFor(() => expect(screen.getByTestId("intent-box-question")).toHaveClass("bg-off-white"));
     });
 
     it("should dispatch goToIntentByQuestion with the leaf's question if a leaf is focused and not End of Conversation and Enter is pressed", () => {
@@ -144,6 +163,24 @@ describe("IntentDiagram", () => {
         screen.getByTestId("leaf-q1").focus();
         userEvent.keyboard("{Space}");
         expect(dispatch).toHaveBeenCalledWith({"payload": "q1", "type": "analyzeTranscript/goToIntentByQuestion",});
+    });
+
+    it("should flash the intent box green and then reset when a corresponding leaf is focused and not End of Conversation and Enter is pressed", async() => {
+        renderComponent(props);
+        jest.spyOn(document, 'getElementsByClassName').mockImplementation(() => [screen.getByTestId("intent-box-question")]);
+        screen.getByTestId("leaf-q1").focus();
+        userEvent.keyboard("{Enter}");
+        await waitFor(() => expect(screen.getByTestId("intent-box-question")).toHaveClass("bg-green-100"));
+        await waitFor(() => expect(screen.getByTestId("intent-box-question")).toHaveClass("bg-off-white"));
+    });
+
+    it("should flash the intent box green and then reset when a corresponding leaf is focused and not End of Conversation and Space is pressed", async() => {
+        renderComponent(props);
+        jest.spyOn(document, 'getElementsByClassName').mockImplementation(() => [screen.getByTestId("intent-box-question")]);
+        screen.getByTestId("leaf-q1").focus();
+        userEvent.keyboard("{Space}");
+        await waitFor(() => expect(screen.getByTestId("intent-box-question")).toHaveClass("bg-green-100"));
+        await waitFor(() => expect(screen.getByTestId("intent-box-question")).toHaveClass("bg-off-white"));
     });
 
     it("should not have click function if a leaf is End of Conversation", () => {
@@ -176,9 +213,9 @@ describe("IntentDiagram", () => {
         expect(dispatch).not.toHaveBeenCalled();
     });
 
-    it("should have proper hover styling on a leaf if it is not End of Conversation", () => {
+    it("should have proper green styling on a leaf if it is not End of Conversation", () => {
         renderComponent(props);
-        expect(screen.getByTestId("leaf-q1")).toHaveClass("hover:bg-green-100");
+        expect(screen.getByTestId("leaf-q1")).toHaveClass("bg-green-200");
     });
 
     it("should have button role on a leaf if it is not End of Conversation", () => {
@@ -196,12 +233,12 @@ describe("IntentDiagram", () => {
         expect(screen.getByTestId("leaf-q1")).toHaveAttribute("aria-label", "Click to view intent: q1");
     });
 
-    it("should not have hover styling on a leaf if it is End of Conversation", () => {
+    it("should have proper red styling on a leaf if it is End of Conversation", () => {
         props.children = {
             "END OF CONVERSATION": 100,
         };
         renderComponent(props);
-        expect(screen.getByTestId("leaf-END OF CONVERSATION")).not.toHaveClass("hover:bg-green-100");
+        expect(screen.getByTestId("leaf-END OF CONVERSATION")).toHaveClass("bg-red");
     });
 
     it("should not have button role on a leaf if it is End of Conversation", () => {

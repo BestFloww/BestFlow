@@ -9,11 +9,11 @@ class IntentDiagram extends Component {
 
     generateIntentBoxStyling = () => {
         // Base className
-        let className = "rounded-lg p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem] bg-off-white ";
+        let className = "rounded-lg p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem] transition ease-in-out bg-off-white ";
         // Add any intent's question and those of any previous intents, so it can be targeted by className
-        className += `intent-box-${this.props.question} `;
+        className += `intent-box-${this.props.question.replaceAll(" ", "")} `;
         if (this.props.previousIntents) {
-            this.props.previousIntents.forEach((intent) => { className += `intent-box-${intent.question} ` })
+            this.props.previousIntents.forEach((intent) => { className += `intent-box-${intent.question.replaceAll(" ", "")} ` })
         }
         return className
     }
@@ -27,10 +27,10 @@ class IntentDiagram extends Component {
                 // Reset focus on clicked leaf (it doesn't do it automatically)
                 document.activeElement.blur()
                 // Find the new intent question box by id, then focus and flash it to highlight its position
-                setTimeout(() => { document.getElementsByClassName(`intent-box-${key}`)[0].focus() }, 0);
-                // Swap background color in the intent box's between off-white and green-100 by reassigning className
-                setTimeout(() => { document.getElementsByClassName(`intent-box-${key}`)[0].className = document.getElementsByClassName(`intent-box-${key}`)[0].className.replace("bg-off-white", "bg-green-100") }, 0);
-                setTimeout(() => { document.getElementsByClassName(`intent-box-${key}`)[0].className = document.getElementsByClassName(`intent-box-${key}`)[0].className.replace("bg-green-100", "bg-off-white") }, 600);
+                setTimeout(() => { document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].focus() }, 0);
+                // FLash intent box green-100 for 0.75s by reassigning className
+                setTimeout(() => { document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className = document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className.replace("bg-off-white", "bg-green-100") }, 0);
+                setTimeout(() => { document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className = document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className.replace("bg-green-100", "bg-off-white") }, 750);
             }
 
             return (
@@ -118,7 +118,7 @@ class IntentDiagram extends Component {
                     </button>
                     <h3
                         className={this.generateIntentBoxStyling()}
-                        data-testid={this.props.question}
+                        data-testid={`intent-box-${this.props.question}`}
                     >
                         {this.props.question}
                     </h3>
