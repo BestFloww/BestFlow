@@ -225,13 +225,13 @@ describe("IntentMenu", () => {
     });
 
     describe("For keyboard shortcuts to close the Intent Menu", () => {
-        it ("should call its onClickOutside prop function if pressing Enter key while focused on the Intent Menu", () => {
+        it ("should call its onClickOutside prop function if pressing Enter key while not focused on the Intent Menu", () => {
             renderComponent(props);
             userEvent.keyboard("{Enter}");
             expect(props.onClickOutside).toHaveBeenCalled();
         });
 
-        it ("should call its onClickOutside prop function if pressing Space key while focused on the Intent Menu", () => {
+        it ("should call its onClickOutside prop function if pressing Space key while not focused on the Intent Menu", () => {
             renderComponent(props);
             userEvent.keyboard("{Space}");
             expect(props.onClickOutside).toHaveBeenCalled();
@@ -239,14 +239,14 @@ describe("IntentMenu", () => {
 
         it ("should not call its onClickOutside prop function if pressing Enter key while focused on the Intent Menu", () => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Search by keyword"));
+            screen.getByLabelText("Search by keyword").focus();
             userEvent.keyboard("{Enter}");
             expect(props.onClickOutside).not.toHaveBeenCalled();
         });
 
         it ("should not call its onClickOutside prop function if pressing Space key while focused on the Intent Menu", () => {
             renderComponent(props);
-            userEvent.click(screen.getByLabelText("Search by keyword"));
+            screen.getByLabelText("Search by keyword").focus();
             userEvent.keyboard("{Space}");
             expect(props.onClickOutside).not.toHaveBeenCalled();
         });

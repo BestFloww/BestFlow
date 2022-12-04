@@ -1,17 +1,49 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import store from '../../store.js';
-import { toggleFlag, toggleStar } from '../../store/analyzeTranscriptSlice.js';
+import { goToIntentByQuestion, toggleFlag, toggleStar } from '../../store/analyzeTranscriptSlice.js';
 import StarAPI from "../../services/StarAPI.js";
 import FlagAPI from "../../services/FlagAPI.js";
 
 class IntentDiagram extends Component {
+
+    generateIntentBoxStyling = () => {
+        let className = "rounded-lg p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem] transition ease-in-out bg-off-white ";
+        // Add any intent's question and those of any previous intents, so it can be targeted by className
+        className += `intent-box-${this.props.question.replaceAll(" ", "")} `;
+        if (this.props.previousIntents) {
+            this.props.previousIntents.forEach((intent) => { className += `intent-box-${intent.question.replaceAll(" ", "")} ` });
+        }
+        return className
+    }
+
     listLeaves = () => {
         return Object.keys(this.props.children).map((key) => {
+            const isEndOfConversation = (key === "[END OF CONVERSATION]" || key === "END OF CONVERSATION");
+
+            const goToLeaf = () => {
+                store.dispatch(goToIntentByQuestion(key))
+                // Reset focus on clicked leaf (it doesn't do it automatically)
+                document.activeElement.blur()
+                // Find the new intent question box by id, then focus and flash it to highlight its position
+                setTimeout(() => { document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].focus() }, 0);
+                // FLash intent box green-100 for 0.8s by reassigning className
+                setTimeout(() => { document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className = document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className.replace("bg-off-white", "bg-green-100") }, 0);
+                setTimeout(() => { document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className = document.getElementsByClassName(`intent-box-${key.replaceAll(" ", "")}`)[0].className.replace("bg-green-100", "bg-off-white") }, 800);
+            }
+
             return (
                 <div 
-                    className="text-md bg-green-100 shadow-md shadow-blue/10 rounded-2xl pb-2 mb-5 border-2 border-green-200"
+                    className={"text-md shadow-md shadow-blue/10 rounded-2xl pb-2 mb-5 border-2 border-green-300 " +
+                    (!isEndOfConversation ? "bg-green-200 hover:bg-green-100 focus:bg-green-100 transition ease-in-out" : "bg-red border-black")}
+                    // As long as the leaf is not End of Conversation, make it a button that displays the corresponding intent when clicked
+                    role={!isEndOfConversation ? "button" : null}
+                    aria-label={!isEndOfConversation ? `Click to view intent: ${key}` : null}
+                    onClick={!isEndOfConversation ? goToLeaf : null}
+                    onKeyDown={e => ((e.key === "Enter" || e.key === "Space") && !isEndOfConversation) ? goToLeaf() : null}
+                    tabIndex={!isEndOfConversation ? 0 : null}
                     key={key}
+                    data-testid={`leaf-${key}`}
                 >
                     <p
                         data-testid={`${key}-${this.props.children[key]}`}
@@ -23,12 +55,12 @@ class IntentDiagram extends Component {
                         className="w-40 h-24 overflow-hidden overflow-y-scroll flex align-center justify-center"
                         data-testid={`${key}-container`}
                     >
-                        <h4 
+                        <p 
                             className="break-words text-center my-auto w-32"
                             data-testid={key}
                         >
                             {key} 
-                        </h4>
+                        </p>
                     </div>
                 </div>
             );
@@ -68,7 +100,7 @@ class IntentDiagram extends Component {
     }
 
     render() { 
-        // Tailwind styilng for the leaves in line 104
+        // Tailwind styilng for the leaves in line 138
         const leafStyling = "rounded-lg flex flex-col gap-y-3 md:flex-row mx-auto text-center gap-x-5 m-9 md:min-w-[37rem] sm:max-w-[35rem] 2xl:max-w-[50rem] 2xl:max-h-[14rem]";
 
         return (
@@ -86,8 +118,8 @@ class IntentDiagram extends Component {
                         </label>
                     </button>
                     <h3
-                        className="rounded-lg bg-off-white p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem]"
-                        data-testid={this.props.question}
+                        className={this.generateIntentBoxStyling()}
+                        data-testid={`intent-box-${this.props.question}`}
                     >
                         {this.props.question}
                     </h3>

@@ -113,9 +113,9 @@ class IntentLister extends Component {
                     data-testid={intent.question}
                     question={intent.question}
                     children={intent.children}
+                    previousIntents={intent.previousIntents}
                     isStarred={intent.star}
                     isFlagged={intent.flag}
-                    previousIntents={intent.previousIntents}
                  />
             );
         });
@@ -144,9 +144,9 @@ class IntentLister extends Component {
                             data-testid={currentIntents[2].question}
                             question={currentIntents[2].question}
                             children={currentIntents[2].children}
+                            previousIntents={currentIntents[2].previousIntents}
                             isStarred={currentIntents[2].star}
                             isFlagged={currentIntents[2].flag}
-                            previousIntents={currentIntents[2].previousIntents}
                         />
                     </div>
                     }

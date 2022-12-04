@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import reducer, {addAnalyzedTranscript, setDisplayingQuestion, deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed, toggleFlag, toggleStar} from "./analyzeTranscriptSlice.js"
+import reducer, {addAnalyzedTranscript, setDisplayingQuestion, deleteAnalyzedTranscript, clearAnalyzedTranscript, setOverrideStatus, setProjectIdToBeDisplayed, goToIntentByQuestion, toggleFlag, toggleStar} from "./analyzeTranscriptSlice.js"
 
 describe('analyzeTranscriptSlice', () => {
     const initialState = {
@@ -12,6 +12,20 @@ describe('analyzeTranscriptSlice', () => {
     const previousState = {
         analyzedTranscripts: {"1": [{question: "q1", children: {"a":100}, star: false, flag: false}], "2": [{question: "q2", children: {"b":90}, star: false, flag: false}]},
         DisplayingQuestion: {"1" : 0, "2": 0},
+        override : false,
+        projectIdToBeDisplayed : "1"
+    };
+
+    const unmergedState = {
+        analyzedTranscripts: {"1": [{question: "q1", children: {"a":100}, star: false, flag: false}, {question: "q2", children: {"a":100}, star: false, flag: false}, {question: "q3", children: {"a":100}, star: false, flag: false}, {question: "q4", children: {"a":100}, star: false, flag: false}, {question: "q5", children: {"a":100}, star: false, flag: false},{question: "q6", children: {"a":100}, star: false, flag: false}]},
+        DisplayingQuestion: {"1" : 0},
+        override : false,
+        projectIdToBeDisplayed : "1"
+    };
+
+    const mergedState = {
+        analyzedTranscripts: {"1": [{question: "q1", children: {"a":100}, star: false, flag: false}, {question: "q2", children: {"a":100}, star: false, flag: false}, {question: "q3", children: {"a":100}, star: false, flag: false}, {question: "q4", children: {"a":100}, star: false, flag: false, previousIntents: [{question: "q4a"}]}, {question: "q5", children: {"a":100}, star: false, flag: false, previousIntents: [{question: "q5a"}]},{question: "q6", children: {"a":100}, star: false, flag: false, previousIntents: [{question: "q6a"}]}]},
+        DisplayingQuestion: {"1" : 0},
         override : false,
         projectIdToBeDisplayed : "1"
     };
@@ -59,10 +73,12 @@ describe('analyzeTranscriptSlice', () => {
         const expected = reducer(previousState, clearAnalyzedTranscript);
         expect(expected.analyzedTranscripts).toEqual({});
     });
+
     it('should set override to the boolean passed by setOverrideStatus, true', () => {
         const expected = reducer(initialState, setOverrideStatus(true));
         expect(expected.override).toBe(true);
     });
+
     it('should set override to the boolean passed by setOverrideStatus, false', () => {
         const previousState2 = {
             analyzedTranscripts: {},
@@ -72,26 +88,62 @@ describe('analyzeTranscriptSlice', () => {
         const expected = reducer(previousState2, setOverrideStatus(false))
         expect(expected.override).toBe(false);
     });
+
     it('should set projectId to the String passed by setProjectIdToBeDisplayed', () => {
         const expected = reducer(previousState, setProjectIdToBeDisplayed("100642Amh632"));
         expect(expected.projectIdToBeDisplayed).toBe("100642Amh632");
     });
+
     it('should set the index of the given project Id in DisplayingQuestion', () => {
         const expected = reducer(previousState, setDisplayingQuestion(3));
         expect(expected.DisplayingQuestion["1"]).toBe(3);
     });
+
+    it("should set the correct index if the string is an exact match and the intent is first on its page", () => {
+        const expected = reducer(unmergedState, goToIntentByQuestion("q4"));
+        expect(expected.DisplayingQuestion["1"]).toBe(3);
+    });
+    
+    it("should set the correct index if the string is an exact match and the intent is first on its page", () => {
+        const expected = reducer(unmergedState, goToIntentByQuestion("q5"));
+        expect(expected.DisplayingQuestion["1"]).toBe(3);
+    });
+
+    it("should set the correct index if the string is an exact match and the intent is first on its page", () => {
+        const expected = reducer(unmergedState, goToIntentByQuestion("q6"));
+        expect(expected.DisplayingQuestion["1"]).toBe(3);
+    });
+
+    it("should set the correct index if the string is in the previousIntents of an intent and that intent is first on its page", () => {
+        const expected = reducer(mergedState, goToIntentByQuestion("q4a"));
+        expect(expected.DisplayingQuestion["1"]).toBe(3);
+    });
+
+    it("should set the correct index if the string is in the previousIntents of an intent and that intent is first on its page", () => {
+        const expected = reducer(mergedState, goToIntentByQuestion("q5a"));
+        expect(expected.DisplayingQuestion["1"]).toBe(3);
+    });
+
+    it("should set the correct index if the string is in the previousIntents of an intent and that intent is first on its page", () => {
+        const expected = reducer(mergedState, goToIntentByQuestion("q6a"));
+        expect(expected.DisplayingQuestion["1"]).toBe(3);
+    });
+
     it("should switch flag of given intent to false", () => {
         const expected = reducer(trueState, toggleFlag("q1"));
         expect(expected.analyzedTranscripts).toStrictEqual({"1": [{question: "q1", children: {"a":100}, star: true, flag: false}]});
     });
+
     it("should switch star of given intent to false", () => {
         const expected = reducer(trueState, toggleStar("q1"));
         expect(expected.analyzedTranscripts).toStrictEqual({"1": [{question: "q1", children: {"a":100}, star: false, flag: true}]});
     });
+
     it("should switch flag of given intent to true", () => {
         const expected = reducer(falseState, toggleFlag("q1"));
         expect(expected.analyzedTranscripts).toStrictEqual({"1": [{question: "q1", children: {"a":100}, star: false, flag: true}]});
     });
+
     it("should switch star of given intent to true", () => {
         const expected = reducer(falseState, toggleStar("q1"));
         expect(expected.analyzedTranscripts).toStrictEqual({"1": [{question: "q1", children: {"a":100}, star: true, flag: false}]})
