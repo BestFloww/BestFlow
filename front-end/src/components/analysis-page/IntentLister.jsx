@@ -116,7 +116,6 @@ class IntentLister extends Component {
                     previousIntents={intent.previousIntents}
                     isStarred={intent.star}
                     isFlagged={intent.flag}
-                    previousIntents={intent.previousIntents}
                  />
             );
         });
@@ -148,7 +147,6 @@ class IntentLister extends Component {
                             previousIntents={currentIntents[2].previousIntents}
                             isStarred={currentIntents[2].star}
                             isFlagged={currentIntents[2].flag}
-                            previousIntents={currentIntents[2].previousIntents}
                         />
                     </div>
                     }
