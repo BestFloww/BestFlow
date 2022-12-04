@@ -111,7 +111,22 @@ describe('MainPage', () => {
         expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/addAnalyzedTranscript', payload: {projectId: "2Mergefalse", transcript: [{question: "a", children: {"b": 100,}}]} });
         expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setOverrideStatus', payload: false });
         await waitFor(() => expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage' }));
-    });        
+    });
+    
+    it("should dispatch setProjectIdToBeDisplayed with correct ID when both merged and not merged version is in store and ", async() => {
+        store.dispatch(addAnalyzedTranscript({projectId: "1Mergetrue", transcript: [{question: "a", children: {"b": 100,}}]}));
+        renderComponent();
+        userEvent.clear(screen.getByLabelText("Enter Project ID"));
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: "" });
+        userEvent.type(screen.getByLabelText("Enter Project ID"), "1");
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: "1Mergefalse" });
+        userEvent.click(screen.getByTestId("checkbox"));
+        await userEvent.click(screen.getByText('View Analysis'));
+        // Check that if no transcript with the ID is stored in analyzedTranscripts, but it exists on the database, it properly dispatches reducers to store it
+        expect(dispatch).toHaveBeenCalledWith({ type: 'analyzeTranscript/setProjectIdToBeDisplayed', payload: "1Mergetrue" });
+        expect(dispatch).toHaveBeenCalledWith({ type: 'switchPage/openAnalysisPage'});
+    }); 
+
 
     it('should download transcript template when Download Transcript Template button is clicked', () => {
         renderComponent();

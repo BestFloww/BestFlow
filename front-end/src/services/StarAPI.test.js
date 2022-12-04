@@ -7,9 +7,21 @@ describe("Star API", () => {
         const body = {
             question: "some question",
             projectId: "the id",
-            starStatus : true
+            starStatus: true
             }
         await StarAPI.put(body);
         expect(axios.put).toHaveBeenCalledWith(expect.any(String), body);
+    });
+
+    it("put intent with merge", async() => {
+        const body = {
+            question: "some question",
+            projectId: "the id",
+            starStatus: true,
+            previousIntents: [{}, {question: "caveman 🍖"}],
+            }
+        const expected = {...body, question: "caveman 🍖"}
+        await StarAPI.put(body);
+        expect(axios.put).toHaveBeenCalledWith(expect.any(String), expected);
     });
 });

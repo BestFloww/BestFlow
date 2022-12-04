@@ -116,6 +116,7 @@ class IntentLister extends Component {
                     previousIntents={intent.previousIntents}
                     isStarred={intent.star}
                     isFlagged={intent.flag}
+                    previousIntents={intent.previousIntents}
                  />
             );
         });
@@ -147,6 +148,7 @@ class IntentLister extends Component {
                             previousIntents={currentIntents[2].previousIntents}
                             isStarred={currentIntents[2].star}
                             isFlagged={currentIntents[2].flag}
+                            previousIntents={currentIntents[2].previousIntents}
                         />
                     </div>
                     }
@@ -161,6 +163,7 @@ class IntentLister extends Component {
                         }}
                         tooltip="Click this button or press the ← key while holding CTRL to skip to the beginning"
                         label="Previous Results"
+                        aria-keyshortcuts="ArrowLeft Control+ArrowLeft"
                     />
                 </div>
                 <div className="fixed right-1 sm:right-6 bottom-1 sm:bottom-8" data-testid="arrow-right">
@@ -173,6 +176,7 @@ class IntentLister extends Component {
                         }}
                         tooltip="Click this button or press the → key while holding CTRL to skip to the end"
                         label="Next Results"
+                        aria-keyshortcuts="ArrowRight Control+ArrowRight"
                     />
                 </div>
             </div>

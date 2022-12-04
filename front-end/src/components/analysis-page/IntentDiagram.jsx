@@ -74,8 +74,9 @@ class IntentDiagram extends Component {
             await StarAPI.put(
                 {
                     question: this.props.question,
-                    projectId: projectId,
-                    starStatus: !this.props.isStarred
+                    projectId: projectId.split("Merge")[0],
+                    starStatus: !this.props.isStarred,
+                    previousIntents: this.props.previousIntents,
                 });
         } catch (e) {
             window.alert("Error in starring question. Please try again. " + e.response.error);
@@ -89,8 +90,9 @@ class IntentDiagram extends Component {
             await FlagAPI.put(
                 {
                     question: this.props.question,
-                    projectId: projectId,
-                    flagStatus: !this.props.isFlagged
+                    projectId: projectId.split("Merge")[0],
+                    flagStatus: !this.props.isFlagged,
+                    previousIntents: this.props.previousIntents,
                 });
         } catch (e) {
             window.alert("Error in flagging question. Please try again. " + e.response.error);
@@ -148,6 +150,7 @@ IntentDiagram.propTypes = {
     children: PropTypes.objectOf(PropTypes.number).isRequired,
     isFlagged: PropTypes.bool,
     isStarred: PropTypes.bool,
+    previousIntents: PropTypes.arrayOf(PropTypes.objectOf(String)),
 };
 
 IntentDiagram.defaultProps = {

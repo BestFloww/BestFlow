@@ -55,12 +55,13 @@ class MainPage extends Component {
 
   getAnalyzedData = async() => {
       const override = store.getState().analyzeTranscript.override;
-      const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed.split("Merge")[0] ;
+      const projectId = store.getState().analyzeTranscript.projectIdToBeDisplayed;
+      const cleanProjectId = projectId.split("Merge")[0];
       const analyzedTranscripts = store.getState().analyzeTranscript.analyzedTranscripts;
-      const mergeId = projectId + "Merge" + this.state.useMerger;
-      if(override || (!((mergeId) in analyzedTranscripts))){
+      const mergeId = cleanProjectId + "Merge" + this.state.useMerger;
+      if(override || (!(mergeId in analyzedTranscripts))){
         // Call API if either the user wants to override or the project ID is not stored in this session's transcripts
-        const analyzedData = await TranscriptAPI.getAnalysis({projectId: projectId, useMerger: this.state.useMerger});
+        const analyzedData = await TranscriptAPI.getAnalysis({projectId: cleanProjectId, useMerger: this.state.useMerger});
         if (analyzedData.data.length === 0) {
           // Throw an error if getAnalysis returns an empty array, as this means no transcript with that project ID was found
           const missingIdError = new Error();
@@ -71,6 +72,9 @@ class MainPage extends Component {
           store.dispatch(addAnalyzedTranscript({projectId: mergeId , transcript: analyzedData.data}));
           store.dispatch(setOverrideStatus(false));
         }
+      }
+      else if (mergeId in analyzedTranscripts & mergeId !== projectId){
+          store.dispatch(setProjectIdToBeDisplayed(mergeId));
       }
   }
 
@@ -119,6 +123,7 @@ class MainPage extends Component {
                     border border-solid border-purple-100
                     hover:border-purple-200
                     focus:border-purple-300 focus:ring"
+                    aria-required="true"
                     aria-label="Enter Project ID"
                     placeholder="Enter Project ID"
                     onChange={this.handleChange}

@@ -26,7 +26,7 @@ describe("IntentLister", () => {
 
     beforeEach(() => {
         props = {...basicProps};
-        store.dispatch(setProjectIdToBeDisplayed("1"));
+        store.dispatch(setProjectIdToBeDisplayed("1Mergefalse"));
     });
 
     afterAll(() => {
