@@ -8,7 +8,6 @@ import FlagAPI from "../../services/FlagAPI.js";
 class IntentDiagram extends Component {
 
     generateIntentBoxStyling = () => {
-        // Base className
         let className = "rounded-lg p-5 mt-9 shadow-lg shadow-blue/10 break-words text-center text-lg 2xl:text-2xl w-52 sm:min-w-[30rem] sm:max-w-[35rem] 2xl:max-h-[14rem] transition ease-in-out bg-off-white ";
         // Add any intent's question and those of any previous intents, so it can be targeted by className
         className += `intent-box-${this.props.question.replaceAll(" ", "")} `;

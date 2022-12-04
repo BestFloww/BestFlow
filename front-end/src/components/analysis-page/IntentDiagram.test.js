@@ -105,12 +105,12 @@ describe("IntentDiagram", () => {
         expect(screen.getByTestId("star-svg")).toHaveClass("fill-yellow");
     });
 
-    it("should correctly add the question to the intent box's className", async() => {
+    it("should correctly add the question to the intent box's className", () => {
         renderComponent(props);
         expect(screen.getByTestId("intent-box-question")).toHaveClass("intent-box-question");
     });
 
-    it("should correctly add previous intents to the intent box's className if there are any", async() => {
+    it("should correctly add previous intents to the intent box's className if there are any", () => {
         props.previousIntents = [{question: "merged question"}];
         renderComponent(props);
         expect(screen.getByTestId("intent-box-question")).toHaveClass("intent-box-mergedquestion");
