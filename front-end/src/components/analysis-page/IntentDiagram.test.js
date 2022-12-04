@@ -284,4 +284,11 @@ describe("IntentDiagram", () => {
         renderComponent(props);
         expect(screen.getByTestId("listLeaves-div")).toHaveClass("md:overflow-auto");
     });
+
+    it("should correctly list all previousIntents in a tooltip", () => {
+        props.previousIntents = [{question: "alpha"}, {question:"beta"}];
+        renderComponent(props);
+        expect(screen.getByText("alpha")).toBeInTheDocument();
+        expect(screen.getByText("beta")).toBeInTheDocument();
+    });
 });

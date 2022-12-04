@@ -117,12 +117,23 @@ class IntentDiagram extends Component {
                             </svg>
                         </label>
                     </button>
-                    <h3
-                        className={this.generateIntentBoxStyling()}
-                        data-testid={`intent-box-${this.props.question}`}
-                    >
-                        {this.props.question}
-                    </h3>
+                    <div className="group relative">
+                        <h3
+                            className={this.generateIntentBoxStyling()}
+                            data-testid={`intent-box-${this.props.question}`}
+                        >
+                            {this.props.question}
+                            
+                        </h3>
+                        {this.props.previousIntents && 
+                            <span className="absolute hidden group-hover:flex flex-col left-24 top-5 -translate-y-full w-72 px-5 py-1 bg-gray-300 rounded-lg text-center text-off-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-300">
+                                The following intents have been merged: <br/>
+                                <div className="flex flex-col">
+                                    {this.props.previousIntents.map((intent) => {return (<li key={intent.question}>{intent.question}</li>)})}
+                                </div>
+                            </span>
+                        }
+                    </div>
                     <button className="w-16 h-16" onClick={this.toggleFlagged} aria-label="flag button" data-testid="flag-button">
                         <label>
                             <svg // Use ternary operator to fill in flag appropriately depending on the status of its flagging
